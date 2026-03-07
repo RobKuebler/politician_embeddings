@@ -124,4 +124,4 @@ else:
         margin={"l": 0, "r": 0, "t": 10, "b": 10},
     )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
