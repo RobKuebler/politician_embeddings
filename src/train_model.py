@@ -54,9 +54,7 @@ class PoliticianEmbeddingModel(nn.Module):
 
     def forward(self, p: torch.Tensor, poll: torch.Tensor) -> torch.Tensor:
         dot = (self.p_embed(p) * self.poll_embed(poll)).sum(dim=1)
-        return torch.sigmoid(
-            dot + self.p_bias(p).squeeze() + self.poll_bias(poll).squeeze()
-        )
+        return dot + self.p_bias(p).squeeze() + self.poll_bias(poll).squeeze()
 
 
 def load_data(period_id: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -97,7 +95,7 @@ def train(
     log.info("Training on %d votes...", len(df))
     model = PoliticianEmbeddingModel(n_politicians, n_polls)
     optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=1e-5)
-    criterion = nn.MSELoss()
+    criterion = nn.BCEWithLogitsLoss()
     dl = DataLoader(VoteDataset(df), batch_size=BATCH_SIZE, shuffle=True)
 
     for epoch in range(N_EPOCHS):
