@@ -1,14 +1,12 @@
-import logging
 from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import umap
 
-log = logging.getLogger(__name__)
-
-EMBEDDINGS_PATH = Path(__file__).parent / "outputs" / "politician_embeddings_161.csv"
+EMBEDDINGS_2D_PATH = (
+    Path(__file__).parent / "outputs" / "politician_embeddings_161_2d.csv"
+)
 
 # Official German party colors
 PARTY_COLORS = {
@@ -19,19 +17,6 @@ PARTY_COLORS = {
     "Die Linke": "#BE3075",
     "fraktionslos": "#888888",
 }
-
-
-@st.cache_data
-def load_and_reduce() -> pd.DataFrame:
-    """Load embeddings CSV and reduce to 2D with UMAP."""
-    df = pd.read_csv(EMBEDDINGS_PATH)
-    dim_cols = [c for c in df.columns if c.startswith("dim_")]
-    reducer = umap.UMAP(n_components=2, random_state=42)
-    coords = reducer.fit_transform(df[dim_cols].values)
-    df["x"] = coords[:, 0]
-    df["y"] = coords[:, 1]
-    return df
-
 
 st.set_page_config(page_title="Politiker-Embeddings", layout="wide")
 
@@ -46,8 +31,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-with st.spinner("UMAP läuft..."):
-    df = load_and_reduce()
+df = pd.read_csv(EMBEDDINGS_2D_PATH)
 
 # Legend above the chart as colored pills
 party_order = [

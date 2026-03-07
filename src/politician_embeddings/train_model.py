@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 import torch
+import umap
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 
@@ -129,5 +130,14 @@ emb_df["politician_id"] = p_ids
 final_df = p_df.merge(emb_df, on="politician_id")
 output_path = OUTPUTS_DIR / f"politician_embeddings_{PERIOD_ID}.csv"
 final_df.to_csv(output_path, index=False)
+log.info("Embeddings saved to %s", output_path)
 
-log.info("Success! Embeddings saved to %s", output_path)
+# 5. UMAP: reduce to 2D for visualization and save separately
+log.info("Running UMAP to produce 2D visualization embeddings...")
+coords = umap.UMAP(n_components=2, random_state=42).fit_transform(embeddings)
+viz_df = p_df.copy()
+viz_df["x"] = coords[:, 0]
+viz_df["y"] = coords[:, 1]
+viz_path = OUTPUTS_DIR / f"politician_embeddings_{PERIOD_ID}_2d.csv"
+viz_df.to_csv(viz_path, index=False)
+log.info("2D embeddings saved to %s", viz_path)
