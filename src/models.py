@@ -5,7 +5,6 @@ import lightning as L
 import numpy as np
 import pandas as pd
 import torch
-import umap
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 
@@ -121,31 +120,14 @@ def save_embeddings(
     p_df: pd.DataFrame,
     p_ids: np.ndarray,
     period_id: int,
-) -> np.ndarray:
-    """Export full-dimensional embeddings to CSV and return the raw numpy array."""
-    embeddings = model.p_embed.weight.detach().numpy()
-    emb_df = pd.DataFrame(
-        embeddings, columns=[f"dim_{i}" for i in range(embeddings.shape[1])]
-    )
-    emb_df["politician_id"] = p_ids
+) -> None:
+    """Export embeddings directly to CSV with x, y (and z for 3D) columns."""
+    weights = model.p_embed.weight.detach().numpy()
+    n_dims = weights.shape[1]
+    coords = {"x": weights[:, 0], "y": weights[:, 1]}
+    if n_dims == 3:
+        coords["z"] = weights[:, 2]
+    emb_df = pd.DataFrame({"politician_id": p_ids, **coords})
     path = OUTPUTS_DIR / f"politician_embeddings_{period_id}.csv"
     p_df.merge(emb_df, on="politician_id").to_csv(path, index=False)
     log.info("Embeddings saved to %s", path)
-    return embeddings
-
-
-def save_2d_embeddings(
-    embeddings: np.ndarray, p_df: pd.DataFrame, period_id: int
-) -> None:
-    """Export 2D visualization CSV — runs UMAP if embeddings have >2 dimensions."""
-    if embeddings.shape[1] > 2:
-        log.info("Running UMAP to produce 2D visualization embeddings...")
-        coords = umap.UMAP(n_components=2, random_state=42).fit_transform(embeddings)
-    else:
-        coords = embeddings
-    viz_df = p_df.copy()
-    viz_df["x"] = coords[:, 0]
-    viz_df["y"] = coords[:, 1]
-    path = OUTPUTS_DIR / f"politician_embeddings_{period_id}_2d.csv"
-    viz_df.to_csv(path, index=False)
-    log.info("2D embeddings saved to %s", path)

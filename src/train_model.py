@@ -57,13 +57,7 @@ def main() -> None:
 
     import lightning as L
 
-    from models import (
-        load_data,
-        prepare_votes,
-        save_2d_embeddings,
-        save_embeddings,
-        train,
-    )
+    from models import load_data, prepare_votes, save_embeddings, train
 
     L.seed_everything(42)
     OUTPUTS_DIR.mkdir(exist_ok=True)
@@ -78,8 +72,7 @@ def main() -> None:
         batch_size=args.batch_size,
         lr=args.lr,
     )
-    embeddings = save_embeddings(model, p_df, p_ids, args.period)
-    save_2d_embeddings(embeddings, p_df, args.period)
+    save_embeddings(model, p_df, p_ids, args.period)
 
 
 if __name__ == "__main__":
