@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = "~=3.13.0"
 dependencies = [
+    "lightning>=2.6.1",
     "numpy>=2.4.2",
     "pandas>=3.0.1",
     "plotly>=6.6.0",
@@ -19,7 +20,7 @@ override-dependencies = ["pandas>=3.0.1"]
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D", "ANN", "COM812", "PLR0913"]  # COM812 conflicts with formatter
+ignore = ["D", "ANN", "COM812", "PLR0913", "N812", "PLC0415", "PLR2004"]
 
 [dependency-groups]
 dev = [
