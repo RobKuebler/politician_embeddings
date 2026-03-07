@@ -58,9 +58,9 @@ class VoteDataset(Dataset[tuple[torch.Tensor, torch.Tensor, torch.Tensor]]):
     """
 
     def __init__(self, df):
-        self.p = torch.LongTensor(df["p_idx"].values)
-        self.poll = torch.LongTensor(df["poll_idx"].values)
-        self.y = torch.FloatTensor(df["rating"].values)
+        self.p = torch.tensor(df["p_idx"].to_numpy(), dtype=torch.long)
+        self.poll = torch.tensor(df["poll_idx"].to_numpy(), dtype=torch.long)
+        self.y = torch.tensor(df["rating"].to_numpy(), dtype=torch.float)
 
     def __len__(self):
         return len(self.y)
