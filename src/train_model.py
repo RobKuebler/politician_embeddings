@@ -51,10 +51,6 @@ class PoliticianEmbeddingModel(nn.Module):
         self.p_bias = nn.Embedding(n_politicians, 1)
         self.poll_embed = nn.Embedding(n_polls, n_factors)
         self.poll_bias = nn.Embedding(n_polls, 1)
-        nn.init.xavier_uniform_(self.p_embed.weight)
-        nn.init.xavier_uniform_(self.poll_embed.weight)
-        self.p_bias.weight.data.fill_(0.0)
-        self.poll_bias.weight.data.fill_(0.0)
 
     def forward(self, p: torch.Tensor, poll: torch.Tensor) -> torch.Tensor:
         dot = (self.p_embed(p) * self.poll_embed(poll)).sum(dim=1)
