@@ -553,7 +553,8 @@ with st.container(border=True):
 st.markdown(
     "<p style='text-align:center; color:#ccc; font-size:12px; margin-top:48px'>"
     "von <a href='https://robkuebler.github.io' style='color:#ccc'>Robert Kübler</a>"
-    " mit Daten von <a href='https://www.abgeordnetenwatch.de' style='color:#ccc'>"
+    " | Code auf <a href='https://github.com/RobKuebler/politician_embeddings' style='color:#ccc'>GitHub</a>"
+    " | Daten von <a href='https://www.abgeordnetenwatch.de' style='color:#ccc'>"
     "abgeordnetenwatch.de</a>"
     "</p>",
     unsafe_allow_html=True,
