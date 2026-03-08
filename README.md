@@ -74,7 +74,7 @@ outputs/            Embedding-CSVs (gitignored)
 
 ## Danksagung
 
-Die Abstimmungsdaten stammen von [**abgeordnetenwatch.de**](https://www.abgeordnetenwatch.de), einer gemeinnützigen Plattform, die Bürgerinnen und Bürger mit ihren gewählten Abgeordneten verbindet und seit Jahren Transparenz über das parlamentarische Handeln schafft. Ohne ihre offene API ware dieses Projekt nicht möglich. Herzlichen Dank.
+Die Abstimmungsdaten stammen von [**abgeordnetenwatch.de**](https://www.abgeordnetenwatch.de), einer gemeinnützigen Plattform, die Bürger mit ihren gewählten Abgeordneten verbindet und seit Jahren Transparenz über das parlamentarische Handeln schafft. Ohne ihre offene API ware dieses Projekt nicht möglich. Herzlichen Dank.
 
 ## Lizenz
 
