@@ -7,6 +7,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
+log = logging.getLogger(__name__)
 
 PERIOD_ID = None  # None = auto-detect current active Bundestag period
 N_FACTORS = 2
@@ -72,6 +73,10 @@ def main() -> None:
     L.seed_everything(42)
     OUTPUTS_DIR.mkdir(exist_ok=True)
     df_votes, p_df, poll_df = load_data(period_id)
+    if df_votes.empty:
+        log.warning("No voting data found for period %d. Skipping training.", period_id)
+        return
+
     df_votes, p_ids, poll_ids = prepare_votes(df_votes, p_df, poll_df)
     model = train(
         df_votes,
