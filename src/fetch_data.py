@@ -135,13 +135,27 @@ def fetch_politicians(period_id: int) -> tuple[pd.DataFrame, dict]:
         mandate_to_politician[m["id"]] = p_id
 
         if p_id not in seen_ids:
-            fractions = m.get("fraction_membership", [])
+            memberships = m.get("fraction_membership", [])
             party = "Unknown"
-            if fractions:
-                party = fractions[0].get("fraction", {}).get("label", "Unknown")
+            if memberships:
+                # Find the currently active membership:
+                # 1. No end_date (still active)
+                # 2. Or the one with the latest end_date
+                today = datetime.now(tz=UTC).date().isoformat()
+                active = [
+                    fm
+                    for fm in memberships
+                    if not fm.get("end_date") or fm.get("end_date") >= today
+                ]
+                # Fallback: if none are technically "active",
+                # take the last one in the list
+                current_membership = active[-1] if active else memberships[-1]
+                party = current_membership.get("fraction", {}).get("label", "Unknown")
+
                 # Strip legislative period suffix, e.g. "SPD (2021-2025)" -> "SPD"
                 if " (" in party:
                     party = party.split(" (")[0]
+
             politician_info.append(
                 {"politician_id": p_id, "name": pol["label"], "party": party}
             )

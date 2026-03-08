@@ -29,6 +29,8 @@ ignore = ["D", "ANN", "COM812", "PLR0913", "N812", "PLC0415", "PLR2004"]
 [dependency-groups]
 dev = [
     "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "requests-mock>=1.12.1",
     "ruff>=0.15.5",
     "ty>=0.0.21",
 ]
