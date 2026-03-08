@@ -22,7 +22,15 @@ jobs:
       - name: Fetch data (upsert — only new polls)
         run: uv run python src/fetch_data.py
 
+      - name: Check for data changes
+        id: data_changed
+        run: |
+          git add data/
+          git diff --staged --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+          git restore --staged data/
+
       - name: Train model
+        if: steps.data_changed.outputs.changed == 'true'
         run: uv run python src/train_model.py
 
       - name: Commit updated data and embeddings

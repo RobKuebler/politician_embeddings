@@ -19,7 +19,7 @@ override-dependencies = ["pandas>=3.0.1"]
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D", "ANN", "COM812", "PLR0913", "N812", "PLC0415", "PLR2004"]
+ignore = ["D", "ANN", "COM812", "PLR0913", "N812", "PLC0415", "PLR2004", "E501", "RUF001"]
 
 [dependency-groups]
 dev = [

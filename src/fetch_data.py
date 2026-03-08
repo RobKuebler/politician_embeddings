@@ -17,6 +17,9 @@ log = logging.getLogger(__name__)
 BASE_URL = "https://www.abgeordnetenwatch.de/api/v2"
 BUNDESTAG_PARLIAMENT_ID = 5
 PAGE_SIZE = 100
+# The abgeordnetenwatch API only covers Bundestag history from 2005 onward;
+# the first legislature in the API is the 16th Bundestag (2005-2009).
+FIRST_BUNDESTAG_NUMBER = 16
 
 DATA_DIR = Path(__file__).parents[1] / "data"
 
@@ -54,8 +57,17 @@ def upsert_periods() -> int:
 
     # Upsert into periods.csv
     path = DATA_DIR / "periods.csv"
+    # Sort chronologically so position index == Bundestag ordinal number (1-based)
+    legislatures.sort(key=lambda p: p["start_date_period"])
     df_api = pd.DataFrame(
-        [{"period_id": p["id"], "label": p["label"]} for p in legislatures]
+        [
+            {
+                "period_id": p["id"],
+                "label": p["label"],
+                "bundestag_number": i + FIRST_BUNDESTAG_NUMBER,
+            }
+            for i, p in enumerate(legislatures)
+        ]
     )
     if path.exists():
         df_existing = pd.read_csv(path).set_index("period_id")
@@ -155,7 +167,7 @@ def upsert_polls(period_id: int) -> tuple[pd.DataFrame, list]:
     New poll_ids are the ones we still need to fetch votes for.
     """
     df_api = fetch_polls(period_id)
-    path = DATA_DIR / f"polls_{period_id}.csv"
+    path = DATA_DIR / str(period_id) / "polls.csv"
 
     if not path.exists():
         df_api.to_csv(path, index=False)
@@ -184,7 +196,7 @@ def upsert_politicians(period_id: int) -> tuple[pd.DataFrame, dict]:
     Returns (full politicians df, mandate_id -> politician_id mapping).
     """
     df_api, mandate_to_politician = fetch_politicians(period_id)
-    path = DATA_DIR / f"politicians_{period_id}.csv"
+    path = DATA_DIR / str(period_id) / "politicians.csv"
 
     if not path.exists():
         df_api.to_csv(path, index=False)
@@ -227,14 +239,14 @@ def main() -> None:
     args = parse_args()
     period_id = args.period or upsert_periods()
 
-    DATA_DIR.mkdir(exist_ok=True)
+    (DATA_DIR / str(period_id)).mkdir(parents=True, exist_ok=True)
 
     # Polls and politicians are always fetched (fast metadata endpoints).
     # Votes are only fetched for polls not yet in the CSV (the slow part).
     _, new_poll_ids = upsert_polls(period_id)
     _, mandate_to_politician = upsert_politicians(period_id)
 
-    votes_path = DATA_DIR / f"votes_{period_id}.csv"
+    votes_path = DATA_DIR / str(period_id) / "votes.csv"
     if not new_poll_ids:
         log.info("No new polls — skipping vote fetching. All data is up to date.")
     else:

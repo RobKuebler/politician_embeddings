@@ -89,15 +89,16 @@ class RelativeEarlyStopping(L.Callback):
 
 def load_data(period_id: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Load votes, politicians and polls CSVs for a given period."""
-    votes_path = DATA_DIR / f"votes_{period_id}.csv"
+    period_dir = DATA_DIR / str(period_id)
+    votes_path = period_dir / "votes.csv"
     if not votes_path.exists():
         log.error("%s not found! Run fetch_data.py first.", votes_path)
         raise SystemExit(1)
     log.info("Loading data for period %d...", period_id)
     return (
         pd.read_csv(votes_path),
-        pd.read_csv(DATA_DIR / f"politicians_{period_id}.csv"),
-        pd.read_csv(DATA_DIR / f"polls_{period_id}.csv"),
+        pd.read_csv(period_dir / "politicians.csv"),
+        pd.read_csv(period_dir / "polls.csv"),
     )
 
 
