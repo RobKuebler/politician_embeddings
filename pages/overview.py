@@ -128,9 +128,10 @@ st.markdown(
       <h1 style='margin:0; font-size:2rem; letter-spacing:-0.5px'>
         Wer stimmt mit wem?
       </h1>
-      <p style='margin:8px 0 0; color:{COLOR_SECONDARY}; font-size:0.95rem; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.5'>
-        Abstimmungsverhalten aller Abgeordneten als Punkte im Raum.
-        Je näher zwei Punkte, desto ähnlicher das Wahlverhalten.
+      <p style='margin:8px 0 0; color:{COLOR_SECONDARY}; font-size:0.95rem; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.6'>
+        Wie ähnlich stimmen Bundestagsabgeordnete ab, und wo verlaufen die echten Trennlinien?
+        Alle namentlichen Abstimmungen einer Wahlperiode, visualisiert als Punkte im Raum.
+        Je näher zwei Punkte, desto ähnlicher das Abstimmungsverhalten.
       </p>
     </div>
     """,
@@ -170,7 +171,7 @@ for party in party_order:
         f"font-weight:500; white-space:nowrap'>{label}</span>"
     )
 st.markdown(
-    "<div style='display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 16px'>"
+    "<div style='display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 16px'>"
     + "".join(pills)
     + "</div>",
     unsafe_allow_html=True,
@@ -311,7 +312,7 @@ with st.container(border=True):
             "Die Achsen selbst haben keine Bedeutung. Nur die relative <b>Nähe</b> der "
             "Punkte zueinander zählt. ◆ markiert jeweils den Mittelpunkt einer Fraktion.<br><br>"
             "Mit Box- oder Lasso-Auswahl (Toolbar rechts oben) können mehrere Abgeordnete "
-            "gleichzeitig ausgewählt werden — sie erscheinen dann in der Heatmap unten."
+            "gleichzeitig ausgewählt werden, sie erscheinen dann in der Heatmap unten."
         ),
         unsafe_allow_html=True,
     )
@@ -487,7 +488,7 @@ with st.container(border=True):
                 f"<span style='font-size:13px; color:{COLOR_BODY}'>{meta['label']}</span></span>"
             )
         st.markdown(
-            "<div style='display:flex; flex-wrap:wrap; gap:4px; margin-bottom:12px'>"
+            "<div style='display:flex; flex-wrap:wrap; gap:16px; margin-bottom:12px'>"
             + "".join(legend_items)
             + "</div>",
             unsafe_allow_html=True,
@@ -551,7 +552,8 @@ with st.container(border=True):
 # Footer
 st.markdown(
     "<p style='text-align:center; color:#ccc; font-size:12px; margin-top:48px'>"
-    "Daten: <a href='https://www.abgeordnetenwatch.de' style='color:#ccc'>"
+    "von <a href='https://robkuebler.github.io' style='color:#ccc'>Robert Kübler</a>"
+    " mit Daten von <a href='https://www.abgeordnetenwatch.de' style='color:#ccc'>"
     "abgeordnetenwatch.de</a>"
     "</p>",
     unsafe_allow_html=True,
