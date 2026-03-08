@@ -12,10 +12,115 @@ OUTPUTS_DIR = Path(__file__).parents[1] / "outputs"
 DATA_DIR = Path(__file__).parents[1] / "data"
 
 
+SCATTER_KEY = "scatter_chart"
+
+
 @st.cache_data
 def _load_csv(path: Path) -> pd.DataFrame:
     # Cached CSV loader; result is reused across reruns until the file changes
     return pd.read_csv(path)
+
+
+@st.cache_data
+def _build_base_scatter_dict(period_id: int) -> dict:
+    """Build scatter + party centroid traces for a period, without highlight rings.
+
+    Returns a plain dict (JSON-serializable) so it can be cached efficiently.
+    Rings are added on each rerun based on current selection.
+    """
+    _df = _load_csv(OUTPUTS_DIR / f"politician_embeddings_{period_id}.csv")
+    _pols = _load_csv(DATA_DIR / str(period_id) / "politicians.csv")
+    if "politician_id" not in _df.columns:
+        _df = _df.merge(_pols[["name", "politician_id"]], on="name", how="left")
+
+    _present = set(_df["party"].unique())
+    _color_map = {p: PARTY_COLORS.get(p, FALLBACK_COLOR) for p in _present}
+    _centroids = _df.groupby("party")[["x", "y"]].mean()
+    _is_3d = "z" in _df.columns
+
+    _common: dict = {
+        "color": "party",
+        "color_discrete_map": _color_map,
+        "hover_data": {"name": True, "party": True, "x": False, "y": False},
+        "labels": {"party": "Partei", "name": "Name"},
+        "custom_data": ["name", "party", "politician_id"],
+        "height": 720,
+    }
+
+    if _is_3d:
+        _common["hover_data"]["z"] = False
+        _fig = px.scatter_3d(_df, x="x", y="y", z="z", **_common)
+        _fig.update_traces(
+            marker={
+                "size": 4,
+                "opacity": 0.85,
+                "line": {"width": 1, "color": MARKER_OUTLINE},
+            }
+        )
+        _fig.update_layout(
+            scene={
+                "xaxis": {"showticklabels": False, "title": "", "showgrid": False},
+                "yaxis": {"showticklabels": False, "title": "", "showgrid": False},
+                "zaxis": {"showticklabels": False, "title": "", "showgrid": False},
+            },
+            showlegend=False,
+            margin={"l": 0, "r": 0, "t": 10, "b": 10},
+        )
+    else:
+        _fig = px.scatter(_df, x="x", y="y", **_common)
+        _fig.update_traces(
+            marker={
+                "size": 7,
+                "opacity": 0.82,
+                "line": {"width": 1, "color": MARKER_OUTLINE},
+            },
+            hovertemplate=(
+                "<b>%{customdata[0]}</b><br>"
+                f"<span style='color:{COLOR_SECONDARY}'>%{{customdata[1]}}</span>"
+                "<extra></extra>"
+            ),
+        )
+        for _party, _crow in _centroids.iterrows():
+            _color = _color_map.get(_party, FALLBACK_COLOR)
+            _label = str(_party).replace("\xad", "")
+            _fig.add_trace(
+                go.Scatter(
+                    x=[_crow["x"]],
+                    y=[_crow["y"]],
+                    mode="markers+text",
+                    marker={
+                        "size": 14,
+                        "color": _color,
+                        "symbol": "diamond",
+                        "line": {"width": 2, "color": "rgba(255,255,255,0.9)"},
+                    },
+                    text=[f"<b>{_label}</b>"],
+                    textposition="top center",
+                    textfont={"size": 11, "color": _color},
+                    hovertemplate=f"<b>{_label}</b> (Partei-Zentrum)<extra></extra>",
+                    showlegend=False,
+                )
+            )
+        _fig.update_layout(
+            xaxis={
+                "showticklabels": False,
+                "title": "",
+                "showgrid": False,
+                "zeroline": False,
+            },
+            yaxis={
+                "showticklabels": False,
+                "title": "",
+                "showgrid": False,
+                "zeroline": False,
+            },
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            showlegend=False,
+            margin={"l": 0, "r": 0, "t": 16, "b": 16},
+        )
+
+    return _fig.to_dict()
 
 
 # Load only periods for which an embeddings CSV actually exists
@@ -117,16 +222,38 @@ components.html(
     height=0,
 )
 
-# Session state for bidirectional scatter ↔ politician multiselect sync
+# Session state for scatter ↔ multiselect sync
 if "heatmap_pol_ids" not in st.session_state:
     st.session_state.heatmap_pol_ids = []
 if "prev_scatter_pol_ids" not in st.session_state:
     st.session_state.prev_scatter_pol_ids = []
 
-# Restore poll selection that was saved before a forced st.rerun() (widget state would
-# otherwise be cleared because the poll multiselect hasn't rendered yet in that run).
-if "preserved_poll_ids" in st.session_state:
-    st.session_state.heatmap_poll_ids = st.session_state.pop("preserved_poll_ids")
+# Pre-process scatter selection before building the figure so rings are correct in THIS
+# rerun without needing a second st.rerun(). Session state for a keyed widget is populated
+# by Streamlit before the script runs, so the selection from the user's click is available.
+_raw_scatter = st.session_state.get(SCATTER_KEY)
+if _raw_scatter is not None:
+    _sel = getattr(_raw_scatter, "selection", None)
+    _pre_ids: list[int] = []
+    for _pt in getattr(_sel, "points", []) or []:
+        _cd = _pt.get("customdata", [])
+        if len(_cd) >= 3 and _cd[2] is not None:
+            with contextlib.suppress(ValueError, TypeError):
+                _pre_ids.append(int(_cd[2]))
+    _pre_ids = list(dict.fromkeys(_pre_ids))
+    if _pre_ids and _pre_ids != list(st.session_state.prev_scatter_pol_ids):
+        if getattr(_sel, "box", None) or getattr(_sel, "lasso", None):
+            st.session_state.heatmap_pol_ids = _pre_ids
+        else:
+            _existing = list(st.session_state.heatmap_pol_ids)
+            _new_ids = _existing[:]
+            for _pid in _pre_ids:
+                if _pid in _new_ids:
+                    _new_ids.remove(_pid)
+                else:
+                    _new_ids.append(_pid)
+            st.session_state.heatmap_pol_ids = _new_ids
+        st.session_state.prev_scatter_pol_ids = _pre_ids
 
 # Header
 st.markdown(
@@ -184,77 +311,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Build scatter chart
+# centroids are still needed for the party discipline chart below
 centroids = df.groupby("party")[["x", "y"]].mean()
 is_3d = "z" in df.columns
 
-common = {
-    "color": "party",
-    "color_discrete_map": color_map,
-    "hover_data": {"name": True, "party": True, "x": False, "y": False},
-    "labels": {"party": "Partei", "name": "Name"},
-    "custom_data": ["name", "party", "politician_id"],
-    "height": 720,
-}
+# Reconstruct base scatter from cache (px.scatter + centroids), then add rings.
+# The base figure is rebuilt only when period_id changes; rings change every rerun.
+fig = go.Figure(_build_base_scatter_dict(period_id))
 
-if is_3d:
-    common["hover_data"]["z"] = False
-    fig = px.scatter_3d(df, x="x", y="y", z="z", **common)
-    fig.update_traces(
-        marker={
-            "size": 4,
-            "opacity": 0.85,
-            "line": {"width": 1, "color": MARKER_OUTLINE},
-        }
-    )
-    fig.update_layout(
-        scene={
-            "xaxis": {"showticklabels": False, "title": "", "showgrid": False},
-            "yaxis": {"showticklabels": False, "title": "", "showgrid": False},
-            "zaxis": {"showticklabels": False, "title": "", "showgrid": False},
-        },
-        showlegend=False,
-        margin={"l": 0, "r": 0, "t": 10, "b": 10},
-    )
-else:
-    fig = px.scatter(df, x="x", y="y", **common)
-    fig.update_traces(
-        marker={
-            "size": 7,
-            "opacity": 0.82,
-            "line": {"width": 1, "color": MARKER_OUTLINE},
-        },
-        hovertemplate=(
-            "<b>%{customdata[0]}</b><br>"
-            f"<span style='color:{COLOR_SECONDARY}'>%{{customdata[1]}}</span>"
-            "<extra></extra>"
-        ),
-    )
-
-    # Centroid: diamond marker + party name label
-    for party, row in centroids.iterrows():
-        color = color_map.get(party, FALLBACK_COLOR)
-        label = str(party).replace("\xad", "")
-        fig.add_trace(
-            go.Scatter(
-                x=[row["x"]],
-                y=[row["y"]],
-                mode="markers+text",
-                marker={
-                    "size": 14,
-                    "color": color,
-                    "symbol": "diamond",
-                    "line": {"width": 2, "color": "rgba(255,255,255,0.9)"},
-                },
-                text=[f"<b>{label}</b>"],
-                textposition="top center",
-                textfont={"size": 11, "color": color},
-                hovertemplate=f"<b>{label}</b> (Partei-Zentrum)<extra></extra>",
-                showlegend=False,
-            )
-        )
-
-    # Highlight rings for multiselect-selected politicians (state from previous rerun)
+if not is_3d:
+    # Highlight rings for currently selected politicians
     # Two rings per politician: white outer for contrast, party-colored inner
     _highlighted = df[df["politician_id"].isin(st.session_state.heatmap_pol_ids)]
     for _, row in _highlighted.iterrows():
@@ -276,25 +342,6 @@ else:
                     showlegend=False,
                 )
             )
-
-    fig.update_layout(
-        xaxis={
-            "showticklabels": False,
-            "title": "",
-            "showgrid": False,
-            "zeroline": False,
-        },
-        yaxis={
-            "showticklabels": False,
-            "title": "",
-            "showgrid": False,
-            "zeroline": False,
-        },
-        plot_bgcolor="rgba(0,0,0,0)",
-        paper_bgcolor="rgba(0,0,0,0)",
-        showlegend=False,
-        margin={"l": 0, "r": 0, "t": 16, "b": 16},
-    )
 
 
 # Reusable HTML snippet for the collapsible "Wie lese ich das?" details element
@@ -324,47 +371,13 @@ with st.container(border=True):
         ),
         unsafe_allow_html=True,
     )
-    event = st.plotly_chart(
+    st.plotly_chart(
         fig,
+        key=SCATTER_KEY,
         width="stretch",
         on_select="rerun",
         selection_mode=["points", "box", "lasso"],
     )
-
-# Resolve politician IDs from scatter selection; sync to multiselect when selection changes
-_scatter_pol_ids: list[int] = []
-for pt in event.selection.points:  # ty: ignore[unresolved-attribute]
-    cd = pt.get("customdata", [])
-    if len(cd) >= 3 and cd[2] is not None:
-        with contextlib.suppress(ValueError, TypeError):
-            _scatter_pol_ids.append(int(cd[2]))
-_scatter_pol_ids = list(dict.fromkeys(_scatter_pol_ids))
-
-# Sync scatter selection → multiselect.
-# Box/lasso: replace the selection entirely.
-# Single point click: toggle the politician (add if new, remove if already selected).
-# In both cases rerun immediately so highlight rings appear in the same cycle.
-if _scatter_pol_ids and _scatter_pol_ids != st.session_state.prev_scatter_pol_ids:
-    is_box_or_lasso = bool(
-        event.selection.get("box") or event.selection.get("lasso")  # ty: ignore[unresolved-attribute]
-    )
-    if is_box_or_lasso:
-        new_ids = _scatter_pol_ids
-    else:
-        existing = list(st.session_state.heatmap_pol_ids)
-        new_ids = existing[:]
-        for pid in _scatter_pol_ids:
-            if pid in new_ids:
-                new_ids.remove(pid)
-            else:
-                new_ids.append(pid)
-    st.session_state.heatmap_pol_ids = new_ids
-    st.session_state.prev_scatter_pol_ids = _scatter_pol_ids
-    st.session_state.preserved_poll_ids = list(
-        st.session_state.get("heatmap_poll_ids", [])
-    )
-    st.rerun()
-st.session_state.prev_scatter_pol_ids = _scatter_pol_ids
 
 # ─── Abstimmungsverhalten heatmap ────────────────────────────────────────────
 st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
