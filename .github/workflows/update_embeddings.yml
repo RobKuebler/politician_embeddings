@@ -17,7 +17,7 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: uv sync --no-group dev
+        run: uv sync --no-group dev --torch-backend cpu
 
       - name: Fetch data (upsert — only new polls)
         run: uv run python src/fetch_data.py --period 161
