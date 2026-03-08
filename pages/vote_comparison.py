@@ -7,7 +7,7 @@ import streamlit as st
 DATA_DIR = Path(__file__).parents[1] / "data"
 OUTPUTS_DIR = Path(__file__).parents[1] / "outputs"
 
-# Design tokens (same as app.py)
+# Design tokens (same as overview.py)
 COLOR_SECONDARY = "#999"
 COLOR_BODY = "#666"
 
@@ -42,8 +42,6 @@ PARTY_ORDER = [
     "fraktionslos",
 ]
 
-st.set_page_config(page_title="Abstimmungsvergleich", layout="wide")
-
 # Header
 st.markdown(
     f"""
@@ -60,7 +58,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Load available periods (only those with embeddings, same logic as app.py)
+# Load available periods (only those with embeddings, same logic as overview.py)
 _periods_df = pd.read_csv(DATA_DIR.parent / "data" / "periods.csv")
 
 
@@ -75,11 +73,21 @@ PERIODS = {
     if (OUTPUTS_DIR / f"politician_embeddings_{row['period_id']}.csv").exists()
 }
 
+# Pre-selection passed from the overview page (popped so it only applies once)
+_preselect_pol_ids = st.session_state.pop("preselect_pol_ids", None)
+_preselect_period_id = st.session_state.pop("preselect_period_id", None)
+
+_period_keys = list(PERIODS.keys())
+_period_index = (
+    _period_keys.index(_preselect_period_id)
+    if _preselect_period_id in _period_keys
+    else 0
+)
 period_id = st.selectbox(
     "Wahlperiode",
-    options=list(PERIODS.keys()),
+    options=_period_keys,
     format_func=lambda p: PERIODS[p],
-    index=0,
+    index=_period_index,
 )
 
 # Load raw data for selected period
@@ -109,10 +117,15 @@ with col_pol:
     pol_options = {
         row["politician_id"]: _pol_label(row) for _, row in politicians.iterrows()
     }
+    _valid_defaults = [i for i in (_preselect_pol_ids or []) if i in pol_options]
+    if _valid_defaults:
+        # Set widget state directly so it survives subsequent reruns
+        st.session_state["pol_multiselect"] = _valid_defaults
     selected_pol_ids = st.multiselect(
         "Abgeordnete",
         options=list(pol_options.keys()),
         format_func=lambda i: pol_options[i],
+        key="pol_multiselect",
         placeholder="Abgeordnete suchen und auswählen …",
     )
 
