@@ -20,6 +20,7 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
+.devcontainer/
 
 # Claude Code local settings
 .claude/
