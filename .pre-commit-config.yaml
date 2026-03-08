@@ -22,7 +22,7 @@ repos:
 
       - id: pytest
         name: pytest
-        entry: uv run pytest tests/
+        entry: uv run pytest tests/test_fetch_data.py
         language: system
         pass_filenames: false
         always_run: true

@@ -17,6 +17,15 @@ dependencies = [
 # streamlit declares pandas<3 but is compatible with pandas 3 in practice
 override-dependencies = ["pandas>=3.0.1"]
 
+# Always install the CPU-only PyTorch build (no CUDA needed)
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = ["D", "ANN", "COM812", "PLR0913", "N812", "PLC0415", "PLR2004"]
