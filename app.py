@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Wer stimmt mit wem?",
-    page_icon=":material/how_to_vote:",
+    page_icon="🏛️",
     layout="wide",
 )
 
