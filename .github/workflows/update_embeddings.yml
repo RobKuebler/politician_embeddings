@@ -18,7 +18,10 @@ jobs:
           version: "latest"
 
       - name: Install dependencies
-        run: uv sync --no-group dev
+        run: uv sync
+
+      - name: Run tests
+        run: uv run pytest tests/
 
       - name: Fetch data (upsert — only new polls)
         run: uv run python src/fetch_data.py
