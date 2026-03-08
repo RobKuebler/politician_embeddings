@@ -15,6 +15,7 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.13"
+          version: "latest"
 
       - name: Install dependencies
         run: uv sync --no-group dev --torch-backend cpu
