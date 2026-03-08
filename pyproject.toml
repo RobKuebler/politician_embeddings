@@ -22,8 +22,9 @@ select = ["ALL"]
 ignore = ["D", "ANN", "COM812", "PLR0913", "N812", "PLC0415", "PLR2004"]
 
 [tool.ruff.lint.per-file-ignores]
-# app.py contains inline HTML strings with intentionally long lines and the ℹ unicode symbol
+# inline HTML strings with intentionally long lines and the ℹ unicode symbol
 "app.py" = ["E501", "RUF001"]
+"pages/*.py" = ["E501", "RUF001", "INP001", "ERA001"]
 
 [dependency-groups]
 dev = [
