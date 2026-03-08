@@ -12,11 +12,6 @@ pages = [
         title="Abstimmungslandkarte",
         icon=":material/scatter_plot:",
     ),
-    st.Page(
-        "pages/vote_comparison.py",
-        title="Abstimmungsvergleich",
-        icon=":material/compare_arrows:",
-    ),
 ]
 
 pg = st.navigation(pages)

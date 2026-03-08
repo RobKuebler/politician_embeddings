@@ -1,0 +1,9 @@
+[theme]
+base                    = "dark"
+primaryColor            = "#38bdf8"
+backgroundColor         = "#080c14"
+secondaryBackgroundColor = "#0e1421"
+textColor               = "#e2e8f0"
+font                    = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap, sans-serif"
+headingFont             = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap, sans-serif"
+codeFont                = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap, monospace"

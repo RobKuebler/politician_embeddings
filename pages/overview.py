@@ -1,3 +1,4 @@
+import contextlib
 from pathlib import Path
 
 import numpy as np
@@ -49,16 +50,36 @@ PARTY_ORDER = [
     "fraktionslos",
 ]
 
+# Vote answer → display label, numeric value for colorscale, hex color
+VOTE_META = {
+    "yes": {"label": "Ja", "value": 3, "color": "#46962B"},
+    "abstain": {"label": "Enthalten", "value": 2, "color": "#F5A623"},
+    "no": {"label": "Nein", "value": 1, "color": "#E3000F"},
+    "no_show": {"label": "–", "value": 0, "color": "#E0E0E0"},
+}
+
+# Discrete 4-step colorscale: no_show → no → abstain → yes
+COLORSCALE = [
+    [0.00, "#E0E0E0"],
+    [0.25, "#E0E0E0"],  # no_show
+    [0.25, "#E3000F"],
+    [0.50, "#E3000F"],  # no
+    [0.50, "#F5A623"],
+    [0.75, "#F5A623"],  # abstain
+    [0.75, "#46962B"],
+    [1.00, "#46962B"],  # yes
+]
+
 # Design tokens
 COLOR_SECONDARY = "#999"  # labels, secondary info, details summaries
 COLOR_BODY = "#666"  # body text in expanded details, descriptive labels
 MARKER_OUTLINE = "rgba(255,255,255,0.4)"  # outline on all chart markers and bars
 
-# Track which interaction happened last: "search" or "click"
-if "last_action" not in st.session_state:
-    st.session_state.last_action = "search"
-if "prev_selection" not in st.session_state:
-    st.session_state.prev_selection = None
+# Session state for bidirectional scatter ↔ politician multiselect sync
+if "heatmap_pol_ids" not in st.session_state:
+    st.session_state.heatmap_pol_ids = []
+if "prev_scatter_pol_ids" not in st.session_state:
+    st.session_state.prev_scatter_pol_ids = []
 
 # Header
 st.markdown(
@@ -76,24 +97,20 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Controls row: period selector + search side by side
-col_period, col_search = st.columns([3, 2], gap="large")
-with col_period:
-    period_id = st.selectbox(
-        "Wahlperiode",
-        options=list(PERIODS.keys()),
-        format_func=lambda p: PERIODS[p],
-        index=0,
-    )
-with col_search:
-    query = st.text_input(
-        "Suche",
-        placeholder="z. B. Müller",
-        key="search_query",
-        on_change=lambda: st.session_state.update(last_action="search"),
-    )
+period_id = st.selectbox(
+    "Wahlperiode",
+    options=list(PERIODS.keys()),
+    format_func=lambda p: PERIODS[p],
+    index=0,
+)
 
 df = pd.read_csv(OUTPUTS_DIR / f"politician_embeddings_{period_id}.csv")
+pols_df = pd.read_csv(DATA_DIR / str(period_id) / "politicians.csv")
+polls_df = pd.read_csv(DATA_DIR / str(period_id) / "polls.csv")
+
+# Merge politician_id into the embeddings df if not already present
+if "politician_id" not in df.columns:
+    df = df.merge(pols_df[["name", "politician_id"]], on="name", how="left")
 
 # Party legend
 present = set(df["party"].unique())
@@ -119,21 +136,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Search logic
-search_idx = None
-if query:
-    mask = df["name"].str.contains(query, case=False, na=False)
-    hits = df[mask]
-    if len(hits) == 0:
-        st.caption("Kein Treffer.")
-    elif len(hits) > 1:
-        labels = [f"{r['name']} ({r['party']})" for _, r in hits.iterrows()]
-        choice = st.selectbox("Treffer", labels)
-        chosen_name = choice.split(" (")[0]
-        search_idx = hits.index[hits["name"] == chosen_name][0]
-    else:
-        search_idx = hits.index[0]
-
 # Build scatter chart
 centroids = df.groupby("party")[["x", "y"]].mean()
 is_3d = "z" in df.columns
@@ -143,7 +145,7 @@ common = {
     "color_discrete_map": color_map,
     "hover_data": {"name": True, "party": True, "x": False, "y": False},
     "labels": {"party": "Partei", "name": "Name"},
-    "custom_data": ["name", "party"],
+    "custom_data": ["name", "party", "politician_id"],
     "height": 720,
 }
 
@@ -204,25 +206,27 @@ else:
             )
         )
 
-    # Highlight ring for searched politician
-    if search_idx is not None:
-        row = df.loc[search_idx]
+    # Highlight rings for multiselect-selected politicians (state from previous rerun)
+    # Two rings per politician: white outer for contrast, party-colored inner
+    _highlighted = df[df["politician_id"].isin(st.session_state.heatmap_pol_ids)]
+    for _, row in _highlighted.iterrows():
         color = color_map.get(row["party"], FALLBACK_COLOR)
-        fig.add_trace(
-            go.Scatter(
-                x=[row["x"]],
-                y=[row["y"]],
-                mode="markers",
-                marker={
-                    "size": 20,
-                    "color": "rgba(0,0,0,0)",
-                    "line": {"width": 3, "color": color},
-                    "symbol": "circle",
-                },
-                hovertemplate=f"<b>{row['name']}</b><extra></extra>",
-                showlegend=False,
+        for size, ring_color in ((22, "white"), (17, color)):
+            fig.add_trace(
+                go.Scatter(
+                    x=[row["x"]],
+                    y=[row["y"]],
+                    mode="markers",
+                    marker={
+                        "size": size,
+                        "color": "rgba(0,0,0,0)",
+                        "line": {"width": 3, "color": ring_color},
+                        "symbol": "circle",
+                    },
+                    hovertemplate=f"<b>{row['name']}</b><extra></extra>",
+                    showlegend=False,
+                )
             )
-        )
 
     fig.update_layout(
         xaxis={
@@ -265,96 +269,172 @@ with st.container(border=True):
             "Ein KI-Modell verdichtet diese Profile so auf zwei Dimensionen, dass "
             "ähnliche Abstimmungsmuster nah beieinander landen.<br><br>"
             "Die Achsen selbst haben keine Bedeutung. Nur die relative <b>Nähe</b> der "
-            "Punkte zueinander zählt. ◆ markiert jeweils den Mittelpunkt einer Fraktion."
+            "Punkte zueinander zählt. ◆ markiert jeweils den Mittelpunkt einer Fraktion.<br><br>"
+            "Mit Box- oder Lasso-Auswahl (Toolbar rechts oben) können mehrere Abgeordnete "
+            "gleichzeitig ausgewählt werden — sie erscheinen dann in der Heatmap unten."
         ),
         unsafe_allow_html=True,
     )
     event = st.plotly_chart(
-        fig, width="stretch", on_select="rerun", selection_mode="points"
+        fig,
+        width="stretch",
+        on_select="rerun",
+        selection_mode=["points", "box", "lasso"],
     )
 
-# Detect if the plotly selection changed this rerun → user clicked
-current_sel = event.selection.points[0] if event.selection.points else None  # ty: ignore[unresolved-attribute]
-if current_sel != st.session_state.prev_selection:
-    st.session_state.prev_selection = current_sel
-    if current_sel is not None:
-        st.session_state.last_action = "click"
+# Resolve politician IDs from scatter selection; sync to multiselect when selection changes
+_scatter_pol_ids: list[int] = []
+for pt in event.selection.points:  # ty: ignore[unresolved-attribute]
+    cd = pt.get("customdata", [])
+    if len(cd) >= 3 and cd[2] is not None:
+        with contextlib.suppress(ValueError, TypeError):
+            _scatter_pol_ids.append(int(cd[2]))
+_scatter_pol_ids = list(dict.fromkeys(_scatter_pol_ids))
 
-# Resolve active selection: whichever action happened last wins
-active_idx = None
-if not is_3d:
-    if st.session_state.last_action == "click" and current_sel is not None:
-        dists = (df["x"] - current_sel["x"]) ** 2 + (df["y"] - current_sel["y"]) ** 2
-        active_idx = dists.idxmin()
-    elif st.session_state.last_action == "search" and search_idx is not None:
-        active_idx = search_idx
+# Only sync scatter → multiselect when the scatter selection actually changed and is non-empty
+if _scatter_pol_ids and _scatter_pol_ids != st.session_state.prev_scatter_pol_ids:
+    st.session_state.heatmap_pol_ids = _scatter_pol_ids
+st.session_state.prev_scatter_pol_ids = _scatter_pol_ids
 
-# Bottom section: neighbors (left) + cohesion (right)
-st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
-col_neighbors, col_cohesion = st.columns(2, gap="large")
+# ─── Abstimmungsverhalten heatmap ────────────────────────────────────────────
+st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
+with st.container(border=True):
+    st.markdown("##### Abstimmungsverhalten")
 
-with col_neighbors, st.container(border=True):
-    st.markdown("##### Ähnlichste Abgeordnete")
-    st.markdown(
-        _info_details(
-            "Die fünf Abgeordneten mit dem ähnlichsten Abstimmungsverhalten, "
-            "unabhängig von der Parteizugehörigkeit. Manchmal stimmen Abgeordnete "
-            "verschiedener Fraktionen häufiger überein als Mitglieder derselben Partei."
-        ),
-        unsafe_allow_html=True,
+    pol_options = {
+        int(r["politician_id"]): f"{r['name']} ({r['party'].replace(chr(173), '')})"
+        for _, r in pols_df.sort_values("name").iterrows()
+    }
+    selected_pol_ids: list[int] = st.multiselect(
+        "Abgeordnete",
+        options=list(pol_options.keys()),
+        format_func=lambda i: pol_options[i],
+        key="heatmap_pol_ids",
+        placeholder="Abgeordnete suchen und auswählen …",
     )
-    if active_idx is not None:
-        selected = df.loc[active_idx]
-        coords = df[["x", "y"]].to_numpy()
-        all_dists = np.linalg.norm(
-            coords - coords[df.index.get_loc(active_idx)], axis=1
-        )
-        neighbor_idx = df.index[np.argsort(all_dists)[1:6]]
-        neighbors = df.loc[neighbor_idx]
 
+    poll_options = {row["poll_id"]: row["topic"] for _, row in polls_df.iterrows()}
+    selected_poll_ids = st.multiselect(
+        "Abstimmungen",
+        options=list(poll_options.keys()),
+        format_func=lambda i: poll_options[i],
+        placeholder="Abstimmungen suchen und auswählen …",
+    )
+
+    if not selected_pol_ids:
         st.markdown(
-            f"<p style='color:{COLOR_BODY}; font-size:13px; margin:0 0 12px'>Ähnlichstes Abstimmungsverhalten "
-            f"wie <b>{selected['name']}</b>:</p>",
+            f"<p style='color:{COLOR_SECONDARY}; font-size:14px; margin-top:4px; text-align:center'>"
+            "Wähle Abgeordnete im Dropdown oben oder per Box-/Lasso-Auswahl im Diagramm aus.</p>",
             unsafe_allow_html=True,
         )
-
-        rows_html = []
-        for _, n in neighbors.iterrows():
-            color = color_map.get(n["party"], FALLBACK_COLOR)
-            label = n["party"].replace("\xad", "")
-            text_color = "#fff" if color != "#FFED00" else "#333"
-            badge = (
-                f"<span style='background:{color}; color:{text_color}; "
-                f"padding:2px 9px; border-radius:20px; font-size:11px; "
-                f"font-weight:500; white-space:nowrap'>{label}</span>"
-            )
-            rows_html.append(
-                f"<div style='display:flex; align-items:center; justify-content:space-between; "
-                f"gap:12px; padding:8px 0; border-bottom:1px solid #ebebeb'>"
-                f"<span style='font-size:14px'>{n['name']}</span>"
-                f"{badge}</div>"
-            )
-        st.markdown("".join(rows_html), unsafe_allow_html=True)
-
-        # Button: selected + neighbors in Vergleich öffnen
-        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-        if st.button("In Vergleich öffnen →", key="compare_btn"):
-            all_names = [selected["name"], *neighbors["name"].tolist()]
-            pols_df = pd.read_csv(DATA_DIR / str(period_id) / "politicians.csv")
-            matched_ids = pols_df[pols_df["name"].isin(all_names)][
-                "politician_id"
-            ].tolist()
-            st.session_state["preselect_pol_ids"] = matched_ids
-            st.session_state["preselect_period_id"] = period_id
-            st.switch_page("pages/vote_comparison.py")
+    elif not selected_poll_ids:
+        st.markdown(
+            f"<p style='color:{COLOR_SECONDARY}; font-size:14px; margin-top:4px; text-align:center'>"
+            "Wähle mindestens eine Abstimmung aus.</p>",
+            unsafe_allow_html=True,
+        )
     else:
+        votes_df = pd.read_csv(DATA_DIR / str(period_id) / "votes.csv")
+
+        # Build name labels for selected politicians
+        pol_rows = pols_df[pols_df["politician_id"].isin(selected_pol_ids)]
+        pol_labels = {
+            int(r["politician_id"]): f"{r['name']} ({r['party'].replace(chr(173), '')})"
+            for _, r in pol_rows.iterrows()
+        }
+
+        subset = votes_df[
+            votes_df["politician_id"].isin(selected_pol_ids)
+            & votes_df["poll_id"].isin(selected_poll_ids)
+        ]
+        pivot = subset.pivot_table(
+            index="poll_id", columns="politician_id", values="answer", aggfunc="first"
+        )
+        pivot = pivot.reindex(index=selected_poll_ids, columns=selected_pol_ids)
+
+        def _to_num(v: object) -> float:
+            # no_show and missing → NaN so the cell renders transparent
+            if not isinstance(v, str) or v == "no_show":
+                return np.nan
+            return float(VOTE_META.get(v, VOTE_META["no_show"])["value"])
+
+        def _to_label(v: object) -> str:
+            if not isinstance(v, str):
+                return "–"
+            return str(VOTE_META.get(v, VOTE_META["no_show"])["label"])
+
+        numeric = pivot.map(_to_num)
+        hover_labels = pivot.map(_to_label).values.tolist()  # noqa: PD011
+
+        y_labels = [poll_options[pid] for pid in selected_poll_ids]
+        y_tick_text = [t if len(t) <= 50 else t[:47] + "…" for t in y_labels]
+        x_labels = [pol_labels.get(pid, str(pid)) for pid in selected_pol_ids]
+        chart_height = max(300, 48 * len(selected_poll_ids) + 80)
+
+        fig_heat = go.Figure(
+            go.Heatmap(
+                z=numeric.values,
+                x=x_labels,
+                y=y_labels,
+                text=hover_labels,
+                colorscale=[
+                    [0.00, "#E3000F"],
+                    [0.33, "#E3000F"],
+                    [0.33, "#F5A623"],
+                    [0.67, "#F5A623"],
+                    [0.67, "#46962B"],
+                    [1.00, "#46962B"],
+                ],
+                zmin=1,
+                zmax=3,
+                showscale=False,
+                xgap=3,
+                ygap=3,
+                hoverongaps=False,
+                hovertemplate="<b>%{x}</b><br>%{y}<br>%{text}<extra></extra>",
+            )
+        )
+        fig_heat.update_layout(
+            height=chart_height,
+            margin={"l": 0, "r": 0, "t": 8, "b": 0},
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            xaxis={
+                "side": "top",
+                "tickangle": -30,
+                "tickfont": {"size": 12},
+                "showgrid": False,
+            },
+            yaxis={
+                "autorange": "reversed",
+                "tickfont": {"size": 12},
+                "showgrid": False,
+                "tickmode": "array",
+                "tickvals": y_labels,
+                "ticktext": y_tick_text,
+            },
+        )
+
+        # Color legend
+        legend_items = []
+        for key in ("yes", "no", "abstain"):
+            meta = VOTE_META[key]
+            legend_items.append(
+                f"<span style='display:inline-flex; align-items:center; gap:6px; margin-right:16px'>"
+                f"<span style='width:14px; height:14px; border-radius:3px; background:{meta['color']}; display:inline-block'></span>"
+                f"<span style='font-size:13px; color:{COLOR_BODY}'>{meta['label']}</span></span>"
+            )
         st.markdown(
-            f"<p style='color:{COLOR_SECONDARY}; font-size:14px; margin-top:8px'>"
-            "Wähle einen Abgeordneten im Diagramm aus.</p>",
+            "<div style='display:flex; flex-wrap:wrap; gap:4px; margin-bottom:12px'>"
+            + "".join(legend_items)
+            + "</div>",
             unsafe_allow_html=True,
         )
 
-with col_cohesion, st.container(border=True):
+        st.plotly_chart(fig_heat, width="stretch")
+
+st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown("##### Fraktionsdisziplin")
     st.markdown(
         _info_details(
