@@ -1,8 +1,9 @@
+import pandas as pd
 import pytest
 import requests
 
 import src.fetch_data
-from src.fetch_data import BASE_URL, fetch_all_v2
+from src.fetch_data import BASE_URL, fetch_all_v2, find_polls_missing_votes
 
 
 def test_fetch_all_v2_single_page(requests_mock):
@@ -193,3 +194,76 @@ def test_fetch_votes_append_mode(requests_mock, tmp_path):
     df = pd.read_csv(path)
     assert len(df) == 2
     assert list(df.columns) == ["politician_id", "poll_id", "answer"]
+
+
+# ─── find_polls_missing_votes ─────────────────────────────────────────────────
+
+
+def test_find_polls_missing_votes_no_file(tmp_path):
+    """No votes.csv exists yet, so all polls need fetching."""
+    result = find_polls_missing_votes([1, 2, 3], tmp_path / "votes.csv")
+    assert result == [1, 2, 3]
+
+
+def test_find_polls_missing_votes_partial(tmp_path):
+    """votes.csv has votes for poll 1 only, poll 2 still needs fetching."""
+    votes_path = tmp_path / "votes.csv"
+    pd.DataFrame({"politician_id": [10], "poll_id": [1], "answer": ["yes"]}).to_csv(
+        votes_path, index=False
+    )
+
+    result = find_polls_missing_votes([1, 2], votes_path)
+    assert result == [2]
+
+
+def test_find_polls_missing_votes_all_present(tmp_path):
+    """votes.csv has votes for all polls, nothing to fetch."""
+    votes_path = tmp_path / "votes.csv"
+    pd.DataFrame(
+        {"politician_id": [10, 20], "poll_id": [1, 2], "answer": ["yes", "no"]}
+    ).to_csv(votes_path, index=False)
+
+    result = find_polls_missing_votes([1, 2], votes_path)
+    assert result == []
+
+
+def test_find_polls_missing_votes_self_heals_after_failed_fetch(
+    requests_mock, tmp_path, monkeypatch
+):
+    """Core bug scenario: poll is in polls.csv but has no votes.
+
+    After a failed vote fetch, upsert_polls marks the poll as "known".
+    find_polls_missing_votes must still detect it as missing by checking
+    votes.csv instead of polls.csv.
+    """
+    monkeypatch.setattr(src.fetch_data, "DATA_DIR", tmp_path)
+    period_dir = tmp_path / "132"
+    period_dir.mkdir()
+
+    # API returns polls 1 and 2
+    requests_mock.get(
+        f"{BASE_URL}/polls",
+        json={
+            "data": [
+                {"id": 1, "label": "Poll 1"},
+                {"id": 2, "label": "Poll 2"},
+            ]
+        },
+    )
+
+    # Run 1: upsert_polls writes both polls to polls.csv
+    df_polls, _ = src.fetch_data.upsert_polls(132)
+
+    # Simulate: votes fetched for poll 1 only (poll 2 failed)
+    votes_path = period_dir / "votes.csv"
+    pd.DataFrame({"politician_id": [10], "poll_id": [1], "answer": ["yes"]}).to_csv(
+        votes_path, index=False
+    )
+
+    # Run 2: upsert_polls returns no "new" polls (both in polls.csv)
+    _, new_from_upsert = src.fetch_data.upsert_polls(132)
+    assert new_from_upsert == []  # upsert_polls can't detect the gap
+
+    # But find_polls_missing_votes correctly identifies poll 2 as missing
+    missing = find_polls_missing_votes(df_polls["poll_id"].tolist(), votes_path)
+    assert missing == [2]

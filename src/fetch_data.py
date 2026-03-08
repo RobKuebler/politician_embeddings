@@ -194,6 +194,18 @@ def fetch_votes(
                 log.exception("Error fetching votes for poll %s", poll_id)
 
 
+def find_polls_missing_votes(all_poll_ids: list, votes_path: Path) -> list:
+    """Return poll_ids that have no votes in votes.csv yet.
+
+    Uses votes.csv (not polls.csv) as source of truth so that polls whose
+    vote fetch previously failed are automatically retried on the next run.
+    """
+    if not votes_path.exists():
+        return list(all_poll_ids)
+    voted_ids = set(pd.read_csv(votes_path)["poll_id"].unique())
+    return [pid for pid in all_poll_ids if pid not in voted_ids]
+
+
 def upsert_polls(period_id: int) -> tuple[pd.DataFrame, list]:
     """Fetch all polls from API, upsert into existing CSV.
 
@@ -276,16 +288,19 @@ def main() -> None:
     (DATA_DIR / str(period_id)).mkdir(parents=True, exist_ok=True)
 
     # Polls and politicians are always fetched (fast metadata endpoints).
-    # Votes are only fetched for polls not yet in the CSV (the slow part).
-    _, new_poll_ids = upsert_polls(period_id)
+    # Votes are only fetched for polls without entries in votes.csv,
+    # so that previously failed fetches are automatically retried.
+    df_polls, _ = upsert_polls(period_id)
     _, mandate_to_politician = upsert_politicians(period_id)
 
     votes_path = DATA_DIR / str(period_id) / "votes.csv"
-    if not new_poll_ids:
-        log.info("No new polls — skipping vote fetching. All data is up to date.")
+    missing = find_polls_missing_votes(df_polls["poll_id"].tolist(), votes_path)
+    if not missing:
+        log.info("All votes up to date, nothing to fetch.")
     else:
+        log.info("%d poll(s) need vote fetching.", len(missing))
         fetch_votes(
-            new_poll_ids,
+            missing,
             mandate_to_politician,
             votes_path,
             append=votes_path.exists(),
