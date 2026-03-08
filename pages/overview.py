@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 
 OUTPUTS_DIR = Path(__file__).parents[1] / "outputs"
 DATA_DIR = Path(__file__).parents[1] / "data"
@@ -74,6 +75,40 @@ COLORSCALE = [
 COLOR_SECONDARY = "#999"  # labels, secondary info, details summaries
 COLOR_BODY = "#666"  # body text in expanded details, descriptive labels
 MARKER_OUTLINE = "rgba(255,255,255,0.4)"  # outline on all chart markers and bars
+
+# Color politician multiselect tags by party, poll tags neutral grey.
+# Uses a zero-height iframe component so the script can access window.parent DOM.
+# A MutationObserver keeps tags colored as the user adds/removes selections.
+_PARTY_COLORS_JS = {k.replace("\xad", ""): v for k, v in PARTY_COLORS.items()}
+components.html(
+    f"""
+    <script>
+    const COLORS = {_PARTY_COLORS_JS};
+    function colorize() {{
+        window.parent.document.querySelectorAll('[data-baseweb="tag"]').forEach(tag => {{
+            const text = (tag.querySelector('span')?.textContent ?? '').trim();
+            let matched = false;
+            for (const [party, color] of Object.entries(COLORS)) {{
+                if (text.endsWith('(' + party + ')')) {{
+                    tag.style.setProperty('background-color', color, 'important');
+                    tag.style.setProperty('color', party === 'FDP' ? '#333' : '#fff', 'important');
+                    matched = true;
+                    break;
+                }}
+            }}
+            if (!matched) {{
+                tag.style.setProperty('background-color', '#555', 'important');
+                tag.style.setProperty('color', '#fff', 'important');
+            }}
+        }});
+    }}
+    const obs = new MutationObserver(colorize);
+    obs.observe(window.parent.document.body, {{childList: true, subtree: true}});
+    colorize();
+    </script>
+    """,
+    height=0,
+)
 
 # Session state for bidirectional scatter ↔ politician multiselect sync
 if "heatmap_pol_ids" not in st.session_state:
@@ -257,7 +292,7 @@ else:
 def _info_details(body: str) -> str:
     return (
         f"<details style='margin:0 0 12px'>"
-        f"<summary style='cursor:pointer; list-style:none; color:{COLOR_SECONDARY}; font-size:12px'>ℹ Wie lese ich das?</summary>"
+        f"<summary style='cursor:pointer; list-style:none; color:{COLOR_SECONDARY}; font-size:12px'>ⓘ Wie lese ich das?</summary>"
         f"<div style='color:{COLOR_BODY}; font-size:13px; margin-top:6px; line-height:1.6'>{body}</div>"
         f"</details>"
     )
