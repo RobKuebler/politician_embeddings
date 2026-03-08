@@ -31,7 +31,7 @@ Nach dem Training werden nur die Abgeordneten-Embeddings exportiert. Ihre relati
 - **Abstimmungslandkarte:** Scatter-Plot aller Abgeordneten als Punkte. Per Box- oder Lasso-Auswahl lassen sich mehrere gleichzeitig markieren.
 - **Abstimmungsverhalten (Heatmap):** Für ausgewählte Abgeordnete und Abstimmungen zeigt eine Heatmap Ja, Nein, Enthalten und Abwesenheit auf einen Blick.
 - **Fraktionsdisziplin:** Ein Balkendiagramm zeigt, wie weit Abgeordnete einer Fraktion im Durchschnitt vom Fraktionsmittelpunkt entfernt sind, ein Maß dafür, wie geschlossen eine Fraktion abstimmt.
-- **Wahlperioden-Auswahl:** Alle Wahlperioden ab dem 16. Bundestag (2005) sind verfügbar, sofern Daten und trainierte Embeddings vorhanden sind.
+- **Wahlperioden-Auswahl:** Alle Wahlperioden ab dem 20. Bundestag (2021) sind verfügbar, sofern Daten und trainierte Embeddings vorhanden sind.
 
 ## Setup
 
