@@ -264,6 +264,7 @@ else:
                         "line": {"width": 3, "color": ring_color},
                         "symbol": "circle",
                     },
+                    customdata=[[row["name"], row["party"], row["politician_id"]]],
                     hovertemplate=f"<b>{row['name']}</b><extra></extra>",
                     showlegend=False,
                 )
