@@ -11,8 +11,15 @@ import streamlit.components.v1 as components
 OUTPUTS_DIR = Path(__file__).parents[1] / "outputs"
 DATA_DIR = Path(__file__).parents[1] / "data"
 
+
+@st.cache_data
+def _load_csv(path: Path) -> pd.DataFrame:
+    # Cached CSV loader; result is reused across reruns until the file changes
+    return pd.read_csv(path)
+
+
 # Load only periods for which an embeddings CSV actually exists
-_periods_df = pd.read_csv(OUTPUTS_DIR.parent / "data" / "periods.csv")
+_periods_df = _load_csv(OUTPUTS_DIR.parent / "data" / "periods.csv")
 
 
 def _period_label(row: pd.Series) -> str:
@@ -145,9 +152,9 @@ period_id = st.selectbox(
     index=0,
 )
 
-df = pd.read_csv(OUTPUTS_DIR / f"politician_embeddings_{period_id}.csv")
-pols_df = pd.read_csv(DATA_DIR / str(period_id) / "politicians.csv")
-polls_df = pd.read_csv(DATA_DIR / str(period_id) / "polls.csv")
+df = _load_csv(OUTPUTS_DIR / f"politician_embeddings_{period_id}.csv")
+pols_df = _load_csv(DATA_DIR / str(period_id) / "politicians.csv")
+polls_df = _load_csv(DATA_DIR / str(period_id) / "polls.csv")
 
 # Merge politician_id into the embeddings df if not already present
 if "politician_id" not in df.columns:
@@ -398,7 +405,7 @@ with st.container(border=True):
             unsafe_allow_html=True,
         )
     else:
-        votes_df = pd.read_csv(DATA_DIR / str(period_id) / "votes.csv")
+        votes_df = _load_csv(DATA_DIR / str(period_id) / "votes.csv")
 
         # Build name labels for selected politicians
         pol_rows = pols_df[pols_df["politician_id"].isin(selected_pol_ids)]
