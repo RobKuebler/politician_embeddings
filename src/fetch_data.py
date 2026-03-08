@@ -6,6 +6,8 @@ from pathlib import Path
 
 import pandas as pd
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util import Retry
 
 logging.basicConfig(
     level=logging.INFO,
@@ -24,6 +26,24 @@ FIRST_BUNDESTAG_NUMBER = 16
 DATA_DIR = Path(__file__).parents[1] / "data"
 
 
+def get_session() -> requests.Session:
+    """Create a requests session with retry strategy."""
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=5,  # 5 attempts in total
+        backoff_factor=1,  # wait 1s, 2s, 4s, 8s, 16s
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET"],
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    return session
+
+
+SESSION = get_session()
+
+
 def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
     """Fetch all pages from a paginated API endpoint."""
     params = dict(params or {})  # copy to avoid mutating the caller's dict
@@ -33,7 +53,7 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
         params.update(
             {"range_start": range_start, "range_end": range_start + PAGE_SIZE}
         )
-        response = requests.get(f"{BASE_URL}/{endpoint}", params=params, timeout=10)
+        response = SESSION.get(f"{BASE_URL}/{endpoint}", params=params, timeout=15)
         response.raise_for_status()
         page = response.json()["data"]
         all_data.extend(page)
