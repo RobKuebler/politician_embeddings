@@ -65,10 +65,10 @@ def main() -> None:
 
     import lightning as L
 
-    from fetch_data import fetch_current_period_id
+    from fetch_data import upsert_periods
     from models import load_data, prepare_votes, save_embeddings, train
 
-    period_id = args.period or fetch_current_period_id()
+    period_id = args.period or upsert_periods()
     L.seed_everything(42)
     OUTPUTS_DIR.mkdir(exist_ok=True)
     df_votes, p_df, poll_df = load_data(period_id)

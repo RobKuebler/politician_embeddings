@@ -40,18 +40,37 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
     return all_data
 
 
-def fetch_current_period_id() -> int:
-    """Fetch the ID of the currently active Bundestag legislative period."""
-    periods = fetch_all_v2(
+def upsert_periods() -> int:
+    """Fetch all Bundestag legislature periods, upsert periods.csv, return current ID.
+
+    Writes data/periods.csv (period_id, label) so the dashboard can list all
+    available periods dynamically without hardcoding.
+    """
+    raw = fetch_all_v2(
         "parliament-periods",
         params={"parliament": BUNDESTAG_PARLIAMENT_ID},
     )
+    legislatures = [p for p in raw if p["type"] == "legislature"]
+
+    # Upsert into periods.csv
+    path = DATA_DIR / "periods.csv"
+    df_api = pd.DataFrame(
+        [{"period_id": p["id"], "label": p["label"]} for p in legislatures]
+    )
+    if path.exists():
+        df_existing = pd.read_csv(path).set_index("period_id")
+        df_existing.update(df_api.set_index("period_id"))
+        new = df_api[~df_api["period_id"].isin(df_existing.index)]
+        if not new.empty:
+            df_existing = pd.concat([df_existing, new.set_index("period_id")])
+        df_existing.reset_index().to_csv(path, index=False)
+    else:
+        df_api.to_csv(path, index=False)
+
+    # Find current active period
     today = datetime.now(tz=UTC).date().isoformat()
-    for p in periods:
-        if (
-            p["type"] == "legislature"
-            and p["start_date_period"] <= today <= p["end_date_period"]
-        ):
+    for p in legislatures:
+        if p["start_date_period"] <= today <= p["end_date_period"]:
             log.info("Current period: %s (id=%d)", p["label"], p["id"])
             return p["id"]
     msg = "No active Bundestag legislative period found."
@@ -206,7 +225,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    period_id = args.period or fetch_current_period_id()
+    period_id = args.period or upsert_periods()
 
     DATA_DIR.mkdir(exist_ok=True)
 

@@ -8,10 +8,9 @@ import streamlit as st
 
 OUTPUTS_DIR = Path(__file__).parent / "outputs"
 
-PERIODS = {
-    132: "20. Wahlperiode (2021-2025)",
-    161: "21. Wahlperiode (2025-2029)",
-}
+# Load available periods from CSV written by fetch_data.py
+_periods_df = pd.read_csv(OUTPUTS_DIR.parent / "data" / "periods.csv")
+PERIODS = dict(zip(_periods_df["period_id"], _periods_df["label"], strict=True))
 
 # Official German party colors; unknown parties fall back to gray
 PARTY_COLORS = {
