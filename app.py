@@ -59,6 +59,10 @@ def _load_periods() -> dict[int, str]:
 
 _PERIODS = _load_periods()
 
+# Initialize period_id before pg.run() so pages can safely read it on the first render.
+if "period_id" not in st.session_state and _PERIODS:
+    st.session_state["period_id"] = next(iter(_PERIODS))
+
 st.sidebar.selectbox(
     "Wahlperiode",
     options=list(_PERIODS.keys()),
