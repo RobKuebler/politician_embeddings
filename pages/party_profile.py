@@ -11,35 +11,10 @@ import streamlit as st
 # Ensure the pages/ directory is on sys.path so occupation_clusters can be found
 # regardless of the working directory (e.g. on Streamlit Cloud).
 sys.path.insert(0, str(Path(__file__).parent))
+from constants import COLOR_SECONDARY, FALLBACK_COLOR, PARTY_COLORS, PARTY_ORDER
 from occupation_clusters import normalize_occupation
 
 DATA_DIR = Path(__file__).parents[1] / "data"
-
-# Official German party colors; unknown parties fall back to gray
-PARTY_COLORS = {
-    "CDU/CSU": "#000000",
-    "SPD": "#E3000F",
-    "AfD": "#009EE0",
-    "BÜNDNIS 90/\xadDIE GRÜNEN": "#46962B",
-    "Die Linke": "#BE3075",
-    "BSW": "#722EA5",
-    "FDP": "#FFED00",
-    "fraktionslos": "#888888",
-}
-FALLBACK_COLOR = "#888888"
-
-PARTY_ORDER = [
-    "CDU/CSU",
-    "SPD",
-    "AfD",
-    "BÜNDNIS 90/\xadDIE GRÜNEN",
-    "Die Linke",
-    "BSW",
-    "FDP",
-    "fraktionslos",
-]
-
-COLOR_SECONDARY = "#999"
 
 CURRENT_YEAR = datetime.now(tz=UTC).year
 
@@ -211,8 +186,10 @@ with st.container(border=True):
                 x=data,
                 name=party,
                 orientation="h",
+                fillcolor=color,
+                line_color="white",
+                line_width=1,
                 marker_color=color,
-                line_color="white" if party == "CDU/CSU" else color,
                 showlegend=False,
                 hoverinfo="skip",
             )

@@ -1,4 +1,5 @@
 import contextlib
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -7,6 +8,19 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 import streamlit.components.v1 as components
+
+# Ensure pages/ is on sys.path so constants can be imported on Streamlit Cloud.
+sys.path.insert(0, str(Path(__file__).parent))
+
+from constants import (
+    COLOR_BODY,
+    COLOR_SECONDARY,
+    FALLBACK_COLOR,
+    MARKER_OUTLINE,
+    NO_FACTION_LABEL,
+    PARTY_COLORS,
+    PARTY_ORDER,
+)
 
 OUTPUTS_DIR = Path(__file__).parents[1] / "outputs"
 DATA_DIR = Path(__file__).parents[1] / "data"
@@ -139,30 +153,6 @@ PERIODS = {
     if (OUTPUTS_DIR / f"politician_embeddings_{row['period_id']}.csv").exists()
 }
 
-# Official German party colors; unknown parties fall back to gray
-PARTY_COLORS = {
-    "CDU/CSU": "#000000",
-    "SPD": "#E3000F",
-    "AfD": "#009EE0",
-    "BÜNDNIS 90/\xadDIE GRÜNEN": "#46962B",
-    "Die Linke": "#BE3075",
-    "BSW": "#722EA5",
-    "FDP": "#FFED00",
-    "fraktionslos": "#888888",
-}
-FALLBACK_COLOR = "#888888"
-
-PARTY_ORDER = [
-    "CDU/CSU",
-    "SPD",
-    "AfD",
-    "BÜNDNIS 90/\xadDIE GRÜNEN",
-    "Die Linke",
-    "BSW",
-    "FDP",
-    "fraktionslos",
-]
-
 # Vote answer → display label, numeric value for colorscale, hex color
 VOTE_META = {
     "yes": {"label": "Ja", "value": 3, "color": "#46962B"},
@@ -182,11 +172,6 @@ COLORSCALE = [
     [0.75, "#46962B"],
     [1.00, "#46962B"],  # yes
 ]
-
-# Design tokens
-COLOR_SECONDARY = "#999"  # labels, secondary info, details summaries
-COLOR_BODY = "#666"  # body text in expanded details, descriptive labels
-MARKER_OUTLINE = "rgba(255,255,255,0.4)"  # outline on all chart markers and bars
 
 # Color politician multiselect tags by party, poll tags neutral grey.
 # Uses a zero-height iframe component so the script can access window.parent DOM.
@@ -538,7 +523,7 @@ with st.container(border=True):
         .mean()
         .reset_index(name="streuung")
     )
-    coh = coh[coh["party"] != "fraktionslos"]
+    coh = coh[coh["party"] != NO_FACTION_LABEL]
     coh["label"] = coh["party"].str.replace("\xad", "", regex=False)
     coh = coh.sort_values("streuung")
 
