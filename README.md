@@ -1,6 +1,6 @@
-# Wer stimmt mit wem?
+# Parlascanned
 
-Ein interaktives Dashboard, das zeigt, wie ähnlich Bundestagsabgeordnete abstimmen, und wo die echten politischen Trennlinien verlaufen.
+Ein interaktives Dashboard, das Bundestagsabgeordnete durchleuchtet: Abstimmungsverhalten, politische Trennlinien, und wer wirklich mit wem stimmt.
 
 [**Demo ansehen**](https://politicianembeddings.streamlit.app/) | [**Daten: abgeordnetenwatch.de**](https://www.abgeordnetenwatch.de)
 

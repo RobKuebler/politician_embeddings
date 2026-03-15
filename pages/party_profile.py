@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from pathlib import Path
 
 import numpy as np
@@ -5,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+from occupation_clusters import normalize_occupation
 
 DATA_DIR = Path(__file__).parents[1] / "data"
 
@@ -34,179 +36,7 @@ PARTY_ORDER = [
 
 COLOR_SECONDARY = "#999"
 
-CURRENT_YEAR = 2026
-
-# Keyword rules for normalizing raw occupation strings into canonical categories.
-# Order matters: first matching rule wins. Matching is case-insensitive substring search.
-_OCCUPATION_RULES: list[tuple[list[str], str]] = [
-    (
-        [
-            "rechtsanwalt",
-            "rechtsanwältin",
-            "syndikusrecht",
-            "anwältin",
-            "anwalt",
-            "jurist",
-            "justiziarin",
-            "justiziar",
-            "kanzlei",
-        ],
-        "Jurist",
-    ),
-    (
-        [
-            "arzt",
-            "ärztin",
-            "notfallmediziner",
-            "mediziner",
-            "chirurg",
-            "hausarzt",
-            "kinderarzt",
-        ],
-        "Arzt",
-    ),
-    (
-        [
-            "krankenschwester",
-            "krankenpfleger",
-            "pflegefach",
-            "fachkrankenpflege",
-            "gesundheits- und krankenpflege",
-        ],
-        "Pflegepersonal",
-    ),
-    (["professor", "hochschullehr", "juniorprofessor"], "Professor"),
-    (
-        ["lehrer", "lehrerin", "oberstudienrat", "schulleiter", "berufsschullehr"],
-        "Lehrer",
-    ),
-    (
-        ["sozialarbeiter", "sozialarbeiterin", "schulsozialarbeiter", "sozialreferent"],
-        "Sozialarbeiter",
-    ),
-    (["polizei", "kriminalhauptkommissar", "kriminal"], "Polizist"),
-    (["soldat", "offizier", "bundeswehr", "berufssoldat"], "Soldat"),
-    (
-        [
-            "softwareentwickler",
-            "softwareentwicklerin",
-            "informatiker",
-            "informatikerin",
-            "it-",
-        ],
-        "IT/Software",
-    ),
-    (["ingenieur", "ingenieurin", "bauingenieur"], "Ingenieur"),
-    (
-        ["geschäftsführer", "geschäftsführerin", "co-geschäftsführerin"],
-        "Geschäftsführer",
-    ),
-    (["unternehmer", "unternehmerin", "familienunternehmerin"], "Unternehmer"),
-    (["selbstständig"], "Selbstständiger"),
-    (
-        [
-            "wissenschaftlich",
-            "politikwissenschaft",
-            "doktorand",
-            "wissenschaftsbasiert",
-            "marktforscher",
-            "marktforscherin",
-        ],
-        "Wissenschaftler",
-    ),
-    (["volkswirt", "betriebswirt", "ökonom"], "Ökonom"),
-    (["berater", "beraterin"], "Berater"),
-    (["referent", "referentin", "referatsleiter", "referatsleiterin"], "Referent"),
-    (["student", "studentin", "studierende"], "Student"),
-    (["gewerkschaft", "betriebsrat"], "Gewerkschafter"),
-    (["bürgermeister", "bürgermeisterin"], "Bürgermeister"),
-    (
-        [
-            "landrat",
-            "bezirksstadtrat",
-            "bezirksbürgermeister",
-            "dezernent",
-            "dezernentin",
-        ],
-        "Kommunalpolitiker",
-    ),
-    (
-        [
-            "beamter",
-            "beamtin",
-            "regierungsrät",
-            "regierungsrat",
-            "verwaltungsangest",
-            "gemeindeprüf",
-            "prüfer",
-            "prüferin",
-        ],
-        "Beamter",
-    ),
-    (
-        [
-            "kaufmann",
-            "kauffrau",
-            "kaufmännisch",
-            "bankkauffrau",
-            "versicherungsvermittler",
-            "versicherungskaufm",
-            "einkäufer",
-            "einkäuferin",
-            "filialleiter",
-            "filialleiterin",
-        ],
-        "Kaufmann",
-    ),
-    (
-        [
-            "mechatroniker",
-            "metallbaumeister",
-            "tischler",
-            "dachdecker",
-            "elektroniker",
-            "schornsteinfeger",
-            "kanalsteuerer",
-            "facharbeiter",
-            "technischer fachwirt",
-        ],
-        "Handwerker",
-    ),
-    (
-        [
-            "mdb",
-            "mdhb",
-            "bundestagsabgeordnet",
-            "mitglied des bundestag",
-            "mitglied des deutschen bundestag",
-            "mitglied im deutschen bundestag",
-            "mitglied deutschen bundestag",
-            "mitglied deutscher bundestag",
-            "abgeordnete",
-            "mdl",
-            "mda",
-            "mdep",
-            "staatssekretär",
-            "staatssekretärin",
-        ],
-        "Abgeordneter",
-    ),
-    (["angestellte", "angestellter"], "Angestellter"),
-]
-
-
-def _normalize_occupation(occ: object) -> str:
-    """Map a raw occupation string to a canonical category via keyword matching.
-
-    Returns "Keine Angabe" for null values, "Sonstiges" if no rule matches.
-    """
-    if not isinstance(occ, str) or not occ.strip():
-        return "Keine Angabe"
-    o = occ.lower()
-    for keywords, label in _OCCUPATION_RULES:
-        if any(k in o for k in keywords):
-            return label
-    return "Sonstiges"
+CURRENT_YEAR = datetime.now(tz=UTC).year
 
 
 @st.cache_data
@@ -278,7 +108,7 @@ color_map = {
 with st.container(border=True):
     st.markdown("##### Berufe")
     occ_df = pols_df[["party_label", "occupation"]].copy()
-    occ_df["occ_cat"] = occ_df["occupation"].apply(_normalize_occupation)
+    occ_df["occ_cat"] = occ_df["occupation"].apply(normalize_occupation)
 
     occ_df = occ_df.copy()
 
