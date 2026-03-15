@@ -108,7 +108,11 @@ color_map = {
 with st.container(border=True):
     st.markdown("##### Berufe")
     occ_df = pols_df[["party_label", "occupation"]].copy()
-    occ_df["occ_cat"] = occ_df["occupation"].apply(normalize_occupation)
+    occ_df["occ_cat"] = (
+        occ_df["occupation"]
+        .where(occ_df["occupation"].notna(), other=None)
+        .apply(normalize_occupation)
+    )
 
     occ_df = occ_df.copy()
 

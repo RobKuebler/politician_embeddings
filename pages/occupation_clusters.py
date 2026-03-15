@@ -157,7 +157,7 @@ _OCCUPATION_RULES: list[tuple[list[str], str]] = [
 ]
 
 
-def normalize_occupation(occ: object) -> str:
+def normalize_occupation(occ: str | None) -> str:
     """Map a raw occupation string to a canonical category via keyword matching.
 
     Returns "Keine Angabe" for null values, "Sonstiges" if no rule matches.
