@@ -4,13 +4,11 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = "~=3.13.0"
 dependencies = [
-    "lightning>=2.6.1",
     "numpy>=2.4.2",
     "pandas>=3.0.1",
     "plotly>=6.6.0",
     "requests>=2.32.5",
     "streamlit>=1.40.0",
-    "torch>=2.10.0",
 ]
 
 [tool.uv]
@@ -43,4 +41,8 @@ dev = [
     "requests-mock>=1.12.1",
     "ruff>=0.15.5",
     "ty>=0.0.21",
+]
+train = [
+    "lightning>=2.6.1",
+    "torch>=2.10.0",
 ]
