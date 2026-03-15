@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 
 BASE_URL = "https://www.abgeordnetenwatch.de/api/v2"
 BUNDESTAG_PARLIAMENT_ID = 5
-PAGE_SIZE = 100
+PAGE_SIZE = 1000  # API supports up to 1000 results per page
 # The abgeordnetenwatch API only covers Bundestag history from 2005 onward;
 # the first legislature in the API is the 16th Bundestag (2005-2009).
 FIRST_BUNDESTAG_NUMBER = 16
@@ -235,35 +235,122 @@ def upsert_polls(period_id: int) -> tuple[pd.DataFrame, list]:
     return df_merged.reset_index(), new_poll_ids
 
 
+DETAIL_BATCH_SIZE = 200  # ids per id[in] request; keeps URLs well under limits
+
+
+def fetch_politician_details(politician_ids: list) -> pd.DataFrame:
+    """Fetch detail fields for politicians using batched id[in] queries.
+
+    The API supports ?id[in]=[id1,id2,...] so we send one request per batch
+    of DETAIL_BATCH_SIZE instead of one request per politician. On batch
+    failure the whole batch falls back to None so the caller can retry.
+    """
+    rows = []
+    n = len(politician_ids)
+    log.info(
+        "Fetching politician details for %d politicians in batches of %d...",
+        n,
+        DETAIL_BATCH_SIZE,
+    )
+
+    for batch_start in range(0, n, DETAIL_BATCH_SIZE):
+        batch = politician_ids[batch_start : batch_start + DETAIL_BATCH_SIZE]
+        log.info(
+            "[%d/%d] Fetching detail batch...",
+            min(batch_start + DETAIL_BATCH_SIZE, n),
+            n,
+        )
+        try:
+            id_list = "[" + ",".join(str(pid) for pid in batch) + "]"
+            response = SESSION.get(
+                f"{BASE_URL}/politicians",
+                params={"id[in]": id_list, "range_start": 0, "range_end": len(batch)},
+                timeout=30,
+            )
+            response.raise_for_status()
+            fetched = {item["id"]: item for item in (response.json().get("data") or [])}
+            for pid in batch:
+                item = fetched.get(pid, {})
+                rows.append(
+                    {
+                        "politician_id": pid,
+                        "occupation": item.get("occupation"),
+                        "year_of_birth": item.get("year_of_birth"),
+                        "field_title": item.get("field_title"),
+                        "sex": item.get("sex"),
+                        "education": item.get("education"),
+                    }
+                )
+        except Exception:  # noqa: BLE001
+            log.warning(
+                "Failed to fetch detail batch starting at index %d", batch_start
+            )
+            rows.extend(
+                {
+                    "politician_id": pid,
+                    "occupation": None,
+                    "year_of_birth": None,
+                    "field_title": None,
+                    "sex": None,
+                    "education": None,
+                }
+                for pid in batch
+            )
+    return pd.DataFrame(rows)
+
+
 def upsert_politicians(period_id: int) -> tuple[pd.DataFrame, dict]:
     """Fetch all politicians from API, upsert into existing CSV.
 
-    Updates changed name/party fields and adds newly elected politicians.
+    Updates changed name/party fields, adds newly elected politicians, and
+    fetches detail fields (occupation, year_of_birth, etc.) for politicians
+    where occupation is still unknown (incremental, no re-fetch).
     Returns (full politicians df, mandate_id -> politician_id mapping).
     """
     df_api, mandate_to_politician = fetch_politicians(period_id)
     path = DATA_DIR / str(period_id) / "politicians.csv"
 
     if not path.exists():
-        df_api.to_csv(path, index=False)
+        df_merged = df_api.copy()
         log.info("No existing politicians CSV — wrote %d politicians.", len(df_api))
-        return df_api, mandate_to_politician
-
-    df_existing = pd.read_csv(path)
-    df_merged = df_existing.set_index("politician_id")
-    df_merged.update(df_api.set_index("politician_id"))  # update changed name/party
-
-    new_politicians = df_api[
-        ~df_api["politician_id"].isin(df_existing["politician_id"])
-    ]
-    if not new_politicians.empty:
-        df_merged = pd.concat([df_merged, new_politicians.set_index("politician_id")])
-        log.info("%d new politician(s) added.", len(new_politicians))
     else:
-        log.info("No new politicians.")
+        df_existing = pd.read_csv(path)
+        df_indexed = df_existing.set_index("politician_id")
+        df_indexed.update(
+            df_api.set_index("politician_id")
+        )  # update changed name/party
 
-    df_merged.reset_index().to_csv(path, index=False)
-    return df_merged.reset_index(), mandate_to_politician
+        new_politicians = df_api[
+            ~df_api["politician_id"].isin(df_existing["politician_id"])
+        ]
+        if not new_politicians.empty:
+            df_indexed = pd.concat(
+                [df_indexed, new_politicians.set_index("politician_id")]
+            )
+            log.info("%d new politician(s) added.", len(new_politicians))
+        else:
+            log.info("No new politicians.")
+        df_merged = df_indexed.reset_index()
+
+    # Ensure detail columns exist (backwards compatible with old CSVs)
+    detail_cols = ["occupation", "year_of_birth", "field_title", "sex", "education"]
+    for col in detail_cols:
+        if col not in df_merged.columns:
+            df_merged[col] = pd.NA
+
+    # Only fetch details for politicians where occupation is not yet known
+    missing_ids = df_merged.loc[
+        df_merged["occupation"].isna(), "politician_id"
+    ].tolist()
+    if missing_ids:
+        log.info("%d politician(s) missing details, fetching...", len(missing_ids))
+        df_details = fetch_politician_details(missing_ids)
+        df_merged = df_merged.set_index("politician_id")
+        df_merged.update(df_details.set_index("politician_id"))
+        df_merged = df_merged.reset_index()
+
+    df_merged.to_csv(path, index=False)
+    return df_merged, mandate_to_politician
 
 
 def parse_args() -> argparse.Namespace:
