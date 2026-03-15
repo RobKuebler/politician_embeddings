@@ -20,4 +20,20 @@ pages = [
 ]
 
 pg = st.navigation(pages)
+
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebarNav"]::before {
+        content: "🏛️ Parlascanned";
+        display: block;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 1.5rem 1rem 0.75rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 pg.run()
