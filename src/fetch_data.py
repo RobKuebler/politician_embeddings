@@ -1,6 +1,7 @@
 import argparse
 import csv
 import logging
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -50,9 +51,9 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
     all_data = []
     range_start = 0
     while True:
-        params.update(
-            {"range_start": range_start, "range_end": range_start + PAGE_SIZE}
-        )
+        # range_end is the page size (not an absolute end position);
+        # values > 1000 silently fall back to 100, breaking pagination.
+        params.update({"range_start": range_start, "range_end": PAGE_SIZE})
         response = SESSION.get(f"{BASE_URL}/{endpoint}", params=params, timeout=15)
         response.raise_for_status()
         page = response.json()["data"]
@@ -370,39 +371,147 @@ def upsert_politicians(period_id: int) -> tuple[pd.DataFrame, dict]:
     return df_merged, mandate_to_politician
 
 
+# German month names → month number for parsing job_title_extra date strings.
+_MONTH_MAP = {
+    "januar": 1,
+    "februar": 2,
+    "märz": 3,
+    "april": 4,
+    "mai": 5,
+    "juni": 6,
+    "juli": 7,
+    "august": 8,
+    "september": 9,
+    "oktober": 10,
+    "november": 11,
+    "dezember": 12,
+}
+
+# Matches DD.MM.YYYY, DD.MM. YYYY, or DD.MM. (no year)
+_RE_DMY = re.compile(r"(\d{1,2})\.(\d{1,2})\.\s*(\d{4})?")
+# Matches German month + year, e.g. "Januar 2022"
+_RE_MONTH_YEAR = re.compile(
+    r"(" + "|".join(_MONTH_MAP) + r")\s+(\d{4})",
+    re.IGNORECASE,
+)
+# Matches bare year, e.g. "ab 2026" or "bis 2025"
+_RE_YEAR_ONLY = re.compile(r"\b(20\d{2})\b")
+
+
+def _format_month_day(year: int, month: int, *, as_end: bool) -> str:
+    """Return ISO date for the first or last day of a month."""
+    if as_end:
+        import calendar
+
+        day = calendar.monthrange(year, month)[1]
+        return f"{year:04d}-{month:02d}-{day:02d}"
+    return f"{year:04d}-{month:02d}-01"
+
+
+def _parse_date(
+    text: str,
+    *,
+    fallback_year: int | None = None,
+    as_end: bool = False,
+) -> str | None:
+    """Extract the first date from a German date string fragment.
+
+    as_end=True makes bare-year hits resolve to Dec 31 instead of Jan 1,
+    and bare-month hits resolve to the last day of that month.
+    Returns an ISO date string (YYYY-MM-DD) or None.
+    """
+    m = _RE_DMY.search(text)
+    if m:
+        day, month = int(m.group(1)), int(m.group(2))
+        year = int(m.group(3)) if m.group(3) else fallback_year
+        return f"{year:04d}-{month:02d}-{day:02d}" if year else None
+
+    m = _RE_MONTH_YEAR.search(text)
+    if m:
+        return _format_month_day(
+            int(m.group(2)),
+            _MONTH_MAP[m.group(1).lower()],
+            as_end=as_end,
+        )
+
+    m = _RE_YEAR_ONLY.search(text)
+    if m:
+        year = int(m.group(1))
+        return f"{year:04d}-12-31" if as_end else f"{year:04d}-01-01"
+
+    # Bare month name without year — use fallback_year
+    for name, num in _MONTH_MAP.items():
+        if name in text.lower() and fallback_year:
+            return _format_month_day(fallback_year, num, as_end=as_end)
+
+    return None
+
+
+def _parse_sidejob_dates(extra: str | None) -> tuple[str | None, str | None]:
+    """Parse start/end dates from the job_title_extra field.
+
+    Handles patterns like:
+      "Einkommen ab 01.01.2022"
+      "Einkommen ab 01.04.2025 bis 30.11.2025"
+      "Einkommen bis 31.12.2023"
+      "Einkommen vom 01.01.2022 bis 31.12.2022"
+      "Einkommen ab Januar 2023"
+      "Einkommen im Jahr 2022"
+      "Einkommen Januar 2022 bis Dezember 2023"
+    Returns (date_start, date_end) as ISO strings or None.
+    """
+    if not extra or not isinstance(extra, str):
+        return None, None
+
+    # "Einkommen im Jahr YYYY" → full year
+    m = re.search(r"im Jahr\s+(\d{4})", extra)
+    if m:
+        year = m.group(1)
+        return f"{year}-01-01", f"{year}-12-31"
+
+    # Split on "bis" or " - " to separate start/end parts.
+    # Handle "ab ... bis ...", "vom ... bis ...", "von ... bis ...", or just "bis ..."
+    parts = re.split(r"\s+bis\s+|\s+-\s+", extra, maxsplit=1)
+
+    if len(parts) == 2:
+        # End date first (may provide fallback year for start)
+        end_text = parts[1]
+        start_text = parts[0]
+
+        date_end = _parse_date(end_text, as_end=True)
+        # For start dates without year (e.g. "01.04."), use end date's year
+        fallback_year = int(date_end[:4]) if date_end else None
+        date_start = _parse_date(start_text, fallback_year=fallback_year)
+        return date_start, date_end
+
+    # Single part: either "ab ..." or "bis ..."
+    text = parts[0]
+    if re.search(r"\bab\b", text, re.IGNORECASE):
+        return _parse_date(text), None
+    if re.search(r"\bbis\b", text, re.IGNORECASE):
+        return None, _parse_date(text, as_end=True)
+
+    # Fallback: try to extract any date
+    return _parse_date(text), None
+
+
 def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> None:
-    """Fetch all sidejobs, filter to this period's politicians, and save to CSV.
+    """Fetch all sidejobs, filter to this period's mandates, and save to CSV.
 
     The sidejobs API has no parliament_period filter, so we fetch everything
-    and keep only entries whose mandate ID maps to a politician in this period.
-    We also load mandates.csv from other periods so politicians who appear in
-    multiple Bundestag sessions are matched via their current-period mandate IDs.
+    and keep only entries whose mandate ID belongs to this period. This ensures
+    each period's CSV contains only sidejobs disclosed under that legislature.
     Overwrites sidejobs.csv on every run so newly disclosed income is captured.
     """
-    # Build a comprehensive mandate->politician mapping: start with this period's
-    # mandates, then add mandate IDs from other periods for the same politicians.
-    politician_ids = set(mandate_to_politician.values())
-    full_m2p: dict[int, int] = dict(mandate_to_politician)
-    for period_dir in DATA_DIR.iterdir():
-        if not period_dir.is_dir():
-            continue
-        mandates_path = period_dir / "mandates.csv"
-        if not mandates_path.exists() or period_dir.name == str(period_id):
-            continue
-        other_df = pd.read_csv(mandates_path)
-        for _, row in other_df.iterrows():
-            if int(row["politician_id"]) in politician_ids:
-                full_m2p[int(row["mandate_id"])] = int(row["politician_id"])
-
     log.info("Fetching sidejobs...")
     raw = fetch_all_v2("sidejobs")
 
     rows = []
     for sj in raw:
-        # Find the first mandate that maps to a politician in this period
+        # Only match mandates that belong to this period (no cross-period lookup)
         politician_id = None
         for mandate in sj.get("mandates") or []:
-            pid = full_m2p.get(mandate["id"])
+            pid = mandate_to_politician.get(mandate["id"])
             if pid is not None:
                 politician_id = pid
                 break
@@ -411,6 +520,7 @@ def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> No
 
         org = sj.get("sidejob_organization") or {}
         topics = [t["label"] for t in (sj.get("field_topics") or [])]
+        date_start, date_end = _parse_sidejob_dates(sj.get("job_title_extra"))
         rows.append(
             {
                 "politician_id": politician_id,
@@ -423,6 +533,9 @@ def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> No
                 "interval": sj.get("interval"),
                 # Unix timestamp of when this entry was first recorded
                 "created": sj.get("created"),
+                # Parsed from job_title_extra (ISO dates, may be None)
+                "date_start": date_start,
+                "date_end": date_end,
                 "category": sj.get("category"),
                 "topics": "|".join(topics),
             }

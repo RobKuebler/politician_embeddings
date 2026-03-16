@@ -2,7 +2,6 @@ import sys
 from datetime import UTC, date, datetime
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -23,25 +22,26 @@ from src.storage import DATA_DIR
 
 
 def _active_months(
-    created_ts: float | None,
+    date_start_str: str | None,
+    date_end_str: str | None,
     period_start: date,
     period_end: date,
 ) -> int:
     """Compute the number of active months within a period.
 
-    Uses max(created_date, period_start) as the start and
-    min(today, period_end) as the end.
-    Falls back to period_start when the created timestamp lies after the
-    period end (disclosures filed retroactively for past legislatures).
+    Clamps the job's date range to the period boundaries:
+      start = max(date_start or period_start, period_start)
+      end   = min(date_end or today or period_end, period_end, today)
     """
     today = datetime.now(tz=UTC).date()
-    end = min(today, period_end)
-    if created_ts is not None:
-        created_date = datetime.fromtimestamp(created_ts, tz=UTC).date()
-        start = period_start if created_date > end else max(created_date, period_start)
-    else:
-        start = period_start
-    return max(0, (end.year - start.year) * 12 + (end.month - start.month) + 1)
+    job_start = date.fromisoformat(date_start_str) if date_start_str else period_start
+    job_end = date.fromisoformat(date_end_str) if date_end_str else today
+
+    start = max(job_start, period_start)
+    end = min(job_end, period_end, today)
+    if start > end:
+        return 0
+    return (end.year - start.year) * 12 + (end.month - start.month) + 1
 
 
 @st.cache_data
@@ -99,6 +99,17 @@ color_map = {
 }
 color_map.update({p: FALLBACK_COLOR for p in present if p not in color_map})
 
+# ── Data-coverage note ────────────────────────────────────────────────────────
+n_total = len(df)
+n_with_income = df["income"].notna().sum()
+n_without = n_total - n_with_income
+pct_without = n_without / n_total * 100 if n_total else 0
+st.info(
+    f"**{n_without} von {n_total}** Nebentätigkeiten ({pct_without:.0f} %) "
+    "haben keine Betragsangabe (unentgeltlich oder nicht offengelegt) "
+    "und fließen nicht in die Einkommens-Auswertungen ein."
+)
+
 # ── Central income computation ────────────────────────────────────────────────
 # Prorate monthly and yearly entries to the period duration. Used by Charts 2-4.
 periods_df = _load_csv(DATA_DIR / "periods.csv")
@@ -124,11 +135,12 @@ if has_period_dates:
         One-time (0) or unspecified (NaN): income as-is.
         """
         interval = str(row.get("interval", ""))
-        ts = row.get("created") if "created" in row.index else None
+        ds = row.get("date_start") if pd.notna(row.get("date_start")) else None
+        de = row.get("date_end") if pd.notna(row.get("date_end")) else None
         if interval == "1":
-            return row["income"] * _active_months(ts, p_start, p_end)
+            return row["income"] * _active_months(ds, de, p_start, p_end)
         if interval == "2":
-            return row["income"] * (_active_months(ts, p_start, p_end) / 12)
+            return row["income"] * (_active_months(ds, de, p_start, p_end) / 12)
         return row["income"]
 
     sj_income["income"] = sj_income.apply(_effective_income, axis=1)
@@ -141,62 +153,6 @@ pol_income = (
     .sum()
     .query("income > 0")
 )
-
-# ── Chart 1: Average sidejobs per politician by party ────────────────────────
-with st.container(border=True):
-    st.markdown("##### Nebentätigkeiten pro Abgeordnetem")
-    st.caption(
-        "Durchschnittliche Anzahl gemeldeter Nebentätigkeiten pro Abgeordnetem, "
-        "bezogen auf alle Abgeordneten der Fraktion (auch solche ohne Nebentätigkeit)."
-    )
-
-    # Count sidejobs per politician (only those who have any).
-    counts_per_pol = (
-        df.groupby(["politician_id", "party_label"], as_index=False)
-        .size()
-        .rename({"size": "n_sidejobs"}, axis=1)
-    )
-    # Compute the average over ALL politicians in the party, not just those
-    # with sidejobs, so parties with many zero-sidejob members aren't inflated.
-    all_pols = pols_df[["politician_id", "party"]].copy()
-    all_pols["party_label"] = all_pols["party"].str.replace("\xad", "", regex=False)
-    total_per_party = all_pols.groupby("party_label").size().reset_index(name="n_pols")
-    sj_per_party = counts_per_pol.groupby("party_label", as_index=False)[
-        "n_sidejobs"
-    ].sum()
-    avg_by_party = sj_per_party.merge(total_per_party, on="party_label", how="right")
-    avg_by_party["n_sidejobs"] = avg_by_party["n_sidejobs"].fillna(0)
-    avg_by_party["avg_sidejobs"] = avg_by_party["n_sidejobs"] / avg_by_party["n_pols"]
-    avg_by_party = avg_by_party[avg_by_party["party_label"].isin(party_order_present)]
-
-    fig_avg = px.bar(
-        avg_by_party,
-        x="party_label",
-        y="avg_sidejobs",
-        color="party_label",
-        color_discrete_map=color_map,
-        labels={"party_label": "", "avg_sidejobs": "Ø Nebentätigkeiten"},
-        category_orders={"party_label": party_order_present},
-        height=360,
-    )
-    fig_avg.update_traces(
-        hovertemplate=(
-            "<b>%{x}</b><br>"
-            "<b>%{y:.2f}</b> Nebentätigkeiten pro Abgeordnetem"
-            "<extra></extra>"
-        ),
-        showlegend=False,
-        marker_line_width=BAR_LINE_WIDTH,
-        marker_line_color=BAR_LINE_COLOR,
-    )
-    fig_avg.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        margin={"l": 0, "r": 0, "t": 8, "b": 0},
-        xaxis={"showgrid": False},
-        yaxis={"showgrid": False},
-    )
-    st.plotly_chart(fig_avg, width="stretch", config={"displayModeBar": True})
 
 # ── Chart 2: Income by party ──────────────────────────────────────────────────
 with st.container(border=True):
@@ -255,88 +211,6 @@ with st.container(border=True):
             config={"displayModeBar": True},
         )
 
-# ── Chart 3: Income raincloud by party (log scale) ───────────────────────────
-with st.container(border=True):
-    st.markdown("##### Einkommensverteilung nach Partei")
-    st.caption("Ein Punkt = ein Abgeordneter (Gesamteinkommen der Periode, Brutto).")
-
-    if pol_income.empty:
-        st.info("Keine genauen Einkommensdaten verfügbar.")
-    else:
-        fig_rain = go.Figure()
-        rng = np.random.RandomState(42)
-        STEP = 2.5
-
-        parties_with_income = [
-            p
-            for p in party_order_present
-            if len(pol_income[pol_income["party_label"] == p]) > 0
-        ]
-        for idx, party in enumerate(reversed(parties_with_income)):
-            y_base = idx * STEP
-            subset = pol_income[pol_income["party_label"] == party]
-            incomes = subset["income"].to_numpy()
-            names = subset["name"].to_numpy()
-            color = color_map.get(party, FALLBACK_COLOR)
-
-            fig_rain.add_trace(
-                go.Violin(
-                    x=incomes,
-                    y=np.full(len(incomes), y_base),
-                    orientation="h",
-                    side="positive",
-                    fillcolor=color,
-                    line_color=color,
-                    opacity=0.55,
-                    width=1.8,
-                    points=False,
-                    showlegend=False,
-                    hoverinfo="skip",
-                )
-            )
-
-            jitter = rng.uniform(-0.15, 0.15, len(incomes))
-            fig_rain.add_trace(
-                go.Scatter(
-                    x=incomes,
-                    y=np.full(len(incomes), y_base) - 0.55 + jitter,
-                    mode="markers",
-                    marker={"color": color, "size": 4, "opacity": 0.6},
-                    customdata=names,
-                    showlegend=False,
-                    hovertemplate=(
-                        "<b>%{customdata}</b><br>"
-                        f"<span style='color:#999'>{party}</span><br>"
-                        "%{x:,.0f} €"
-                        "<extra></extra>"
-                    ),
-                )
-            )
-
-        tick_positions = [idx * STEP for idx in range(len(parties_with_income))]
-        fig_rain.update_layout(
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            margin={"l": 0, "r": 0, "t": 8, "b": 0},
-            height=max(300, len(parties_with_income) * 90 + 60),
-            showlegend=False,
-            violingap=0,
-            violinmode="overlay",
-            xaxis={
-                "showgrid": False,
-                "title": "Gesamteinkommen (€)",
-                "tickformat": ",.0f",
-            },
-            yaxis={
-                "showgrid": False,
-                "title": "",
-                "tickmode": "array",
-                "tickvals": tick_positions,
-                "ticktext": list(reversed(parties_with_income)),
-            },
-        )
-        st.plotly_chart(fig_rain, width="stretch", config={"displayModeBar": True})
-
 # ── Chart 4: Top earners ─────────────────────────────────────────────────────
 with st.container(border=True):
     st.markdown("##### Top-Verdiener")
@@ -348,7 +222,7 @@ with st.container(border=True):
     if pol_income.empty:
         st.info("Keine genauen Einkommensdaten verfügbar.")
     else:
-        top = pol_income.nlargest(20, "income")
+        top = pol_income.nlargest(15, "income")
 
         fig_top = go.Figure(
             go.Bar(
@@ -377,6 +251,101 @@ with st.container(border=True):
             yaxis={"showgrid": False, "title": "", "autorange": "reversed"},
         )
         st.plotly_chart(fig_top, width="stretch", config={"displayModeBar": True})
+
+# ── Chart 5: Top topics by income, stacked by party ─────────────────────────
+with st.container(border=True):
+    st.markdown("##### Themenfelder der Nebentätigkeiten")
+    st.caption(
+        "Top-Themenfelder nach Gesamteinkommen, aufgeschlüsselt nach Partei. "
+        "Ein Nebenjob kann mehreren Themen zugeordnet sein."
+    )
+
+    # Explode pipe-separated topics into individual rows.
+    sj_topics = sj_income[sj_income["topics"].notna()].copy()
+    sj_topics["topic"] = sj_topics["topics"].str.split("|")
+    sj_topics = sj_topics.explode("topic")
+    sj_topics["topic"] = sj_topics["topic"].str.strip()
+    sj_topics = sj_topics[sj_topics["topic"] != ""]
+
+    if sj_topics.empty:
+        st.info("Keine Themendaten verfügbar.")
+    else:
+        # Aggregate income and count per topic x party.
+        topic_party = sj_topics.groupby(["topic", "party_label"], as_index=False).agg(
+            income=("income", "sum"), count=("income", "size")
+        )
+
+        # Total income per topic for ranking and tooltip.
+        topic_totals = topic_party.groupby("topic", as_index=False).agg(
+            income_total=("income", "sum"), count_total=("count", "sum")
+        )
+        topic_totals = topic_totals.nlargest(15, "income_total")
+        top_topics = topic_totals["topic"].tolist()
+        topic_party = topic_party[topic_party["topic"].isin(top_topics)]
+
+        # Merge totals for tooltip.
+        topic_party = topic_party.merge(topic_totals, on="topic", how="left")
+
+        # Sort topics by total income (highest on top in horizontal bar).
+        topic_order = topic_totals.sort_values("income_total", ascending=False)[
+            "topic"
+        ].tolist()
+
+        fig_topics = go.Figure()
+        for party in party_order_present:
+            subset = topic_party[topic_party["party_label"] == party]
+            if subset.empty:
+                continue
+            fig_topics.add_trace(
+                go.Bar(
+                    y=subset["topic"],
+                    x=subset["income"],
+                    orientation="h",
+                    name=party,
+                    marker={
+                        "color": color_map.get(party, FALLBACK_COLOR),
+                        "line": {"color": BAR_LINE_COLOR, "width": BAR_LINE_WIDTH},
+                    },
+                    customdata=list(
+                        zip(
+                            subset["party_label"],
+                            subset["count"],
+                            subset["income_total"],
+                            subset["count_total"],
+                            strict=False,
+                        )
+                    ),
+                    hovertemplate=(
+                        "<b>%{y}</b><br>"
+                        "%{customdata[0]}: <b>%{x:,.0f} €</b> "
+                        "(%{customdata[1]} Tätigkeiten)<br>"
+                        "<span style='color:#999'>Gesamt: %{customdata[2]:,.0f} € · "
+                        "%{customdata[3]} Tätigkeiten</span>"
+                        "<extra></extra>"
+                    ),
+                )
+            )
+        fig_topics.update_layout(
+            height=max(300, len(top_topics) * 32 + 80),
+            yaxis_categoryorder="array",
+            yaxis_categoryarray=list(reversed(topic_order)),
+        )
+        fig_topics.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            margin={"l": 0, "r": 0, "t": 8, "b": 0},
+            xaxis={"showgrid": False, "tickformat": ",.0f"},
+            yaxis={"showgrid": False},
+            legend={
+                "title": "",
+                "orientation": "h",
+                "y": -0.15,
+                "x": 0.5,
+                "xanchor": "center",
+            },
+            barmode="stack",
+        )
+        st.plotly_chart(fig_topics, width="stretch", config={"displayModeBar": True})
 
 # Footer
 st.html(

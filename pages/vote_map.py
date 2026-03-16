@@ -309,7 +309,7 @@ def _info_details(body: str) -> str:
     """Return a collapsible HTML <details> element with a 'Wie lese ich das?' summary."""
     return (
         f"<details style='margin:0 0 12px'>"
-        f"<summary style='cursor:pointer; list-style:none; color:{COLOR_SECONDARY}; font-size:12px'>ⓘ Wie lese ich das?</summary>"
+        f"<summary style='cursor:pointer; list-style:none; color:{COLOR_SECONDARY}; font-size:12px'>ⓘ Erklärung</summary>"
         f"<div style='color:{COLOR_BODY}; font-size:13px; margin-top:6px; line-height:1.6'>{body}</div>"
         f"</details>"
     )
@@ -317,6 +317,10 @@ def _info_details(body: str) -> str:
 
 with st.container(border=True):
     st.markdown("##### Abstimmungslandkarte")
+    st.caption(
+        "Jeder Punkt = ein Abgeordneter. Nähe = ähnliches Abstimmungsverhalten. "
+        "◆ = Fraktionsmittelpunkt. Box-/Lasso-Auswahl wählt Abgeordnete für die Heatmap unten."
+    )
     st.html(
         _info_details(
             "Jeder Punkt steht für einen Abgeordneten. Je näher zwei Punkte beieinander "
@@ -344,7 +348,8 @@ st.html("<div style='height:24px'></div>")
 with st.container(border=True):
     st.markdown("##### Abstimmungsverhalten")
     st.caption(
-        "Vergleiche das Abstimmungsverhalten einzelner Abgeordneter bei ausgewählten namentlichen Abstimmungen."
+        "Vergleiche, wie einzelne Abgeordnete bei namentlichen Abstimmungen gestimmt haben. "
+        "Grün = Ja, Orange = Enthalten, Rot = Nein."
     )
 
     pol_options = {
@@ -481,12 +486,14 @@ with st.container(border=True):
 st.html("<div style='height:32px'></div>")
 with st.container(border=True):
     st.markdown("##### Fraktionsdisziplin")
+    st.caption(
+        "Wie geschlossen stimmt eine Fraktion ab? "
+        "Kurzer Balken = hohe Disziplin, langer Balken = mehr Abweichler."
+    )
     st.html(
         _info_details(
-            "Der Balken zeigt, wie weit die Abgeordneten einer Fraktion im Diagramm "
-            "durchschnittlich vom Fraktionsmittelpunkt entfernt sind.<br><br>"
-            "<b>Kurzer Balken:</b> Die Fraktion stimmt fast immer geschlossen ab.<br>"
-            "<b>Langer Balken:</b> Es gibt starke Abweichler."
+            "Der Balken zeigt die durchschnittliche Entfernung der Abgeordneten "
+            "vom Fraktionsmittelpunkt in der Abstimmungslandkarte."
         )
     )
 

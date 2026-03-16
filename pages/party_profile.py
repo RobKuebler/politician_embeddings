@@ -21,9 +21,10 @@ from constants import (
 
 from src.storage import DATA_DIR
 from src.transforms import (
+    compute_education_degree_pivot,
+    compute_education_field_pivot,
     compute_occupation_pivot,
     compute_sex_counts,
-    compute_title_counts,
 )
 
 CURRENT_YEAR = datetime.now(tz=UTC).year
@@ -61,6 +62,9 @@ for col in ["occupation", "year_of_birth", "field_title", "sex", "education"]:
 # Normalize party display labels (strip soft hyphen used in Grünen party name)
 pols_df["party_label"] = pols_df["party"].str.replace("\xad", "", regex=False)
 
+# Drop fraktionslos — too few members for meaningful comparison
+pols_df = pols_df[pols_df["party"] != "fraktionslos"]
+
 # Determine display order for this period
 present = set(pols_df["party"].unique())
 party_order_present = [p for p in PARTY_ORDER if p in present] + sorted(
@@ -72,49 +76,70 @@ color_map = {
     for p in party_order_present
 }
 
-# ── Chart 1: Occupations heatmap ─────────────────────────────────────────────
-with st.container(border=True):
-    st.markdown("##### Berufe")
-    st.caption(
-        "Anzahl Abgeordneter pro Berufskategorie und Fraktion. "
-        "Berufsangaben aus den Profilen auf abgeordnetenwatch.de, normalisiert in Oberkategorien."
-    )
-    pivot, z, zmax = compute_occupation_pivot(pols_df, party_labels_ordered)
+# Diverging colorscale for deviation heatmaps (red = below avg, blue = above avg)
+_DEV_COLORSCALE = [
+    [0.0, "#c0392b"],
+    [0.35, "#e8a0a0"],
+    [0.5, "#f5f5f5"],
+    [0.65, "#a0c4e8"],
+    [1.0, "#2471a3"],
+]
 
-    fig_occ_heat = go.Figure(
+
+def _deviation_heatmap(
+    pivot_pct: pd.DataFrame,
+    pct_z: np.ndarray,
+    dev_z: np.ndarray,
+    hover_label: str,
+) -> go.Figure:
+    """Create a heatmap colored by deviation from average, with %-text overlay."""
+    dev_max = float(np.nanmax(np.abs(dev_z)))
+    text = [[f"{v:+.0f}" if not np.isnan(v) else "" for v in row] for row in dev_z]
+    # Custom data for hover: pct and deviation side by side
+    custom = np.stack([np.round(pct_z, 1), np.round(dev_z, 0)], axis=-1)
+    fig = go.Figure(
         go.Heatmap(
-            z=z,
-            x=pivot.columns.tolist(),
-            y=pivot.index.tolist(),
-            colorscale="Blues",
+            z=dev_z,
+            x=pivot_pct.columns.tolist(),
+            y=pivot_pct.index.tolist(),
+            colorscale=_DEV_COLORSCALE,
             showscale=False,
-            zmin=0,
-            zmax=zmax,
-            text=[[str(int(v)) if not np.isnan(v) else "" for v in row] for row in z],
+            zmid=0,
+            zmin=-dev_max,
+            zmax=dev_max,
+            text=text,
             texttemplate="%{text}",
             textfont={"size": 11},
+            customdata=custom,
             hovertemplate=(
-                "<b>%{x}</b> – %{y}<br><b>%{z} Abgeordnete</b><extra></extra>"
+                f"<b>%{{x}}</b> – %{{y}}<br>"
+                f"<b>%{{customdata[0]:.1f}}%</b> {hover_label}<br>"
+                f"%{{customdata[1]:+.0f}} Pp. vs. Ø Bundestag"
+                f"<extra></extra>"
             ),
             hoverongaps=False,
             xgap=2,
             ygap=2,
         )
     )
-    fig_occ_heat.update_layout(
+    fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         margin={"l": 0, "r": 0, "t": 8, "b": 0},
-        height=max(300, len(pivot) * 40 + 60),
+        height=max(300, len(pivot_pct) * 40 + 60),
         xaxis={"side": "top", "showgrid": False},
         yaxis={"showgrid": False, "autorange": "reversed"},
     )
-    st.plotly_chart(fig_occ_heat, width="stretch", config={"displayModeBar": True})
+    return fig
 
-# ── Chart 2: Age distribution ────────────────────────────────────────────────
+
+# ── Altersverteilung ─────────────────────────────────────────────────────────
 with st.container(border=True):
     st.markdown("##### Altersverteilung")
-    st.caption("Ein Punkt = ein Abgeordneter. Alter berechnet aus dem Geburtsjahr.")
+    st.caption(
+        "Altersverteilung pro Fraktion. Halbe Violine zeigt die Dichteverteilung, "
+        "jeder Punkt ist ein Abgeordneter. Alter berechnet aus dem Geburtsjahr."
+    )
     # Raincloud: half violin (distribution) above + jittered points below.
     # Computed inline to include name for tooltip (compute_age_df omits it).
     # Uses a numeric y-axis so violin and points can be offset from the baseline.
@@ -198,10 +223,13 @@ with st.container(border=True):
     )
     st.plotly_chart(fig_age, width="stretch", config={"displayModeBar": True})
 
-# ── Chart 3: Gender breakdown ─────────────────────────────────────────────────
+# ── Geschlecht ───────────────────────────────────────────────────────────────
 with st.container(border=True):
     st.markdown("##### Geschlecht")
-    st.caption("Anteil Männlich / Weiblich / Divers pro Fraktion.")
+    st.caption(
+        "Geschlechterverteilung pro Fraktion in Prozent. "
+        "Balken zeigen den Anteil Männlich, Weiblich und Divers."
+    )
     sex_counts = compute_sex_counts(pols_df)
 
     fig_sex = px.bar(
@@ -234,42 +262,55 @@ with st.container(border=True):
     )
     st.plotly_chart(fig_sex, width="stretch", config={"displayModeBar": True})
 
-# ── Chart 4: Academic titles ──────────────────────────────────────────────────
+# ── Berufe (Heatmap) ────────────────────────────────────────────────────────
 with st.container(border=True):
-    st.markdown("##### Akademische Titel")
-    st.caption("Anteil der Abgeordneten mit akademischem Titel (z.B. Dr., Prof.).")
-    title_counts = compute_title_counts(pols_df)
+    st.markdown("##### Berufe")
+    st.caption(
+        "Welche Berufe sind in welcher Fraktion über- oder unterrepräsentiert? "
+        "Zahl = Abweichung vom Bundestag-Ø in Prozentpunkten. "
+        "Blau = überproportional, rot = unterproportional. "
+        'Die Berufsbezeichnung "Abgeordneter" wurde entfernt.'
+    )
+    pivot, pct_z, dev_z = compute_occupation_pivot(pols_df, party_labels_ordered)
+    st.plotly_chart(
+        _deviation_heatmap(pivot, pct_z, dev_z, "der Fraktion"),
+        width="stretch",
+        config={"displayModeBar": True},
+    )
 
-    fig_title = px.bar(
-        title_counts,
-        x="party_label",
-        y="pct",
-        color="titel",
-        barmode="group",
-        custom_data=["count"],
-        color_discrete_map={"Mit Titel": "#4A90D9", "Ohne Titel": "#CCCCCC"},
-        labels={"party_label": "", "pct": "Anteil (%)", "titel": ""},
-        category_orders={"party_label": party_labels_ordered},
-        height=360,
+# ── Ausbildung / Studienrichtung (Heatmap) ──────────────────────────────────
+with st.container(border=True):
+    st.markdown("##### Ausbildung / Studienrichtung")
+    st.caption(
+        "Welche Studienrichtungen sind in welcher Fraktion über- oder unterrepräsentiert? "
+        "Zahl = Abweichung vom Bundestag-Ø in Prozentpunkten. "
+        "Blau = überproportional, rot = unterproportional."
     )
-    fig_title.update_traces(
-        hovertemplate=(
-            "<b>%{x}</b> – %{fullData.name}<br>"
-            "<b>%{y:.1f}%</b>"
-            "<span style='color:#999'> (%{customdata[0]} Abgeordnete)</span>"
-            "<extra></extra>"
-        ),
-        marker_line_width=BAR_LINE_WIDTH,
-        marker_line_color=BAR_LINE_COLOR,
+    edu_pivot, edu_pct_z, edu_dev_z = compute_education_field_pivot(
+        pols_df, party_labels_ordered
     )
-    fig_title.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        margin={"l": 0, "r": 0, "t": 8, "b": 0},
-        xaxis={"showgrid": False},
-        yaxis={"showgrid": False},
+    st.plotly_chart(
+        _deviation_heatmap(edu_pivot, edu_pct_z, edu_dev_z, "der Fraktion"),
+        width="stretch",
+        config={"displayModeBar": True},
     )
-    st.plotly_chart(fig_title, width="stretch", config={"displayModeBar": True})
+
+# ── Abschlussniveau (Heatmap) ────────────────────────────────────────────────
+with st.container(border=True):
+    st.markdown("##### Abschlussniveau")
+    st.caption(
+        "Welche Abschlüsse sind in welcher Fraktion über- oder unterrepräsentiert? "
+        "Zahl = Abweichung vom Bundestag-Ø in Prozentpunkten. "
+        "Blau = überproportional, rot = unterproportional. Höchster erkennbarer Abschluss pro Abgeordnetem."
+    )
+    deg_pivot, deg_pct_z, deg_dev_z = compute_education_degree_pivot(
+        pols_df, party_labels_ordered
+    )
+    st.plotly_chart(
+        _deviation_heatmap(deg_pivot, deg_pct_z, deg_dev_z, "der Fraktion"),
+        width="stretch",
+        config={"displayModeBar": True},
+    )
 
 # Footer
 st.html(
