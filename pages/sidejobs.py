@@ -20,6 +20,18 @@ from constants import (
 
 from src.storage import DATA_DIR
 
+# Sidejob category IDs from the Bundestagsverwaltung taxonomy.
+SIDEJOB_CATEGORIES: dict[int, str] = {
+    29647: "Entgeltliche Tätigkeit",
+    29228: "Unternehmensbeteiligung / Organmitglied",
+    29229: "Funktionen in öffentlichen Institutionen",
+    29230: "Verband / Stiftung / Verein",
+    29231: "Unternehmensbeteiligung",
+    29232: "Spende / Zuwendung",
+    29233: "Vereinbarung über künftige Tätigkeit",
+    29234: "Tätigkeit vor Mitgliedschaft",
+}
+
 
 def _active_months(
     date_start_str: str | None,
@@ -86,6 +98,7 @@ df = sj_df.merge(
     how="left",
 )
 df["party_label"] = df["party"].str.replace("\xad", "", regex=False)
+df["category_label"] = df["category"].map(SIDEJOB_CATEGORIES).fillna("Sonstiges")
 
 # Determine display order for parties present in this period.
 present = set(df["party_label"].dropna().unique())
@@ -210,6 +223,87 @@ with st.container(border=True):
             width="stretch",
             config={"displayModeBar": True},
         )
+
+# ── Chart: Income by category ────────────────────────────────────────────────
+with st.container(border=True):
+    st.markdown("##### Einkommen nach Kategorie")
+    st.caption(
+        "Nebeneinkünfte aufgeschlüsselt nach Art der Tätigkeit "
+        "(Kategorien der Bundestagsverwaltung), gestapelt nach Partei."
+    )
+
+    cat_income = sj_income.copy()
+    cat_income["category_label"] = (
+        cat_income["category"].map(SIDEJOB_CATEGORIES).fillna("Sonstiges")
+    )
+    cat_party = cat_income.groupby(
+        ["category_label", "party_label"],
+        as_index=False,
+    ).agg(income=("income", "sum"), count=("income", "size"))
+
+    cat_totals = cat_party.groupby("category_label", as_index=False).agg(
+        income_total=("income", "sum"),
+        count_total=("count", "sum"),
+    )
+    cat_order = cat_totals.sort_values(
+        "income_total",
+        ascending=False,
+    )["category_label"].tolist()
+    cat_party = cat_party.merge(cat_totals, on="category_label", how="left")
+
+    fig_cat = go.Figure()
+    for party in party_order_present:
+        subset = cat_party[cat_party["party_label"] == party]
+        if subset.empty:
+            continue
+        fig_cat.add_trace(
+            go.Bar(
+                y=subset["category_label"],
+                x=subset["income"],
+                orientation="h",
+                name=party,
+                marker={
+                    "color": color_map.get(party, FALLBACK_COLOR),
+                    "line": {"color": BAR_LINE_COLOR, "width": BAR_LINE_WIDTH},
+                },
+                customdata=list(
+                    zip(
+                        subset["party_label"],
+                        subset["count"],
+                        subset["income_total"],
+                        subset["count_total"],
+                        strict=False,
+                    )
+                ),
+                hovertemplate=(
+                    "<b>%{y}</b><br>"
+                    "%{customdata[0]}: <b>%{x:,.0f} €</b> "
+                    "(%{customdata[1]} Tätigkeiten)<br>"
+                    "<span style='color:#999'>Gesamt: %{customdata[2]:,.0f} € · "
+                    "%{customdata[3]} Tätigkeiten</span>"
+                    "<extra></extra>"
+                ),
+            )
+        )
+    fig_cat.update_layout(
+        height=max(300, len(cat_order) * 36 + 80),
+        yaxis_categoryorder="array",
+        yaxis_categoryarray=list(reversed(cat_order)),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        margin={"l": 0, "r": 0, "t": 8, "b": 0},
+        xaxis={"showgrid": False, "tickformat": ",.0f"},
+        yaxis={"showgrid": False},
+        legend={
+            "title": "",
+            "orientation": "h",
+            "y": -0.15,
+            "x": 0.5,
+            "xanchor": "center",
+        },
+        barmode="stack",
+    )
+    st.plotly_chart(fig_cat, width="stretch", config={"displayModeBar": True})
 
 # ── Chart 4: Top earners ─────────────────────────────────────────────────────
 with st.container(border=True):
