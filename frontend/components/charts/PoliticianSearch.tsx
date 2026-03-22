@@ -9,6 +9,12 @@ interface Props {
   onSelectionChange: (ids: number[]) => void  // = handleSelection in page.tsx
 }
 
+// Shared visual constants — must match PollFilter exactly
+const ACCENT = '#4B6BFB'
+const ACCENT_LIGHT = '#F0F4FF'
+const BORDER = '#E2E5EE'
+const BG_INPUT = '#FAFBFF'
+
 /** Truncates a string to maxLen characters, appending '…' if truncated. */
 function truncate(s: string, maxLen: number): string {
   return s.length > maxLen ? s.slice(0, maxLen) + '…' : s
@@ -21,18 +27,15 @@ export function PoliticianSearch({ politicians, selected, onSelectionChange }: P
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Build a lookup map for fast access by id
   const polMap = useMemo(() => new Map(politicians.map(p => [p.politician_id, p])), [politicians])
-
-  // Filter politicians: name match (case-insensitive), not already selected
   const selectedSet = useMemo(() => new Set(selected), [selected])
-  const lowerQuery = query.toLowerCase()
-  const results = query.length > 0
-    ? politicians.filter(p =>
-        !selectedSet.has(p.politician_id) &&
-        p.name.toLowerCase().includes(lowerQuery)
-      )
-    : []
+
+  const results = useMemo(() => {
+    const unselected = politicians.filter(p => !selectedSet.has(p.politician_id))
+    if (query.length === 0) return [...unselected].sort((a, b) => a.name.localeCompare(b.name, 'de'))
+    const lq = query.toLowerCase()
+    return unselected.filter(p => p.name.toLowerCase().includes(lq))
+  }, [politicians, query, selectedSet])
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -47,11 +50,8 @@ export function PoliticianSearch({ politicians, selected, onSelectionChange }: P
   }, [])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const val = e.target.value
-    setQuery(val)
-    // Close dropdown when user manually clears input; open it when they type
-    if (val.length === 0) setIsOpen(false)
-    else setIsOpen(true)
+    setQuery(e.target.value)
+    setIsOpen(true)
   }
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
@@ -73,9 +73,79 @@ export function PoliticianSearch({ politicians, selected, onSelectionChange }: P
 
   return (
     <div ref={containerRef} style={{ position: 'relative' }}>
-      {/* Chips for selected politicians */}
+
+      {/* Search row: input + clear-all button */}
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ position: 'relative', flex: 1 }}>
+          {/* Search icon */}
+          <svg
+            width="14" height="14"
+            viewBox="0 0 24 24" fill="none"
+            stroke="#bbb" strokeWidth="2.5"
+            strokeLinecap="round" strokeLinejoin="round"
+            style={{
+              position: 'absolute', left: 10, top: '50%',
+              transform: 'translateY(-50%)', pointerEvents: 'none',
+            }}
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            type="text"
+            value={query}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            placeholder="Politiker suchen…"
+            style={{
+              width: '100%', boxSizing: 'border-box',
+              padding: '7px 10px 7px 30px',
+              borderRadius: 8,
+              border: `1px solid ${BORDER}`,
+              fontSize: 13, outline: 'none',
+              background: BG_INPUT,
+              color: '#333',
+              transition: 'border-color 0.15s, box-shadow 0.15s',
+            }}
+            onFocus={e => {
+              e.target.style.borderColor = ACCENT
+              e.target.style.boxShadow = `0 0 0 3px ${ACCENT}22`
+              setIsOpen(true)
+            }}
+            onBlur={e => {
+              e.target.style.borderColor = BORDER
+              e.target.style.boxShadow = 'none'
+            }}
+          />
+        </div>
+
+        {selected.length > 0 && (
+          <button
+            onClick={() => onSelectionChange([])}
+            style={{
+              padding: '7px 12px', borderRadius: 8, fontSize: 12,
+              border: `1px solid ${BORDER}`,
+              background: '#fff', cursor: 'pointer', color: COLOR_SECONDARY,
+              whiteSpace: 'nowrap',
+              transition: 'border-color 0.15s, color 0.15s',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = ACCENT
+              e.currentTarget.style.color = ACCENT
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = BORDER
+              e.currentTarget.style.color = COLOR_SECONDARY
+            }}
+          >
+            Auswahl aufheben
+          </button>
+        )}
+      </div>
+
+      {/* Chips — below the search bar */}
       {selected.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
           {selected.map(id => {
             const pol = polMap.get(id)
             if (!pol) return null
@@ -112,51 +182,44 @@ export function PoliticianSearch({ politicians, selected, onSelectionChange }: P
         </div>
       )}
 
-      {/* Search row: input + clear-all button */}
-      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-        <input
-          type="text"
-          value={query}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          placeholder="Politiker suchen…"
-          style={{
-            flex: 1, padding: '6px 10px', borderRadius: 8,
-            border: '1px solid #ddd', fontSize: 13, outline: 'none',
-          }}
-        />
-        {selected.length > 0 && (
-          <button
-            onClick={() => onSelectionChange([])}
-            style={{
-              padding: '6px 12px', borderRadius: 8, fontSize: 12,
-              border: '1px solid #ddd', background: '#fff', cursor: 'pointer', color: '#666',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            Auswahl aufheben
-          </button>
-        )}
-      </div>
-
       {/* Dropdown — visible when isOpen (stays open after selection for multiselect UX) */}
       {isOpen && (
         <ul
           role="listbox"
           style={{
-            position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 20,
-            background: '#fff', border: '1px solid #ddd', borderRadius: 8,
-            marginTop: 4, padding: 0, listStyle: 'none',
+            position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 30,
+            background: '#fff',
+            border: `1px solid ${BORDER}`,
+            borderRadius: 10,
+            padding: 0, margin: 0, listStyle: 'none',
+            boxShadow: `0 8px 24px ${ACCENT}14, 0 2px 8px rgba(0,0,0,0.06)`,
             maxHeight: 240, overflowY: 'auto',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
           }}
         >
+          {/* Subtle header when browsing all politicians */}
+          {query.length === 0 && results.length > 0 && (
+            <li
+              style={{
+                padding: '6px 14px 5px',
+                fontSize: 11,
+                color: COLOR_SECONDARY,
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+                borderBottom: '1px solid #F3F4F8',
+                userSelect: 'none',
+                pointerEvents: 'none',
+              }}
+            >
+              {results.length} Abgeordnete
+            </li>
+          )}
+
           {results.length === 0 ? (
             <li style={{ padding: '8px 12px', color: COLOR_SECONDARY, fontSize: 13 }}>
-              {query.length === 0 ? 'Tippe um zu suchen…' : 'Keine Ergebnisse'}
+              Keine Ergebnisse
             </li>
           ) : (
-            results.map(pol => {
+            results.map((pol, i) => {
               const party = stripSoftHyphen(pol.party)
               const color = PARTY_COLORS[party] ?? FALLBACK_COLOR
               return (
@@ -168,8 +231,10 @@ export function PoliticianSearch({ politicians, selected, onSelectionChange }: P
                   style={{
                     display: 'flex', alignItems: 'center', gap: 8,
                     padding: '7px 12px', cursor: 'pointer', fontSize: 13,
+                    borderBottom: i < results.length - 1 ? '1px solid #F3F4F8' : 'none',
+                    transition: 'background 0.1s',
                   }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#f5f5f5')}
+                  onMouseEnter={e => (e.currentTarget.style.background = ACCENT_LIGHT)}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}
                 >
                   <span

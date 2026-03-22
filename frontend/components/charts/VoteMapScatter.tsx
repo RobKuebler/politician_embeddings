@@ -118,11 +118,10 @@ export function VoteMapScatter({
         .on('mousemove', (event, d) => {
           const pol = polMap.get(d.politician_id)
           if (!pol) return
-          const [x, y] = d3.pointer(event, containerRef.current!)
           d3.select(tooltipRef.current!)
             .style('opacity', '1')
-            .style('left', `${x + 12}px`)
-            .style('top', `${y - 28}px`)
+            .style('left', `${event.clientX + 12}px`)
+            .style('top', `${event.clientY - 28}px`)
             .html(`<b>${pol.name}</b><br/><span style="color:#bbb">${pol.party.replace(/\u00ad/g, '')}</span>`)
         })
         .on('mouseleave', () => d3.select(tooltipRef.current!).style('opacity', '0'))
@@ -135,6 +134,55 @@ export function VoteMapScatter({
             : [...current, d.politician_id]
           onChangeRef.current(next)
         })
+    }
+
+    // Draw party centroids (after dots so they render on top)
+    for (const [party, points] of seriesByParty) {
+      if (points.length < 2) continue
+      const cx = points.reduce((s, p) => s + p.x, 0) / points.length
+      const cy = points.reduce((s, p) => s + p.y, 0) / points.length
+      const partyColor = PARTY_COLORS[party] ?? FALLBACK_COLOR
+      const sx = xScale(cx)
+      const sy = yScale(cy)
+      const arm = 6
+
+      const cg = contentG.append('g')
+        .attr('class', 'centroid')
+        .attr('transform', `translate(${sx},${sy})`)
+        .style('cursor', 'default')
+
+      // Filled circle background for legibility
+      cg.append('circle').attr('r', arm + 2)
+        .attr('fill', '#fff').attr('opacity', 0.7)
+
+      // Cross arms
+      cg.append('line').attr('x1', -arm).attr('y1', 0).attr('x2', arm).attr('y2', 0)
+        .attr('stroke', partyColor).attr('stroke-width', 2.5).attr('stroke-linecap', 'round')
+      cg.append('line').attr('x1', 0).attr('y1', -arm).attr('x2', 0).attr('y2', arm)
+        .attr('stroke', partyColor).attr('stroke-width', 2.5).attr('stroke-linecap', 'round')
+
+      // Outer ring
+      cg.append('circle').attr('r', arm + 2)
+        .attr('fill', 'none').attr('stroke', partyColor).attr('stroke-width', 1.5)
+
+      cg.style('cursor', 'pointer')
+        .on('click', event => {
+          event.stopPropagation()
+          const partyIds = new Set(points.map(pt => pt.politician_id))
+          const existing = selectedIdsRef.current
+          const allSelected = points.every(pt => existing.includes(pt.politician_id))
+          const next = allSelected
+            ? existing.filter(id => !partyIds.has(id))
+            : [...new Set([...existing, ...partyIds])]
+          onChangeRef.current(next)
+        })
+        .on('mousemove', event => {
+          d3.select(tooltipRef.current!)
+            .style('opacity', '1')
+            .style('left', `${event.clientX + 12}px`)
+            .style('top', `${event.clientY - 28}px`)
+            .html(`<b>${party}</b> – Klicken zum Auswählen`)
+        }).on('mouseleave', () => d3.select(tooltipRef.current!).style('opacity', '0'))
     }
 
     // Click on background (pan mode) clears selection
@@ -297,7 +345,7 @@ export function VoteMapScatter({
         <div
           ref={tooltipRef}
           style={{
-            position: 'absolute', pointerEvents: 'none',
+            position: 'fixed', pointerEvents: 'none',
             background: 'rgba(0,0,0,0.78)', color: '#fff',
             padding: '4px 8px', borderRadius: 4, fontSize: 12,
             opacity: 0, transition: 'opacity 0.1s', whiteSpace: 'nowrap', zIndex: 10,

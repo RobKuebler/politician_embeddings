@@ -6,7 +6,8 @@ export const PARTY_COLORS: Record<string, string> = {
   'SPD': '#E3000F',
   'AfD': '#009EE0',
   'BÜNDNIS 90/DIE GRÜNEN': '#46962B',
-  'Die Linke': '#BE3075',
+  'Die Linke': '#FF69B4',
+  'Die Linke.': '#FF69B4',
   'BSW': '#722EA5',
   'FDP': '#FFED00',
   'fraktionslos': '#888888',
@@ -17,7 +18,7 @@ export const FALLBACK_COLOR = '#888888'
 // Preferred display order (most seats first).
 export const PARTY_ORDER = [
   'CDU/CSU', 'SPD', 'AfD', 'BÜNDNIS 90/DIE GRÜNEN',
-  'Die Linke', 'BSW', 'FDP', 'fraktionslos',
+  'Die Linke', 'Die Linke.', 'BSW', 'FDP', 'fraktionslos',
 ]
 
 // Party whose fill is so dark it needs a white outline on the scatter plot.

@@ -95,20 +95,21 @@ export default function VoteMapPage() {
         )}
       </div>
 
-      {/* Politician search — rendered as soon as politicians are loaded, synced with scatter */}
-      {!loading && (
-        <div className="mb-6">
-          <PoliticianSearch
-            politicians={politicians}
-            selected={selectedPolIds}
-            onSelectionChange={handleSelection}
-          />
-        </div>
-      )}
-
       {/* Heatmap */}
       <div className="rounded-xl border border-gray-100 p-4 mb-6">
         <h2 className="font-semibold mb-3">Abstimmungsverhalten</h2>
+
+        {/* Politician search — synced with scatter, always visible once loaded */}
+        {!loading && (
+          <div className="mb-4">
+            <PoliticianSearch
+              politicians={politicians}
+              selected={selectedPolIds}
+              onSelectionChange={handleSelection}
+            />
+          </div>
+        )}
+
         {!selectedPolIds.length ? (
           <p className="text-sm text-center py-8" style={{ color: COLOR_SECONDARY }}>
             Politiker auswählen, um ihre Abstimmungen zu sehen
@@ -117,6 +118,9 @@ export default function VoteMapPage() {
           <ChartSkeleton height={300} />
         ) : votes ? (
           <>
+            <div className="mb-4">
+              <PollFilter polls={polls} selectedIds={selectedPollIds} onChange={setSelectedPollIds} />
+            </div>
             {/* Vote legend */}
             <div className="flex flex-wrap gap-4 mb-3 text-xs">
               {(['yes', 'no', 'abstain'] as const).map((k) => (
@@ -126,9 +130,6 @@ export default function VoteMapPage() {
                   {{ yes: 'Ja', no: 'Nein', abstain: 'Enthalten' }[k]}
                 </span>
               ))}
-            </div>
-            <div className="mb-4">
-              <PollFilter polls={polls} selectedIds={selectedPollIds} onChange={setSelectedPollIds} />
             </div>
             <VoteHeatmap
               votes={votes}

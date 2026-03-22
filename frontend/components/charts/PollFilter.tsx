@@ -81,39 +81,6 @@ export function PollFilter({ polls, selectedIds, onChange }: Props) {
   return (
     <div ref={containerRef} style={{ position: 'relative' }}>
 
-      {/* Selected poll chips */}
-      {selectedIds.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
-          {selectedIds.map(id => {
-            const poll = pollMap.get(id)
-            if (!poll) return null
-            return (
-              <span
-                key={id}
-                title={poll.topic}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 4,
-                  padding: '2px 8px', borderRadius: 12,
-                  background: '#f0f0f0', fontSize: 12, color: '#333',
-                }}
-              >
-                {truncate(poll.topic, 40)}
-                <button
-                  aria-label={`Entferne ${poll.topic}`}
-                  onClick={() => removePoll(id)}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    padding: 0, fontSize: 13, color: '#888', lineHeight: 1,
-                  }}
-                >
-                  ×
-                </button>
-              </span>
-            )
-          })}
-        </div>
-      )}
-
       {/* Search row */}
       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
         <div style={{ position: 'relative', flex: 1 }}>
@@ -159,38 +126,64 @@ export function PollFilter({ polls, selectedIds, onChange }: Props) {
           />
         </div>
 
-        {selectedIds.length > 0 && (
-          <button
-            onClick={() => onChange([])}
-            style={{
-              padding: '7px 12px', borderRadius: 8, fontSize: 12,
-              border: `1px solid ${BORDER}`,
-              background: '#fff', cursor: 'pointer', color: COLOR_SECONDARY,
-              whiteSpace: 'nowrap',
-              transition: 'border-color 0.15s, color 0.15s',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = ACCENT
-              e.currentTarget.style.color = ACCENT
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = BORDER
-              e.currentTarget.style.color = COLOR_SECONDARY
-            }}
-          >
-            Auswahl aufheben
-          </button>
-        )}
       </div>
 
-      {/* Count summary — shown when dropdown is closed and something is selected */}
-      {selectedIds.length > 0 && !isOpen && (
-        <div style={{ marginTop: 5, fontSize: 11, color: COLOR_SECONDARY, letterSpacing: '0.01em' }}>
-          {selectedIds.length === 1
-            ? '1 Abstimmung gefiltert'
-            : `${selectedIds.length} Abstimmungen gefiltert`}
-        </div>
-      )}
+      {/* Chips — always shown: "Alle" when nothing selected, otherwise selected poll chips */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
+        {selectedIds.length === 0 ? (
+          <span
+            style={{
+              display: 'inline-flex', alignItems: 'center',
+              padding: '2px 10px', borderRadius: 12,
+              background: ACCENT, fontSize: 12, color: '#fff',
+            }}
+          >
+            Alle
+          </span>
+        ) : (
+          <>
+            <span
+              onClick={() => onChange([])}
+              style={{
+                display: 'inline-flex', alignItems: 'center',
+                padding: '2px 10px', borderRadius: 12,
+                background: '#f0f0f0', fontSize: 12, color: '#333',
+                cursor: 'pointer',
+              }}
+            >
+              Alle
+            </span>
+            {selectedIds.map(id => {
+              const poll = pollMap.get(id)
+              if (!poll) return null
+              return (
+                <span
+                  key={id}
+                  title={poll.topic}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 4,
+                    padding: '2px 8px', borderRadius: 12,
+                    background: ACCENT_LIGHT, fontSize: 12, color: '#333',
+                    border: `1px solid ${ACCENT}44`,
+                  }}
+                >
+                  {truncate(poll.topic, 40)}
+                  <button
+                    aria-label={`Entferne ${poll.topic}`}
+                    onClick={() => removePoll(id)}
+                    style={{
+                      background: 'none', border: 'none', cursor: 'pointer',
+                      padding: 0, fontSize: 13, color: '#888', lineHeight: 1,
+                    }}
+                  >
+                    ×
+                  </button>
+                </span>
+              )
+            })}
+          </>
+        )}
+      </div>
 
       {/* Dropdown */}
       {isOpen && (
