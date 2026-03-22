@@ -1,14 +1,32 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { usePeriod } from '@/lib/period-context'
-import { fetchData, dataUrl, EmbeddingsFile, Politician, VoteRecord, Poll, CohesionRecord } from '@/lib/data'
+import { fetchData, dataUrl, EmbeddingsFile, EmbeddingPoint, Politician, VoteRecord, Poll, CohesionRecord } from '@/lib/data'
 import { VoteMapScatter } from '@/components/charts/VoteMapScatter'
 import { VoteHeatmap } from '@/components/charts/VoteHeatmap'
 import { CohesionChart } from '@/components/charts/CohesionChart'
+import { PoliticianSearch } from '@/components/charts/PoliticianSearch'
 import { PollFilter } from '@/components/charts/PollFilter'
 import { ChartSkeleton } from '@/components/ui/ChartSkeleton'
 import { Footer } from '@/components/ui/Footer'
 import { COLOR_SECONDARY } from '@/lib/constants'
+
+/** Computes per-party cohesion as mean Euclidean distance from each politician to the party centroid. */
+function computeCohesion(points: EmbeddingPoint[], politicians: Politician[]): CohesionRecord[] {
+  const polMap = new Map(politicians.map(p => [p.politician_id, p]))
+  const partyPoints = new Map<string, { x: number; y: number }[]>()
+  for (const pt of points) {
+    const label = polMap.get(pt.politician_id)?.party.replace(/\u00ad/g, '') ?? 'fraktionslos'
+    if (!partyPoints.has(label)) partyPoints.set(label, [])
+    partyPoints.get(label)!.push({ x: pt.x, y: pt.y })
+  }
+  return Array.from(partyPoints.entries()).filter(([label]) => label !== 'fraktionslos').map(([label, pts]) => {
+    const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length
+    const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length
+    const streuung = pts.reduce((s, p) => s + Math.sqrt((p.x - cx) ** 2 + (p.y - cy) ** 2), 0) / pts.length
+    return { party: label, label, streuung }
+  })
+}
 
 export default function VoteMapPage() {
   const { activePeriodId } = usePeriod()
@@ -30,11 +48,10 @@ export default function VoteMapPage() {
     Promise.all([
       fetchData<EmbeddingsFile>(dataUrl('embeddings_{period}.json', activePeriodId)),
       fetchData<Politician[]>(dataUrl('politicians_{period}.json', activePeriodId)),
-      fetchData<CohesionRecord[]>(dataUrl('cohesion_{period}.json', activePeriodId)),
-    ]).then(([emb, pols, coh]) => {
+    ]).then(([emb, pols]) => {
       setEmbeddings(emb)
       setPoliticians(pols)
-      setCohesion(coh)
+      setCohesion(computeCohesion(emb.data, pols))
       setLoading(false)
     }).catch(console.error)
   }, [activePeriodId])
@@ -77,6 +94,17 @@ export default function VoteMapPage() {
           />
         )}
       </div>
+
+      {/* Politician search — rendered as soon as politicians are loaded, synced with scatter */}
+      {!loading && (
+        <div className="mb-6">
+          <PoliticianSearch
+            politicians={politicians}
+            selected={selectedPolIds}
+            onSelectionChange={handleSelection}
+          />
+        </div>
+      )}
 
       {/* Heatmap */}
       <div className="rounded-xl border border-gray-100 p-4 mb-6">
