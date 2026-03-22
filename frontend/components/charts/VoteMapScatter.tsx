@@ -17,6 +17,11 @@ export function VoteMapScatter({
   embeddings, politicians, selectedIds, onSelectionChange, height = 600
 }: Props) {
   const chartRef = useRef<ReactECharts>(null)
+
+  // Stable ref to per-series point arrays in the same order as the ECharts series array.
+  // Used in the brush handler to avoid relying on getOption() normalization.
+  const seriesPointsRef = useRef<EmbeddingPoint[][]>([])
+
   const polMap = useMemo(
     () => new Map(politicians.map((p) => [p.politician_id, p])),
     [politicians]
@@ -34,64 +39,67 @@ export function VoteMapScatter({
     return map
   }, [embeddings, polMap])
 
-  const option: EChartsOption = useMemo(() => ({
-    animation: false,
-    brush: {
-      toolbox: ['rect', 'polygon', 'clear'],
-      brushLink: 'all',
-    },
-    toolbox: {
-      feature: {
-        brush: {
-          type: ['rect', 'polygon', 'clear'],
-          // Large icon size for touch targets (min 44px)
-          iconStyle: { borderWidth: 2 },
+  const option: EChartsOption = useMemo(() => {
+    const entries = Array.from(seriesByParty.entries())
+    // Keep ref in sync with the series order we pass to ECharts
+    seriesPointsRef.current = entries.map(([, pts]) => pts)
+    return {
+      animation: false,
+      brush: {
+        toolbox: ['rect', 'polygon', 'clear'],
+        brushLink: 'all',
+      },
+      toolbox: {
+        feature: {
+          brush: {
+            type: ['rect', 'polygon', 'clear'],
+            iconStyle: { borderWidth: 2 },
+          },
+        },
+        right: 16,
+        top: 8,
+        itemSize: 20,
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: (params: any) => {
+          const pol = polMap.get(params.data[2])
+          if (!pol) return ''
+          return `<b>${pol.name}</b><br/><span style="color:#999">${pol.party.replace(/\u00ad/g, '')}</span>`
         },
       },
-      right: 16,
-      top: 8,
-      itemSize: 20,
-    },
-    tooltip: {
-      trigger: 'item',
-      formatter: (params: any) => {
-        const pol = polMap.get(params.data[2])
-        if (!pol) return ''
-        return `<b>${pol.name}</b><br/><span style="color:#999">${pol.party.replace(/\u00ad/g, '')}</span>`
-      },
-    },
-    xAxis: { show: false },
-    yAxis: { show: false },
-    series: Array.from(seriesByParty.entries()).map(([party, points]) => ({
-      type: 'scatter',
-      name: party,
-      data: points.map((pt) => [pt.x, pt.y, pt.politician_id]),
-      symbolSize: 8,
-      itemStyle: {
-        color: PARTY_COLORS[party] ?? FALLBACK_COLOR,
-        opacity: 0.82,
-        borderColor: party === DARK_FILL_PARTY ? 'rgba(255,255,255,0.5)' : MARKER_OUTLINE,
-        borderWidth: 1,
-      },
-    })),
-    grid: { left: 0, right: 0, top: 40, bottom: 0 },
-  }), [seriesByParty, polMap])
+      xAxis: { show: false },
+      yAxis: { show: false },
+      series: entries.map(([party, points]) => ({
+        type: 'scatter',
+        name: party,
+        data: points.map((pt) => [pt.x, pt.y, pt.politician_id]),
+        symbolSize: 8,
+        itemStyle: {
+          color: PARTY_COLORS[party] ?? FALLBACK_COLOR,
+          opacity: 0.82,
+          borderColor: party === DARK_FILL_PARTY ? 'rgba(255,255,255,0.5)' : MARKER_OUTLINE,
+          borderWidth: 1,
+        },
+      })),
+      grid: { left: 0, right: 0, top: 40, bottom: 0 },
+    }
+  }, [seriesByParty, polMap])
 
-  // Handle brush selection events
+  // Handle brush selection events.
+  // brushselected gives per-series dataIndex values — look up directly from our ref
+  // to avoid any getOption() data normalization issues.
   useEffect(() => {
     const chart = chartRef.current?.getEchartsInstance()
     if (!chart) return
     const handler = (params: any) => {
-      // dataIndex is per-series, not a global index — look up via chart option
-      const seriesData = (chart.getOption() as any).series as any[]
       const ids: number[] = []
       for (const batch of params.batch ?? []) {
         for (const sel of batch.selected ?? []) {
-          const series = seriesData[sel.seriesIndex]
-          if (!series) continue
+          const pts = seriesPointsRef.current[sel.seriesIndex]
+          if (!pts) continue
           for (const idx of sel.dataIndex ?? []) {
-            const point = series.data[idx]
-            if (point) ids.push(point[2])  // data format: [x, y, politician_id]
+            if (pts[idx]) ids.push(pts[idx].politician_id)
           }
         }
       }
