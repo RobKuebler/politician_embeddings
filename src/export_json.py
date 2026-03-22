@@ -6,6 +6,7 @@ Writes to frontend/public/data/.
 
 import json
 import logging
+import math
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -78,10 +79,23 @@ def _active_months(
     return (end.year - start.year) * 12 + (end.month - start.month) + 1
 
 
+def _sanitize(obj: object) -> object:
+    """Recursively replace float NaN/inf with None so json.dumps produces valid JSON."""
+    if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+        return None
+    if isinstance(obj, dict):
+        return {k: _sanitize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize(v) for v in obj]
+    return obj
+
+
 def _write(path: Path, data: object) -> None:
     """Write data as JSON; create parent dirs if needed."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, default=str), encoding="utf-8")
+    path.write_text(
+        json.dumps(_sanitize(data), ensure_ascii=False, default=str), encoding="utf-8"
+    )
     log.info("Wrote %s (%.1f KB)", path, path.stat().st_size / 1024)
 
 
