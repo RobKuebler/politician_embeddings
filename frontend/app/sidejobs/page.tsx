@@ -59,7 +59,7 @@ export default function SidejobsPage() {
             <p className="text-xs mb-3" style={{ color: COLOR_SECONDARY }}>
               Monatliche und jährliche Zahlungen werden auf die Periodendauer hochgerechnet.
             </p>
-            <IncomeByPartyChart jobs={sjData.jobs} parties={parties} />
+            <IncomeByPartyChart jobs={sjData.jobs} parties={parties} politicians={politicians} />
           </section>
 
           <section className="rounded-xl border border-gray-100 p-4">

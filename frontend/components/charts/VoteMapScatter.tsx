@@ -165,6 +165,20 @@ export function VoteMapScatter({
       cg.append('circle').attr('r', arm + 2)
         .attr('fill', 'none').attr('stroke', partyColor).attr('stroke-width', 1.5)
 
+      // Party label above the centroid marker
+      cg.append('text')
+        .attr('y', -(arm + 8))
+        .attr('text-anchor', 'middle')
+        .style('font-size', '11px')
+        .style('font-weight', '700')
+        .style('fill', partyColor)
+        .style('paint-order', 'stroke')
+        .style('stroke', '#fff')
+        .style('stroke-width', '3px')
+        .style('stroke-linejoin', 'round')
+        .style('pointer-events', 'none')
+        .text(party)
+
       cg.style('cursor', 'pointer')
         .on('click', event => {
           event.stopPropagation()

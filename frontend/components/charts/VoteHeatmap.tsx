@@ -17,15 +17,15 @@ const VOTE_COLOR: Record<string, string> = {
   yes: '#46962B',
   no: '#E3000F',
   abstain: '#F5A623',
-  no_show: '#E0E0E0',
+  no_show: 'none',
 }
 
 const ML = 240         // left margin for y-labels
 const MR = 180         // right margin to catch rotated x-label overflow
 const HEADER_H = 110   // header height — must fit labels rotated -30° upward
-const ROW_H = 44       // row height
+const ROW_H = 22       // row height — matches DeviationHeatmap cell height
 const COL_W = 80       // minimum column width
-const MAX_VISIBLE_ROWS = 10
+const MAX_VISIBLE_ROWS = 20
 
 export function VoteHeatmap({ votes, polls, politicians, selectedPolIds, selectedPollIds }: Props) {
   const { ref: containerRef, width } = useContainerWidth()

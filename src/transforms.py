@@ -107,7 +107,7 @@ def compute_occupation_pivot(
 def compute_age_df(pols_df: pd.DataFrame, current_year: int) -> pd.DataFrame:
     """Add 'alter' (age) column; drops rows with missing year_of_birth."""
     age_df = (
-        pols_df[["party_label", "year_of_birth"]]
+        pols_df[["name", "party_label", "year_of_birth"]]
         .dropna(subset=["year_of_birth"])
         .copy()
     )

@@ -26,6 +26,24 @@ export const DARK_FILL_PARTY = 'CDU/CSU'
 
 export const NO_FACTION_LABEL = 'fraktionslos'
 
+/**
+ * Sort a list of party names by PARTY_ORDER (most seats first).
+ * Unknown parties come before fraktionslos, sorted alphabetically.
+ */
+export function sortParties(parties: string[]): string[] {
+  return [...parties].sort((a, b) => {
+    const ai = PARTY_ORDER.indexOf(a)
+    const bi = PARTY_ORDER.indexOf(b)
+    // Both known → use PARTY_ORDER index
+    if (ai !== -1 && bi !== -1) return ai - bi
+    // Only one known → known comes first, unless it's fraktionslos
+    if (ai !== -1) return a === NO_FACTION_LABEL ? 1 : -1
+    if (bi !== -1) return b === NO_FACTION_LABEL ? -1 : 1
+    // Both unknown → alphabetical
+    return a.localeCompare(b)
+  })
+}
+
 // Design tokens
 export const COLOR_SECONDARY = '#999'
 export const COLOR_BODY = '#666'

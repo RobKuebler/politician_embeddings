@@ -7,7 +7,7 @@ import { GenderChart } from '@/components/charts/GenderChart'
 import { DeviationHeatmap } from '@/components/charts/DeviationHeatmap'
 import { ChartSkeleton } from '@/components/ui/ChartSkeleton'
 import { Footer } from '@/components/ui/Footer'
-import { COLOR_SECONDARY } from '@/lib/constants'
+import { COLOR_SECONDARY, sortParties } from '@/lib/constants'
 
 export default function PartyProfilePage() {
   const { activePeriodId } = usePeriod()
@@ -21,6 +21,9 @@ export default function PartyProfilePage() {
       .then((d) => { setData(d); setLoading(false) })
       .catch(console.error)
   }, [activePeriodId])
+
+  // Sort parties by seat count (most seats first), fraktionslos always last.
+  const parties = data ? sortParties(data.parties) : []
 
   return (
     <>
@@ -36,12 +39,12 @@ export default function PartyProfilePage() {
           <section className="rounded-xl border border-gray-100 p-4">
             <h2 className="font-semibold mb-1">Altersverteilung</h2>
             <p className="text-xs mb-3" style={{ color: COLOR_SECONDARY }}>Jeder Punkt = ein Abgeordneter.</p>
-            <AgeDistribution data={data.age} parties={data.parties} />
+            <AgeDistribution data={data.age} parties={parties} />
           </section>
 
           <section className="rounded-xl border border-gray-100 p-4">
             <h2 className="font-semibold mb-3">Geschlecht</h2>
-            <GenderChart data={data.sex} parties={data.parties} />
+            <GenderChart data={data.sex} parties={parties} />
           </section>
 
           <section className="rounded-xl border border-gray-100 p-4">

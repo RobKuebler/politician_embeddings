@@ -70,7 +70,7 @@ export interface DeviationPivot {
 
 export interface PartyProfileFile {
   parties: string[]
-  age: { party: string; age: number }[]
+  age: { name: string; party: string; age: number }[]
   sex: { party_label: string; geschlecht: string; count: number; pct: number }[]
   titles: { party_label: string; titel: string; count: number; pct: number }[]
   occupation: DeviationPivot

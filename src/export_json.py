@@ -217,7 +217,7 @@ def _export_party_profile(period_id: int, pols_df: pd.DataFrame) -> None:
         OUTPUT_DIR / f"party_profile_{period_id}.json",
         {
             "parties": party_labels_ordered,
-            "age": age_df[["party_label", "alter"]]
+            "age": age_df[["name", "party_label", "alter"]]
             .rename(columns={"party_label": "party", "alter": "age"})
             .to_dict("records"),
             "sex": sex_df.to_dict("records"),
