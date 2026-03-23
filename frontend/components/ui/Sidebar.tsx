@@ -142,7 +142,7 @@ export function Sidebar() {
             <Link
               key={href}
               href={href}
-              className={`flex flex-col items-center gap-1 rounded-lg px-1.5 py-2 outline-none transition-opacity duration-150 ${
+              className={`flex flex-col items-center gap-1 rounded-lg px-1.5 py-2 outline-none focus:outline-none transition-opacity duration-150 ${
                 active ? "bg-[#4C46D9]" : "opacity-55 hover:opacity-85"
               }`}
             >
