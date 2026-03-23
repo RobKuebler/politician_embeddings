@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Syne } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/ui/Sidebar";
 import { BottomNav } from "@/components/ui/BottomNav";
 import { PeriodProvider } from "@/lib/period-context";
 import { PeriodSelector } from "@/components/ui/PeriodSelector";
 
-const syne = Syne({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <body className={`${syne.className} text-[#171613]`}>
+      <body className={`${plusJakarta.className} text-[#171613]`}>
         <PeriodProvider>
           <div className="flex min-h-screen">
             <Sidebar />

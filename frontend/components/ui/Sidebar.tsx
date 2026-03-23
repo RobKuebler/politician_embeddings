@@ -15,11 +15,15 @@ export function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col w-56 shrink-0 h-screen sticky top-0 border-r border-[#E3E0DA] bg-white px-3 py-5 gap-1">
       {/* Brand */}
-      <div className="px-3 py-3 mb-3">
+      <div className="px-3 pt-3 pb-4">
         <span className="text-[13px] font-extrabold tracking-[0.14em] text-[#171613] uppercase">
           Parlascanned
         </span>
-        <div className="w-5 h-[2.5px] bg-[#2347C8] mt-1.5 rounded-full" />
+        <div className="w-5 h-[2.5px] bg-[#2347C8] mt-1.5 rounded-full mb-3" />
+        <p className="text-[11px] font-bold tracking-[0.1em] uppercase text-[#9A9790] mb-1.5">
+          Wahlperiode
+        </p>
+        <PeriodSelector />
       </div>
 
       {/* Navigation */}
@@ -44,14 +48,6 @@ export function Sidebar() {
           );
         })}
       </nav>
-
-      {/* Period selector */}
-      <div className="border-t border-[#E3E0DA] pt-4 mt-2">
-        <p className="text-[11px] font-bold tracking-[0.1em] uppercase text-[#9A9790] mb-2 px-1">
-          Wahlperiode
-        </p>
-        <PeriodSelector />
-      </div>
     </aside>
   );
 }

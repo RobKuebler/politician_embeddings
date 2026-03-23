@@ -30,36 +30,36 @@ body {
 }
 
 /* ── Page fade-in ─────────────────────────────────────────────────────────── */
-@keyframes fadeUp {
+/* Only opacity — no transform. transform on an ancestor breaks position:fixed
+   on D3 tooltip descendants (creates a new containing block). */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 .fade-up {
-  animation: fadeUp 0.28s ease-out both;
+  animation: fadeIn 0.25s ease-out both;
 }
 
 /* Staggered children — for feature card grids etc. */
 .stagger > *:nth-child(1) {
-  animation: fadeUp 0.28s ease-out both 0ms;
+  animation: fadeIn 0.25s ease-out both 0ms;
 }
 .stagger > *:nth-child(2) {
-  animation: fadeUp 0.28s ease-out both 55ms;
+  animation: fadeIn 0.25s ease-out both 55ms;
 }
 .stagger > *:nth-child(3) {
-  animation: fadeUp 0.28s ease-out both 110ms;
+  animation: fadeIn 0.25s ease-out both 110ms;
 }
 .stagger > *:nth-child(4) {
-  animation: fadeUp 0.28s ease-out both 165ms;
+  animation: fadeIn 0.25s ease-out both 165ms;
 }
 .stagger > *:nth-child(5) {
-  animation: fadeUp 0.28s ease-out both 220ms;
+  animation: fadeIn 0.25s ease-out both 220ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
