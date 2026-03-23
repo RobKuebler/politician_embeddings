@@ -547,7 +547,9 @@ def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> No
     log.info("Saved %d sidejobs for period %d.", len(df), period_id)
 
 
-def upsert_committees(period_id: int, mandate_to_politician: dict[int, int]) -> None:
+def upsert_committees(
+    period_id: int, mandate_to_politician: dict[int, int]
+) -> None:
     """Fetch committees and memberships for a period, save as CSVs.
 
     Produces two files:
@@ -555,7 +557,9 @@ def upsert_committees(period_id: int, mandate_to_politician: dict[int, int]) -> 
       - committee_memberships.csv: politician_id, committee_id, role
     """
     log.info("Fetching committees for period %d...", period_id)
-    raw_committees = fetch_all_v2("committees", params={"field_legislature": period_id})
+    raw_committees = fetch_all_v2(
+        "committees", params={"field_legislature": period_id}
+    )
     committee_rows = []
     for c in raw_committees:
         topics = [t["label"] for t in (c.get("field_topics") or [])]

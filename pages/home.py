@@ -23,6 +23,22 @@ st.html(
     """
 )
 
+# Make all three cards the same height.
+st.html(
+    """
+    <style>
+    div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-testid="stVerticalBlockBorderWrapper"] {
+        height: 100%;
+    }
+    div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-testid="stVerticalBlockBorderWrapper"] > div {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    </style>
+    """
+)
+
 col1, col2, col3 = st.columns(3)
 
 with col1, st.container(border=True):

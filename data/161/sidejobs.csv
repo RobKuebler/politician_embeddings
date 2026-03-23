@@ -1,20 +1,4 @@
 politician_id,job_title,job_title_extra,organization,income_level,income,interval,created,date_start,date_end,category,topics
-120442,"Mitglied des Beirates, ehrenamtlich (ab 04.02.2026)",,Katholische Akademie für Berufe im Gesundheits- und Sozialwesen in Bayern e.V.,,,,1773918787,,,29230,Gesundheit|Bildung und Erziehung
-130072,Mitglied des Kuratoriums (ab 24.06.2025),,Internationale Journalisten-Programme e.V. (IJP),,,,1773918637,,,29230,"Bildung und Erziehung|Medien, Kommunikation und Informationstechnik|Medien"
-145751,Mitglied der Bezirksvertretung Scharnhorst,Einkommen ab Januar 2026,Stadt Dortmund,,824.0,1,1773918391,2026-01-01,,29229,Staat und Verwaltung
-145751,Mitglied der Bezirksvertretung Scharnhorst,Einkommen bis Dezember 2025,Stadt Dortmund,,769.9,1,1773918363,,2025-12-31,29229,Staat und Verwaltung
-175489,"Mitglied des Kuratoriums zur Rettung der Kölner Historischen Stadt- und Wallraf-Bibliothek, ehrenamtlich",,Universitäts- und Stadtbibliothek Köln,,,,1773917947,,,29229,Bildung und Erziehung
-79299,Mitglied des Aufsichtsrates (ab 28.01.2026),,Bundesgesellschaft für Endlagerung mbH (BGE),,,,1773916943,,,29228,"Energie|Umwelt|Wirtschaft|Wissenschaft, Forschung und Technologie|Technologiefolgenabschätzung"
-79468,"Vorsitzende, von Amts wegen (ab 01.01.2026)",,Gemeinsame Wissenschaftskonferenz (GWK),,,,1773916619,,,29229,Wirtschaft
-79238,Immobilienmakler - Kunde A-S,Einkommen im Jahr 2025,Immobilienmakler - selbständig,2,4617.2,,1773916385,2025-01-01,2025-12-31,29647,"Raumordnung, Bau- und Wohnungswesen"
-79238,Immobilienmakler - Kunde GA-S,Einkommen im Jahr 2025,Immobilienmakler - selbständig,1,2512.0,,1773916360,2025-01-01,2025-12-31,29647,"Raumordnung, Bau- und Wohnungswesen"
-145870,Stellv. Mitglied des Verwaltungsrates (ab 11.02.2026),,Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin),,,,1773843988,,,29229,"Öffentliche Finanzen, Steuern und Abgaben|Staat und Verwaltung"
-145870,Vertrauensmann bei der LBS Landesbausparkasse NordWest (ehm. LBS Westdeutsche Landesbausparkasse),Einkommen im Jahr 2026,Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin),1,1690.46,,1773843850,2026-01-01,2026-12-31,29647,"Öffentliche Finanzen, Steuern und Abgaben|Finanzen|Staat und Verwaltung"
-150288,Mitglied des Stiftungsrates,,Stiftung Berliner Schloss - Humboldtforum,,,,1773843690,,,29230,Kultur
-150288,Stellv. Mitglied des Stiftungsrates (ab 25.09.2025),,Bundesstiftung Bauakademie,,,,1773843625,,,29230,"Raumordnung, Bau- und Wohnungswesen|Kultur"
-150288,Beratendes Mitglied des Stiftungsrates (ab 06.11.2025),,Stiftung Preußischer Kulturbesitz,,,,1773843560,,,29229,Kultur
-150288,Mitglied des Kuratoriums (ab 17.06.2025),,Stiftung Haus der Geschichte der Bundesrepublik Deutschland,,,,1773843516,,,29229,"Kultur|Politisches Leben, Parteien"
-175892,Mitglied des Kuratoriums (ab 26.01.2026),,Stiftung Bundespräsident-Theodor-Heuss-Haus,,,,1773843357,,,29229,"Kultur|Politisches Leben, Parteien"
 182845,"Mitglied des Kuratoriums, ehrenamtlich (ab 13.02.2026)",,Stiftung Bürger für Bürger,,,,1773754608,,,29230,"Gesellschaftspolitik, soziale Gruppen"
 175138,Mitglied der Versammlung,,Medienanstalt Sachsen-Anhalt,,,,1773653921,,,29229,"Medien, Kommunikation und Informationstechnik"
 142259,Mitglied des Aufsichtsrates,Einkommen im Jahr 2025,Sozialnetzwerk Arche e.V.,4,16387.0,,1773389304,2025-01-01,2025-12-31,29230,"Gesellschaftspolitik, soziale Gruppen"
@@ -765,7 +749,7 @@ politician_id,job_title,job_title_extra,organization,income_level,income,interva
 79468,Mitglied des Kuratoriums (ab 27.07.2025),,Gesellschaft der Freunde von Bayreuth e.V.,,,,1768211744,,,29230,Kultur
 79468,"Mitglied des Kuratoriums, von Amts wegen (ab 06.05.2025)",,Deutsches Studierendenwerk e.V.,,,,1768211360,,,29230,Bildung und Erziehung
 79468,"Mitglied des Stiftungsrates, von Amts wegen (ab 06.05.2025)",,Alexander-von-Humboldt-Stiftung (AvH),,,,1768211263,,,29230,Kultur
-79468,"Stell. Vorsitzende, von Amts wegen (16.05. bis 31.12.2025)",,Gemeinsame Wissenschaftskonferenz (GWK),,,,1768210973,,,29229,Wirtschaft
+79468,"Stell. Vorsitzende, von Amts wegen (ab 16.05.2025)",,Gemeinsame Wissenschaftskonferenz (GWK),,,,1768210973,,,29229,Wirtschaft
 79468,"Mitglied des Kuratoriums, von Amts wegen (ab 06.05.2025)",,Deutsches Museum von Meisterwerken der Naturwissenschaft und Technik,,,,1768210633,,,29229,"Kultur|Wissenschaft, Forschung und Technologie"
 79468,Mitglied der Jury „TOP 100-Besten“ (bis 01.07.2025),,Compamedia GmbH,,,,1768210537,,,29228,Wirtschaft
 145741,Sachkundiger Bürger (bis 31.10.2025),Einkommen im Jahr 2025,Landschaftsverband Rheinland (LVR),2,3713.6,,1767959996,2025-01-01,2025-12-31,29229,"Staat und Verwaltung|Sport, Freizeit und Tourismus"
@@ -1423,7 +1407,7 @@ politician_id,job_title,job_title_extra,organization,income_level,income,interva
 183497,"Stadtverordneter, ehrenamtlich (bis 12.06.2025) ",,Stadt Eltville am Rhein,,,,1761639022,,,29229,Staat und Verwaltung
 183497,"Fraktionsreferent der AfD-Fraktion, Rückkehrrecht (Tätigkeit vor der Mitgliedschaft im Deutschen Bundestag)",,Hessischer Landtag,,,,1761638968,,,29234,"Politisches Leben, Parteien"
 130072,Vorsitzender des Kuratoriums,,RAG-Stiftung,6,60000.0,2,1761571572,,,29230,Energie|Kultur
-130072,Mitglied des Kuratoriums,,Brost-Stiftung,4,25200.0,2,1761570850,,,29230,"Kultur|Bildung und Erziehung|Gesellschaftspolitik, soziale Gruppen"
+130072,Mitglied des Kuratoriums,Einkommen ab 23.07.2025,Brost-Stiftung,4,25200.0,2,1761570850,2025-07-23,,29230,"Kultur|Bildung und Erziehung|Gesellschaftspolitik, soziale Gruppen"
 130072,Mitglied des Kuratoriums,,Alfried Krupp von Bohlen und Halbach-Stiftung,4,30000.0,2,1761570692,,,29230,Kultur
 130072,Mitglied des Beirates,,Postcode Lotterie DT gemeinnützige GmbH,,,,1761570372,,,29228,Wirtschaft
 121794,Beteiligung,Einkommen im Jahr 2025,HaVo AG,10,420590.0,,1761570108,2025-01-01,2025-12-31,29231,Wirtschaft
@@ -2974,7 +2958,7 @@ politician_id,job_title,job_title_extra,organization,income_level,income,interva
 29084,Mitglied des Vorstandes ,,Deutsch-Ukrainisches Forum e.V.,,,,1674547809,,,29230,"Gesellschaftspolitik, soziale Gruppen"
 145870,Stellv. Vorsitzender des Vorstandes,,RING BERUFLICHER BILDUNG e.V.,,,,1673897489,,,29230,Arbeit und Beschäftigung|Bildung und Erziehung
 145870,Mitglied des Beirates,,Deutsche Renten Information e.V.,,,,1673897390,,,29230,"Arbeit und Beschäftigung|Öffentliche Finanzen, Steuern und Abgaben|Finanzen"
-145870,Stellv. Mitglied des Kuratoriums (bis 13.10.2025),,KENFO – Fonds zur Finanzierung der kerntechnischen Entsorgung,,,,1673897333,,,29229,"Energie|Öffentliche Finanzen, Steuern und Abgaben|Finanzen|Umwelt"
+145870,Stellv. Mitglied des Kuratoriums,,KENFO – Fonds zur Finanzierung der kerntechnischen Entsorgung,,,,1673897333,,,29229,"Energie|Öffentliche Finanzen, Steuern und Abgaben|Finanzen|Umwelt"
 145878,"Mitglied des Rates, ehrenamtlich",,Stiftung für deutsch-polnische Zusammenarbeit (SdpZ),,,,1673897124,,,29230,Außenpolitik und internationale Beziehungen|Außenwirtschaft
 145878,Generalsekretär (ab 07.11.2022),,Christlich Demokratische Union Nordrhein-Westfalen,3,8950.0,1,1673896884,,,29647,"Politisches Leben, Parteien"
 78944,Mitglied des Aufsichtsrates,,Lüneburger Wohnungsbau GmbH (LüWoBau),,,,1673895951,,,29228,"Raumordnung, Bau- und Wohnungswesen"

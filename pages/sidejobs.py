@@ -38,15 +38,22 @@ def _active_months(
     date_end_str: str | None,
     period_start: date,
     period_end: date,
+    created_ts: float | None = None,
 ) -> int:
     """Compute the number of active months within a period.
 
     Clamps the job's date range to the period boundaries:
-      start = max(date_start or period_start, period_start)
+      start = max(date_start or created or period_start, period_start)
       end   = min(date_end or today or period_end, period_end, today)
+    Uses the created timestamp as fallback when date_start is missing.
     """
     today = datetime.now(tz=UTC).date()
-    job_start = date.fromisoformat(date_start_str) if date_start_str else period_start
+    if date_start_str:
+        job_start = date.fromisoformat(date_start_str)
+    elif created_ts:
+        job_start = datetime.fromtimestamp(created_ts, tz=UTC).date()
+    else:
+        job_start = period_start
     job_end = date.fromisoformat(date_end_str) if date_end_str else today
 
     start = max(job_start, period_start)
@@ -150,8 +157,11 @@ if has_period_dates:
         interval = str(row.get("interval", ""))
         ds = row.get("date_start") if pd.notna(row.get("date_start")) else None
         de = row.get("date_end") if pd.notna(row.get("date_end")) else None
+        created = row.get("created") if pd.notna(row.get("created")) else None
         if interval == "1":
-            return row["income"] * _active_months(ds, de, p_start, p_end)
+            # For monthly payments, use created timestamp as start fallback —
+            # the reporting date typically matches the payment start.
+            return row["income"] * _active_months(ds, de, p_start, p_end, created)
         if interval == "2":
             return row["income"] * (_active_months(ds, de, p_start, p_end) / 12)
         return row["income"]
