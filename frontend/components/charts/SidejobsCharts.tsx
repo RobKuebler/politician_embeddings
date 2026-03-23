@@ -5,6 +5,35 @@ import { useContainerWidth } from '@/hooks/useContainerWidth'
 import { SidejobRecord } from '@/lib/data'
 import { PARTY_COLORS, FALLBACK_COLOR } from '@/lib/constants'
 
+// ── Truncates axis tick labels to fit within maxPx; shows full text on hover ──
+
+function truncateLabels(
+  ax: d3.Selection<SVGGElement, unknown, null, undefined>,
+  maxPx: number,
+  tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>,
+) {
+  ax.selectAll<SVGTextElement, unknown>('text').each(function () {
+    const el = d3.select(this)
+    const full = el.text()
+    let truncated = full
+    while ((this as SVGTextElement).getComputedTextLength() > maxPx && truncated.length > 1) {
+      truncated = truncated.slice(0, -1)
+      el.text(truncated + '…')
+    }
+    if (truncated !== full) {
+      el.style('cursor', 'default')
+        .on('mousemove', (event: MouseEvent) => {
+          tooltip
+            .style('opacity', '1')
+            .style('left', `${event.clientX + 12}px`)
+            .style('top', `${event.clientY - 28}px`)
+            .html(full)
+        })
+        .on('mouseleave', () => tooltip.style('opacity', '0'))
+    }
+  })
+}
+
 // ── Shared tooltip div ────────────────────────────────────────────────────────
 
 function Tooltip({ ref: tooltipRef }: { ref: React.RefObject<HTMLDivElement | null> }) {
@@ -53,8 +82,11 @@ export function IncomeByPartyChart({ jobs, parties, politicians }: {
     const draw = (svgEl: SVGSVGElement, values: number[]) => {
       const sorted = parties.map((p, i) => ({ party: p, value: values[i] }))
 
-      const M = { left: 60, right: 16, top: 12, bottom: 40 }
-      const H = 280
+      const iW0 = width - 60 - 16
+      const tempScale = d3.scaleBand().domain(sorted.map(d => d.party)).range([0, iW0]).padding(0.25)
+      const needsRotation = tempScale.bandwidth() < 42
+      const M = { left: 60, right: 16, top: 12, bottom: needsRotation ? 100 : 52 }
+      const H = needsRotation ? 320 : 270
       const iW = width - M.left - M.right
       const iH = H - M.top - M.bottom
       const svg = d3.select(svgEl)
@@ -70,7 +102,18 @@ export function IncomeByPartyChart({ jobs, parties, politicians }: {
         .attr('transform', `translate(0,${iH})`)
         .call(d3.axisBottom(xScale).tickSize(0))
         .call(ax => ax.select('.domain').remove())
-        .call(ax => ax.selectAll('text').style('font-size', '11px'))
+        .call(ax => {
+          if (needsRotation) {
+            ax.selectAll('text')
+              .style('font-size', '11px')
+              .style('text-anchor', 'end')
+              .attr('dx', '-0.5em')
+              .attr('dy', '0.15em')
+              .attr('transform', 'rotate(-40)')
+          } else {
+            ax.selectAll('text').style('font-size', '11px')
+          }
+        })
 
       g.append('g')
         .call(d3.axisLeft(yScale).ticks(4).tickFormat(v => `${((v as number) / 1000).toFixed(0)}k`))
@@ -141,10 +184,8 @@ export function IncomeByCategoryChart({ jobs, parties }: { jobs: SidejobRecord[]
       return totB - totA
     })
     const cats = rows.map(r => r.cat as string)
-    const legendRows = Math.ceil(parties.length / 4)
-    const legendH = legendRows * 16 + 8
-    const H = Math.max(300, cats.length * 36 + 80) + legendH
-    const M = { left: 240, right: 16, top: 8, bottom: legendH + 36 }
+    const H = Math.max(300, cats.length * 36 + 80)
+    const M = { left: 240, right: 16, top: 8, bottom: 36 }
     const iW = width - M.left - M.right
     const iH = H - M.top - M.bottom
 
@@ -160,17 +201,18 @@ export function IncomeByCategoryChart({ jobs, parties }: { jobs: SidejobRecord[]
     const xScale = d3.scaleLinear().domain([0, xMax * 1.02]).range([0, iW])
     const yScale = d3.scaleBand().domain(cats).range([0, iH]).padding(0.2)
 
+    const tooltip = d3.select(tooltipRef.current!)
+
     g.append('g')
       .call(d3.axisLeft(yScale).tickSize(0))
       .call(ax => ax.select('.domain').remove())
       .call(ax => ax.selectAll('text').style('font-size', '10px'))
+      .call(ax => truncateLabels(ax, M.left - 8, tooltip))
 
     g.append('g')
       .attr('transform', `translate(0,${iH})`)
       .call(d3.axisBottom(xScale).ticks(4).tickFormat(v => `${((v as number) / 1000).toFixed(0)}k`))
       .call(ax => ax.select('.domain').remove())
-
-    const tooltip = d3.select(tooltipRef.current!)
 
     series.forEach(s => {
       const party = s.key
@@ -196,21 +238,23 @@ export function IncomeByCategoryChart({ jobs, parties }: { jobs: SidejobRecord[]
         .on('mouseleave', () => tooltip.style('opacity', '0'))
     })
 
-    // Legend
-    const legendG = svg.append('g').attr('transform', `translate(${M.left},${H - legendH})`)
-    parties.forEach((party, i) => {
-      const lx = (i % 4) * (iW / 4)
-      const ly = Math.floor(i / 4) * 16
-      legendG.append('rect').attr('x', lx).attr('y', ly).attr('width', 10).attr('height', 10).attr('fill', PARTY_COLORS[party] ?? FALLBACK_COLOR)
-      legendG.append('text').attr('x', lx + 14).attr('y', ly + 9).style('font-size', '10px').text(party)
-    })
   }, [jobs, parties, width])
 
   return (
-    <div className="overflow-x-auto">
-      <div ref={containerRef} style={{ position: 'relative', minWidth: 500 }}>
-        <svg ref={svgRef} style={{ display: 'block', width: '100%' }} />
-        <Tooltip ref={tooltipRef} />
+    <div>
+      <div className="overflow-x-auto">
+        <div ref={containerRef} style={{ position: 'relative', minWidth: 500 }}>
+          <svg ref={svgRef} style={{ display: 'block', width: '100%', overflow: 'visible' }} />
+          <Tooltip ref={tooltipRef} />
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
+        {parties.map(party => (
+          <span key={party} className="flex items-center gap-1 text-[10px] text-muted">
+            <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 2, background: PARTY_COLORS[party] ?? FALLBACK_COLOR, flexShrink: 0 }} />
+            {party}
+          </span>
+        ))}
       </div>
     </div>
   )
@@ -241,10 +285,8 @@ export function TopTopicsChart({ jobs, parties }: { jobs: SidejobRecord[]; parti
       .slice(0, 15)
       .map(t => t.topic)
 
-    const legendRows = Math.ceil(parties.length / 4)
-    const legendH = legendRows * 16 + 8
-    const H = Math.max(300, topTopics.length * 32 + 80) + legendH
-    const M = { left: 180, right: 16, top: 8, bottom: legendH + 36 }
+    const H = Math.max(300, topTopics.length * 32 + 80)
+    const M = { left: 210, right: 16, top: 8, bottom: 36 }
     const iW = width - M.left - M.right
     const iH = H - M.top - M.bottom
 
@@ -268,17 +310,18 @@ export function TopTopicsChart({ jobs, parties }: { jobs: SidejobRecord[]; parti
     const xScale = d3.scaleLinear().domain([0, xMax * 1.02]).range([0, iW])
     const yScale = d3.scaleBand().domain(topTopics).range([0, iH]).padding(0.2)
 
+    const tooltip = d3.select(tooltipRef.current!)
+
     g.append('g')
       .call(d3.axisLeft(yScale).tickSize(0))
       .call(ax => ax.select('.domain').remove())
       .call(ax => ax.selectAll('text').style('font-size', '10px'))
+      .call(ax => truncateLabels(ax, M.left - 8, tooltip))
 
     g.append('g')
       .attr('transform', `translate(0,${iH})`)
       .call(d3.axisBottom(xScale).ticks(4).tickFormat(v => `${((v as number) / 1000).toFixed(0)}k`))
       .call(ax => ax.select('.domain').remove())
-
-    const tooltip = d3.select(tooltipRef.current!)
 
     series.forEach(s => {
       const party = s.key
@@ -304,20 +347,23 @@ export function TopTopicsChart({ jobs, parties }: { jobs: SidejobRecord[]; parti
         .on('mouseleave', () => tooltip.style('opacity', '0'))
     })
 
-    const legendG = svg.append('g').attr('transform', `translate(${M.left},${H - legendH})`)
-    parties.forEach((party, i) => {
-      const lx = (i % 4) * (iW / 4)
-      const ly = Math.floor(i / 4) * 16
-      legendG.append('rect').attr('x', lx).attr('y', ly).attr('width', 10).attr('height', 10).attr('fill', PARTY_COLORS[party] ?? FALLBACK_COLOR)
-      legendG.append('text').attr('x', lx + 14).attr('y', ly + 9).style('font-size', '10px').text(party)
-    })
   }, [jobs, parties, width])
 
   return (
-    <div className="overflow-x-auto">
-      <div ref={containerRef} style={{ position: 'relative', minWidth: 500 }}>
-        <svg ref={svgRef} style={{ display: 'block', width: '100%' }} />
-        <Tooltip ref={tooltipRef} />
+    <div>
+      <div className="overflow-x-auto">
+        <div ref={containerRef} style={{ position: 'relative', minWidth: 520 }}>
+          <svg ref={svgRef} style={{ display: 'block', width: '100%', overflow: 'visible' }} />
+          <Tooltip ref={tooltipRef} />
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
+        {parties.map(party => (
+          <span key={party} className="flex items-center gap-1 text-[10px] text-muted">
+            <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 2, background: PARTY_COLORS[party] ?? FALLBACK_COLOR, flexShrink: 0 }} />
+            {party}
+          </span>
+        ))}
       </div>
     </div>
   )
@@ -366,17 +412,18 @@ export function TopEarnersChart({
     const xScale = d3.scaleLinear().domain([0, xMax * 1.05]).range([0, iW])
     const yScale = d3.scaleBand().domain(names).range([0, iH]).padding(0.25)
 
+    const tooltip = d3.select(tooltipRef.current!)
+
     g.append('g')
       .call(d3.axisLeft(yScale).tickSize(0))
       .call(ax => ax.select('.domain').remove())
       .call(ax => ax.selectAll('text').style('font-size', '11px'))
+      .call(ax => truncateLabels(ax, M.left - 8, tooltip))
 
     g.append('g')
       .attr('transform', `translate(0,${iH})`)
       .call(d3.axisBottom(xScale).ticks(4).tickFormat(v => `${((v as number) / 1000).toFixed(0)}k`))
       .call(ax => ax.select('.domain').remove())
-
-    const tooltip = d3.select(tooltipRef.current!)
 
     g.selectAll<SVGRectElement, typeof top[number]>('rect')
       .data(top)
