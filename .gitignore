@@ -29,6 +29,7 @@ checkpoints/
 
 # Superpowers brainstorming sessions
 .superpowers/
+docs/superpowers/
 
 # Git worktrees
 .worktrees/
