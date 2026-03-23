@@ -146,12 +146,17 @@ export function IncomeByPartyChart({
           if (needsRotation) {
             ax.selectAll("text")
               .style("font-size", "11px")
+              .style("font-family", '"Plus Jakarta Sans", sans-serif')
+              .style("fill", "#9A9790")
               .style("text-anchor", "end")
               .attr("dx", "-0.5em")
               .attr("dy", "0.15em")
               .attr("transform", "rotate(-40)");
           } else {
-            ax.selectAll("text").style("font-size", "11px");
+            ax.selectAll("text")
+              .style("font-size", "11px")
+              .style("font-family", '"Plus Jakarta Sans", sans-serif')
+              .style("fill", "#9A9790");
           }
         });
 
@@ -163,6 +168,13 @@ export function IncomeByPartyChart({
             .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
         )
         .call((ax) => ax.select(".domain").remove())
+        .call((ax) =>
+          ax
+            .selectAll("text")
+            .style("font-size", "11px")
+            .style("font-family", '"Plus Jakarta Sans", sans-serif')
+            .style("fill", "#9A9790"),
+        )
         .call((ax) => ax.selectAll(".tick line").attr("stroke", "#eee"));
 
       const tooltip = d3.select(tooltipRef.current!);
@@ -276,7 +288,13 @@ export function IncomeByCategoryChart({
     g.append("g")
       .call(d3.axisLeft(yScale).tickSize(0))
       .call((ax) => ax.select(".domain").remove())
-      .call((ax) => ax.selectAll("text").style("font-size", "10px"))
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      )
       .call((ax) =>
         truncateLabels(ax, M.left - 8, tooltip, containerRef.current!),
       );
@@ -289,7 +307,14 @@ export function IncomeByCategoryChart({
           .ticks(4)
           .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
       )
-      .call((ax) => ax.select(".domain").remove());
+      .call((ax) => ax.select(".domain").remove())
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      );
 
     series.forEach((s) => {
       const party = s.key;
@@ -428,7 +453,13 @@ export function TopTopicsChart({
     g.append("g")
       .call(d3.axisLeft(yScale).tickSize(0))
       .call((ax) => ax.select(".domain").remove())
-      .call((ax) => ax.selectAll("text").style("font-size", "10px"))
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      )
       .call((ax) =>
         truncateLabels(ax, M.left - 8, tooltip, containerRef.current!),
       );
@@ -441,7 +472,14 @@ export function TopTopicsChart({
           .ticks(4)
           .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
       )
-      .call((ax) => ax.select(".domain").remove());
+      .call((ax) => ax.select(".domain").remove())
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      );
 
     series.forEach((s) => {
       const party = s.key;
@@ -570,7 +608,13 @@ export function TopEarnersChart({
     g.append("g")
       .call(d3.axisLeft(yScale).tickSize(0))
       .call((ax) => ax.select(".domain").remove())
-      .call((ax) => ax.selectAll("text").style("font-size", "11px"))
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      )
       .call((ax) =>
         truncateLabels(ax, M.left - 8, tooltip, containerRef.current!),
       );

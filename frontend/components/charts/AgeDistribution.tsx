@@ -72,7 +72,12 @@ export function AgeDistribution({ data, parties }: Props) {
       .call(d3.axisLeft(yScale).tickSize(0))
       .call((ax) => ax.select(".domain").remove())
       .call((ax) =>
-        ax.selectAll("text").style("font-size", "11px").attr("dx", "-6"),
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790")
+          .attr("dx", "-6"),
       );
 
     // Clipped group for everything x-dependent
@@ -195,7 +200,11 @@ export function AgeDistribution({ data, parties }: Props) {
         .call(d3.axisBottom(xS).ticks(8).tickSize(0))
         .call((ax) => ax.select(".domain").remove())
         .call((ax) =>
-          ax.selectAll("text").style("fill", "#888").style("font-size", "11px"),
+          ax
+            .selectAll("text")
+            .style("fill", "#9A9790")
+            .style("font-size", "11px")
+            .style("font-family", '"Plus Jakarta Sans", sans-serif'),
         );
 
       // Violin paths

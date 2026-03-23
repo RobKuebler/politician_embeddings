@@ -186,7 +186,9 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .call((ax) =>
           ax
             .selectAll("text")
-            .style("font-size", "10px")
+            .style("font-size", "11px")
+            .style("font-family", '"Plus Jakarta Sans", sans-serif')
+            .style("fill", "#9A9790")
             .attr("transform", "rotate(-30)")
             .attr("text-anchor", "start")
             .attr("dy", "-0.4em")
@@ -231,7 +233,13 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .attr("transform", `translate(${ML}, ${HEADER_H})`)
         .call(d3.axisLeft(yScale).tickSize(0))
         .call((ax) => ax.select(".domain").remove())
-        .call((ax) => ax.selectAll("text").style("font-size", "10px"))
+        .call((ax) =>
+          ax
+            .selectAll("text")
+            .style("font-size", "11px")
+            .style("font-family", '"Plus Jakarta Sans", sans-serif')
+            .style("fill", "#9A9790"),
+        )
         .call((ax) =>
           truncateAxisLabels(ax, ML - 8, tooltip, containerRef.current!),
         );
@@ -287,7 +295,13 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .attr("transform", `translate(${ML}, 0)`)
         .call(d3.axisLeft(yScale).tickSize(0))
         .call((ax) => ax.select(".domain").remove())
-        .call((ax) => ax.selectAll("text").style("font-size", "10px"))
+        .call((ax) =>
+          ax
+            .selectAll("text")
+            .style("font-size", "11px")
+            .style("font-family", '"Plus Jakarta Sans", sans-serif')
+            .style("fill", "#9A9790"),
+        )
         .call((ax) =>
           truncateAxisLabels(ax, ML - 8, tooltip, containerRef.current!),
         );

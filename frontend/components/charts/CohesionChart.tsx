@@ -50,7 +50,13 @@ export function CohesionChart({ cohesion, height = 300 }: Props) {
     g.append("g")
       .call(d3.axisLeft(yScale).tickSize(0))
       .call((ax) => ax.select(".domain").remove())
-      .call((ax) => ax.selectAll("text").style("font-size", "11px"));
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      );
 
     const tooltip = d3.select(tooltipRef.current!);
 

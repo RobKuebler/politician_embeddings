@@ -50,7 +50,13 @@ export function GenderChart({
       .attr("transform", `translate(0,${iH})`)
       .call(d3.axisBottom(xScale).tickSize(0))
       .call((ax) => ax.select(".domain").remove())
-      .call((ax) => ax.selectAll("text").style("font-size", "11px"));
+      .call((ax) =>
+        ax
+          .selectAll("text")
+          .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790"),
+      );
 
     g.append("g")
       .call(
@@ -109,6 +115,8 @@ export function GenderChart({
         .attr("x", i * 90 + 16)
         .attr("y", 10)
         .style("font-size", "11px")
+        .style("font-family", '"Plus Jakarta Sans", sans-serif')
+        .style("fill", "#9A9790")
         .text(gender);
     });
   }, [data, parties, width]);

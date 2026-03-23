@@ -115,6 +115,8 @@ export function VoteHeatmap({
         ax
           .selectAll("text")
           .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790")
           .attr("transform", "rotate(-30)")
           .attr("text-anchor", "start")
           .attr("dy", "-0.5em")
@@ -141,6 +143,8 @@ export function VoteHeatmap({
         ax
           .selectAll<SVGTextElement, string>("text")
           .style("font-size", "11px")
+          .style("font-family", '"Plus Jakarta Sans", sans-serif')
+          .style("fill", "#9A9790")
           .style("cursor", "default")
           .on("mousemove", function (event, id) {
             const full = yTopicFull.get(id);
