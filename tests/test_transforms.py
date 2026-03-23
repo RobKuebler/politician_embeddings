@@ -129,7 +129,9 @@ def test_occupation_pivot_dev_z_shape():
 
 
 def make_pols_age(rows: list[tuple]) -> pd.DataFrame:
-    return pd.DataFrame(rows, columns=["party_label", "year_of_birth"])
+    df = pd.DataFrame(rows, columns=["party_label", "year_of_birth"])
+    df["name"] = "Test Person"
+    return df
 
 
 def test_age_df_calculates_alter():
