@@ -9,8 +9,8 @@ const NAV_ITEMS = [
     label: "Start",
     icon: (active: boolean) => (
       <svg
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -28,8 +28,8 @@ const NAV_ITEMS = [
     label: "Abstimmungen",
     icon: (active: boolean) => (
       <svg
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -47,8 +47,8 @@ const NAV_ITEMS = [
     label: "Parteiprofil",
     icon: (active: boolean) => (
       <svg
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -68,8 +68,8 @@ const NAV_ITEMS = [
     label: "Nebeneinkünfte",
     icon: (active: boolean) => (
       <svg
-        width="22"
-        height="22"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -88,7 +88,7 @@ const NAV_ITEMS = [
 export function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="hidden md:flex flex-col w-[96px] shrink-0 h-screen sticky top-0 bg-[#1E1B5E]">
+    <aside className="hidden md:flex flex-col w-[120px] shrink-0 h-screen sticky top-0 bg-[#1E1B5E]">
       {/* Logo */}
       <div className="flex justify-center pt-[14px] pb-[10px]">
         <div className="w-9 h-9 bg-[#4C46D9] rounded-[9px] flex items-center justify-center">
@@ -120,7 +120,7 @@ export function Sidebar() {
                 {icon(active)}
               </span>
               <span
-                className={`text-[8px] font-bold tracking-wide ${active ? "text-white" : "text-[#A8A5E0]"}`}
+                className={`text-[9px] font-bold tracking-wide ${active ? "text-white" : "text-[#A8A5E0]"}`}
               >
                 {label}
               </span>
