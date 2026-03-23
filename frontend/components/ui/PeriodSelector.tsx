@@ -33,11 +33,10 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
 
   const rawLabel =
     periods.find((p) => p.period_id === activePeriodId)?.label ?? "";
-  // In the compact sidebar button: "Bundestag 2021 - 2025" → "21–25"
-  const compactLabel = (label: string) =>
-    label.replace(/bundestag\s*20/i, "").replace(/\s*-\s*20(\d{2})\s*$/, "–$1");
+  // Normalize the API dash: "Bundestag 2021 - 2025" → "Bundestag 2021–2025"
+  const normalizeLabel = (label: string) => label.replace(/\s*-\s*/g, "–");
 
-  const displayLabel = isSidebar ? compactLabel(rawLabel) : rawLabel;
+  const displayLabel = normalizeLabel(rawLabel);
 
   return (
     <div className="relative" ref={containerRef}>
@@ -105,7 +104,7 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
                       : "text-[#1E1B5E] hover:bg-[#F0EFF9]"
                 }`}
               >
-                {isSidebar ? compactLabel(p.label) : p.label}
+                {normalizeLabel(p.label)}
               </button>
             );
           })}
