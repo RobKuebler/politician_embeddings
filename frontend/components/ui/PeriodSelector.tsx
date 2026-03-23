@@ -49,6 +49,7 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
       <select
         value={activePeriodId ?? ""}
         onChange={(e) => setActivePeriodId(Number(e.target.value))}
+        aria-label="Wahlperiode auswählen"
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
       >
         {periods.map((p) => (
