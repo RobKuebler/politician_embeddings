@@ -7,6 +7,33 @@ import { sortParties } from '@/lib/constants'
 
 interface Props { pivot: DeviationPivot; height?: number }
 
+function truncateAxisLabels(
+  ax: d3.Selection<SVGGElement, unknown, null, undefined>,
+  maxPx: number,
+  tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>,
+) {
+  ax.selectAll<SVGTextElement, unknown>('text').each(function () {
+    const el = d3.select(this)
+    const full = el.text()
+    let truncated = full
+    while ((this as SVGTextElement).getComputedTextLength() > maxPx && truncated.length > 1) {
+      truncated = truncated.slice(0, -1)
+      el.text(truncated + '…')
+    }
+    if (truncated !== full) {
+      el.style('cursor', 'default')
+        .on('mousemove', (event: MouseEvent) => {
+          tooltip
+            .style('opacity', '1')
+            .style('left', `${event.clientX + 12}px`)
+            .style('top', `${event.clientY - 28}px`)
+            .html(full)
+        })
+        .on('mouseleave', () => tooltip.style('opacity', '0'))
+    }
+  })
+}
+
 const ML = 160      // left margin for y-labels
 const MR = 40       // right margin — extra room for last label extending rightward
 const HEADER_H = 84 // sticky header height — room for rotated party labels
@@ -50,16 +77,18 @@ function drawCells(
     })
     .on('mouseleave', () => tooltip.style('opacity', '0'))
 
-  if (xScale.bandwidth() > 20) {
+  const bw = xScale.bandwidth()
+  if (bw > 10) {
+    const fontSize = bw < 20 ? '7px' : '9px'
     g.selectAll<SVGTextElement, Cell>('text.cell-label')
       .data(cells.filter(c => c.dev !== null))
       .join('text')
       .attr('class', 'cell-label')
-      .attr('x', d => (xScale(pivot.parties[d.partyIdx]) ?? 0) + xScale.bandwidth() / 2)
+      .attr('x', d => (xScale(pivot.parties[d.partyIdx]) ?? 0) + bw / 2)
       .attr('y', d => (yScale(pivot.categories[d.catIdx]) ?? 0) + yScale.bandwidth() / 2)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')
-      .style('font-size', '9px')
+      .style('font-size', fontSize)
       .style('pointer-events', 'none')
       .style('fill', d => Math.abs(d.dev!) > maxDev * 0.5 ? '#fff' : '#333')
       .text(d => `${d.dev! > 0 ? '+' : ''}${d.dev!.toFixed(0)}`)
@@ -154,6 +183,7 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .call(d3.axisLeft(yScale).tickSize(0))
         .call(ax => ax.select('.domain').remove())
         .call(ax => ax.selectAll('text').style('font-size', '10px'))
+        .call(ax => truncateAxisLabels(ax, ML - 8, tooltip))
 
       const g = svg.append('g').attr('transform', `translate(${ML}, ${HEADER_H})`)
       drawCells(g, cells, xScale, yScale, sortedPivot, colorScale, clampMax, tooltip)
@@ -183,6 +213,7 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .call(d3.axisLeft(yScale).tickSize(0))
         .call(ax => ax.select('.domain').remove())
         .call(ax => ax.selectAll('text').style('font-size', '10px'))
+        .call(ax => truncateAxisLabels(ax, ML - 8, tooltip))
 
       const g = bodySvg.append('g').attr('transform', `translate(${ML}, 0)`)
       drawCells(g, cells, xScale, yScale, sortedPivot, colorScale, clampMax, tooltip)
