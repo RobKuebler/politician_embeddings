@@ -31,7 +31,7 @@ export default function RootLayout({
             <main className="flex-1 min-w-0 px-4 py-6 md:px-8 pb-20 md:pb-10">
               {/* Mobile period selector */}
               <div className="md:hidden mb-4">
-                <PeriodSelector />
+                <PeriodSelector variant="light" />
               </div>
               <div className="fade-up">{children}</div>
             </main>
