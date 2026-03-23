@@ -1,1 +1,74 @@
 @import "tailwindcss";
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f4f3f0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Shimmer skeleton ─────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #eceae5 0%, #f5f3ee 50%, #eceae5 100%);
+  background-size: 1600px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ── Page fade-in ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.28s ease-out both;
+}
+
+/* Staggered children — for feature card grids etc. */
+.stagger > *:nth-child(1) {
+  animation: fadeUp 0.28s ease-out both 0ms;
+}
+.stagger > *:nth-child(2) {
+  animation: fadeUp 0.28s ease-out both 55ms;
+}
+.stagger > *:nth-child(3) {
+  animation: fadeUp 0.28s ease-out both 110ms;
+}
+.stagger > *:nth-child(4) {
+  animation: fadeUp 0.28s ease-out both 165ms;
+}
+.stagger > *:nth-child(5) {
+  animation: fadeUp 0.28s ease-out both 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .stagger > * {
+    animation: none !important;
+  }
+  .skeleton-shimmer {
+    animation: none;
+    background: #eceae5;
+  }
+}

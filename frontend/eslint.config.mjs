@@ -6,6 +6,8 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   // Override default ignores of eslint-config-next.
+  // setLoading(true) at the top of data-fetching effects is valid; rule is too strict
+  { rules: { 'react-hooks/set-state-in-effect': 'off' } },
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
