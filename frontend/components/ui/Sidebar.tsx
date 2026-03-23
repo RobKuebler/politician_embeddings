@@ -86,7 +86,10 @@ const NAV_ITEMS = [
 ];
 
 export function Sidebar() {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  // Next.js may return trailing slashes (e.g. "/party-profile/") — strip them for comparison
+  const pathname =
+    rawPathname !== "/" ? rawPathname.replace(/\/$/, "") : rawPathname;
   return (
     <aside className="hidden md:flex flex-col w-[120px] shrink-0 h-screen sticky top-0 bg-[#1E1B5E]">
       {/* Logo */}
