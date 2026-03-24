@@ -5,9 +5,14 @@ import { useEffect, useRef, useState } from "react";
 interface PeriodSelectorProps {
   /** "sidebar" = dark pill on navy bg | "light" = white pill on light bg (mobile, default) */
   variant?: "sidebar" | "light";
+  /** Hide the "Bundestag" label above the button (e.g. when shown externally) */
+  showLabel?: boolean;
 }
 
-export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
+export function PeriodSelector({
+  variant = "light",
+  showLabel = true,
+}: PeriodSelectorProps) {
   const { periods, activePeriodId, setActivePeriodId } = usePeriod();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,13 +49,15 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
   return (
     <div className="relative" ref={containerRef}>
       {/* Label above */}
-      <p
-        className={`text-[10px] font-bold tracking-[0.12em] uppercase mb-1 ${
-          isSidebar ? "text-white/40" : "text-[#1E1B5E]/50"
-        }`}
-      >
-        Bundestag
-      </p>
+      {showLabel && (
+        <p
+          className={`text-[10px] font-bold tracking-[0.12em] uppercase mb-1 ${
+            isSidebar ? "text-white/40" : "text-[#1E1B5E]/50"
+          }`}
+        >
+          Bundestag
+        </p>
+      )}
 
       {/* Trigger button */}
       <button
@@ -90,7 +97,7 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
       {/* Backdrop — mobile only: dims content below header when dropdown is open */}
       {open && isSidebar && (
         <div
-          className="fixed top-[52px] inset-x-0 bottom-0 z-[49] bg-black/20"
+          className="fixed top-[68px] inset-x-0 bottom-0 z-[49] bg-black/20"
           onClick={() => setOpen(false)}
           aria-hidden="true"
         />

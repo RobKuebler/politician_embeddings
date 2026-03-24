@@ -30,7 +30,7 @@ export default function RootLayout({
         <PeriodProvider>
           <div className="flex min-h-screen">
             <Sidebar />
-            <main className="flex-1 min-w-0 px-4 pt-[60px] py-6 md:pt-6 md:px-8 pb-24 md:pb-10">
+            <main className="flex-1 min-w-0 px-4 pt-[76px] py-6 md:pt-6 md:px-8 pb-24 md:pb-10">
               <div className="fade-up">{children}</div>
             </main>
           </div>
