@@ -448,8 +448,11 @@ def _parse_date(
     m = _RE_DMY.search(text)
     if m:
         day, month = int(m.group(1)), int(m.group(2))
-        year = int(m.group(3)) if m.group(3) else fallback_year
-        return f"{year:04d}-{month:02d}-{day:02d}" if year else None
+        if not (1 <= month <= 12 and 1 <= day <= 31):
+            pass  # malformed date in source data (e.g. "30.0.2024"); skip
+        else:
+            year = int(m.group(3)) if m.group(3) else fallback_year
+            return f"{year:04d}-{month:02d}-{day:02d}" if year else None
 
     m = _RE_MONTH_YEAR.search(text)
     if m:

@@ -1,1 +1,11 @@
-[{"party": "SPD", "streuung": 0.04710804011779737, "label": "SPD"}, {"party": "CDU/CSU", "streuung": 0.08094080719589414, "label": "CDU/CSU"}, {"party": "BÜNDNIS 90/­DIE GRÜNEN", "streuung": 0.37909197431320246, "label": "BÜNDNIS 90/DIE GRÜNEN"}, {"party": "AfD", "streuung": 0.5585877761990888, "label": "AfD"}, {"party": "Die Linke", "streuung": 1.0937135163220835, "label": "Die Linke"}]
+[
+  { "party": "SPD", "streuung": 0.21689198743713928, "label": "SPD" },
+  { "party": "CDU/CSU", "streuung": 0.2612888463684343, "label": "CDU/CSU" },
+  {
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "streuung": 0.5089608741297421,
+    "label": "BÜNDNIS 90/DIE GRÜNEN"
+  },
+  { "party": "AfD", "streuung": 0.786479320143882, "label": "AfD" },
+  { "party": "Die Linke", "streuung": 1.6939057610084314, "label": "Die Linke" }
+]
