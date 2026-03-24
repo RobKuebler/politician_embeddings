@@ -56,7 +56,7 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
         params.update({"range_start": range_start, "range_end": PAGE_SIZE})
         response = SESSION.get(f"{BASE_URL}/{endpoint}", params=params, timeout=15)
         response.raise_for_status()
-        page = response.json()["data"]
+        page = response.json().get("data") or []
         all_data.extend(page)
         if len(page) < PAGE_SIZE:
             break
@@ -105,7 +105,9 @@ def upsert_periods() -> int:
     # Find current active period
     today = datetime.now(tz=UTC).date().isoformat()
     for p in legislatures:
-        if p["start_date_period"] <= today <= p["end_date_period"]:
+        # Treat null end_date_period as "far future" (period is still ongoing).
+        end = p["end_date_period"] or "9999-12-31"
+        if p["start_date_period"] <= today <= end:
             log.info("Current period: %s (id=%d)", p["label"], p["id"])
             return p["id"]
     msg = "No active Bundestag legislative period found."
@@ -148,7 +150,7 @@ def fetch_politicians(period_id: int) -> tuple[pd.DataFrame, dict]:
                 active = [
                     fm
                     for fm in memberships
-                    if not fm.get("end_date") or fm.get("end_date") >= today
+                    if not fm.get("valid_until") or fm.get("valid_until") >= today
                 ]
                 # Fallback: if none are technically "active",
                 # take the last one in the list
@@ -180,6 +182,10 @@ def fetch_votes(
 
     append=False: overwrite the file and write header.
     append=True: open in append mode, no header (file already has one).
+
+    Votes are buffered per poll and written + flushed in one batch. This means
+    a crash between polls leaves no partial data: find_polls_missing_votes
+    would correctly re-detect the unfinished poll on the next run.
     """
     mode = "a" if append else "w"
     n = len(poll_ids)
@@ -192,11 +198,18 @@ def fetch_votes(
             log.info("[%d/%d] Fetching votes for poll %s...", i + 1, n, poll_id)
             try:
                 votes = fetch_all_v2("votes", params={"poll": poll_id})
+                # Use `or {}` to handle mandate=null (key exists, value is None):
+                # v.get("mandate", {}) returns None for null, so .get("id") crashes.
+                rows = []
                 for v in votes:
-                    m_id = v.get("mandate", {}).get("id")
-                    p_id = mandate_to_politician.get(m_id)
-                    if p_id:
-                        writer.writerow([p_id, poll_id, v["vote"]])
+                    m_id = (v.get("mandate") or {}).get("id")
+                    p_id = mandate_to_politician.get(m_id)  # type: ignore[arg-type]
+                    # Use .get("vote") so a missing key skips this row, not the poll.
+                    if p_id is not None and v.get("vote") is not None:
+                        rows.append([p_id, poll_id, v.get("vote")])
+                writer.writerows(rows)
+                f.flush()  # durably written before moving to next poll
+                log.info("  → %d votes written.", len(rows))
             except Exception:
                 log.exception("Error fetching votes for poll %s", poll_id)
 
@@ -321,7 +334,19 @@ def upsert_politicians(period_id: int) -> tuple[pd.DataFrame, dict]:
         df_merged = df_api.copy()
         log.info("No existing politicians CSV — wrote %d politicians.", len(df_api))
     else:
-        df_existing = pd.read_csv(path)
+        # Specify dtype=object for string columns so pandas doesn't coerce all-NaN
+        # columns to float64. Without this, a column like field_title that has only
+        # NaN values in the CSV is read as float64, and a subsequent .update() with
+        # string values (e.g. "Dr.") raises TypeError.
+        df_existing = pd.read_csv(
+            path,
+            dtype={
+                "occupation": object,
+                "field_title": object,
+                "sex": object,
+                "education": object,
+            },
+        )
         df_indexed = df_existing.set_index("politician_id")
         df_indexed.update(
             df_api.set_index("politician_id")
@@ -511,7 +536,7 @@ def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> No
         # Only match mandates that belong to this period (no cross-period lookup)
         politician_id = None
         for mandate in sj.get("mandates") or []:
-            pid = mandate_to_politician.get(mandate["id"])
+            pid = mandate_to_politician.get(mandate.get("id"))
             if pid is not None:
                 politician_id = pid
                 break
@@ -520,7 +545,15 @@ def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> No
 
         org = sj.get("sidejob_organization") or {}
         topics = [t["label"] for t in (sj.get("field_topics") or [])]
-        date_start, date_end = _parse_sidejob_dates(sj.get("job_title_extra"))
+        # Prefer job_title_extra for date parsing; fall back to parenthesised
+        # suffix in the label, e.g. "Mitglied des Aufsichtsrates (ab 01.01.2024)".
+        extra_text = sj.get("job_title_extra")
+        if not extra_text:
+            label = sj.get("label") or ""
+            paren = re.search(r"\(([^)]+)\)", label)
+            if paren:
+                extra_text = paren.group(1)
+        date_start, date_end = _parse_sidejob_dates(extra_text)
         rows.append(
             {
                 "politician_id": politician_id,
@@ -541,7 +574,23 @@ def upsert_sidejobs(period_id: int, mandate_to_politician: dict[int, int]) -> No
             }
         )
 
-    df = pd.DataFrame(rows)
+    # Explicit columns ensure a valid header is written even when rows is empty.
+    # pd.DataFrame([]) produces a headerless file that crashes on read.
+    _cols = [
+        "politician_id",
+        "job_title",
+        "job_title_extra",
+        "organization",
+        "income_level",
+        "income",
+        "interval",
+        "created",
+        "date_start",
+        "date_end",
+        "category",
+        "topics",
+    ]
+    df = pd.DataFrame(rows, columns=_cols)
     path = DATA_DIR / str(period_id) / "sidejobs.csv"
     df.to_csv(path, index=False)
     log.info("Saved %d sidejobs for period %d.", len(df), period_id)
@@ -566,7 +615,9 @@ def upsert_committees(period_id: int, mandate_to_politician: dict[int, int]) -> 
                 "topics": "|".join(topics),
             }
         )
-    df_committees = pd.DataFrame(committee_rows)
+    df_committees = pd.DataFrame(
+        committee_rows, columns=["committee_id", "label", "topics"]
+    )
     path = DATA_DIR / str(period_id) / "committees.csv"
     df_committees.to_csv(path, index=False)
     log.info("Saved %d committees.", len(df_committees))
@@ -578,18 +629,20 @@ def upsert_committees(period_id: int, mandate_to_politician: dict[int, int]) -> 
     )
     membership_rows = []
     for m in raw_memberships:
-        mandate_id = m.get("candidacy_mandate", {}).get("id")
-        p_id = mandate_to_politician.get(mandate_id)
+        mandate_id = (m.get("candidacy_mandate") or {}).get("id")
+        p_id = mandate_to_politician.get(mandate_id)  # type: ignore[arg-type]
         if p_id is None:
             continue
         membership_rows.append(
             {
                 "politician_id": p_id,
-                "committee_id": m.get("committee", {}).get("id"),
+                "committee_id": (m.get("committee") or {}).get("id"),
                 "role": m.get("committee_role"),
             }
         )
-    df_memberships = pd.DataFrame(membership_rows)
+    df_memberships = pd.DataFrame(
+        membership_rows, columns=["politician_id", "committee_id", "role"]
+    )
     path = DATA_DIR / str(period_id) / "committee_memberships.csv"
     df_memberships.to_csv(path, index=False)
     log.info("Saved %d committee memberships.", len(df_memberships))

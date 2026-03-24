@@ -1,29 +1,86 @@
 """Tests for src/export_json.py.
 
 Verifies that export_period produces correctly-shaped JSON output.
-Uses real period 161 data (must have been fetched already).
+Uses synthetic CSV fixtures — no fetched data required.
 """
 
 import json
+import textwrap
 from datetime import date
 from pathlib import Path
 from typing import Any
 
 import pytest
 
-OUTPUT_DIR = Path("frontend/public/data")
 PERIOD_ID = 161
+
+_POLITICIANS_CSV = textwrap.dedent("""\
+    politician_id,name,party,sex,year_of_birth,occupation,education,field_title
+    1,Hans Müller,CDU/CSU,m,1970,Rechtsanwalt,Dr. jur. Rechtswissenschaften,Dr.
+    2,Maria Schmidt,SPD,f,1980,Ärztin,Diplom-Medizin,
+    3,Klaus Fischer,AfD,m,1965,Lehrer,Staatsexamen Pädagogik,
+    4,Anna Weber,CDU/CSU,f,1975,Unternehmerin,Diplom-Wirtschaftswissenschaften,
+    5,Peter Braun,SPD,m,1985,Ingenieur,Dipl.-Ing. Ingenieurwissenschaften,
+""")
+
+_VOTES_CSV = textwrap.dedent("""\
+    politician_id,poll_id,answer
+    1,101,yes
+    2,101,no
+    3,101,yes
+    4,102,no
+    5,102,yes
+""")
+
+_POLLS_CSV = textwrap.dedent("""\
+    poll_id,topic
+    101,Haushalt
+    102,Klimaschutz
+""")
+
+_EMBEDDINGS_CSV = textwrap.dedent("""\
+    politician_id,x,y
+    1,0.1,0.2
+    2,0.3,0.4
+    3,0.5,0.6
+    4,0.2,0.3
+    5,0.4,0.5
+""")
+
+_SIDEJOBS_CSV = textwrap.dedent("""\
+    politician_id,income,income_level,category,date_start,date_end,created,interval,topics
+    1,5000,2,29647,2025-01-01,,1640000000,1,Wirtschaft|Recht
+    2,10000,3,29228,,,1640000000,2,Gesundheit
+""")
 
 
 @pytest.fixture(autouse=True)
 def run_export(tmp_path, monkeypatch):
-    """Run export_period for period 161 into a temp output dir."""
+    """Run export_period with synthetic CSV fixtures into a temp dir."""
     import src.export_json as ej
 
-    monkeypatch.setattr(ej, "OUTPUT_DIR", tmp_path)
-    # Use real period dates from periods.csv
+    # Build input directory structure
+    period_dir = tmp_path / "data" / str(PERIOD_ID)
+    period_dir.mkdir(parents=True)
+    outputs_dir = tmp_path / "outputs"
+    outputs_dir.mkdir()
+    out_dir = tmp_path / "output"
+    out_dir.mkdir()
+
+    (period_dir / "politicians.csv").write_text(_POLITICIANS_CSV, encoding="utf-8")
+    (period_dir / "votes.csv").write_text(_VOTES_CSV, encoding="utf-8")
+    (period_dir / "polls.csv").write_text(_POLLS_CSV, encoding="utf-8")
+    (period_dir / "sidejobs.csv").write_text(_SIDEJOBS_CSV, encoding="utf-8")
+    (outputs_dir / f"politician_embeddings_{PERIOD_ID}.csv").write_text(
+        _EMBEDDINGS_CSV, encoding="utf-8"
+    )
+
+    monkeypatch.setattr(ej, "DATA_DIR", tmp_path / "data")
+    monkeypatch.setattr(ej, "OUTPUTS_DIR", outputs_dir)
+    monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
+
     ej.export_period(PERIOD_ID, date(2025, 1, 1), date(2029, 12, 31))
-    return tmp_path
+    return out_dir
 
 
 def _load(run_export: Path, name: str) -> Any:
@@ -75,6 +132,61 @@ def test_cohesion_shape(run_export):
     assert {"party", "label", "streuung"}.issubset(data[0].keys())
     # fraktionslos must be excluded
     assert all(d["party"] != "fraktionslos" for d in data)
+
+
+def test_sidejobs_interval_float64_proration(tmp_path, monkeypatch):
+    """REGRESSION: interval column is float64 after CSV roundtrip with NaN rows.
+
+    When some rows have interval=null, pandas reads the column as float64,
+    making values 1.0 and 2.0 instead of 1 and 2. The old code compared
+    str(row["interval"]) == "1" which gives "1.0" == "1" → False, silently
+    skipping all proration. This test uses a CSV with a null-interval row
+    to trigger the float64 coercion and verifies that proration still fires.
+    """
+    import src.export_json as ej
+
+    # CSV with one null-interval row → forces pandas to read interval as float64
+    csv_content = textwrap.dedent("""\
+        politician_id,income,income_level,category,date_start,date_end,created,interval,topics
+        1,1000,,29647,2025-01-01,2025-06-30,,1,
+        2,12000,,29647,2025-01-01,2025-06-30,,2,
+        3,500,,29647,,,1640000000,,
+    """)
+    pid = 999  # use a different ID to avoid conflict with the autouse fixture
+    period_dir = tmp_path / "data" / str(pid)
+    period_dir.mkdir(parents=True)
+    outputs_dir = tmp_path / "outputs"
+    outputs_dir.mkdir(exist_ok=True)
+    out_dir = tmp_path / "output"
+    out_dir.mkdir(exist_ok=True)
+
+    (period_dir / "politicians.csv").write_text(_POLITICIANS_CSV, encoding="utf-8")
+    (period_dir / "votes.csv").write_text(_VOTES_CSV, encoding="utf-8")
+    (period_dir / "polls.csv").write_text(_POLLS_CSV, encoding="utf-8")
+    (period_dir / "sidejobs.csv").write_text(csv_content, encoding="utf-8")
+    (outputs_dir / f"politician_embeddings_{pid}.csv").write_text(
+        _EMBEDDINGS_CSV, encoding="utf-8"
+    )
+    monkeypatch.setattr(ej, "DATA_DIR", tmp_path / "data")
+    monkeypatch.setattr(ej, "OUTPUTS_DIR", outputs_dir)
+    monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
+
+    # Period: Jan-Jun 2025 (6 months). date_start=2025-01-01, date_end=2025-06-30.
+    ej.export_period(pid, date(2025, 1, 1), date(2025, 6, 30))
+
+    data = json.loads((out_dir / f"sidejobs_{pid}.json").read_text())
+    jobs = {j["politician_id"]: j for j in data["jobs"]}
+
+    # interval=1 (monthly 1000 EUR) active Jan-Jun = 6 months -> 6000 EUR
+    assert jobs[1]["prorated_income"] == pytest.approx(6000, rel=0.01), (
+        f"Monthly job: expected ~6000 but got {jobs[1]['prorated_income']}. "
+        "Likely interval float64 type mismatch ('1.0' != '1')."
+    )
+    # interval=2 (yearly 12000 EUR) active Jan-Jun = 6 months -> 12000 * 6/12 = 6000 EUR
+    assert jobs[2]["prorated_income"] == pytest.approx(6000, rel=0.01), (
+        f"Yearly job: expected ~6000 but got {jobs[2]['prorated_income']}. "
+        "Likely interval float64 type mismatch ('2.0' != '2')."
+    )
 
 
 def test_sidejobs_shape(run_export):

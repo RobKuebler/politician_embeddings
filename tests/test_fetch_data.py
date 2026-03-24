@@ -71,11 +71,11 @@ def test_fetch_politicians_active_party(requests_mock):
             "fraction_membership": [
                 {
                     "fraction": {"label": "Alte Partei (2000-2020)"},
-                    "end_date": "2020-01-01",
+                    "valid_until": "2020-01-01",
                 },
                 {
                     "fraction": {"label": "Neue Partei (2021-2025)"},
-                    "end_date": None,
+                    "valid_until": None,
                 },
             ],
         }

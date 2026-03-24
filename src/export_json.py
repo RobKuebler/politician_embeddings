@@ -63,12 +63,17 @@ def _active_months(
 
     Adapted from pages/sidejobs.py — adds a created_ts fallback for jobs with no
     date_start.
+
+    created_ts is the disclosure timestamp, not the job start date. For retroactive
+    disclosures (created after period_end), it tells us nothing about when the job
+    started, so we fall back to period_start (assume active for the full period).
     """
     today = datetime.now(tz=UTC).date()
     if date_start_str:
         job_start = date.fromisoformat(date_start_str)
     elif created_ts:
-        job_start = datetime.fromtimestamp(created_ts, tz=UTC).date()
+        created_date = datetime.fromtimestamp(created_ts, tz=UTC).date()
+        job_start = created_date if created_date <= period_end else period_start
     else:
         job_start = period_start
     job_end = date.fromisoformat(date_end_str) if date_end_str else today
@@ -153,16 +158,24 @@ def _export_sidejobs(
     sj_income["income"] = pd.to_numeric(sj_income["income"], errors="coerce")
 
     def _effective_income(row: pd.Series) -> float:
-        """Prorate income to period duration. Mirrors sidejobs.py."""
-        interval = str(row.get("interval", ""))
+        """Prorate income to period duration. Mirrors sidejobs.py.
+
+        interval is read from CSV as float64 (pandas coerces int columns with
+        NaN values to float), so compare as int, not as string.
+        """
+        raw_interval = row.get("interval")
+        try:
+            interval = int(raw_interval)
+        except (TypeError, ValueError):
+            interval = None
         ds = row.get("date_start") if pd.notna(row.get("date_start")) else None
         de = row.get("date_end") if pd.notna(row.get("date_end")) else None
         created = row.get("created") if pd.notna(row.get("created")) else None
-        if interval == "1":
+        if interval == 1:
             return row["income"] * _active_months(
                 ds, de, period_start, period_end, created
             )
-        if interval == "2":
+        if interval == 2:
             return row["income"] * (
                 _active_months(ds, de, period_start, period_end, created) / 12
             )
