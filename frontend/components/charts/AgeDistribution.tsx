@@ -98,7 +98,10 @@ export function AgeDistribution({ data, parties }: Props) {
     const kernel = epanechnikovKernel(5);
 
     const partyData = parties.map((party) => {
-      const records = byParty.get(party) ?? [];
+      // Sort by age so evenly-spaced y positions follow the data order
+      const records = [...(byParty.get(party) ?? [])].sort(
+        (a, b) => a.age - b.age,
+      );
       const ages = records.map((d) => d.age);
       const density = kernelDensity(kernel, thresholds, ages);
       const maxDensity = d3.max(density, (d) => d[1]) ?? 1;
