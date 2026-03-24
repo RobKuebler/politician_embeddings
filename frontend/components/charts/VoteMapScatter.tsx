@@ -291,7 +291,7 @@ export function VoteMapScatter({
     // Zoom behavior for pan mode
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 20])
+      .scaleExtent([0.2, 20])
       .on("zoom", (event) => {
         transformRef.current = event.transform;
         const tx = `translate(${M.left + event.transform.x},${M.top + event.transform.y}) scale(${event.transform.k})`;
