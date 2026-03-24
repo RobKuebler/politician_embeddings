@@ -102,12 +102,18 @@ export function VoteMapScatter({
       .attr("width", iW)
       .attr("height", iH);
 
-    // Content group — zoom transform is applied here
+    // Content group — zoom transform is applied here; clip-path keeps dots inside chart
     const contentG = svg
       .append("g")
       .attr("class", "scatter-content")
       .attr("transform", `translate(${M.left},${M.top})`)
       .attr("clip-path", "url(#scatter-clip)");
+
+    // Unclipped layer for centroid labels so they're never cropped at chart edges
+    const labelsG = svg
+      .append("g")
+      .attr("class", "centroid-labels")
+      .attr("transform", `translate(${M.left},${M.top})`);
 
     // Group embeddings by party for rendering
     const polMap = new Map(politicians.map((p) => [p.politician_id, p]));
@@ -229,10 +235,16 @@ export function VoteMapScatter({
         .attr("stroke", partyColor)
         .attr("stroke-width", 1.5);
 
-      // Party label above the centroid marker
-      cg.append("text")
-        .attr("y", -(arm + 8))
-        .attr("text-anchor", "middle")
+      // Adaptive text-anchor: labels near edges stay within the SVG boundary
+      const halfLabelW = (party.length * 6.5) / 2;
+      const edgeAnchor =
+        sx <= halfLabelW ? "start" : sx >= iW - halfLabelW ? "end" : "middle";
+      // Party label in the unclipped layer so it's never cropped at chart edges
+      labelsG
+        .append("text")
+        .attr("x", sx)
+        .attr("y", sy - (arm + 8))
+        .attr("text-anchor", edgeAnchor)
         .style("font-size", "11px")
         .style("font-weight", "700")
         .style("fill", partyColor)
@@ -282,10 +294,9 @@ export function VoteMapScatter({
       .scaleExtent([0.2, 20])
       .on("zoom", (event) => {
         transformRef.current = event.transform;
-        contentG.attr(
-          "transform",
-          `translate(${M.left + event.transform.x},${M.top + event.transform.y}) scale(${event.transform.k})`,
-        );
+        const tx = `translate(${M.left + event.transform.x},${M.top + event.transform.y}) scale(${event.transform.k})`;
+        contentG.attr("transform", tx);
+        labelsG.attr("transform", tx);
       });
     zoomRef.current = zoom;
 
@@ -526,6 +537,7 @@ export function VoteMapScatter({
           style={{
             display: "block",
             width: "100%",
+            overflow: "visible",
             cursor: mode === "pan" ? "grab" : "crosshair",
           }}
         />

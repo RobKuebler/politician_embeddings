@@ -20,6 +20,7 @@ interface Props {
   parties: string[];
 }
 
+// Left margin accommodates the longest party name; right/top/bottom are fixed.
 const M = { left: 160, right: 24, top: 16, bottom: 36 };
 
 function epanechnikovKernel(bandwidth: number) {
@@ -52,6 +53,9 @@ export function AgeDistribution({ data, parties }: Props) {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
     svg.attr("width", width).attr("height", H);
+
+    // Adaptive tick count: ~1 tick per 40px so labels never overlap on mobile
+    const tickCount = Math.max(3, Math.floor(iW / 40));
 
     // Clip path so zoomed content doesn't bleed into y-axis area
     const clipId = "age-dist-clip";
@@ -183,7 +187,7 @@ export function AgeDistribution({ data, parties }: Props) {
           .call(
             d3
               .axisBottom(xS)
-              .ticks(8)
+              .ticks(tickCount)
               .tickSize(iH)
               .tickFormat(() => ""),
           )
@@ -197,7 +201,7 @@ export function AgeDistribution({ data, parties }: Props) {
       );
 
       xAxisG
-        .call(d3.axisBottom(xS).ticks(8).tickSize(0))
+        .call(d3.axisBottom(xS).ticks(tickCount).tickSize(0))
         .call((ax) => ax.select(".domain").remove())
         .call(styleAxisText);
 

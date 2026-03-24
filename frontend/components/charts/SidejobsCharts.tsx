@@ -3,7 +3,13 @@ import { useRef, useEffect } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { SidejobRecord } from "@/lib/data";
-import { PARTY_COLORS, FALLBACK_COLOR, sortParties } from "@/lib/constants";
+import {
+  PARTY_COLORS,
+  FALLBACK_COLOR,
+  sortParties,
+  CHART_ROTATION_THRESHOLD,
+  CHART_BOTTOM_ROTATED,
+} from "@/lib/constants";
 import {
   ChartTooltip,
   styleAxisText,
@@ -56,12 +62,12 @@ export function IncomeByPartyChart({
         .domain(sorted.map((d) => d.party))
         .range([0, iW0])
         .padding(0.25);
-      const needsRotation = tempScale.bandwidth() < 42;
+      const needsRotation = tempScale.bandwidth() < CHART_ROTATION_THRESHOLD;
       const M = {
         left: 60,
         right: 16,
         top: 12,
-        bottom: needsRotation ? 100 : 52,
+        bottom: needsRotation ? CHART_BOTTOM_ROTATED : 52,
       };
       const H = needsRotation ? 320 : 270;
       const iW = width - M.left - M.right;
@@ -144,13 +150,19 @@ export function IncomeByPartyChart({
       <div className="flex flex-col gap-4">
         <div>
           <p className="text-xs font-medium text-gray-500 mb-1">Summe</p>
-          <svg ref={svgSumRef} style={{ display: "block", width: "100%" }} />
+          <svg
+            ref={svgSumRef}
+            style={{ display: "block", width: "100%", overflow: "visible" }}
+          />
         </div>
         <div>
           <p className="text-xs font-medium text-gray-500 mb-1">
             Ø pro Abgeordnetem
           </p>
-          <svg ref={svgMeanRef} style={{ display: "block", width: "100%" }} />
+          <svg
+            ref={svgMeanRef}
+            style={{ display: "block", width: "100%", overflow: "visible" }}
+          />
         </div>
       </div>
       <ChartTooltip tooltipRef={tooltipRef} />

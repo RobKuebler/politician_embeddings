@@ -59,6 +59,13 @@ export const COLOR_BODY = "#171613";
 export const CHART_FONT_FAMILY = '"Plus Jakarta Sans", sans-serif';
 export const MARKER_OUTLINE = "rgba(255,255,255,0.4)";
 
+// Chart axis / label layout constants — shared across all D3 charts
+export const CHART_AXIS_FONT_SIZE = "11px";
+// Band width (px) below which vertical bar-chart x-labels rotate to avoid overlap
+export const CHART_ROTATION_THRESHOLD = 42;
+// Bottom margin (px) used when x-labels are rotated
+export const CHART_BOTTOM_ROTATED = 100;
+
 // Vote answer → label + color (for heatmap legend)
 export const VOTE_META = {
   yes: { label: "Ja", color: "#46962B" },

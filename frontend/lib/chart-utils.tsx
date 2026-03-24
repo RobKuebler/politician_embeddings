@@ -11,7 +11,11 @@
 
 import React from "react";
 import * as d3 from "d3";
-import { COLOR_SECONDARY, CHART_FONT_FAMILY } from "@/lib/constants";
+import {
+  COLOR_SECONDARY,
+  CHART_FONT_FAMILY,
+  CHART_AXIS_FONT_SIZE,
+} from "@/lib/constants";
 
 // ── Tooltip offset constants ───────────────────────────────────────────────────
 // All charts position tooltips at pointer + these offsets.
@@ -66,7 +70,7 @@ export function styleAxisText(
   ax: d3.Selection<SVGGElement, unknown, null, undefined>,
 ): void {
   ax.selectAll<SVGTextElement, unknown>("text")
-    .style("font-size", "11px")
+    .style("font-size", CHART_AXIS_FONT_SIZE)
     .style("font-family", CHART_FONT_FAMILY)
     .style("fill", COLOR_SECONDARY);
 }

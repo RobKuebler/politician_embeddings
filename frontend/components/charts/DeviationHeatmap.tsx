@@ -19,8 +19,12 @@ interface Props {
 
 const ML = 160; // left margin for y-labels
 const MR = 40; // right margin — extra room for last label extending rightward
-const HEADER_H = 84; // sticky header height — room for rotated party labels
+const HEADER_H = 100; // header height — enough for -30° rotated party labels
 const SCROLL_THRESHOLD = 25;
+// Minimum column width so rotated party-name headers don't overlap.
+// At -30° rotation a label of L px uses L*cos(30°)≈0.87L horizontal space,
+// so 44px columns give roughly 50px label width before overlap.
+const MIN_COL_W = 44;
 
 function drawCells(
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
@@ -113,7 +117,12 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
     };
     const { categories, parties, pct: pctData, dev: devData } = sortedPivot;
 
-    const iW = width - ML - MR;
+    // Use at least MIN_COL_W per party; if that exceeds container, chart scrolls.
+    const colW = Math.max(
+      MIN_COL_W,
+      Math.floor((width - ML - MR) / parties.length),
+    );
+    const iW = colW * parties.length;
     const allDevs = devData.flat().filter((v): v is number => v !== null);
     // Clamp to 95th percentile of absolute deviations so one outlier doesn't
     // wash out all other cells.
@@ -188,9 +197,10 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .range([0, bodyHeight])
         .padding(0.05);
 
+      const svgW = ML + iW + MR;
       const svg = d3.select(singleSvgRef.current);
       svg.selectAll("*").remove();
-      svg.attr("width", width).attr("height", totalH);
+      svg.attr("width", svgW).attr("height", totalH);
 
       svg
         .append("g")
@@ -242,9 +252,10 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
         .range([0, bodyHeight])
         .padding(0.05);
 
+      const svgW = ML + iW + MR;
       const headerSvg = d3.select(headerSvgRef.current);
       headerSvg.selectAll("*").remove();
-      headerSvg.attr("width", width).attr("height", HEADER_H);
+      headerSvg.attr("width", svgW).attr("height", HEADER_H);
       headerSvg
         .append("g")
         .attr("transform", `translate(${ML}, ${HEADER_H})`)
@@ -252,7 +263,7 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
 
       const bodySvg = d3.select(bodySvgRef.current);
       bodySvg.selectAll("*").remove();
-      bodySvg.attr("width", width).attr("height", bodyHeight);
+      bodySvg.attr("width", svgW).attr("height", bodyHeight);
       bodySvg
         .append("g")
         .attr("transform", `translate(${ML}, 0)`)
@@ -281,10 +292,12 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
       {!useScroll ? (
-        <svg
-          ref={singleSvgRef}
-          style={{ display: "block", overflow: "visible" }}
-        />
+        <div style={{ overflowX: "auto" }}>
+          <svg
+            ref={singleSvgRef}
+            style={{ display: "block", overflow: "visible" }}
+          />
+        </div>
       ) : (
         <div style={{ overflowX: "auto" }}>
           <div
