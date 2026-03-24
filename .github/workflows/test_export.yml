@@ -1,0 +1,22 @@
+name: Test export JSON
+
+on:
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --group train
+
+      - name: Export JSON for frontend
+        run: uv run python -m src.export_json
