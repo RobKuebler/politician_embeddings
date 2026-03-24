@@ -31,38 +31,50 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
 
   const isSidebar = variant === "sidebar";
 
-  const rawLabel =
-    periods.find((p) => p.period_id === activePeriodId)?.label ?? "";
-  // Normalize the API dash: "Bundestag 2021 - 2025" → "Bundestag 2021–2025"
-  const normalizeLabel = (label: string) => label.replace(/\s*-\s*/g, "–");
+  // "Bundestag 2021 - 2025" → "2021–2025"
+  const yearsOnly = (label: string) => {
+    const m = label.match(/(\d{4})\s*[-–]\s*(\d{4})/);
+    return m ? `${m[1]}–${m[2]}` : label;
+  };
 
-  const displayLabel = normalizeLabel(rawLabel);
+  const activeYears = yearsOnly(
+    periods.find((p) => p.period_id === activePeriodId)?.label ?? "",
+  );
 
   return (
     <div className="relative" ref={containerRef}>
+      {/* Label above */}
+      <p
+        className={`text-[10px] font-bold tracking-[0.12em] uppercase mb-1 ${
+          isSidebar ? "text-white/40" : "text-[#1E1B5E]/50"
+        }`}
+      >
+        Bundestag
+      </p>
+
       {/* Trigger button */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="Wahlperiode auswählen"
         aria-expanded={open}
-        className={`w-full flex items-center justify-between gap-1 rounded-lg px-2 py-1.5 outline-none transition-colors duration-150 ${
+        className={`w-full flex items-center justify-between gap-2 rounded-lg px-3 py-2 outline-none transition-colors duration-150 ${
           isSidebar
             ? "bg-white/10 border border-white/[0.18] hover:bg-white/15"
             : "bg-white border border-[#1E1B5E] hover:bg-[#F0EFF9]"
         }`}
       >
         <span
-          className={`text-[11px] font-bold truncate ${
+          className={`text-[14px] font-bold tabular-nums truncate ${
             isSidebar ? "text-white" : "text-[#1E1B5E]"
           }`}
         >
-          {displayLabel}
+          {activeYears}
         </span>
         {/* Chevron — rotates when open */}
         <svg
-          width="10"
-          height="10"
+          width="11"
+          height="11"
           viewBox="0 0 24 24"
           fill="none"
           stroke={isSidebar ? "rgba(255,255,255,0.6)" : "#1E1B5E"}
@@ -80,7 +92,7 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
         <div
           className={`absolute z-50 mt-1 rounded-xl overflow-hidden ${
             isSidebar
-              ? "left-0 min-w-[160px] bg-[#16134A] border border-white/[0.15] shadow-xl shadow-black/40"
+              ? "left-0 min-w-[140px] bg-[#16134A] border border-white/[0.15] shadow-xl shadow-black/40"
               : "left-0 right-0 bg-white border border-[#E3E0DA] shadow-lg"
           }`}
         >
@@ -94,7 +106,7 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
                   setActivePeriodId(p.period_id);
                   setOpen(false);
                 }}
-                className={`w-full text-left px-3 py-2.5 text-[11px] font-bold outline-none transition-colors duration-100 ${
+                className={`w-full text-left px-3 py-2.5 text-[13px] font-bold tabular-nums outline-none transition-colors duration-100 ${
                   isSidebar
                     ? isActive
                       ? "bg-[#4C46D9] text-white"
@@ -104,7 +116,7 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
                       : "text-[#1E1B5E] hover:bg-[#F0EFF9]"
                 }`}
               >
-                {normalizeLabel(p.label)}
+                {yearsOnly(p.label)}
               </button>
             );
           })}
