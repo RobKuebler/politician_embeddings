@@ -87,6 +87,15 @@ export function PeriodSelector({ variant = "light" }: PeriodSelectorProps) {
         </svg>
       </button>
 
+      {/* Backdrop — mobile only: dims content below header when dropdown is open */}
+      {open && isSidebar && (
+        <div
+          className="fixed top-[52px] inset-x-0 bottom-0 z-[49] bg-black/20"
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Custom dropdown panel */}
       {open && (
         <div

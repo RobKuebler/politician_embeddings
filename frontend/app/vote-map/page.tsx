@@ -58,6 +58,11 @@ export default function VoteMapPage() {
   const [selectedPollIds, setSelectedPollIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingVotes, setLoadingVotes] = useState(false);
+  // Chart height — start at 350 (mobile-safe default) and update after mount to avoid SSR/client mismatch
+  const [chartHeight, setChartHeight] = useState(350);
+  useEffect(() => {
+    setChartHeight(window.innerWidth < 768 ? 350 : 600);
+  }, []);
 
   useEffect(() => {
     if (!activePeriodId) return;
@@ -142,24 +147,14 @@ export default function VoteMapPage() {
           analysieren. Fraktionsnamen im Diagramm sind ebenfalls anklickbar.
         </p>
         {loading ? (
-          <ChartSkeleton
-            height={
-              typeof window !== "undefined" && window.innerWidth < 768
-                ? 350
-                : 600
-            }
-          />
+          <ChartSkeleton height={chartHeight} />
         ) : (
           <VoteMapScatter
             embeddings={embeddings!.data}
             politicians={politicians}
             selectedIds={selectedPolIds}
             onSelectionChange={handleSelection}
-            height={
-              typeof window !== "undefined" && window.innerWidth < 768
-                ? 350
-                : 600
-            }
+            height={chartHeight}
           />
         )}
       </div>
