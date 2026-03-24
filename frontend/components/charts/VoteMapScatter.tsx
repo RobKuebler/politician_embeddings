@@ -93,14 +93,27 @@ export function VoteMapScatter({
     xScaleRef.current = xScale;
     yScaleRef.current = yScale;
 
+    const LABEL_PAD = 24; // px of bleed allowed for edge centroid labels
+    const defs = svg.append("defs");
+
     // Clip path so dots don't overflow chart area
-    svg
-      .append("defs")
+    defs
       .append("clipPath")
       .attr("id", "scatter-clip")
       .append("rect")
       .attr("width", iW)
       .attr("height", iH);
+
+    // Slightly padded clip for centroid labels — allows labels at the edge to
+    // bleed LABEL_PAD px beyond the chart boundary without leaking onto the UI.
+    defs
+      .append("clipPath")
+      .attr("id", "label-clip")
+      .append("rect")
+      .attr("x", -LABEL_PAD)
+      .attr("y", -LABEL_PAD)
+      .attr("width", iW + LABEL_PAD * 2)
+      .attr("height", iH + LABEL_PAD * 2);
 
     // Content group — zoom transform is applied here; clip-path keeps dots inside chart
     const contentG = svg
@@ -109,11 +122,13 @@ export function VoteMapScatter({
       .attr("transform", `translate(${M.left},${M.top})`)
       .attr("clip-path", "url(#scatter-clip)");
 
-    // Unclipped layer for centroid labels so they're never cropped at chart edges
+    // Label layer — uses padded clip so edge labels aren't cropped, but labels
+    // can't bleed onto surrounding UI when zoomed/panned far
     const labelsG = svg
       .append("g")
       .attr("class", "centroid-labels")
-      .attr("transform", `translate(${M.left},${M.top})`);
+      .attr("transform", `translate(${M.left},${M.top})`)
+      .attr("clip-path", "url(#label-clip)");
 
     // Group embeddings by party for rendering
     const polMap = new Map(politicians.map((p) => [p.politician_id, p]));
@@ -291,7 +306,7 @@ export function VoteMapScatter({
     // Zoom behavior for pan mode
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.2, 20])
+      .scaleExtent([0.8, 20])
       .on("zoom", (event) => {
         transformRef.current = event.transform;
         const tx = `translate(${M.left + event.transform.x},${M.top + event.transform.y}) scale(${event.transform.k})`;
@@ -537,7 +552,6 @@ export function VoteMapScatter({
           style={{
             display: "block",
             width: "100%",
-            overflow: "visible",
             cursor: mode === "pan" ? "grab" : "crosshair",
           }}
         />
