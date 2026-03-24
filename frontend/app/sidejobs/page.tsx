@@ -7,6 +7,7 @@ import {
   IncomeByCategoryChart,
   TopTopicsChart,
   TopEarnersChart,
+  SidejobCoverageByPartyChart,
 } from "@/components/charts/SidejobsCharts";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
@@ -95,6 +96,28 @@ export default function SidejobsPage() {
         </div>
       ) : sjData ? (
         <div className="flex flex-col gap-5 stagger">
+          {/* Coverage chart: per-party breakdown of Nebenverdienst / keine Angabe / kein Nebenjob */}
+          <section
+            className="bg-white rounded-xl border border-[#E3E0DA] p-5 md:p-6"
+            style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}
+          >
+            <h2
+              className="font-extrabold text-[15px] mb-1"
+              style={{ color: "#1E1B5E" }}
+            >
+              Abgeordnete mit Nebenverdienst
+            </h2>
+            <p className="text-[12px] text-[#9A9790] mb-4">
+              Anteil je Fraktion. Als Nebenverdienst gilt jedes gemeldete
+              Einkommen ab 1.000 €/Monat (gesetzliche Meldepflicht-Stufe 1, §
+              44a AbgG).
+            </p>
+            <SidejobCoverageByPartyChart
+              jobs={sjData.jobs}
+              politicians={politicians}
+            />
+          </section>
+
           <section
             className="bg-white rounded-xl border border-[#E3E0DA] p-5 md:p-6"
             style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}

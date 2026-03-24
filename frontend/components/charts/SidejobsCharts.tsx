@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { SidejobRecord } from "@/lib/data";
-import { PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
+import { PARTY_COLORS, FALLBACK_COLOR, sortParties } from "@/lib/constants";
 
 // ── Truncates axis tick labels to fit within maxPx; shows full text on hover ──
 
@@ -659,6 +659,212 @@ export function TopEarnersChart({
     <div ref={containerRef} style={{ position: "relative" }}>
       <svg ref={svgRef} style={{ display: "block", width: "100%" }} />
       <Tooltip ref={tooltipRef} />
+    </div>
+  );
+}
+
+// ── Chart 5: Coverage per party (stacked bar: Nebenverdienst / keine Angabe / kein Nebenjob) ──
+
+/**
+ * Categorises each politician into one of three buckets:
+ *   "income"   — has at least one sidejob with income_level set (above threshold)
+ *   "no_amount" — has sidejob(s) but none with income_level (no amount declared)
+ *   "none"     — no sidejob entry at all
+ * Then renders one horizontal stacked bar per party.
+ */
+export function SidejobCoverageByPartyChart({
+  jobs,
+  politicians,
+}: {
+  jobs: SidejobRecord[];
+  politicians: { politician_id: number; name: string; party: string }[];
+}) {
+  // Build lookup: which politicians have qualifying income / any sidejob
+  const withIncome = new Set<number>();
+  const withAnySidejob = new Set<number>();
+  for (const j of jobs) {
+    withAnySidejob.add(j.politician_id);
+    if (j.income_level !== null) withIncome.add(j.politician_id);
+  }
+
+  // Aggregate counts per party
+  type Counts = {
+    income: number;
+    no_amount: number;
+    none: number;
+    total: number;
+  };
+  const byParty = new Map<string, Counts>();
+  for (const pol of politicians) {
+    const party = pol.party.replace(/\u00ad/g, "");
+    if (!byParty.has(party))
+      byParty.set(party, { income: 0, no_amount: 0, none: 0, total: 0 });
+    const c = byParty.get(party)!;
+    c.total++;
+    if (withIncome.has(pol.politician_id)) c.income++;
+    else if (withAnySidejob.has(pol.politician_id)) c.no_amount++;
+    else c.none++;
+  }
+
+  const parties = sortParties(
+    Array.from(byParty.keys()).filter((p) => p !== "fraktionslos"),
+  );
+
+  const LEGEND = [
+    { key: "income" as const, label: "Nebenverdienst ≥ 1.000 €/Monat" },
+    {
+      key: "no_amount" as const,
+      label: "Nebentätigkeit, ohne Einkommensangabe",
+    },
+    { key: "none" as const, label: "Kein Nebenjob" },
+  ];
+
+  return (
+    <div className="flex flex-col gap-4">
+      {parties.map((party) => {
+        const c = byParty.get(party);
+        if (!c) return null;
+        const pct = (n: number) => ((n / c.total) * 100).toFixed(1);
+        const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+
+        // Lighten the party color for the "no_amount" segment via opacity
+        return (
+          <div key={party}>
+            {/* Party label + seat count */}
+            <div className="flex items-baseline gap-2 mb-1">
+              <span
+                className="text-[12px] font-bold"
+                style={{ color: "#1E1B5E" }}
+              >
+                {party}
+              </span>
+              <span className="text-[11px]" style={{ color: "#9A9790" }}>
+                {c.total} Abgeordnete
+              </span>
+            </div>
+
+            {/* Stacked bar */}
+            <div
+              style={{
+                display: "flex",
+                height: 28,
+                borderRadius: 6,
+                overflow: "hidden",
+                gap: 1,
+              }}
+            >
+              {/* Segment 1: Nebenverdienst — full party color */}
+              <BarSegment
+                width={c.income / c.total}
+                bg={color}
+                label={`${c.income} (${pct("income" in c ? c.income : 0)}%)`}
+                title={`Nebenverdienst ≥ 1.000 €/Monat: ${c.income}`}
+              />
+              {/* Segment 2: keine Angabe — party color at 40% opacity */}
+              <BarSegment
+                width={c.no_amount / c.total}
+                bg={color}
+                opacity={0.35}
+                label={`${c.no_amount} (${pct(c.no_amount)}%)`}
+                title={`Nebentätigkeit, ohne Einkommensangabe: ${c.no_amount}`}
+              />
+              {/* Segment 3: kein Nebenjob — neutral */}
+              <BarSegment
+                width={c.none / c.total}
+                bg="#E8E7E2"
+                label={`${c.none} (${pct(c.none)}%)`}
+                title={`Kein Nebenjob: ${c.none}`}
+              />
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Legend */}
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-1">
+        {LEGEND.map(({ key, label }) => (
+          <span
+            key={key}
+            className="flex items-center gap-1.5 text-[11px]"
+            style={{ color: "#6B6760" }}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                width: 10,
+                height: 10,
+                borderRadius: 2,
+                background:
+                  key === "income"
+                    ? "#E67E22"
+                    : key === "no_amount"
+                      ? "rgba(230,126,34,0.35)"
+                      : "#E8E7E2",
+                border: key === "none" ? "1px solid #ccc" : undefined,
+                flexShrink: 0,
+              }}
+            />
+            {label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Single segment in the stacked bar — shows label when wide enough. */
+function BarSegment({
+  width,
+  bg,
+  opacity = 1,
+  label,
+  title,
+}: {
+  width: number;
+  bg: string;
+  opacity?: number;
+  label: string;
+  title: string;
+}) {
+  if (width <= 0) return null;
+  const pct = width * 100;
+  return (
+    <div
+      title={title}
+      style={{
+        width: `${pct}%`,
+        background: bg,
+        opacity,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+        cursor: "default",
+        transition: "opacity 0.15s",
+      }}
+      onMouseEnter={(e) =>
+        ((e.currentTarget as HTMLDivElement).style.opacity = String(
+          opacity * 0.8,
+        ))
+      }
+      onMouseLeave={(e) =>
+        ((e.currentTarget as HTMLDivElement).style.opacity = String(opacity))
+      }
+    >
+      {/* Only show label text if segment is wide enough */}
+      {pct > 12 && (
+        <span
+          style={{
+            fontSize: 10,
+            fontWeight: 600,
+            color: opacity < 0.5 ? "#555" : bg === "#E8E7E2" ? "#888" : "#fff",
+            whiteSpace: "nowrap",
+            pointerEvents: "none",
+          }}
+        >
+          {label}
+        </span>
+      )}
     </div>
   );
 }
