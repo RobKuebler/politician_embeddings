@@ -116,11 +116,16 @@ export function PartyDistanceMatrix({ centroids }: { centroids: Centroid[] }) {
           .attr("rx", 3)
           .on("mousemove", (event) => {
             const [px, py] = d3.pointer(event, containerRef.current!);
+            // Set content first so offsetWidth reflects actual tooltip width
             tooltip
               .style("opacity", "1")
-              .style("left", `${px + TOOLTIP_DX}px`)
-              .style("top", `${py + TOOLTIP_DY}px`)
               .html(`<b>${pa}</b> ↔ <b>${pb}</b><br/>Abstand: ${d.toFixed(3)}`);
+            const containerW = containerRef.current!.offsetWidth;
+            const tipW = tooltipRef.current!.offsetWidth;
+            const left = Math.min(px + TOOLTIP_DX, containerW - tipW - 4);
+            tooltip
+              .style("left", `${left}px`)
+              .style("top", `${py + TOOLTIP_DY}px`);
           })
           .on("mouseleave", () => tooltip.style("opacity", "0"));
 
