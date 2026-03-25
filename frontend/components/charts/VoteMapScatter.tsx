@@ -57,11 +57,15 @@ export function VoteMapScatter({
   const brushGRef = useRef<SVGGElement | null>(null);
   const allPointsRef = useRef<EmbeddingPoint[]>([]);
 
-  // Width measurement
+  // Width measurement — also resets selection mode to pan on mobile
   useEffect(() => {
     if (!containerRef.current) return;
-    setWidth(containerRef.current.clientWidth);
-    const ro = new ResizeObserver(([e]) => setWidth(e.contentRect.width));
+    const handleResize = (w: number) => {
+      setWidth(w);
+      if (w < 640) setMode("pan");
+    };
+    handleResize(containerRef.current.clientWidth);
+    const ro = new ResizeObserver(([e]) => handleResize(e.contentRect.width));
     ro.observe(containerRef.current);
     return () => ro.disconnect();
   }, []);
@@ -534,7 +538,7 @@ export function VoteMapScatter({
               key={m}
               onClick={() => setMode(m)}
               title={hint}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-150 cursor-pointer ${
+              className={`${m !== "pan" ? "hidden sm:flex" : "flex"} items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-150 cursor-pointer ${
                 mode === m
                   ? "bg-white text-[#2347C8] shadow-sm border border-[#E3E0DA]"
                   : "text-[#6B6760] hover:text-[#171613]"
