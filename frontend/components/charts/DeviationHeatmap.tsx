@@ -31,6 +31,7 @@ function drawCells(
     catIdx: number;
     dev: number | null;
     pct: number | null;
+    count: number;
   }[],
   xScale: d3.ScaleBand<string>,
   yScale: d3.ScaleBand<string>,
@@ -56,11 +57,12 @@ function drawCells(
     .on("mousemove", (event, d) => {
       const cat = pivot.categories[d.catIdx];
       const party = pivot.parties[d.partyIdx];
+      const partyTotal = pivot.party_totals[d.partyIdx];
       let html = `<b>${party}</b><br/>${cat}<br/>`;
       html +=
         d.dev === null
           ? "keine Daten"
-          : `Anteil: ${d.pct?.toFixed(1) ?? "?"}%<br/>Abweichung: ${d.dev > 0 ? "+" : ""}${d.dev.toFixed(1)} pp`;
+          : `${d.count} von ${partyTotal} Abgeordneten (${d.pct?.toFixed(1) ?? "?"}%)<br/>Abweichung: ${d.dev > 0 ? "+" : ""}${d.dev.toFixed(1)} pp`;
       const [px, py] = d3.pointer(event, container);
       positionTooltip(tooltip, container, px, py, html);
     })
@@ -104,8 +106,16 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
       parties: sortedParties,
       pct: pivot.pct.map((row) => colMap.map((ci) => row[ci] ?? null)),
       dev: pivot.dev.map((row) => colMap.map((ci) => row[ci] ?? null)),
+      count: pivot.count.map((row) => colMap.map((ci) => row[ci] ?? 0)),
+      party_totals: colMap.map((ci) => pivot.party_totals[ci] ?? 0),
     };
-    const { categories, parties, pct: pctData, dev: devData } = sortedPivot;
+    const {
+      categories,
+      parties,
+      pct: pctData,
+      dev: devData,
+      count: countData,
+    } = sortedPivot;
 
     // Use at least MIN_COL_W per party; if that exceeds container, chart scrolls.
     const colW = Math.max(
@@ -133,6 +143,7 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
       catIdx: number;
       dev: number | null;
       pct: number | null;
+      count: number;
     };
     const cells: Cell[] = [];
     categories.forEach((_, catIdx) => {
@@ -142,6 +153,7 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
           catIdx,
           dev: devData[catIdx]?.[partyIdx] ?? null,
           pct: pctData[catIdx]?.[partyIdx] ?? null,
+          count: countData[catIdx]?.[partyIdx] ?? 0,
         });
       });
     });

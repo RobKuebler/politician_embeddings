@@ -111,7 +111,9 @@ def _split_topics(t: object) -> list[str]:
     return [x.strip() for x in t.split("|") if x.strip()]
 
 
-def _pivot_to_json(pivot_pct: pd.DataFrame, dev_z: np.ndarray) -> dict:
+def _pivot_to_json(
+    pivot_pct: pd.DataFrame, dev_z: np.ndarray, pivot_count: pd.DataFrame
+) -> dict:
     """Serialize a deviation pivot for the frontend DeviationHeatmap component."""
     pct_vals = pivot_pct.to_numpy().astype(float)
     pct_clean = [
@@ -122,11 +124,17 @@ def _pivot_to_json(pivot_pct: pd.DataFrame, dev_z: np.ndarray) -> dict:
         [None if np.isnan(v) else round(float(v), 2) for v in row]
         for row in dev_z.tolist()
     ]
+    count_clean = [
+        [int(v) for v in row] for row in pivot_count.to_numpy().astype(int).tolist()
+    ]
+    party_totals = [int(v) for v in pivot_count.sum(axis=0).tolist()]
     return {
         "categories": list(pivot_pct.index),
         "parties": list(pivot_pct.columns),
         "pct": pct_clean,
         "dev": dev_clean,
+        "count": count_clean,
+        "party_totals": party_totals,
     }
 
 
@@ -222,11 +230,13 @@ def _export_party_profile(
     age_df = compute_age_df(pols_df, period_start.year)
     sex_df = compute_sex_counts(pols_df)
     title_df = compute_title_counts(pols_df)
-    occ_pct, _, occ_dev_z = compute_occupation_pivot(pols_df, party_labels_ordered)
-    edu_field_pct, _, edu_field_dev_z = compute_education_field_pivot(
+    occ_pct, _, occ_dev_z, occ_count = compute_occupation_pivot(
         pols_df, party_labels_ordered
     )
-    edu_deg_pct, _, edu_deg_dev_z = compute_education_degree_pivot(
+    edu_field_pct, _, edu_field_dev_z, edu_field_count = compute_education_field_pivot(
+        pols_df, party_labels_ordered
+    )
+    edu_deg_pct, _, edu_deg_dev_z, edu_deg_count = compute_education_degree_pivot(
         pols_df, party_labels_ordered
     )
 
@@ -239,9 +249,13 @@ def _export_party_profile(
             .to_dict("records"),
             "sex": sex_df.to_dict("records"),
             "titles": title_df.to_dict("records"),
-            "occupation": _pivot_to_json(occ_pct, occ_dev_z),
-            "education_field": _pivot_to_json(edu_field_pct, edu_field_dev_z),
-            "education_degree": _pivot_to_json(edu_deg_pct, edu_deg_dev_z),
+            "occupation": _pivot_to_json(occ_pct, occ_dev_z, occ_count),
+            "education_field": _pivot_to_json(
+                edu_field_pct, edu_field_dev_z, edu_field_count
+            ),
+            "education_degree": _pivot_to_json(
+                edu_deg_pct, edu_deg_dev_z, edu_deg_count
+            ),
         },
     )
 

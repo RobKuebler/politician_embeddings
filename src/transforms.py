@@ -35,15 +35,16 @@ def _build_category_pivot(
     cat_col: str,
     party_labels_ordered: list[str],
     top_n: int = 0,
-) -> tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+) -> tuple[pd.DataFrame, np.ndarray, np.ndarray, pd.DataFrame]:
     """Build a category pivot with %-values per party and deviation.
 
     Deviation is measured from the Bundestag average.
 
-    Returns (pivot_pct, pct_z, dev_z) where:
+    Returns (pivot_pct, pct_z, dev_z, pivot_count) where:
     - pivot_pct: DataFrame with %-values (rows=categories, cols=parties)
     - pct_z: numpy matrix of %-values (0 replaced by NaN)
     - dev_z: numpy matrix of deviation from Bundestag average in percentage points
+    - pivot_count: DataFrame with absolute counts (rows=categories, cols=parties)
     """
     tmp = pols_df[["party_label", col]].copy()
     tmp[cat_col] = tmp[col].where(tmp[col].notna(), other=None).apply(normalize_fn)
@@ -83,12 +84,12 @@ def _build_category_pivot(
     pct_z[pct_z == 0] = np.nan
     dev_z = dev.to_numpy().astype(float)
     dev_z[np.isnan(pct_z)] = np.nan
-    return pivot_pct, pct_z, dev_z
+    return pivot_pct, pct_z, dev_z, pivot
 
 
 def compute_occupation_pivot(
     pols_df: pd.DataFrame, party_labels_ordered: list[str]
-) -> tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+) -> tuple[pd.DataFrame, np.ndarray, np.ndarray, pd.DataFrame]:
     """Build occupation pivot with %-values and deviation from Bundestag average.
 
     Shows all categories (no Sonstiges grouping).
@@ -133,7 +134,7 @@ def compute_sex_counts(pols_df: pd.DataFrame) -> pd.DataFrame:
 
 def compute_education_field_pivot(
     pols_df: pd.DataFrame, party_labels_ordered: list[str]
-) -> tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+) -> tuple[pd.DataFrame, np.ndarray, np.ndarray, pd.DataFrame]:
     """Build education-field pivot with %-values and deviation.
 
     Shows all categories (no Sonstiges grouping).
@@ -150,7 +151,7 @@ def compute_education_field_pivot(
 
 def compute_education_degree_pivot(
     pols_df: pd.DataFrame, party_labels_ordered: list[str]
-) -> tuple[pd.DataFrame, np.ndarray, np.ndarray]:
+) -> tuple[pd.DataFrame, np.ndarray, np.ndarray, pd.DataFrame]:
     """Build degree-level pivot with %-values and deviation from Bundestag average."""
     return _build_category_pivot(
         pols_df, "education", normalize_education_degree, "degree", party_labels_ordered

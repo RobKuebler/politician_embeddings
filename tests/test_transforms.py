@@ -77,7 +77,7 @@ def make_pols(rows: list[tuple]) -> pd.DataFrame:
 def test_occupation_pivot_shape():
     """Pivot has one row per occupation category and one column per party."""
     df = make_pols([("SPD", "Lehrer"), ("CDU", "Lehrer"), ("SPD", "Arzt")])
-    pivot, _z, _ = compute_occupation_pivot(df, ["SPD", "CDU"])
+    pivot, _z, _, _count = compute_occupation_pivot(df, ["SPD", "CDU"])
     assert "SPD" in pivot.columns
     assert "CDU" in pivot.columns
 
@@ -85,7 +85,7 @@ def test_occupation_pivot_shape():
 def test_occupation_pivot_zeros_become_nan():
     """Zero counts in the pivot matrix are replaced with NaN in z."""
     df = make_pols([("SPD", "Lehrer")])
-    pivot, z, _ = compute_occupation_pivot(df, ["SPD", "CDU"])
+    pivot, z, _, _count = compute_occupation_pivot(df, ["SPD", "CDU"])
     # CDU has 0 Lehrer -> should be NaN in z
     if "CDU" in pivot.columns:
         cdu_idx = list(pivot.columns).index("CDU")
@@ -95,14 +95,14 @@ def test_occupation_pivot_zeros_become_nan():
 def test_occupation_pivot_party_order():
     """Party columns follow party_labels_ordered, unknown parties are excluded."""
     df = make_pols([("SPD", "Lehrer"), ("CDU", "Arzt"), ("FDP", "Jurist")])
-    pivot, _, _ = compute_occupation_pivot(df, ["CDU", "SPD"])  # FDP excluded
+    pivot, _, _, _count = compute_occupation_pivot(df, ["CDU", "SPD"])  # FDP excluded
     assert list(pivot.columns) == ["CDU", "SPD"]
 
 
 def test_occupation_pivot_null_occupation():
     """Null occupations are dropped (Keine Angabe), not crash."""
     df = make_pols([("SPD", None), ("SPD", "Lehrer")])
-    pivot, _z, _ = compute_occupation_pivot(df, ["SPD"])
+    pivot, _z, _, _count = compute_occupation_pivot(df, ["SPD"])
     # "Keine Angabe" is dropped from the pivot by _build_category_pivot
     assert "Keine Angabe" not in pivot.index
     assert "Lehrer" in pivot.index
@@ -120,7 +120,7 @@ def test_occupation_pivot_dev_z_shape():
             ("CDU", "Arzt"),
         ]
     )
-    pivot, pct_z, dev_z = compute_occupation_pivot(df, ["SPD", "CDU"])
+    pivot, pct_z, dev_z, _count = compute_occupation_pivot(df, ["SPD", "CDU"])
     assert pct_z.shape == pivot.shape
     assert dev_z.shape == pivot.shape
 

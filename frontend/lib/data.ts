@@ -67,6 +67,8 @@ export interface DeviationPivot {
   parties: string[];
   pct: (number | null)[][]; // [category][party]
   dev: (number | null)[][]; // [category][party], deviation from Bundestag avg
+  count: number[][]; // [category][party], absolute counts
+  party_totals: number[]; // total members per party
 }
 
 export interface PartyProfileFile {
