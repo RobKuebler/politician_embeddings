@@ -13,6 +13,10 @@ import {
   CohesionRecord,
 } from "@/lib/data";
 import { VoteMapScatter } from "@/components/charts/VoteMapScatter";
+import {
+  PartyDistanceMatrix,
+  Centroid,
+} from "@/components/charts/PartyDistanceMatrix";
 import { VoteHeatmap } from "@/components/charts/VoteHeatmap";
 import { CohesionChart } from "@/components/charts/CohesionChart";
 import { PoliticianSearch } from "@/components/charts/PoliticianSearch";
@@ -25,11 +29,11 @@ import {
   FALLBACK_COLOR,
 } from "@/lib/constants";
 
-/** Computes per-party cohesion as mean Euclidean distance from each politician to the party centroid. */
-function computeCohesion(
+/** Computes per-party cohesion (mean distance to centroid) and centroid positions. */
+function computeCohesionAndCentroids(
   points: EmbeddingPoint[],
   politicians: Politician[],
-): CohesionRecord[] {
+): { cohesion: CohesionRecord[]; centroids: Centroid[] } {
   const polMap = new Map(politicians.map((p) => [p.politician_id, p]));
   const partyPoints = new Map<string, { x: number; y: number }[]>();
   for (const pt of points) {
@@ -39,18 +43,21 @@ function computeCohesion(
     if (!partyPoints.has(label)) partyPoints.set(label, []);
     partyPoints.get(label)!.push({ x: pt.x, y: pt.y });
   }
-  return Array.from(partyPoints.entries())
-    .filter(([label]) => label !== "fraktionslos")
-    .map(([label, pts]) => {
-      const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
-      const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
-      const streuung =
-        pts.reduce(
-          (s, p) => s + Math.sqrt((p.x - cx) ** 2 + (p.y - cy) ** 2),
-          0,
-        ) / pts.length;
-      return { party: label, label, streuung };
-    });
+  const cohesion: CohesionRecord[] = [];
+  const centroids: Centroid[] = [];
+  for (const [label, pts] of partyPoints) {
+    if (label === "fraktionslos" || pts.length < 2) continue;
+    const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length;
+    const cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+    const streuung =
+      pts.reduce(
+        (s, p) => s + Math.sqrt((p.x - cx) ** 2 + (p.y - cy) ** 2),
+        0,
+      ) / pts.length;
+    cohesion.push({ party: label, label, streuung });
+    centroids.push({ party: label, cx, cy });
+  }
+  return { cohesion, centroids };
 }
 
 export default function VoteMapPage() {
@@ -58,6 +65,7 @@ export default function VoteMapPage() {
   const [embeddings, setEmbeddings] = useState<EmbeddingsFile | null>(null);
   const [politicians, setPoliticians] = useState<Politician[]>([]);
   const [cohesion, setCohesion] = useState<CohesionRecord[]>([]);
+  const [centroids, setCentroids] = useState<Centroid[]>([]);
   const [votes, setVotes] = useState<VoteRecord[] | null>(null);
   const [polls, setPolls] = useState<Poll[]>([]);
   const [selectedPolIds, setSelectedPolIds] = useState<number[]>([]);
@@ -86,7 +94,12 @@ export default function VoteMapPage() {
       .then(([emb, pols]) => {
         setEmbeddings(emb);
         setPoliticians(pols);
-        setCohesion(computeCohesion(emb.data, pols));
+        const { cohesion: c, centroids: cent } = computeCohesionAndCentroids(
+          emb.data,
+          pols,
+        );
+        setCohesion(c);
+        setCentroids(cent);
         setLoading(false);
       })
       .catch(console.error);
@@ -270,29 +283,50 @@ export default function VoteMapPage() {
         ) : null}
       </div>
 
-      {/* Cohesion */}
-      <div
-        className="bg-white rounded-xl border border-[#E3E0DA] p-5 md:p-6 mb-5"
-        style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}
-      >
-        <h2
-          className="font-extrabold text-[15px] mb-1"
-          style={{ color: "#1E1B5E" }}
+      {/* Cohesion + Party distance matrix — side by side on md+ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+        <div
+          className="bg-white rounded-xl border border-[#E3E0DA] p-5 md:p-6"
+          style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}
         >
-          Fraktionsdisziplin
-        </h2>
-        <p className="text-[12px] text-[#9A9790] mb-4">
-          Die Fraktionsdisziplin ist der mittlere euklidische Abstand jedes
-          Abgeordneten zum Schwerpunkt seiner Fraktion in der Abstimmungskarte.
-          Ein kurzer Balken bedeutet, dass die Mitglieder sehr geschlossen
-          abstimmen; ein langer Balken zeigt größere interne
-          Meinungsverschiedenheiten.
-        </p>
-        {loading ? (
-          <ChartSkeleton height={300} />
-        ) : (
-          <CohesionChart cohesion={cohesion} />
-        )}
+          <h2
+            className="font-extrabold text-[15px] mb-1"
+            style={{ color: "#1E1B5E" }}
+          >
+            Fraktionsdisziplin
+          </h2>
+          <p className="text-[12px] text-[#9A9790] mb-4">
+            Mittlerer euklidischer Abstand jedes Abgeordneten zum Schwerpunkt
+            seiner Fraktion. Ein kurzer Balken bedeutet geschlossenes
+            Abstimmungsverhalten.
+          </p>
+          {loading ? (
+            <ChartSkeleton height={250} />
+          ) : (
+            <CohesionChart cohesion={cohesion} />
+          )}
+        </div>
+
+        <div
+          className="bg-white rounded-xl border border-[#E3E0DA] p-5 md:p-6"
+          style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}
+        >
+          <h2
+            className="font-extrabold text-[15px] mb-1"
+            style={{ color: "#1E1B5E" }}
+          >
+            Parteiähnlichkeit
+          </h2>
+          <p className="text-[12px] text-[#9A9790] mb-4">
+            Abstände zwischen den Fraktionszentroiden. Dunkel = ähnliches
+            Abstimmungsverhalten, hell = größere Unterschiede.
+          </p>
+          {loading ? (
+            <ChartSkeleton height={250} />
+          ) : (
+            <PartyDistanceMatrix centroids={centroids} />
+          )}
+        </div>
       </div>
 
       <Footer />
