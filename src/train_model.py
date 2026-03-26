@@ -63,9 +63,9 @@ def main() -> None:
 
     import lightning as L
 
-    from fetch_data import upsert_periods
-    from model import prepare_votes, train
-    from storage import OUTPUTS_DIR, load_data, save_embeddings
+    from .fetch_data import upsert_periods
+    from .model import prepare_votes, train
+    from .storage import OUTPUTS_DIR, load_data, save_embeddings
 
     period_id = args.period or upsert_periods()
     L.seed_everything(42)
