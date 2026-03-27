@@ -23,9 +23,18 @@ jobs:
         run: uv sync --group train
 
       - name: Fetch data
-        run: uv run python -m src.fetch_data
+        id: fetch
+        run: |
+          output=$(uv run python -m src.fetch_data 2>&1)
+          echo "$output"
+          if echo "$output" | grep -q "nothing to fetch"; then
+            echo "new_data=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new_data=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Train model
+        if: steps.fetch.outputs.new_data == 'true'
         run: uv run python -m src.train_model
 
       - name: Export JSON for frontend
