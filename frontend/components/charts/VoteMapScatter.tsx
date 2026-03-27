@@ -239,8 +239,11 @@ export function VoteMapScatter({
         .attr("transform", `translate(${sx},${sy})`)
         .style("cursor", "default");
 
+      // Inner group so zoom counter-scaling can target it independently
+      const ig = cg.append("g").attr("class", "centroid-inner");
+
       // Filled diamond: points at cardinal directions
-      cg.append("polygon")
+      ig.append("polygon")
         .attr("points", `0,${-arm} ${arm},0 0,${arm} ${-arm},0`)
         .attr("fill", partyColor)
         .attr("stroke", "#fff")
@@ -318,11 +321,14 @@ export function VoteMapScatter({
         const tx = `translate(${M.left + event.transform.x},${M.top + event.transform.y}) scale(${k})`;
         contentG.attr("transform", tx);
         labelsG.attr("transform", tx);
-        // Counter-scale dots so they stay the same visual size regardless of zoom level
+        // Counter-scale dots and centroids so they stay the same visual size regardless of zoom level
         svg
           .selectAll<SVGCircleElement, unknown>(".dot")
           .attr("r", 4 / k)
           .attr("stroke-width", 1 / k);
+        svg
+          .selectAll<SVGGElement, unknown>(".centroid-inner")
+          .attr("transform", `scale(${1 / k})`);
       });
     zoomRef.current = zoom;
 
