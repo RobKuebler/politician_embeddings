@@ -7,6 +7,15 @@ from src.education_clusters import normalize_education_degree, normalize_educati
 from src.occupation_clusters import normalize_occupation
 
 
+def _add_party_pct(df: pd.DataFrame) -> pd.DataFrame:
+    """Add a 'pct' column: each row's count as % of its party's total count."""
+    return df.assign(
+        pct=lambda d: (
+            d["count"] / d.groupby("party_label")["count"].transform("sum") * 100
+        ).round(1)
+    )
+
+
 def _grouped_pct(
     pols_df: pd.DataFrame,
     raw_col: str,
@@ -27,11 +36,7 @@ def _grouped_pct(
         .groupby(["party_label", display_col])
         .size()
         .reset_index(name="count")  # type: ignore[call-overload]
-        .assign(
-            pct=lambda df: (
-                df["count"] / df.groupby("party_label")["count"].transform("sum") * 100
-            ).round(1)
-        )
+        .pipe(_add_party_pct)
     )
 
 
@@ -240,9 +245,5 @@ def compute_title_counts(pols_df: pd.DataFrame) -> pd.DataFrame:
         .groupby(["party_label", "titel"])
         .size()
         .reset_index(name="count")  # type: ignore[call-overload]
-        .assign(
-            pct=lambda df: (
-                df["count"] / df.groupby("party_label")["count"].transform("sum") * 100
-            ).round(1)
-        )
+        .pipe(_add_party_pct)
     )

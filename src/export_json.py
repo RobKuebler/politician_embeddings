@@ -104,6 +104,14 @@ def _write(path: Path, data: object) -> None:
     log.info("Wrote %s (%.1f KB)", path, path.stat().st_size / 1024)
 
 
+def _clean_matrix(arr: np.ndarray, precision: int) -> list:
+    """Convert a 2D numpy array to a nested list, replacing NaN with None."""
+    return [
+        [None if np.isnan(v) else round(float(v), precision) for v in row]
+        for row in arr.tolist()
+    ]
+
+
 def _split_topics(t: object) -> list[str]:
     """Split pipe-separated topic string into a list."""
     if not isinstance(t, str):
@@ -115,15 +123,8 @@ def _pivot_to_json(
     pivot_pct: pd.DataFrame, dev_z: np.ndarray, pivot_count: pd.DataFrame
 ) -> dict:
     """Serialize a deviation pivot for the frontend DeviationHeatmap component."""
-    pct_vals = pivot_pct.to_numpy().astype(float)
-    pct_clean = [
-        [None if np.isnan(v) else round(float(v), 1) for v in row]
-        for row in pct_vals.tolist()
-    ]
-    dev_clean = [
-        [None if np.isnan(v) else round(float(v), 2) for v in row]
-        for row in dev_z.tolist()
-    ]
+    pct_clean = _clean_matrix(pivot_pct.to_numpy().astype(float), 1)
+    dev_clean = _clean_matrix(dev_z, 2)
     count_clean = [
         [int(v) for v in row] for row in pivot_count.to_numpy().astype(int).tolist()
     ]
@@ -187,14 +188,9 @@ def _export_sidejobs(
         ds = row.get("date_start") if pd.notna(row.get("date_start")) else None
         de = row.get("date_end") if pd.notna(row.get("date_end")) else None
         created = row.get("created") if pd.notna(row.get("created")) else None
-        if interval == 1:
-            return row["income"] * _active_months(
-                ds, de, period_start, period_end, created
-            )
-        if interval == 2:
-            return row["income"] * (
-                _active_months(ds, de, period_start, period_end, created) / 12
-            )
+        if interval in (1, 2):
+            months = _active_months(ds, de, period_start, period_end, created)
+            return row["income"] * (months if interval == 1 else months / 12)
         return row["income"]
 
     sj_income = sj_income.assign(
