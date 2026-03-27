@@ -1,4 +1,8 @@
 politician_id,job_title,job_title_extra,organization,income_level,income,interval,created,date_start,date_end,category,topics
+79043,"Kooptiertes Mitglied des Stiftungsrates, ehrenamtlich (ab 19.05.2026)",,Wissenschaftsstiftung Ernst Reuter,,,,1774520804,2026-05-19,,29230,"Bildung und Erziehung|Wissenschaft, Forschung und Technologie"
+78979,Mitglied des Aufsichtsrates,Einkommen im Jahr 2026,Wohnungsgenossenschaft Unstruttal eG,,100.0,,1774520688,2026-01-01,2026-12-31,29228,"Raumordnung, Bau- und Wohnungswesen"
+79293,Mitglied des Verwaltungsrates,Einkommen ab 01.01.2026,Sparkasse Hannover,,475.0,1,1774519629,2026-01-01,,29229,"Öffentliche Finanzen, Steuern und Abgaben|Finanzen|Wirtschaft"
+97972,Mitglied des Stadtrates,Einkommen ab 01.02.2026,Stadt Erfurt,,360.51,1,1774518773,2026-02-01,,29229,Staat und Verwaltung
 178656,Mitglied des Polizeibeirates (ab 18.12.2025),,Oberbergischer Kreis,,,,1774447716,2025-12-18,,29229,Staat und Verwaltung
 178656,Mitglied des Betriebsausschusses (ab 18.12.2025),,Oberbergischer Kreis,,,,1774447680,2025-12-18,,29229,Staat und Verwaltung
 178656,Mitglied des Wahlprüfungsausschusses (ab 20.11.2025),,Gemeinde Nümbrecht,,,,1774447343,2025-11-20,,29229,Staat und Verwaltung
@@ -949,8 +953,8 @@ politician_id,job_title,job_title_extra,organization,income_level,income,interva
 175286,Mitglied des Beirates der Green Culture Anlaufstelle (ab 08.10.2025),,Delta1 gemeinnützige GmbH,,,,1765362984,2025-10-08,,29228,Umwelt|Wirtschaft
 184332,"Mitglied des Stiftungsrates, ehrenamtlich",,Heinrich-Böll-Stiftung Schleswig-Holstein e.V.,,,,1765362581,,,29230,"Politisches Leben, Parteien"
 184332,Studentische Mitarbeiterin (Tätigkeit vor der Mitgliedschaft im Deutschen Bundestag),,"Denise Loop, MdB",,,,1765362240,,,29234,"Politisches Leben, Parteien"
-97972,Mitglied des Stadtrates,Einkommen im Jahr 2025,Stadt Erfurt,,480.0,,1765362141,2025-01-01,2025-12-31,29229,Staat und Verwaltung
-97972,Mitglied des Stadtrates,Einkommen ab 01.08.2025,Stadt Erfurt,,649.8,1,1765362058,2025-08-01,,29229,Staat und Verwaltung
+97972,Mitglied des Stadtrates,Einkommen im Jahr 2025,Stadt Erfurt,,570.0,,1765362141,2025-01-01,2025-12-31,29229,Staat und Verwaltung
+97972,Mitglied des Stadtrates,Einkommen vom 01.08.2025 bis 31.01.2026,Stadt Erfurt,,649.8,1,1765362058,2025-08-01,2026-01-31,29229,Staat und Verwaltung
 97972,Mitglied des Stadtrates,Einkommen vom 01.04. bis 31.07.2025,Stadt Erfurt,,644.7,1,1765361992,2025-04-01,2025-07-31,29229,Staat und Verwaltung
 97972,Mitglied des Verbandsrates,,Sparkasse Mittelthüringen,,,,1765361869,,,29229,Finanzen
 97972,Mitglied des Aufsichtsrates,,Thüringer Zukunftskontor GmbH,,,,1765361796,,,29228,"Sport, Freizeit und Tourismus|Wirtschaft"
@@ -2152,7 +2156,7 @@ politician_id,job_title,job_title_extra,organization,income_level,income,interva
 182900,"Syndikusrechtsanwalt, Rückkehrrecht (Tätigkeit vor der Mitgliedschaft im Deutschen Bundestag)",,EnBW Energie Baden-Württemberg AG,,,,1749549034,,,29234,Energie
 78979,"Geschäftsführender Erster Vorsitzender des Vorstandes, ehrenamtlich",,Weißenfelser Reitverein e.V.,,,,1749548918,,,29230,"Sport, Freizeit und Tourismus"
 78979,"Erster Vorsitzender des Vorstandes, ehrenamtlich",,Kreisreiterverband Burgenlandkreis e.V.,,,,1749548773,,,29230,"Sport, Freizeit und Tourismus"
-78979,Mitglied des Aufsichtsrates,zuzüglich Summe unregelmäßiger Zahlungen 2025,Wohnungsgenossenschaft Unstruttal eG,,500.0,,1749548730,2025-01-01,,29228,"Raumordnung, Bau- und Wohnungswesen"
+78979,Mitglied des Aufsichtsrates,Einkommen im Jahr 2025,Wohnungsgenossenschaft Unstruttal eG,,500.0,,1749548730,2025-01-01,2025-12-31,29228,"Raumordnung, Bau- und Wohnungswesen"
 78979,Mitglied des Aufsichtsrates,,Wohnungsgenossenschaft Unstruttal eG,1,2000.0,2,1749548657,,,29228,"Raumordnung, Bau- und Wohnungswesen"
 175471,Beteiligung,,Sanabene GmbH,,,,1748856865,,,29231,"Gesundheit|Gesellschaftspolitik, soziale Gruppen"
 79149,Generalsekretär,Einkommen ab 01.01.2025,Christlich Demokratische Union Deutschlands,3,11227.2,1,1748854863,2025-01-01,,29647,"Politisches Leben, Parteien"
@@ -2819,7 +2823,7 @@ politician_id,job_title,job_title_extra,organization,income_level,income,interva
 79429,"Vorsitzende des Aufsichtsrates, von Amts wegen (bis 25.06.2025) ",,Germany Trade and Invest (GTAI) - Gesellschaft für Außenwirtschaft und Standortmarketing mbH,,,,1678792082,,2025-06-25,29228,Wirtschaft|Außenwirtschaft
 79429,"Mitglied des Aufsichtsrates, von Amts wegen",,Bundesagentur für Sprunginnovationen (SprinD GmbH),,,,1678791983,,,29228,"Wirtschaft|Wissenschaft, Forschung und Technologie|Forschung"
 79293,Beteiligung,,"Hoppenstedt Land & Art KG, Burgwedel",,,,1678783054,,,29231,Finanzen
-79293,Mitglied des Verwaltungsrates,,Sparkasse Hannover,,250.0,1,1678783023,,,29229,"Öffentliche Finanzen, Steuern und Abgaben|Finanzen|Wirtschaft"
+79293,Mitglied des Verwaltungsrates,Einkommen bis 31.12.2025,Sparkasse Hannover,,250.0,1,1678783023,,2025-12-31,29229,"Öffentliche Finanzen, Steuern und Abgaben|Finanzen|Wirtschaft"
 78865,Mitglied des Stiftungsrates,,Stiftung Humboldt Forum im Berliner Schloss,,,,1678741797,,,29230,Kultur
 78865,Mitglied des Vorstandes,,Gegen Vergessen - Für Demokratie e.V.,,,,1678740936,,,29230,"Politisches Leben, Parteien"
 78865,Mitglied des Stiftungsrates,,Bundesstiftung Bauakademie,,,,1678740851,,,29230,"Kultur|Raumordnung, Bau- und Wohnungswesen"
