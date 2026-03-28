@@ -242,13 +242,13 @@ export function drawSimpleHorizontalBarChart({
     .range([0, iW]);
   const yScale = d3.scaleBand().domain(labels).range([0, iH]).padding(yPadding);
 
-  renderBarLabels(g, labels, yScale, width, M.right, tooltip, container);
   appendHBarXAxis(
     g,
     xScale,
     iH,
     xTickFormat ?? ((v) => `${(+v / 1000).toFixed(0)}k`),
   );
+  renderBarLabels(g, labels, yScale, width, M.right, tooltip, container);
 
   type Row = { label: string; value: number; color: string };
   const data: Row[] = labels.map((l, i) => ({
@@ -336,13 +336,13 @@ export function drawStackedHorizontalBarChart({
     .range([0, iW]);
   const yScale = d3.scaleBand().domain(categories).range([0, iH]).padding(0.2);
 
-  renderBarLabels(g, categories, yScale, width, M.right, tooltip, container);
   appendHBarXAxis(
     g,
     xScale,
     iH,
     xTickFormat ?? ((v) => `${(+v / 1000).toFixed(0)}k`),
   );
+  renderBarLabels(g, categories, yScale, width, M.right, tooltip, container);
 
   series.forEach((s) => {
     const key = s.key;
@@ -846,8 +846,8 @@ export function drawPartyColoredStackedBarChart({
     const xScale = d3.scaleLinear().domain([0, 100]).range([0, iW]);
     const yScale = d3.scaleBand().domain(labels).range([0, iH]).padding(0.2);
 
-    renderBarLabels(g, labels, yScale, width, M.right, tooltip, container);
     appendHBarXAxis(g, xScale, iH, (v) => `${+v}%`);
+    renderBarLabels(g, labels, yScale, width, M.right, tooltip, container);
 
     labels.forEach((label) => {
       renderStacks(
