@@ -64,7 +64,11 @@ def fetch_protokoll_xmls(wahlperiode: int, out_dir: Path) -> int:  # noqa: ARG00
         if dest.exists():
             continue
         log.info("Lade %s → %s", url, dest.name)
-        _curl_download(url, dest)
+        try:
+            _curl_download(url, dest)
+        except RuntimeError:
+            dest.unlink(missing_ok=True)
+            raise
         downloaded += 1
 
     log.info("%d neue XMLs heruntergeladen nach %s", downloaded, xml_dir)
