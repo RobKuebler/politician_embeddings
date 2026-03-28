@@ -162,6 +162,9 @@ def fetch_dip_plenarprotokolle(
     Reads existing CSV (if any) to determine which IDs are already stored
     and which date to use as API start filter. Only new records are appended.
     Returns a DataFrame of the newly added rows (empty if nothing new).
+    Note: limit is intended for testing only — a partial run does not resume
+    where it left off; next run re-fetches from f.datum.start but correctly
+    skips already-known IDs.
     """
     csv_path = Path(out_dir) / "dip_plenarprotokolle.csv"
 
