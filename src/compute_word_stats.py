@@ -42,21 +42,93 @@ def _get_nlp() -> "spacy_type.Language":
     return _nlp
 
 
-def _lemmatize_tokens(tokens: list[str]) -> list[str]:
-    """Lemmatize German tokens using spaCy, batching unique tokens for speed.
+def _fix_feminine_lemma(lemma: str) -> str:
+    """Fix spaCy's known bad lemmas for German feminine forms.
 
-    Processes only the unique token set, then maps back to the full list.
-    Tokens whose lemma is not alphabetic or < 4 chars are kept as-is.
+    de_core_news_sm truncates "-innen" plurals incorrectly:
+      "demokratinnen" → "demokratinne" (should be "demokratin")
+    """
+    if lemma.endswith("inne") and len(lemma) >= 6:
+        return lemma[:-2]  # demokratinne → demokratin
+    if lemma.endswith("inn") and len(lemma) >= 5:
+        return lemma[:-1]  # politikerinn → politikerin
+    return lemma
+
+
+def _spacy_isolated_pass(
+    nlp: "spacy_type.Language",
+    words: list[str],
+) -> tuple[dict[str, str], list[str]]:
+    """Run isolated spaCy lemmatization; return (lemma_map, words_needing_retry).
+
+    Words ending in -en/-em that spaCy left unchanged are collected for a
+    second pass with adjective context (stage 3 in _lemmatize_tokens).
+    """
+    lemma_map: dict[str, str] = {}
+    needs_retry: list[str] = []
+    for word, doc in zip(words, nlp.pipe(words), strict=False):
+        lemma = doc[0].lemma_.lower() if doc else word
+        if not (lemma.isalpha() and len(lemma) >= 4):
+            lemma = word
+        lemma = _fix_feminine_lemma(lemma)
+        if lemma == word and word.endswith(("en", "em")):
+            needs_retry.append(word)
+        else:
+            lemma_map[word] = lemma
+    return lemma_map, needs_retry
+
+
+def _spacy_adj_context_pass(
+    nlp: "spacy_type.Language",
+    words: list[str],
+) -> dict[str, str]:
+    """Retry lemmatization in adjective context ("ein X Mensch").
+
+    Accepts the result only if spaCy produced a shorter form (i.e. an
+    inflection ending was stripped), e.g. "rechtsextremen" → "rechtsextrem".
+    """
+    sentences = [f"ein {w} Mensch" for w in words]
+    lemma_map: dict[str, str] = {}
+    for word, doc in zip(words, nlp.pipe(sentences), strict=False):
+        result = word
+        for tok in doc:
+            if tok.text.lower() == word:
+                candidate = tok.lemma_.lower()
+                if (
+                    candidate.isalpha()
+                    and len(candidate) >= 4
+                    and len(candidate) < len(word)
+                ):
+                    result = candidate
+                break
+        lemma_map[word] = result
+    return lemma_map
+
+
+def _lemmatize_tokens(tokens: list[str]) -> list[str]:
+    """Lemmatize German tokens using spaCy with a three-stage pipeline.
+
+    1. Pre-process: -innen plurals → -in directly (spaCy lookup table is wrong).
+    2. Isolated spaCy pass; post-fix bad -inne/-inn lemmas.
+    3. ADJ-context retry for -en/-em tokens spaCy left unchanged.
     """
     if not tokens:
         return tokens
     nlp = _get_nlp()
     unique = list(set(tokens))
-    lemma_map: dict[str, str] = {}
-    for word, doc in zip(unique, nlp.pipe(unique), strict=False):
-        lemma = doc[0].lemma_.lower() if doc else word
-        # Discard degenerate lemmas (non-alpha or too short)
-        lemma_map[word] = lemma if lemma.isalpha() and len(lemma) >= 4 else word
+
+    # Stage 1: German feminine plurals bypass spaCy
+    pre_processed = {w for w in unique if w.endswith("innen") and len(w) >= 7}
+    lemma_map: dict[str, str] = {w: w[:-3] for w in pre_processed}  # -innen → -in
+
+    # Stage 2: isolated spaCy pass
+    to_spacy = [w for w in unique if w not in pre_processed]
+    stage2_map, needs_retry = _spacy_isolated_pass(nlp, to_spacy)
+    lemma_map.update(stage2_map)
+
+    # Stage 3: adjective-context retry
+    lemma_map.update(_spacy_adj_context_pass(nlp, needs_retry))
+
     return [lemma_map.get(t, t) for t in tokens]
 
 

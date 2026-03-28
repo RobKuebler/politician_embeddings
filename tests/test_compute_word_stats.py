@@ -219,16 +219,30 @@ def test_fetch_word_stats_fehlendes_csv_wirft_systemexit(tmp_path):
 
 
 def test_lemmatize_tokens_fasst_flexionsformen_zusammen(monkeypatch):
-    """Inflektierte Formen werden auf Grundform reduziert."""
-    # Überschreibe die Fixture — echter Aufruf
+    """Adjektiv-Flexionsformen werden auf Grundform reduziert."""
     monkeypatch.undo()
 
     tokens = ["rechtsextreme", "rechtsextremen", "rechtsextremem", "rechtsextrem"]
     lemmas = cws._lemmatize_tokens(tokens)
-    # de_core_news_sm reduziert zumindest einige Formen — Anzahl der Varianten sinkt
-    assert len(set(lemmas)) < len(set(tokens)), (
-        f"Erwartet weniger als {len(set(tokens))} Grundformen, bekommen: {set(lemmas)}"
+    lemma_set = set(lemmas)
+    # Die häufigsten Flexionsformen (-e, -en) müssen zur Grundform "rechtsextrem" zusammenlaufen
+    assert "rechtsextrem" in lemma_set, f"Grundform fehlt: {lemma_set}"
+    idx_e = tokens.index("rechtsextreme")
+    idx_en = tokens.index("rechtsextremen")
+    assert lemmas[idx_e] == lemmas[idx_en] == "rechtsextrem", (
+        f"rechtsextreme→{lemmas[idx_e]}, rechtsextremen→{lemmas[idx_en]}"
     )
+
+
+def test_lemmatize_tokens_innen_plural(monkeypatch):
+    """Feminine Pluralformen auf -innen werden auf -in reduziert."""
+    monkeypatch.undo()
+
+    tokens = ["demokratinnen", "politikerinnen", "sozialdemokratinnen"]
+    lemmas = cws._lemmatize_tokens(tokens)
+    assert lemmas[0] == "demokratin", f"demokratinnen→{lemmas[0]}"
+    assert lemmas[1] == "politikerin", f"politikerinnen→{lemmas[1]}"
+    assert lemmas[2] == "sozialdemokratin", f"sozialdemokratinnen→{lemmas[2]}"
 
 
 def test_lemmatize_tokens_identity_fuer_grundformen(monkeypatch):
