@@ -2,16 +2,8 @@
 import { useRef, useEffect } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
-import {
-  ChartTooltip,
-  styleAxisText,
-  positionTooltip,
-} from "@/lib/chart-utils";
-import {
-  COLOR_SECONDARY,
-  CHART_ROTATION_THRESHOLD,
-  CHART_BOTTOM_ROTATED,
-} from "@/lib/constants";
+import { ChartTooltip, drawStackedVerticalBarChart } from "@/lib/chart-utils";
+import { COLOR_SECONDARY } from "@/lib/constants";
 
 interface SexRecord {
   party_label: string;
@@ -26,14 +18,6 @@ const GENDER_COLORS: Record<string, string> = {
   Weiblich: "#E87E9B",
   Divers: "#9B59B6",
 };
-const M_LEFT = 48;
-const M_RIGHT = 16;
-const M_TOP = 16;
-// Bottom margin — straight labels need 36px, rotated labels need CHART_BOTTOM_ROTATED
-const BOTTOM_NORMAL = 36;
-// Chart heights — legend is rendered as HTML below the SVG, so no extra SVG space needed
-const H_NORMAL = 270;
-const H_ROTATED = 320;
 
 export function GenderChart({
   data,
@@ -48,62 +32,6 @@ export function GenderChart({
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-
-    // Determine whether party labels need rotation to avoid overlap
-    const tempScale = d3
-      .scaleBand()
-      .domain(parties)
-      .range([0, width - M_LEFT - M_RIGHT])
-      .padding(0.25);
-    const needsRotation = tempScale.bandwidth() < CHART_ROTATION_THRESHOLD;
-
-    const M = {
-      left: M_LEFT,
-      right: M_RIGHT,
-      top: M_TOP,
-      bottom: needsRotation ? CHART_BOTTOM_ROTATED : BOTTOM_NORMAL,
-    };
-    const H = needsRotation ? H_ROTATED : H_NORMAL;
-    const iW = width - M.left - M.right;
-    const iH = H - M.top - M.bottom;
-    svg.attr("width", width).attr("height", H);
-
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${M.left},${M.top})`);
-
-    const xScale = d3.scaleBand().domain(parties).range([0, iW]).padding(0.25);
-    const yScale = d3.scaleLinear().domain([0, 100]).range([iH, 0]);
-
-    g.append("g")
-      .attr("transform", `translate(0,${iH})`)
-      .call(d3.axisBottom(xScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call((ax) => {
-        styleAxisText(ax);
-        if (needsRotation) {
-          ax.selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-0.5em")
-            .attr("dy", "0.15em")
-            .attr("transform", "rotate(-40)");
-        }
-      });
-
-    g.append("g")
-      .call(
-        d3
-          .axisLeft(yScale)
-          .ticks(5)
-          .tickFormat((d) => `${d}%`),
-      )
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText)
-      .call((ax) => ax.selectAll(".tick line").attr("stroke", "#eee"));
-
-    const tooltip = d3.select(tooltipRef.current!);
 
     // Precompute total members per party for absolute counts in tooltip
     const partyTotals = Object.fromEntries(
@@ -115,36 +43,21 @@ export function GenderChart({
       ]),
     );
 
-    // Build stacked segments per party
-    parties.forEach((party) => {
-      let y0 = 0;
-      GENDERS.forEach((gender) => {
-        const row = data.find(
-          (r) => r.party_label === party && r.geschlecht === gender,
-        );
-        const pct = row ? Math.round(row.pct) : 0;
-        const count = row?.count ?? 0;
-        const total = partyTotals[party] ?? 0;
-        const y1 = y0 + pct;
-        g.append("rect")
-          .attr("x", xScale(party) ?? 0)
-          .attr("y", yScale(y1))
-          .attr("width", xScale.bandwidth())
-          .attr("height", Math.max(0, yScale(y0) - yScale(y1)))
-          .attr("fill", GENDER_COLORS[gender])
-          .on("mousemove", (event) => {
-            const [px, py] = d3.pointer(event, containerRef.current!);
-            positionTooltip(
-              tooltip,
-              containerRef.current!,
-              px,
-              py,
-              `<b>${party}</b><br/>${count} von ${total} Abgeordneten sind ${gender.toLowerCase()} (${pct}%)`,
-            );
-          })
-          .on("mouseleave", () => tooltip.style("opacity", "0"));
-        y0 = y1;
-      });
+    drawStackedVerticalBarChart({
+      svgEl: svgRef.current,
+      width,
+      labels: parties,
+      series: GENDERS.map((gender) => ({
+        key: gender,
+        color: GENDER_COLORS[gender],
+        getValue: (party) =>
+          data.find((r) => r.party_label === party && r.geschlecht === gender)
+            ?.count ?? 0,
+      })),
+      tooltipHtml: (party, gender, pct, count) =>
+        `<b>${party}</b><br/>${count} von ${partyTotals[party] ?? 0} Abgeordneten sind ${gender.toLowerCase()} (${pct}%)`,
+      tooltip: d3.select(tooltipRef.current!),
+      container: containerRef.current!,
     });
   }, [data, parties, width]);
 

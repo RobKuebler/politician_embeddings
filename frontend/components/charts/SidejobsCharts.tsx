@@ -7,14 +7,14 @@ import {
   PARTY_COLORS,
   FALLBACK_COLOR,
   sortParties,
-  CHART_ROTATION_THRESHOLD,
-  CHART_BOTTOM_ROTATED,
+  COLOR_SECONDARY,
 } from "@/lib/constants";
 import {
   ChartTooltip,
-  styleAxisText,
-  truncateAxisLabels,
-  positionTooltip,
+  drawSimpleHorizontalBarChart,
+  drawStackedHorizontalBarChart,
+  drawSimpleVerticalBarChart,
+  drawPartyColoredStackedBarChart,
 } from "@/lib/chart-utils";
 
 // ── Chart 1: Income by party (sum + mean) ─────────────────────────────────────
@@ -51,93 +51,21 @@ export function IncomeByPartyChart({
       return n > 0 ? totals[i] / n : 0;
     });
 
-    // Draws a vertical bar chart in PARTY_ORDER (seat count order)
+    // Draws a bar chart in PARTY_ORDER (seat count order).
+    // Vertical on desktop, horizontal on mobile — handled by drawSimpleVerticalBarChart.
     const draw = (svgEl: SVGSVGElement, values: number[]) => {
-      const sorted = parties.map((p, i) => ({ party: p, value: values[i] }));
-
-      const iW0 = width - 60 - 16;
-      const tempScale = d3
-        .scaleBand()
-        .domain(sorted.map((d) => d.party))
-        .range([0, iW0])
-        .padding(0.25);
-      const needsRotation = tempScale.bandwidth() < CHART_ROTATION_THRESHOLD;
-      const M = {
-        left: 60,
-        right: 16,
-        top: 12,
-        bottom: needsRotation ? CHART_BOTTOM_ROTATED : 52,
-      };
-      const H = needsRotation ? 320 : 270;
-      const iW = width - M.left - M.right;
-      const iH = H - M.top - M.bottom;
-      const svg = d3.select(svgEl);
-      svg.selectAll("*").remove();
-      svg.attr("width", width).attr("height", H);
-      const g = svg
-        .append("g")
-        .attr("transform", `translate(${M.left},${M.top})`);
-
-      const xScale = d3
-        .scaleBand()
-        .domain(sorted.map((d) => d.party))
-        .range([0, iW])
-        .padding(0.25);
-      const yMax = d3.max(sorted, (d) => d.value) ?? 1;
-      const yScale = d3
-        .scaleLinear()
-        .domain([0, yMax * 1.05])
-        .range([iH, 0]);
-
-      g.append("g")
-        .attr("transform", `translate(0,${iH})`)
-        .call(d3.axisBottom(xScale).tickSize(0))
-        .call((ax) => ax.select(".domain").remove())
-        .call((ax) => {
-          if (needsRotation) {
-            styleAxisText(ax);
-            ax.selectAll("text")
-              .style("text-anchor", "end")
-              .attr("dx", "-0.5em")
-              .attr("dy", "0.15em")
-              .attr("transform", "rotate(-40)");
-          } else {
-            styleAxisText(ax);
-          }
-        });
-
-      g.append("g")
-        .call(
-          d3
-            .axisLeft(yScale)
-            .ticks(4)
-            .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
-        )
-        .call((ax) => ax.select(".domain").remove())
-        .call(styleAxisText)
-        .call((ax) => ax.selectAll(".tick line").attr("stroke", "#eee"));
-
-      const tooltip = d3.select(tooltipRef.current!);
-      g.selectAll<SVGRectElement, (typeof sorted)[number]>("rect")
-        .data(sorted)
-        .join("rect")
-        .attr("x", (d) => xScale(d.party) ?? 0)
-        .attr("y", (d) => yScale(d.value))
-        .attr("width", xScale.bandwidth())
-        .attr("height", (d) => Math.max(0, iH - yScale(d.value)))
-        .attr("fill", (d) => PARTY_COLORS[d.party] ?? FALLBACK_COLOR)
-        .attr("rx", 2)
-        .on("mousemove", (event, d) => {
-          const [px, py] = d3.pointer(event, containerRef.current!);
-          positionTooltip(
-            tooltip,
-            containerRef.current!,
-            px,
-            py,
-            `<b>${d.party}</b><br/>${Math.round(d.value).toLocaleString("de")} €`,
-          );
-        })
-        .on("mouseleave", () => tooltip.style("opacity", "0"));
+      drawSimpleVerticalBarChart({
+        svgEl,
+        width,
+        labels: parties,
+        values,
+        colors: parties.map((p) => PARTY_COLORS[p] ?? FALLBACK_COLOR),
+        tooltipHtml: (label, value) =>
+          `<b>${label}</b><br/>${Math.round(value).toLocaleString("de")} €`,
+        tooltip: d3.select(tooltipRef.current!),
+        container: containerRef.current!,
+        hBar: { rowSlotHeight: 30, minHeight: 180 },
+      });
     };
 
     if (svgSumRef.current) draw(svgSumRef.current, totals);
@@ -204,92 +132,33 @@ export function IncomeByCategoryChart({
         return totB - totA;
       });
     const cats = rows.map((r) => r.cat as string);
-    const H = Math.max(300, cats.length * 36 + 80);
-    const M = { left: 240, right: 16, top: 8, bottom: 36 };
-    const iW = width - M.left - M.right;
-    const iH = H - M.top - M.bottom;
 
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-    svg.attr("width", width).attr("height", H);
-
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${M.left},${M.top})`);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const series = (d3.stack().keys(parties) as any)(rows) as d3.Series<
-      Record<string, string | number>,
-      string
-    >[];
-    const xMax = d3.max(series, (s) => d3.max(s, (d) => d[1])) ?? 1;
-
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, xMax * 1.02])
-      .range([0, iW]);
-    const yScale = d3.scaleBand().domain(cats).range([0, iH]).padding(0.2);
-
-    const tooltip = d3.select(tooltipRef.current!);
-
-    g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText)
-      .call((ax) =>
-        truncateAxisLabels(ax, M.left - 8, tooltip, containerRef.current!),
-      );
-
-    g.append("g")
-      .attr("transform", `translate(0,${iH})`)
-      .call(
-        d3
-          .axisBottom(xScale)
-          .ticks(4)
-          .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
-      )
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText);
-
-    series.forEach((s) => {
-      const party = s.key;
-      const cls = `s-${party.replace(/\W/g, "_")}`;
-      g.selectAll<
-        SVGRectElement,
-        d3.SeriesPoint<Record<string, string | number>>
-      >(`rect.${cls}`)
-        .data(s)
-        .join("rect")
-        .attr("class", cls)
-        .attr("y", (d) => yScale(d.data.cat as string) ?? 0)
-        .attr("x", (d) => xScale(d[0]))
-        .attr("height", yScale.bandwidth())
-        .attr("width", (d) => Math.max(0, xScale(d[1]) - xScale(d[0])))
-        .attr("fill", PARTY_COLORS[party] ?? FALLBACK_COLOR)
-        .on("mousemove", (event, d) => {
-          const [px, py] = d3.pointer(event, containerRef.current!);
-          const val = Math.round(d[1] - d[0]);
-          positionTooltip(
-            tooltip,
-            containerRef.current!,
-            px,
-            py,
-            `<b>${party}</b><br/>${d.data.cat}<br/>${val.toLocaleString("de")} €`,
-          );
-        })
-        .on("mouseleave", () => tooltip.style("opacity", "0"));
+    drawStackedHorizontalBarChart({
+      svgEl: svgRef.current,
+      width,
+      categories: cats,
+      categoryKey: "cat",
+      seriesKeys: parties,
+      colorFn: (key) => PARTY_COLORS[key] ?? FALLBACK_COLOR,
+      dataRows: rows,
+      tooltipHtml: (cat, party, value) =>
+        `<b>${party}</b><br/>${cat}<br/>${value.toLocaleString("de")} €`,
+      tooltip: d3.select(tooltipRef.current!),
+      container: containerRef.current!,
+      rowSlotHeight: 36,
+      desktopLeftMargin: 240,
+      minHeight: 300,
     });
   }, [jobs, parties, width]);
 
   return (
     <div>
-      <div className="overflow-x-auto">
-        <div ref={containerRef} style={{ position: "relative", minWidth: 500 }}>
-          <svg
-            ref={svgRef}
-            style={{ display: "block", width: "100%", overflow: "visible" }}
-          />
-          <ChartTooltip tooltipRef={tooltipRef} />
-        </div>
+      <div ref={containerRef} style={{ position: "relative" }}>
+        <svg
+          ref={svgRef}
+          style={{ display: "block", width: "100%", overflow: "visible" }}
+        />
+        <ChartTooltip tooltipRef={tooltipRef} />
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
         {parties.map((party) => (
@@ -349,19 +218,6 @@ export function TopTopicsChart({
       .slice(0, 15)
       .map((t) => t.topic);
 
-    const H = Math.max(300, topTopics.length * 32 + 80);
-    const M = { left: 210, right: 16, top: 8, bottom: 36 };
-    const iW = width - M.left - M.right;
-    const iH = H - M.top - M.bottom;
-
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-    svg.attr("width", width).attr("height", H);
-
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${M.left},${M.top})`);
-
     const rows = topTopics.map((topic) => {
       const row: Record<string, string | number> = { topic };
       parties.forEach((party) => {
@@ -369,80 +225,33 @@ export function TopTopicsChart({
       });
       return row;
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const series = (d3.stack().keys(parties) as any)(rows) as d3.Series<
-      Record<string, string | number>,
-      string
-    >[];
-    const xMax = d3.max(series, (s) => d3.max(s, (d) => d[1])) ?? 1;
 
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, xMax * 1.02])
-      .range([0, iW]);
-    const yScale = d3.scaleBand().domain(topTopics).range([0, iH]).padding(0.2);
-
-    const tooltip = d3.select(tooltipRef.current!);
-
-    g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText)
-      .call((ax) =>
-        truncateAxisLabels(ax, M.left - 8, tooltip, containerRef.current!),
-      );
-
-    g.append("g")
-      .attr("transform", `translate(0,${iH})`)
-      .call(
-        d3
-          .axisBottom(xScale)
-          .ticks(4)
-          .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
-      )
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText);
-
-    series.forEach((s) => {
-      const party = s.key;
-      const cls = `s-${party.replace(/\W/g, "_")}`;
-      g.selectAll<
-        SVGRectElement,
-        d3.SeriesPoint<Record<string, string | number>>
-      >(`rect.${cls}`)
-        .data(s)
-        .join("rect")
-        .attr("class", cls)
-        .attr("y", (d) => yScale(d.data.topic as string) ?? 0)
-        .attr("x", (d) => xScale(d[0]))
-        .attr("height", yScale.bandwidth())
-        .attr("width", (d) => Math.max(0, xScale(d[1]) - xScale(d[0])))
-        .attr("fill", PARTY_COLORS[party] ?? FALLBACK_COLOR)
-        .on("mousemove", (event, d) => {
-          const [px, py] = d3.pointer(event, containerRef.current!);
-          const val = Math.round(d[1] - d[0]);
-          positionTooltip(
-            tooltip,
-            containerRef.current!,
-            px,
-            py,
-            `<b>${party}</b><br/>${d.data.topic}<br/>${val.toLocaleString("de")} €`,
-          );
-        })
-        .on("mouseleave", () => tooltip.style("opacity", "0"));
+    drawStackedHorizontalBarChart({
+      svgEl: svgRef.current,
+      width,
+      categories: topTopics,
+      categoryKey: "topic",
+      seriesKeys: parties,
+      colorFn: (key) => PARTY_COLORS[key] ?? FALLBACK_COLOR,
+      dataRows: rows,
+      tooltipHtml: (topic, party, value) =>
+        `<b>${party}</b><br/>${topic}<br/>${value.toLocaleString("de")} €`,
+      tooltip: d3.select(tooltipRef.current!),
+      container: containerRef.current!,
+      rowSlotHeight: 32,
+      desktopLeftMargin: 210,
+      minHeight: 300,
     });
   }, [jobs, parties, width]);
 
   return (
     <div>
-      <div className="overflow-x-auto">
-        <div ref={containerRef} style={{ position: "relative", minWidth: 520 }}>
-          <svg
-            ref={svgRef}
-            style={{ display: "block", width: "100%", overflow: "visible" }}
-          />
-          <ChartTooltip tooltipRef={tooltipRef} />
-        </div>
+      <div ref={containerRef} style={{ position: "relative" }}>
+        <svg
+          ref={svgRef}
+          style={{ display: "block", width: "100%", overflow: "visible" }}
+        />
+        <ChartTooltip tooltipRef={tooltipRef} />
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
         {parties.map((party) => (
@@ -503,71 +312,22 @@ export function TopEarnersChart({
       income: number;
     }[];
 
-    const H = Math.max(300, top.length * 28 + 60);
-    const M = { left: 140, right: 24, top: 8, bottom: 40 };
-    const iW = width - M.left - M.right;
-    const iH = H - M.top - M.bottom;
-
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-    svg.attr("width", width).attr("height", H);
-
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${M.left},${M.top})`);
-
-    const names = top.map((t) => t.pol.name);
-    const xMax = d3.max(top, (t) => t.income) ?? 1;
-
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, xMax * 1.05])
-      .range([0, iW]);
-    const yScale = d3.scaleBand().domain(names).range([0, iH]).padding(0.25);
-
-    const tooltip = d3.select(tooltipRef.current!);
-
-    g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText)
-      .call((ax) =>
-        truncateAxisLabels(ax, M.left - 8, tooltip, containerRef.current!),
-      );
-
-    g.append("g")
-      .attr("transform", `translate(0,${iH})`)
-      .call(
-        d3
-          .axisBottom(xScale)
-          .ticks(4)
-          .tickFormat((v) => `${((v as number) / 1000).toFixed(0)}k`),
-      )
-      .call((ax) => ax.select(".domain").remove());
-
-    g.selectAll<SVGRectElement, (typeof top)[number]>("rect")
-      .data(top)
-      .join("rect")
-      .attr("x", 0)
-      .attr("y", (d) => yScale(d.pol.name) ?? 0)
-      .attr("width", (d) => xScale(d.income))
-      .attr("height", yScale.bandwidth())
-      .attr(
-        "fill",
-        (d) => PARTY_COLORS[stripSoftHyphen(d.pol.party)] ?? FALLBACK_COLOR,
-      )
-      .attr("rx", 2)
-      .on("mousemove", (event, d) => {
-        const [px, py] = d3.pointer(event, containerRef.current!);
-        positionTooltip(
-          tooltip,
-          containerRef.current!,
-          px,
-          py,
-          `<b>${d.pol.name}</b><br/>${Math.round(d.income).toLocaleString("de")} €`,
-        );
-      })
-      .on("mouseleave", () => tooltip.style("opacity", "0"));
+    drawSimpleHorizontalBarChart({
+      svgEl: svgRef.current,
+      width,
+      labels: top.map((t) => t.pol.name),
+      values: top.map((t) => t.income),
+      colors: top.map(
+        (t) => PARTY_COLORS[stripSoftHyphen(t.pol.party)] ?? FALLBACK_COLOR,
+      ),
+      tooltipHtml: (label, value) =>
+        `<b>${label}</b><br/>${Math.round(value).toLocaleString("de")} €`,
+      tooltip: d3.select(tooltipRef.current!),
+      container: containerRef.current!,
+      rowSlotHeight: 28,
+      desktopLeftMargin: 140,
+      minHeight: 300,
+    });
   }, [jobs, politicians, width]);
 
   return (
@@ -580,12 +340,30 @@ export function TopEarnersChart({
 
 // ── Chart 5: Coverage per party (stacked bar: Nebenverdienst / keine Angabe / kein Nebenjob) ──
 
+// Series definitions: color comes from the party, opacity encodes the category.
+// "none" overrides to neutral gray since it represents absence of a sidejob.
+const COVERAGE_SERIES = [
+  {
+    key: "income",
+    opacity: 1,
+    fallbackColor: undefined,
+    label: "Nebenverdienst ≥ 1.000 €/Monat",
+  },
+  {
+    key: "no_amount",
+    opacity: 0.4,
+    fallbackColor: undefined,
+    label: "Nebentätigkeit, ohne Einkommensangabe",
+  },
+  { key: "none", opacity: 1, fallbackColor: "#E8E7E2", label: "Kein Nebenjob" },
+] as const;
+
 /**
  * Categorises each politician into one of three buckets:
- *   "income"   — has at least one sidejob with income_level set (above threshold)
+ *   "income"    — has at least one sidejob with income_level set (above threshold)
  *   "no_amount" — has sidejob(s) but none with income_level (no amount declared)
- *   "none"     — no sidejob entry at all
- * Then renders one horizontal stacked bar per party.
+ *   "none"      — no sidejob entry at all
+ * Rendered as a 100%-stacked bar chart (same style as GenderChart).
  */
 export function SidejobCoverageByPartyChart({
   jobs,
@@ -594,6 +372,10 @@ export function SidejobCoverageByPartyChart({
   jobs: SidejobRecord[];
   politicians: { politician_id: number; name: string; party: string }[];
 }) {
+  const { ref: containerRef, width } = useContainerWidth();
+  const svgRef = useRef<SVGSVGElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
   // Build lookup: which politicians have qualifying income / any sidejob
   const withIncome = new Set<number>();
   const withAnySidejob = new Set<number>();
@@ -625,83 +407,41 @@ export function SidejobCoverageByPartyChart({
     Array.from(byParty.keys()).filter((p) => p !== "fraktionslos"),
   );
 
-  const LEGEND = [
-    { key: "income" as const, label: "Nebenverdienst ≥ 1.000 €/Monat" },
-    {
-      key: "no_amount" as const,
-      label: "Nebentätigkeit, ohne Einkommensangabe",
-    },
-    { key: "none" as const, label: "Kein Nebenjob" },
-  ];
+  useEffect(() => {
+    if (!width || !svgRef.current) return;
+    drawPartyColoredStackedBarChart({
+      svgEl: svgRef.current,
+      width,
+      labels: parties,
+      series: COVERAGE_SERIES.map((s) => ({
+        key: s.key,
+        opacity: s.opacity,
+        fallbackColor: s.fallbackColor,
+      })),
+      partyColor: (party) => PARTY_COLORS[party] ?? FALLBACK_COLOR,
+      getValue: (party, key) =>
+        byParty.get(party)?.[key as "income" | "no_amount" | "none"] ?? 0,
+      tooltipHtml: (party, key, pct, count, total) => {
+        const label = COVERAGE_SERIES.find((s) => s.key === key)?.label ?? key;
+        return `<b>${party}</b><br/>${label}<br/>${count} von ${total} (${pct}%)`;
+      },
+      tooltip: d3.select(tooltipRef.current!),
+      container: containerRef.current!,
+    });
+  }, [jobs, politicians, width]);
 
   return (
-    <div className="flex flex-col gap-4">
-      {parties.map((party) => {
-        const c = byParty.get(party);
-        if (!c) return null;
-        const pct = (n: number) => ((n / c.total) * 100).toFixed(1);
-        const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
-
-        // Lighten the party color for the "no_amount" segment via opacity
-        return (
-          <div key={party}>
-            {/* Party label + seat count */}
-            <div className="flex items-baseline gap-2 mb-1">
-              <span
-                className="text-[12px] font-bold"
-                style={{ color: "#1E1B5E" }}
-              >
-                {party}
-              </span>
-              <span className="text-[11px]" style={{ color: "#9A9790" }}>
-                {c.total} Abgeordnete
-              </span>
-            </div>
-
-            {/* Stacked bar */}
-            <div
-              style={{
-                display: "flex",
-                height: 28,
-                borderRadius: 6,
-                overflow: "hidden",
-                gap: 1,
-              }}
-            >
-              {/* Segment 1: Nebenverdienst — full party color */}
-              <BarSegment
-                width={c.income / c.total}
-                bg={color}
-                label={`${c.income} (${pct("income" in c ? c.income : 0)}%)`}
-                title={`Nebenverdienst ≥ 1.000 €/Monat: ${c.income}`}
-              />
-              {/* Segment 2: keine Angabe — party color at 40% opacity */}
-              <BarSegment
-                width={c.no_amount / c.total}
-                bg={color}
-                opacity={0.35}
-                label={`${c.no_amount} (${pct(c.no_amount)}%)`}
-                title={`Nebentätigkeit, ohne Einkommensangabe: ${c.no_amount}`}
-              />
-              {/* Segment 3: kein Nebenjob — neutral */}
-              <BarSegment
-                width={c.none / c.total}
-                bg="#E8E7E2"
-                label={`${c.none} (${pct(c.none)}%)`}
-                title={`Kein Nebenjob: ${c.none}`}
-              />
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Legend */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-1">
-        {LEGEND.map(({ key, label }) => (
+    <div ref={containerRef} style={{ position: "relative" }}>
+      <svg
+        ref={svgRef}
+        style={{ display: "block", width: "100%", overflow: "visible" }}
+      />
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
+        {COVERAGE_SERIES.map(({ key, label, opacity, fallbackColor }) => (
           <span
             key={key}
-            className="flex items-center gap-1.5 text-[11px]"
-            style={{ color: "#6B6760" }}
+            className="flex items-center gap-1 text-[11px]"
+            style={{ color: COLOR_SECONDARY }}
           >
             <span
               style={{
@@ -709,77 +449,16 @@ export function SidejobCoverageByPartyChart({
                 width: 10,
                 height: 10,
                 borderRadius: 2,
-                background:
-                  key === "income"
-                    ? "#E67E22"
-                    : key === "no_amount"
-                      ? "rgba(230,126,34,0.35)"
-                      : "#E8E7E2",
-                border: key === "none" ? "1px solid #ccc" : undefined,
                 flexShrink: 0,
+                background: fallbackColor ?? "#888",
+                opacity,
               }}
             />
             {label}
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-/** Single segment in the stacked bar — shows label when wide enough. */
-function BarSegment({
-  width,
-  bg,
-  opacity = 1,
-  label,
-  title,
-}: {
-  width: number;
-  bg: string;
-  opacity?: number;
-  label: string;
-  title: string;
-}) {
-  if (width <= 0) return null;
-  const pct = width * 100;
-  return (
-    <div
-      title={title}
-      style={{
-        width: `${pct}%`,
-        background: bg,
-        opacity,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        cursor: "default",
-        transition: "opacity 0.15s",
-      }}
-      onMouseEnter={(e) =>
-        ((e.currentTarget as HTMLDivElement).style.opacity = String(
-          opacity * 0.8,
-        ))
-      }
-      onMouseLeave={(e) =>
-        ((e.currentTarget as HTMLDivElement).style.opacity = String(opacity))
-      }
-    >
-      {/* Only show label text if segment is wide enough */}
-      {pct > 12 && (
-        <span
-          style={{
-            fontSize: 10,
-            fontWeight: 600,
-            color: opacity < 0.5 ? "#555" : bg === "#E8E7E2" ? "#888" : "#fff",
-            whiteSpace: "nowrap",
-            pointerEvents: "none",
-          }}
-        >
-          {label}
-        </span>
-      )}
+      <ChartTooltip tooltipRef={tooltipRef} />
     </div>
   );
 }

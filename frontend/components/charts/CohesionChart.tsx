@@ -4,18 +4,12 @@ import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { CohesionRecord } from "@/lib/data";
 import { PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
-import {
-  ChartTooltip,
-  styleAxisText,
-  positionTooltip,
-} from "@/lib/chart-utils";
+import { ChartTooltip, drawSimpleHorizontalBarChart } from "@/lib/chart-utils";
 
 interface Props {
   cohesion: CohesionRecord[];
   height?: number;
 }
-
-const M_FIXED = { right: 16, top: 8, bottom: 8 };
 
 export function CohesionChart({ cohesion, height = 300 }: Props) {
   const { ref: containerRef, width } = useContainerWidth();
@@ -24,61 +18,28 @@ export function CohesionChart({ cohesion, height = 300 }: Props) {
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-
-    // Measure longest label to set left margin dynamically
     const sorted = [...cohesion].sort((a, b) => b.streuung - a.streuung);
     const labels = sorted.map((c) => c.label);
     const maxLabelWidth = labels.reduce(
       (max, l) => Math.max(max, l.length * 7),
       0,
     );
-    const M = { ...M_FIXED, left: maxLabelWidth + 8 };
 
-    const iW = width - M.left - M.right;
-    const iH = height - M.top - M.bottom;
-    svg.attr("width", width).attr("height", height);
-
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${M.left},${M.top})`);
-
-    const xMax = d3.max(sorted, (c) => c.streuung) ?? 1;
-
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, xMax * 1.05])
-      .range([0, iW]);
-    const yScale = d3.scaleBand().domain(labels).range([0, iH]).padding(0.3);
-
-    g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText);
-
-    const tooltip = d3.select(tooltipRef.current!);
-
-    g.selectAll<SVGRectElement, CohesionRecord>("rect")
-      .data(sorted)
-      .join("rect")
-      .attr("x", 0)
-      .attr("y", (d) => yScale(d.label) ?? 0)
-      .attr("width", (d) => xScale(d.streuung))
-      .attr("height", yScale.bandwidth())
-      .attr("fill", (d) => PARTY_COLORS[d.label] ?? FALLBACK_COLOR)
-      .attr("rx", 2)
-      .on("mousemove", (event, d) => {
-        const [px, py] = d3.pointer(event, containerRef.current!);
-        positionTooltip(
-          tooltip,
-          containerRef.current!,
-          px,
-          py,
-          `<b>${d.label}</b><br/>Ø Abstand: ${d.streuung.toFixed(3)}`,
-        );
-      })
-      .on("mouseleave", () => tooltip.style("opacity", "0"));
+    drawSimpleHorizontalBarChart({
+      svgEl: svgRef.current,
+      width,
+      labels,
+      values: sorted.map((c) => c.streuung),
+      colors: sorted.map((c) => PARTY_COLORS[c.label] ?? FALLBACK_COLOR),
+      tooltipHtml: (label, value) =>
+        `<b>${label}</b><br/>Ø Abstand: ${value.toFixed(3)}`,
+      tooltip: d3.select(tooltipRef.current!),
+      container: containerRef.current!,
+      desktopLeftMargin: maxLabelWidth + 8,
+      xTickFormat: (v) => String(parseFloat((+v).toFixed(2))),
+      yPadding: 0.3,
+      minHeight: height,
+    });
   }, [cohesion, height, width]);
 
   return (
