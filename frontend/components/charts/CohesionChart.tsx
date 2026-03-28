@@ -20,10 +20,6 @@ export function CohesionChart({ cohesion, height = 300 }: Props) {
     if (!width || !svgRef.current) return;
     const sorted = [...cohesion].sort((a, b) => b.streuung - a.streuung);
     const labels = sorted.map((c) => c.label);
-    const maxLabelWidth = labels.reduce(
-      (max, l) => Math.max(max, l.length * 7),
-      0,
-    );
 
     drawSimpleHorizontalBarChart({
       svgEl: svgRef.current,
@@ -35,7 +31,6 @@ export function CohesionChart({ cohesion, height = 300 }: Props) {
         `<b>${label}</b><br/>Ø Abstand: ${value.toFixed(3)}`,
       tooltip: d3.select(tooltipRef.current!),
       container: containerRef.current!,
-      desktopLeftMargin: maxLabelWidth + 8,
       xTickFormat: (v) => String(parseFloat((+v).toFixed(2))),
       yPadding: 0.3,
       minHeight: height,

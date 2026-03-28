@@ -96,17 +96,17 @@ export function styleAxisText(
     .style("fill", COLOR_SECONDARY);
 }
 
-// ── Mobile horizontal bar chart constants ────────────────────────────────────
-// Width threshold below which horizontal bar charts switch to label-above layout.
+// ── Horizontal bar chart constants ───────────────────────────────────────────
+// Width threshold below which vertical bar charts switch to horizontal layout.
 export const MOBILE_BAR_W = 480;
 // Pixels reserved per bar row for the category label rendered above the bar.
 export const MOBILE_BAR_LABEL_H = 14;
 
-// ── renderMobileBarLabels ─────────────────────────────────────────────────────
-// Renders category labels above each bar row for the mobile layout of horizontal
-// bar charts. Call this instead of axisLeft when M.left = 0 on mobile.
+// ── renderBarLabels ───────────────────────────────────────────────────────────
+// Renders category labels above each bar row. Used by all horizontal bar charts
+// (desktop and mobile alike — labels always sit above bars, never to the left).
 // Labels that exceed the available width are truncated with a "…" tooltip.
-export function renderMobileBarLabels(
+export function renderBarLabels(
   g: d3.Selection<SVGGElement, unknown, null, undefined>,
   labels: string[],
   yScale: d3.ScaleBand<string>,
@@ -173,6 +173,7 @@ export function appendHBarXAxis(
 }
 
 // ── Shared margin/layout helper (internal) ────────────────────────────────────
+// Labels always sit above bars, so left margin is always 0.
 interface _HBarM {
   left: number;
   right: number;
@@ -183,37 +184,15 @@ function _hBarLayout(
   width: number,
   labelCount: number,
   rowSlotHeight: number,
-  desktopLeftMargin: number | undefined,
-  labels: string[],
   minHeight: number,
-  mobileExtra: number,
-): { isMobile: boolean; M: _HBarM; H: number; iW: number; iH: number } {
-  const isMobile = width < MOBILE_BAR_W;
-  const autoLeft =
-    labels.reduce((max, l) => Math.max(max, l.length * 7), 0) + 8;
-  const M: _HBarM = isMobile
-    ? { left: 0, right: 8, top: 6, bottom: 36 }
-    : { left: desktopLeftMargin ?? autoLeft, right: 16, top: 8, bottom: 36 };
-  const H = Math.max(
-    minHeight,
-    labelCount * (rowSlotHeight + (isMobile ? mobileExtra : 0)) +
-      M.top +
-      M.bottom,
-  );
-  return {
-    isMobile,
-    M,
-    H,
-    iW: width - M.left - M.right,
-    iH: H - M.top - M.bottom,
-  };
+): { M: _HBarM; H: number; iW: number; iH: number } {
+  const M: _HBarM = { left: 0, right: 8, top: 6, bottom: 36 };
+  const H = Math.max(minHeight, labelCount * rowSlotHeight + M.top + M.bottom);
+  return { M, H, iW: width - M.left - M.right, iH: H - M.top - M.bottom };
 }
 
 // ── drawSimpleHorizontalBarChart ──────────────────────────────────────────────
-// Renders a single-value horizontal bar chart with full desktop/mobile support.
-// Desktop: labels on left (axisLeft + truncation).
-// Mobile:  labels above bars (renderMobileBarLabels).
-// Use this instead of writing D3 from scratch for every new horizontal bar chart.
+// Renders a single-value horizontal bar chart. Labels always sit above bars.
 export interface HBarConfig {
   svgEl: SVGSVGElement;
   width: number;
@@ -224,7 +203,6 @@ export interface HBarConfig {
   tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>;
   container: Element;
   rowSlotHeight?: number;
-  desktopLeftMargin?: number;
   xTickFormat?: (v: d3.NumberValue) => string;
   barRx?: number;
   minHeight?: number;
@@ -241,20 +219,16 @@ export function drawSimpleHorizontalBarChart({
   tooltip,
   container,
   rowSlotHeight = 32,
-  desktopLeftMargin,
   xTickFormat,
   barRx = 2,
   minHeight = 200,
   yPadding = 0.25,
 }: HBarConfig): void {
-  const { isMobile, M, H, iW, iH } = _hBarLayout(
+  const { M, H, iW, iH } = _hBarLayout(
     width,
     labels.length,
     rowSlotHeight,
-    desktopLeftMargin,
-    labels,
     minHeight,
-    MOBILE_BAR_LABEL_H,
   );
   const svg = d3.select(svgEl);
   svg.selectAll("*").remove();
@@ -268,24 +242,7 @@ export function drawSimpleHorizontalBarChart({
     .range([0, iW]);
   const yScale = d3.scaleBand().domain(labels).range([0, iH]).padding(yPadding);
 
-  if (!isMobile) {
-    g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText)
-      .call((ax) => truncateAxisLabels(ax, M.left - 8, tooltip, container));
-  } else {
-    renderMobileBarLabels(
-      g,
-      labels,
-      yScale,
-      width,
-      M.right,
-      tooltip,
-      container,
-    );
-  }
-
+  renderBarLabels(g, labels, yScale, width, M.right, tooltip, container);
   appendHBarXAxis(
     g,
     xScale,
@@ -303,15 +260,9 @@ export function drawSimpleHorizontalBarChart({
     .data(data)
     .join("rect")
     .attr("x", 0)
-    .attr(
-      "y",
-      (d) => (yScale(d.label) ?? 0) + (isMobile ? MOBILE_BAR_LABEL_H : 0),
-    )
+    .attr("y", (d) => (yScale(d.label) ?? 0) + MOBILE_BAR_LABEL_H)
     .attr("width", (d) => Math.max(0, xScale(d.value)))
-    .attr(
-      "height",
-      Math.max(0, yScale.bandwidth() - (isMobile ? MOBILE_BAR_LABEL_H : 0)),
-    )
+    .attr("height", Math.max(0, yScale.bandwidth() - MOBILE_BAR_LABEL_H))
     .attr("fill", (d) => d.color)
     .attr("rx", barRx)
     .on("mousemove", (event, d) => {
@@ -343,7 +294,6 @@ export interface HStackedBarConfig {
   tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>;
   container: Element;
   rowSlotHeight?: number;
-  desktopLeftMargin?: number;
   xTickFormat?: (v: d3.NumberValue) => string;
   minHeight?: number;
 }
@@ -360,18 +310,14 @@ export function drawStackedHorizontalBarChart({
   tooltip,
   container,
   rowSlotHeight = 36,
-  desktopLeftMargin,
   xTickFormat,
   minHeight = 300,
 }: HStackedBarConfig): void {
-  const { isMobile, M, H, iW, iH } = _hBarLayout(
+  const { M, H, iW, iH } = _hBarLayout(
     width,
     categories.length,
     rowSlotHeight,
-    desktopLeftMargin,
-    categories,
     minHeight,
-    MOBILE_BAR_LABEL_H,
   );
   const svg = d3.select(svgEl);
   svg.selectAll("*").remove();
@@ -390,24 +336,7 @@ export function drawStackedHorizontalBarChart({
     .range([0, iW]);
   const yScale = d3.scaleBand().domain(categories).range([0, iH]).padding(0.2);
 
-  if (!isMobile) {
-    g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call(styleAxisText)
-      .call((ax) => truncateAxisLabels(ax, M.left - 8, tooltip, container));
-  } else {
-    renderMobileBarLabels(
-      g,
-      categories,
-      yScale,
-      width,
-      M.right,
-      tooltip,
-      container,
-    );
-  }
-
+  renderBarLabels(g, categories, yScale, width, M.right, tooltip, container);
   appendHBarXAxis(
     g,
     xScale,
@@ -428,14 +357,10 @@ export function drawStackedHorizontalBarChart({
       .attr(
         "y",
         (d) =>
-          (yScale(d.data[categoryKey] as string) ?? 0) +
-          (isMobile ? MOBILE_BAR_LABEL_H : 0),
+          (yScale(d.data[categoryKey] as string) ?? 0) + MOBILE_BAR_LABEL_H,
       )
       .attr("x", (d) => xScale(d[0]))
-      .attr(
-        "height",
-        Math.max(0, yScale.bandwidth() - (isMobile ? MOBILE_BAR_LABEL_H : 0)),
-      )
+      .attr("height", Math.max(0, yScale.bandwidth() - MOBILE_BAR_LABEL_H))
       .attr("width", (d) => Math.max(0, xScale(d[1]) - xScale(d[0])))
       .attr("fill", colorFn(key))
       .on("mousemove", (event, d) => {
@@ -911,15 +836,7 @@ export function drawPartyColoredStackedBarChart({
   }
 
   if (width < MOBILE_BAR_W) {
-    const { M, H, iW, iH } = _hBarLayout(
-      width,
-      labels.length,
-      36,
-      undefined,
-      labels,
-      200,
-      MOBILE_BAR_LABEL_H,
-    );
+    const { M, H, iW, iH } = _hBarLayout(width, labels.length, 36, 200);
     const svg = d3.select(svgEl);
     svg.selectAll("*").remove();
     svg.attr("width", width).attr("height", H);
@@ -929,15 +846,7 @@ export function drawPartyColoredStackedBarChart({
     const xScale = d3.scaleLinear().domain([0, 100]).range([0, iW]);
     const yScale = d3.scaleBand().domain(labels).range([0, iH]).padding(0.2);
 
-    renderMobileBarLabels(
-      g,
-      labels,
-      yScale,
-      width,
-      M.right,
-      tooltip,
-      container,
-    );
+    renderBarLabels(g, labels, yScale, width, M.right, tooltip, container);
     appendHBarXAxis(g, xScale, iH, (v) => `${+v}%`);
 
     labels.forEach((label) => {

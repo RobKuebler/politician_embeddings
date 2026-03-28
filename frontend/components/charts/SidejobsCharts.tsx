@@ -146,7 +146,6 @@ export function IncomeByCategoryChart({
       tooltip: d3.select(tooltipRef.current!),
       container: containerRef.current!,
       rowSlotHeight: 36,
-      desktopLeftMargin: 240,
       minHeight: 300,
     });
   }, [jobs, parties, width]);
@@ -239,7 +238,6 @@ export function TopTopicsChart({
       tooltip: d3.select(tooltipRef.current!),
       container: containerRef.current!,
       rowSlotHeight: 32,
-      desktopLeftMargin: 210,
       minHeight: 300,
     });
   }, [jobs, parties, width]);
@@ -325,7 +323,6 @@ export function TopEarnersChart({
       tooltip: d3.select(tooltipRef.current!),
       container: containerRef.current!,
       rowSlotHeight: 28,
-      desktopLeftMargin: 140,
       minHeight: 300,
     });
   }, [jobs, politicians, width]);
