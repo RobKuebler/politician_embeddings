@@ -1,6 +1,7 @@
 """Tests für src/compute_word_stats.py."""
 
 import pandas as pd
+import pytest
 
 import src.compute_word_stats as cws
 
@@ -10,15 +11,15 @@ import src.compute_word_stats as cws
 
 
 def test_tokenize_lowercase_und_nur_alpha():
-    tokens = cws._tokenize("Klimawandel bedroht unsere Zukunft!")
+    tokens = cws._tokenize("Klimawandel bedroht unsere Zukunft")
     assert "klimawandel" in tokens
     assert "zukunft" in tokens
-    # Satzzeichen werden entfernt (nicht-alpha)
+    # Nicht-alphabetische Tokens werden gefiltert
     assert "zukunft!" not in tokens
 
 
 def test_tokenize_filtert_kurze_woerter():
-    # Wörter <= 2 Zeichen werden gefiltert
+    # Wörter <= 3 Zeichen werden gefiltert
     tokens = cws._tokenize("wir in an ja klimawandel")
     assert "klimawandel" in tokens
     assert "wir" not in tokens
@@ -70,7 +71,10 @@ def test_tfidf_stopwords_werden_entfernt():
 
 
 def test_tfidf_top_n_begrenzt_eintraege():
-    party_texts = {"SPD": " ".join(f"wort{i}" for i in range(50))}
+    # Use 50 distinct alphabetic words to test top_n limiting
+    alpha = "abcdefghijklmnopqrstuvwxyz"
+    words = [f"wort{alpha[i % 26]}{alpha[i // 26]}" for i in range(50)]
+    party_texts: dict[str, str] = {"SPD": " ".join(words)}
     df = cws.compute_tfidf(party_texts, stopwords=set(), top_n=10)
     assert len(df[df["fraktion"] == "SPD"]) == 10
 
@@ -190,3 +194,9 @@ def test_fetch_word_stats_schreibt_csvs(tmp_path):
     }
     assert len(wf) == 10  # 5 Woerter x 2 Parteien
     assert len(ss) == 2  # 1 Redner pro Partei
+
+
+def test_fetch_word_stats_fehlendes_csv_wirft_systemexit(tmp_path):
+    """Fehlendes speeches.csv → SystemExit."""
+    with pytest.raises(SystemExit):
+        cws.fetch_word_stats(tmp_path)

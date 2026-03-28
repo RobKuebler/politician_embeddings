@@ -11,7 +11,6 @@ Usage:
 
 import logging
 import math
-import re
 from collections import Counter
 from pathlib import Path
 
@@ -215,14 +214,8 @@ _SPEECH_STATS_COLS = [
 
 
 def _tokenize(text: str) -> list[str]:
-    """Lowercase, strip punctuation, keep only alphabetic tokens with >= 4 chars."""
-    tokens = []
-    for raw in text.lower().split():
-        # Strip leading/trailing non-alphanumeric characters (e.g. punctuation)
-        w = re.sub(r"^\W+|\W+$", "", raw)
-        if len(w) >= 4 and w.isalnum():
-            tokens.append(w)
-    return tokens
+    """Lowercase, split on whitespace, keep only alphabetic tokens >= 4 chars."""
+    return [w.lower() for w in text.split() if len(w) >= 4 and w.isalpha()]
 
 
 def compute_tfidf(
