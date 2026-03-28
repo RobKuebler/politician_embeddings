@@ -1,9 +1,14 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { DeviationPivot } from "@/lib/data";
-import { sortParties } from "@/lib/constants";
+import {
+  sortParties,
+  PARTY_COLORS,
+  FALLBACK_COLOR,
+  CHART_FONT_FAMILY,
+} from "@/lib/constants";
 import {
   ChartTooltip,
   styleAxisText,
@@ -16,12 +21,7 @@ interface Props {
   height?: number;
 }
 
-const ML = 130; // left margin for y-labels
-const MR = 40; // right margin — extra room for last label extending rightward
-const HEADER_H = 100; // header height — enough for -30° rotated party labels
-// Minimum column width so rotated party-name headers don't overlap.
-// At -30° rotation a label of L px uses L*cos(30°)≈0.87L horizontal space,
-// so 44px columns give roughly 50px label width before overlap.
+// Desktop default minimum column width (may be widened to fit party name text).
 const MIN_COL_W = 44;
 
 function drawCells(
@@ -105,9 +105,20 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
   const { ref: containerRef, width } = useContainerWidth();
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [legend, setLegend] = useState<{ name: string; color: string }[]>([]);
 
   useEffect(() => {
     if (!width) return;
+
+    // Responsive layout constants.
+    const isMobile = width < 520;
+    const ML = isMobile ? 88 : 130;
+    const MR = isMobile ? 24 : 40;
+    // Colored party blocks replace rotated text labels → much shorter header.
+    const BLOCK_H = isMobile ? 22 : 26; // height of the colored column-header block
+    const HEADER_H = BLOCK_H + 10; // 10px gap between block bottom and first row
+    // Estimated px per character at 9.5px font (for desktop column sizing).
+    const CHAR_W = 5.8;
 
     // Re-order parties by seat count (PARTY_ORDER), fraktionslos always last.
     const sortedParties = sortParties(pivot.parties);
@@ -128,12 +139,21 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
       count: countData,
     } = sortedPivot;
 
-    // Use at least MIN_COL_W per party; if that exceeds container, chart scrolls.
+    // Desktop: widen columns enough to fit the longest party name.
+    const longestName = parties.reduce(
+      (a, b) => (a.length > b.length ? a : b),
+      "",
+    );
+    const minColW = isMobile
+      ? 36
+      : Math.max(MIN_COL_W, Math.ceil(longestName.length * CHAR_W) + 10);
+
     const colW = Math.max(
-      MIN_COL_W,
+      minColW,
       Math.floor((width - ML - MR) / parties.length),
     );
     const iW = colW * parties.length;
+
     // Exclude "Unbekannt" and small parties (< 10 members) from the color scale
     // so they don't distort the range with statistically noisy deviations.
     const allDevs = devData
@@ -203,20 +223,68 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
     svg.selectAll("*").remove();
     svg.attr("width", svgW).attr("height", totalH);
 
-    // X-axis (party names) with -30° rotated labels
-    svg
-      .append("g")
-      .attr("transform", `translate(${ML}, ${HEADER_H})`)
-      .call(d3.axisTop(xScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call((ax) => {
-        styleAxisText(ax);
-        ax.selectAll("text")
-          .attr("transform", "rotate(-30)")
-          .attr("text-anchor", "start")
-          .attr("dy", "-0.4em")
-          .attr("dx", "0.4em");
-      });
+    // ── Party color blocks (x-axis header) ───────────────────────────────────
+    // Desktop: colored rectangle with the full party name inside (truncated
+    //          with "…" + tooltip if the column is too narrow).
+    // Mobile: colored square only; party name appears in a tooltip on hover/tap,
+    //         and a flex-wrap legend is shown below the chart.
+    const headerG = svg.append("g").attr("transform", `translate(${ML}, 0)`);
+    parties.forEach((party) => {
+      const bw = xScale.bandwidth();
+      const x = xScale(party) ?? 0;
+      const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const blockY = HEADER_H - BLOCK_H - 2; // 2px above first data row
+
+      const blockG = headerG.append("g");
+      blockG
+        .append("rect")
+        .attr("x", x)
+        .attr("y", blockY)
+        .attr("width", bw)
+        .attr("height", BLOCK_H)
+        .attr("rx", 4)
+        .attr("fill", color);
+
+      if (!isMobile) {
+        // Party name centered in the block; truncate if column is too narrow.
+        const maxChars = Math.floor((bw - 8) / CHAR_W);
+        const displayText =
+          party.length > maxChars ? party.slice(0, maxChars - 1) + "…" : party;
+        blockG
+          .append("text")
+          .attr("x", x + bw / 2)
+          .attr("y", blockY + BLOCK_H / 2)
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "central")
+          .style("font-size", "9.5px")
+          .style("font-family", CHART_FONT_FAMILY)
+          .style("font-weight", "600")
+          .style("fill", "#fff")
+          .style("filter", "drop-shadow(0 1px 1.5px rgba(0,0,0,0.4))")
+          .style("pointer-events", "none")
+          .text(displayText);
+        if (displayText !== party) {
+          blockG
+            .select("rect")
+            .style("cursor", "default")
+            .on("mousemove", (event) => {
+              const [px, py] = d3.pointer(event, containerRef.current!);
+              positionTooltip(tooltip, containerRef.current!, px, py, party);
+            })
+            .on("mouseleave", () => tooltip.style("opacity", "0"));
+        }
+      } else {
+        // Mobile: tooltip reveals party name on hover/tap.
+        blockG
+          .select("rect")
+          .style("cursor", "pointer")
+          .on("mousemove", (event) => {
+            const [px, py] = d3.pointer(event, containerRef.current!);
+            positionTooltip(tooltip, containerRef.current!, px, py, party);
+          })
+          .on("mouseleave", () => tooltip.style("opacity", "0"));
+      }
+    });
 
     // Y-axis (category names)
     svg
@@ -243,6 +311,16 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
       tooltip,
       containerRef.current!,
     );
+
+    // Update mobile legend (shows below the chart; hidden on desktop).
+    setLegend(
+      isMobile
+        ? parties.map((p) => ({
+            name: p,
+            color: PARTY_COLORS[p] ?? FALLBACK_COLOR,
+          }))
+        : [],
+    );
   }, [pivot, height, width]);
 
   return (
@@ -250,6 +328,35 @@ export function DeviationHeatmap({ pivot, height = 400 }: Props) {
       <div style={{ overflowX: "auto" }}>
         <svg ref={svgRef} style={{ display: "block", overflow: "visible" }} />
       </div>
+      {legend.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "4px 12px",
+            marginTop: 10,
+          }}
+        >
+          {legend.map(({ name, color }) => (
+            <span
+              key={name}
+              style={{ display: "inline-flex", alignItems: "center", gap: 4 }}
+            >
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 2,
+                  background: color,
+                  display: "inline-block",
+                  flexShrink: 0,
+                }}
+              />
+              <span style={{ fontSize: 11, color: "#9A9790" }}>{name}</span>
+            </span>
+          ))}
+        </div>
+      )}
       <ChartTooltip tooltipRef={tooltipRef} maxWidth={280} zIndex={50} />
     </div>
   );
