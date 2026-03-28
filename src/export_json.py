@@ -381,5 +381,46 @@ def main() -> None:
     log.info("Done. Exported %d periods.", len(available))
 
 
+def export_party_word_freq(period_id: int) -> None:
+    """Export party_word_freq.csv to JSON for the frontend.
+
+    Output: frontend/public/data/party_word_freq_{period_id}.json
+    Format: {fraktion: [{wort, tfidf, rang}, ...], ...}
+    """
+    path = DATA_DIR / str(period_id) / "party_word_freq.csv"
+    if not path.exists():
+        log.warning(
+            "party_word_freq.csv für period_id=%d nicht gefunden, übersprungen.",
+            period_id,
+        )
+        return
+    df = pd.read_csv(path)
+    result = {}
+    for fraktion, group in df.groupby("fraktion"):
+        result[fraktion] = group[["wort", "tfidf", "rang"]].to_dict(orient="records")
+    _write(OUTPUT_DIR / f"party_word_freq_{period_id}.json", result)
+
+
+def export_party_speech_stats(period_id: int) -> None:
+    """Export party_speech_stats.csv to JSON for the frontend.
+
+    Output: frontend/public/data/party_speech_stats_{period_id}.json
+    Format: [{fraktion, redner_id, vorname, nachname, anzahl_reden, wortanzahl_gesamt},
+    ...]
+    """
+    path = DATA_DIR / str(period_id) / "party_speech_stats.csv"
+    if not path.exists():
+        log.warning(
+            "party_speech_stats.csv für period_id=%d nicht gefunden, übersprungen.",
+            period_id,
+        )
+        return
+    df = pd.read_csv(path)
+    _write(
+        OUTPUT_DIR / f"party_speech_stats_{period_id}.json",
+        df.to_dict(orient="records"),
+    )
+
+
 if __name__ == "__main__":
     main()
