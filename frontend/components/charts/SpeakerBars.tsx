@@ -20,7 +20,7 @@ export function SpeakerBars({ speakers, partyColor }: Props) {
         const pct = (s.wortanzahl_gesamt / max) * 100;
         return (
           <div
-            key={s.redner_id}
+            key={`${s.redner_id}-${i}`}
             className="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0"
           >
             {/* Rank */}
