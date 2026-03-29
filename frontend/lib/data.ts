@@ -86,6 +86,27 @@ export interface PartyProfileFile {
   education_degree: DeviationPivot;
 }
 
+export interface WordFreqEntry {
+  wort: string;
+  tfidf: number;
+  rang: number;
+}
+
+/** party_word_freq_{period}.json — keys are raw fraktion names (may contain soft-hyphen) */
+export type WordFreqFile = Record<string, WordFreqEntry[]>;
+
+export interface SpeakerRecord {
+  fraktion: string;
+  redner_id: number;
+  vorname: string;
+  nachname: string;
+  anzahl_reden: number;
+  wortanzahl_gesamt: number;
+}
+
+/** party_speech_stats_{period}.json — flat array sorted by fraktion then wortanzahl_gesamt desc */
+export type SpeechStatsFile = SpeakerRecord[];
+
 // ── Data loading utilities ──────────────────────────────────────────────────
 
 /** Normalize a raw party name from the API: strip soft-hyphens and apply short display names. */
