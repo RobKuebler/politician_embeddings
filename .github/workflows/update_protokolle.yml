@@ -1,0 +1,46 @@
+name: Update Plenarprotokolle
+
+on:
+  schedule:
+    - cron: "0 5 * * *" # daily at 5am UTC (after update_data)
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Fetch new Plenarprotokolle (WP21)
+        run: uv run python -m src.fetch_protokolle --wahlperiode 21
+
+      - name: Download new XMLs (WP21)
+        run: uv run python -m src.fetch_protokoll_xml --wahlperiode 21
+
+      - name: Parse speeches from XMLs (WP21)
+        run: uv run python -m src.parse_protokolle --wahlperiode 21
+
+      - name: Compute TF-IDF word stats (WP21)
+        run: uv run python -m src.compute_word_stats --wahlperiode 21
+
+      - name: Export JSON for frontend
+        run: uv run python -m src.export_json
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ frontend/public/data/
+          git diff --staged --quiet || git commit -m "data: update Plenarprotokolle WP21 $(date -u +%Y-%m-%d)"
+          git pull --rebase && git push

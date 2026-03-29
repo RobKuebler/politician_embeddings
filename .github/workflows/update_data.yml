@@ -37,18 +37,6 @@ jobs:
         if: steps.fetch.outputs.new_data == 'true'
         run: uv run python -m src.train_model
 
-      - name: Fetch new Plenarprotokolle (WP21)
-        run: uv run python -m src.fetch_protokolle --wahlperiode 21
-
-      - name: Download new XMLs (WP21)
-        run: uv run python -m src.fetch_protokoll_xml --wahlperiode 21
-
-      - name: Parse speeches from XMLs (WP21)
-        run: uv run python -m src.parse_protokolle --wahlperiode 21
-
-      - name: Compute TF-IDF word stats (WP21)
-        run: uv run python -m src.compute_word_stats --wahlperiode 21
-
       - name: Export JSON for frontend
         run: uv run python -m src.export_json
 
