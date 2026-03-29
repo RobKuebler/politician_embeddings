@@ -1,0 +1,5098 @@
+[
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004678",
+    "vorname": "Stephan",
+    "nachname": "Brandner",
+    "anzahl_reden": 69,
+    "wortanzahl_gesamt": 30305
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004731",
+    "vorname": "Kay",
+    "nachname": "Gottschalk",
+    "anzahl_reden": 25,
+    "wortanzahl_gesamt": 19326
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004721",
+    "vorname": "Markus",
+    "nachname": "Frohnmaier",
+    "anzahl_reden": 29,
+    "wortanzahl_gesamt": 15579
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004695",
+    "vorname": "Tino",
+    "nachname": "Chrupalla",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 15439
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004711",
+    "vorname": "Michael",
+    "nachname": "Espendiller",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 14637
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004933",
+    "vorname": "Wolfgang",
+    "nachname": "Wiehle",
+    "anzahl_reden": 23,
+    "wortanzahl_gesamt": 13715
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004930",
+    "vorname": "Alice",
+    "nachname": "Weidel",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 13257
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004669",
+    "vorname": "Marc",
+    "nachname": "Bernhard",
+    "anzahl_reden": 29,
+    "wortanzahl_gesamt": 13249
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004892",
+    "vorname": "Martin",
+    "nachname": "Sichert",
+    "anzahl_reden": 25,
+    "wortanzahl_gesamt": 11809
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004722",
+    "vorname": "Götz",
+    "nachname": "Frömming",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 11808
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004873",
+    "vorname": "Ulrike",
+    "nachname": "Schielke-Ziesing",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 11616
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005561",
+    "vorname": "Ruben",
+    "nachname": "Rupp",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 10995
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004905",
+    "vorname": "Beatrix",
+    "nachname": "von Storch",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 10414
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004698",
+    "vorname": "Gottfried",
+    "nachname": "Curio",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 9988
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004662",
+    "vorname": "Bernd",
+    "nachname": "Baumann",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 9908
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005521",
+    "vorname": "Sebastian",
+    "nachname": "Maack",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 9529
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005613",
+    "vorname": "Alexander",
+    "nachname": "Wolf",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 9261
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005203",
+    "vorname": "Bernd",
+    "nachname": "Schattner",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 9232
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004778",
+    "vorname": "Stefan",
+    "nachname": "Keuter",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 9232
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004792",
+    "vorname": "Rainer",
+    "nachname": "Kraft",
+    "anzahl_reden": 36,
+    "wortanzahl_gesamt": 9226
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004791",
+    "vorname": "Steffen",
+    "nachname": "Kotré",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 8996
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005468",
+    "vorname": "Ronald",
+    "nachname": "Gläser",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 8896
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005091",
+    "vorname": "Gerrit",
+    "nachname": "Huy",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 8609
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004752",
+    "vorname": "Karsten",
+    "nachname": "Hilse",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 8544
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004936",
+    "vorname": "Christian",
+    "nachname": "Wirth",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 8516
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005415",
+    "vorname": "Birgit",
+    "nachname": "Bessin",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 8412
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005479",
+    "vorname": "Mirco",
+    "nachname": "Hanker",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 8375
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004761",
+    "vorname": "Leif-Erik",
+    "nachname": "Holm",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 8346
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005549",
+    "vorname": "Arne",
+    "nachname": "Raue",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 8115
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004859",
+    "vorname": "Martin",
+    "nachname": "Reichardt",
+    "anzahl_reden": 33,
+    "wortanzahl_gesamt": 8043
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005516",
+    "vorname": "Thomas",
+    "nachname": "Ladzinski",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 7724
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005515",
+    "vorname": "Anna",
+    "nachname": "Rathert",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 7721
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004788",
+    "vorname": "Jörn",
+    "nachname": "König",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 7675
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004858",
+    "vorname": "Stephan",
+    "nachname": "Protschka",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7518
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004749",
+    "vorname": "Martin",
+    "nachname": "Hess",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 7307
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004787",
+    "vorname": "Enrico",
+    "nachname": "Komning",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 7170
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005423",
+    "vorname": "Peter",
+    "nachname": "Bohnhof",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6877
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005476",
+    "vorname": "Ingo",
+    "nachname": "Hahn",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 6832
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005408",
+    "vorname": "Adam",
+    "nachname": "Balten",
+    "anzahl_reden": 24,
+    "wortanzahl_gesamt": 6814
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005483",
+    "vorname": "Nicole",
+    "nachname": "Hess",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 6765
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004850",
+    "vorname": "Tobias Matthias",
+    "nachname": "Peterka",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6720
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005418",
+    "vorname": "Christoph",
+    "nachname": "Birghan",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 6631
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004846",
+    "vorname": "Gerold",
+    "nachname": "Otten",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6489
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005092",
+    "vorname": "Steffen",
+    "nachname": "Janich",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 6422
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005455",
+    "vorname": "Jan",
+    "nachname": "Feser",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6369
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005615",
+    "vorname": "Christian",
+    "nachname": "Zaum",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6326
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005529",
+    "vorname": "Sergej",
+    "nachname": "Minich",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6215
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005618",
+    "vorname": "Diana",
+    "nachname": "Zimmer",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6200
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005014",
+    "vorname": "Carolin",
+    "nachname": "Bachmann",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 6104
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005569",
+    "vorname": "Julian",
+    "nachname": "Schmidt",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6053
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004753",
+    "vorname": "Nicole",
+    "nachname": "Höchst",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6006
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005100",
+    "vorname": "Michael",
+    "nachname": "Kaufmann",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5965
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005456",
+    "vorname": "Thomas",
+    "nachname": "Fetsch",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5919
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005099",
+    "vorname": "Malte",
+    "nachname": "Kaufmann",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 5904
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005499",
+    "vorname": "Maximilian",
+    "nachname": "Kneller",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 5883
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004807",
+    "vorname": "Rüdiger",
+    "nachname": "Lucassen",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 5857
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005577",
+    "vorname": "Georg",
+    "nachname": "Schroeter",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5667
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005442",
+    "vorname": "Christian",
+    "nachname": "Douglas",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5601
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005621",
+    "vorname": "Ulrich",
+    "nachname": "von Zons",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5504
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005520",
+    "vorname": "Sascha",
+    "nachname": "Lensing",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5417
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005443",
+    "vorname": "Christopher",
+    "nachname": "Drößler",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5411
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005586",
+    "vorname": "Otto",
+    "nachname": "Strauß",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 5410
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005462",
+    "vorname": "Rainer",
+    "nachname": "Galla",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5400
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004767",
+    "vorname": "Fabian",
+    "nachname": "Jacobi",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5296
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005446",
+    "vorname": "Tobias",
+    "nachname": "Ebenberger",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 5248
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005029",
+    "vorname": "Gereon",
+    "nachname": "Bollmann",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5218
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005532",
+    "vorname": "Stefan",
+    "nachname": "Möller",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 5124
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004900",
+    "vorname": "René",
+    "nachname": "Springer",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 5031
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005404",
+    "vorname": "Alexander",
+    "nachname": "Arpaschi",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4961
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005469",
+    "vorname": "Hans-Jürgen",
+    "nachname": "Goßner",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 4954
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005585",
+    "vorname": "Thomas",
+    "nachname": "Stephan",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4934
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005458",
+    "vorname": "Hauke",
+    "nachname": "Finger",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 4931
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005031",
+    "vorname": "Dirk",
+    "nachname": "Brandes",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4925
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004687",
+    "vorname": "Marcus",
+    "nachname": "Bühl",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4771
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005607",
+    "vorname": "Mathias",
+    "nachname": "Weiser",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4756
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005513",
+    "vorname": "Manuel",
+    "nachname": "Krauthausen",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4715
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005572",
+    "vorname": "Paul",
+    "nachname": "Schmidt",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 4694
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005497",
+    "vorname": "Rocco",
+    "nachname": "Kever",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4434
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005540",
+    "vorname": "Andreas",
+    "nachname": "Paul",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4414
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005305",
+    "vorname": "Rainer",
+    "nachname": "Rothfuß",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4322
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004674",
+    "vorname": "Andreas",
+    "nachname": "Bleck",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4317
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005473",
+    "vorname": "Rainer",
+    "nachname": "Groß",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4269
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005493",
+    "vorname": "Robin",
+    "nachname": "Jünger",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 4183
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005535",
+    "vorname": "Iris",
+    "nachname": "Nieland",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 3971
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005498",
+    "vorname": "Kurt",
+    "nachname": "Kleinschmidt",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3888
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004836",
+    "vorname": "Sebastian",
+    "nachname": "Münzenmaier",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3795
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005503",
+    "vorname": "Jürgen",
+    "nachname": "Koegel",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3780
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005548",
+    "vorname": "Marcel",
+    "nachname": "Queckemeyer",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3735
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004675",
+    "vorname": "Peter",
+    "nachname": "Boehringer",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3693
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005419",
+    "vorname": "Joachim",
+    "nachname": "Bloch",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3427
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005547",
+    "vorname": "Kerstin",
+    "nachname": "Przygodda",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3425
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005564",
+    "vorname": "Raimond",
+    "nachname": "Scheirich",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3418
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005523",
+    "vorname": "Markus",
+    "nachname": "Matzerath",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3401
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005616",
+    "vorname": "Daniel",
+    "nachname": "Zerbin",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3389
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004842",
+    "vorname": "Jan Ralf",
+    "nachname": "Nolte",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3362
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005018",
+    "vorname": "Christina",
+    "nachname": "Baum",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 3327
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005478",
+    "vorname": "Lars",
+    "nachname": "Haise",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 3319
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005026",
+    "vorname": "René",
+    "nachname": "Bochmann",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3120
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005429",
+    "vorname": "Torben",
+    "nachname": "Braga",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3118
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005531",
+    "vorname": "Reinhard",
+    "nachname": "Mixl",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3071
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005591",
+    "vorname": "Robert",
+    "nachname": "Teske",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3034
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005528",
+    "vorname": "Knuth",
+    "nachname": "Meyer-Soltau",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2996
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005576",
+    "vorname": "Stefan",
+    "nachname": "Schröder",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2986
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004862",
+    "vorname": "Martin Erwin",
+    "nachname": "Renner",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2887
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005608",
+    "vorname": "Claudia",
+    "nachname": "Weiss",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2846
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004739",
+    "vorname": "Jochen",
+    "nachname": "Haug",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2806
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005550",
+    "vorname": "Christian",
+    "nachname": "Reck",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2756
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005619",
+    "vorname": "Jörg",
+    "nachname": "Zirwes",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2714
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005210",
+    "vorname": "Jan Wenzel",
+    "nachname": "Schmidt",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2673
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005066",
+    "vorname": "Hannes",
+    "nachname": "Gnauck",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2643
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005079",
+    "vorname": "Matthias",
+    "nachname": "Helferich",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2546
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005541",
+    "vorname": "Denis",
+    "nachname": "Pauli",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2495
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005486",
+    "vorname": "Olaf",
+    "nachname": "Hilmer",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2436
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005517",
+    "vorname": "Pierre",
+    "nachname": "Lamely",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2359
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005578",
+    "vorname": "Bernd",
+    "nachname": "Schuhmann",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2317
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005420",
+    "vorname": "Michael",
+    "nachname": "Blos",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2255
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004743",
+    "vorname": "Udo Theodor",
+    "nachname": "Hemmelgarn",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2224
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005596",
+    "vorname": "Bastian",
+    "nachname": "Treuheit",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2176
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005042",
+    "vorname": "Thomas",
+    "nachname": "Dietz",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2169
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005502",
+    "vorname": "Heinrich",
+    "nachname": "Koch",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2155
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005509",
+    "vorname": "Thomas",
+    "nachname": "Korell",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2141
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005566",
+    "vorname": "Lars",
+    "nachname": "Schieske",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2140
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005496",
+    "vorname": "Martina",
+    "nachname": "Kempf",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1991
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004714",
+    "vorname": "Peter",
+    "nachname": "Felser",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1979
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004724",
+    "vorname": "Alexander",
+    "nachname": "Gauland",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1853
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005609",
+    "vorname": "Sven",
+    "nachname": "Wendorf",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1837
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005412",
+    "vorname": "Carsten",
+    "nachname": "Becker",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1832
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005315",
+    "vorname": "Manfred",
+    "nachname": "Schiller",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1800
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005526",
+    "vorname": "Danny",
+    "nachname": "Meiners",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1760
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005512",
+    "vorname": "Maximilian",
+    "nachname": "Krah",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1618
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005565",
+    "vorname": "Volker",
+    "nachname": "Scheurell",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1600
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005522",
+    "vorname": "Johann",
+    "nachname": "Martel",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 1540
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005472",
+    "vorname": "Christoph",
+    "nachname": "Grimm",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1352
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005480",
+    "vorname": "Stefan",
+    "nachname": "Henze",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1295
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11004888",
+    "vorname": "Uwe",
+    "nachname": "Schulz",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1143
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005265",
+    "vorname": "Kay-Uwe",
+    "nachname": "Ziegler",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 1075
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005552",
+    "vorname": "Lukas",
+    "nachname": "Rehm",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1000
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005454",
+    "vorname": "Micha",
+    "nachname": "Fehre",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 950
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005581",
+    "vorname": "Dario",
+    "nachname": "Seifert",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 942
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005597",
+    "vorname": "Martina",
+    "nachname": "Uhr",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 941
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005524",
+    "vorname": "Andreas",
+    "nachname": "Mayer",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 923
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005504",
+    "vorname": "Achim",
+    "nachname": "Köhler",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 914
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005590",
+    "vorname": "Tobias",
+    "nachname": "Teich",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 757
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005157",
+    "vorname": "Matthias",
+    "nachname": "Moosdorf",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 706
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005555",
+    "vorname": "Matthias",
+    "nachname": "Rentzsch",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 621
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005433",
+    "vorname": "Erhard",
+    "nachname": "Brucker",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 591
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005166",
+    "vorname": "Edgar",
+    "nachname": "Naujok",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 569
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005622",
+    "vorname": "Alexis L.",
+    "nachname": "Giersch",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 553
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005567",
+    "vorname": "Carina",
+    "nachname": "Schießl",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 342
+  },
+  {
+    "fraktion": "AfD",
+    "redner_id": "11005559",
+    "vorname": "Angela",
+    "nachname": "Rudzka",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 341
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005180",
+    "vorname": "Paula",
+    "nachname": "Piechotta",
+    "anzahl_reden": 25,
+    "wortanzahl_gesamt": 17388
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005019",
+    "vorname": "Katharina",
+    "nachname": "Beck",
+    "anzahl_reden": 22,
+    "wortanzahl_gesamt": 13080
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004263",
+    "vorname": "Katharina",
+    "nachname": "Dröge",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 13011
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004969",
+    "vorname": "Marcel",
+    "nachname": "Emmerich",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 12905
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005011",
+    "vorname": "Andreas",
+    "nachname": "Audretsch",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 12871
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005047",
+    "vorname": "Leon",
+    "nachname": "Eckert",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 12689
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004243",
+    "vorname": "Luise",
+    "nachname": "Amtsberg",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 12203
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005121",
+    "vorname": "Ricarda",
+    "nachname": "Lang",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 10799
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004353",
+    "vorname": "Irene",
+    "nachname": "Mihalic",
+    "anzahl_reden": 25,
+    "wortanzahl_gesamt": 10485
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005200",
+    "vorname": "Jamila",
+    "nachname": "Schäfer",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 10384
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005228",
+    "vorname": "Till",
+    "nachname": "Steffen",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 9443
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005155",
+    "vorname": "Boris",
+    "nachname": "Mijatović",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 9385
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004106",
+    "vorname": "Agnieszka",
+    "nachname": "Brugger",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 9295
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004429",
+    "vorname": "Julia",
+    "nachname": "Verlinden",
+    "anzahl_reden": 23,
+    "wortanzahl_gesamt": 9236
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005102",
+    "vorname": "Michael",
+    "nachname": "Kellner",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 9158
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005132",
+    "vorname": "Helge",
+    "nachname": "Limburg",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 9097
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005242",
+    "vorname": "Katrin",
+    "nachname": "Uhlig",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 8400
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005246",
+    "vorname": "Robin",
+    "nachname": "Wagener",
+    "anzahl_reden": 22,
+    "wortanzahl_gesamt": 8355
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005070",
+    "vorname": "Armin",
+    "nachname": "Grau",
+    "anzahl_reden": 22,
+    "wortanzahl_gesamt": 8234
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11003764",
+    "vorname": "Britta",
+    "nachname": "Haßelmann",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 7906
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005440",
+    "vorname": "Jeanne",
+    "nachname": "Dillschneider",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7423
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005095",
+    "vorname": "Lamya",
+    "nachname": "Kaddor",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7294
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004659",
+    "vorname": "Lisa",
+    "nachname": "Badum",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 7217
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005134",
+    "vorname": "Max",
+    "nachname": "Lucks",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 6955
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005201",
+    "vorname": "Sebastian",
+    "nachname": "Schäfer",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 6866
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005474",
+    "vorname": "Lena",
+    "nachname": "Gumnior",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 6701
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005039",
+    "vorname": "Sandra",
+    "nachname": "Detzer",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 6658
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004127",
+    "vorname": "Lisa",
+    "nachname": "Paus",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 6567
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005445",
+    "vorname": "Timon",
+    "nachname": "Dzienus",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 6449
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004123",
+    "vorname": "Konstantin",
+    "nachname": "von Notz",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 6381
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005065",
+    "vorname": "Jan-Niclas",
+    "nachname": "Gesenhues",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 6361
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005164",
+    "vorname": "Sara",
+    "nachname": "Nanni",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 6051
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11003132",
+    "vorname": "Katrin",
+    "nachname": "Göring-Eckardt",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5999
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004830",
+    "vorname": "Claudia",
+    "nachname": "Müller",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5996
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004395",
+    "vorname": "Ulle",
+    "nachname": "Schauws",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 5906
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005492",
+    "vorname": "Julian",
+    "nachname": "Joswig",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5880
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005584",
+    "vorname": "Sandra",
+    "nachname": "Stein",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 5854
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005145",
+    "vorname": "Zoe",
+    "nachname": "Mayer",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 5846
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005104",
+    "vorname": "Misbah",
+    "nachname": "Khan",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5751
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005172",
+    "vorname": "Karoline",
+    "nachname": "Otte",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 5691
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004857",
+    "vorname": "Filiz",
+    "nachname": "Polat",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 5581
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004962",
+    "vorname": "Janosch",
+    "nachname": "Dahmen",
+    "anzahl_reden": 25,
+    "wortanzahl_gesamt": 5578
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005556",
+    "vorname": "Sylvia",
+    "nachname": "Rietenberg",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 5557
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005162",
+    "vorname": "Sascha",
+    "nachname": "Müller",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5527
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005059",
+    "vorname": "Schahina",
+    "nachname": "Gambir",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 5502
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005045",
+    "vorname": "Deborah",
+    "nachname": "Düring",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 5304
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005187",
+    "vorname": "Anja",
+    "nachname": "Reinalter",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 5288
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11003585",
+    "vorname": "Anna",
+    "nachname": "Lührmann",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5082
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005519",
+    "vorname": "Rebecca",
+    "nachname": "Lenhard",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5059
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004877",
+    "vorname": "Stefan",
+    "nachname": "Schmidt",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4996
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004215",
+    "vorname": "Harald",
+    "nachname": "Ebner",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4951
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005401",
+    "vorname": "Alaa",
+    "nachname": "Alhamwi",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 4951
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005230",
+    "vorname": "Hanna",
+    "nachname": "Steinmüller",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 4891
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005573",
+    "vorname": "Julia",
+    "nachname": "Schneider",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4696
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004278",
+    "vorname": "Matthias",
+    "nachname": "Gastel",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4535
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005459",
+    "vorname": "Simone",
+    "nachname": "Fischer",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4503
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005022",
+    "vorname": "Lukas",
+    "nachname": "Benner",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4424
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005016",
+    "vorname": "Felix",
+    "nachname": "Banaszak",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 4292
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005245",
+    "vorname": "Niklas",
+    "nachname": "Wagener",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4119
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005405",
+    "vorname": "Ayse",
+    "nachname": "Asar",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 4038
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005017",
+    "vorname": "Karl",
+    "nachname": "Bär",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 3889
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11003212",
+    "vorname": "Claudia",
+    "nachname": "Roth",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 3708
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005167",
+    "vorname": "Ophelia",
+    "nachname": "Nick",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3484
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005248",
+    "vorname": "Johannes",
+    "nachname": "Wagner",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 3289
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005402",
+    "vorname": "Tarek",
+    "nachname": "Al-Wazir",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 3227
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005078",
+    "vorname": "Linda",
+    "nachname": "Heitmann",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3181
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005432",
+    "vorname": "Victoria",
+    "nachname": "Broßart",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3174
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005224",
+    "vorname": "Nyke",
+    "nachname": "Slawik",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3148
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005111",
+    "vorname": "Chantal",
+    "nachname": "Kopf",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3050
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005212",
+    "vorname": "Marlene",
+    "nachname": "Schönberger",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 2820
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005484",
+    "vorname": "Moritz",
+    "nachname": "Heuberger",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2810
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004390",
+    "vorname": "Corinna",
+    "nachname": "Rüffer",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2797
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005152",
+    "vorname": "Swantje Henrike",
+    "nachname": "Michaelsen",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 2765
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005197",
+    "vorname": "Kassem",
+    "nachname": "Taher Saleh",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 2555
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11003881",
+    "vorname": "Omid",
+    "nachname": "Nouripour",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2519
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004255",
+    "vorname": "Franziska",
+    "nachname": "Brantner",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2463
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004801",
+    "vorname": "Sven",
+    "nachname": "Lehmann",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2451
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005237",
+    "vorname": "Awet",
+    "nachname": "Tesfaiesus",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2334
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005259",
+    "vorname": "Tina",
+    "nachname": "Winklmann",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2196
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005133",
+    "vorname": "Denise",
+    "nachname": "Loop",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2176
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004773",
+    "vorname": "Kirsten",
+    "nachname": "Kappert-Gonther",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 2168
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005624",
+    "vorname": "Andrea",
+    "nachname": "Lübcke",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2080
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11005626",
+    "vorname": "Mayra",
+    "nachname": "Vriesema",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 1418
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11004245",
+    "vorname": "Annalena",
+    "nachname": "Baerbock",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 1290
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11002720",
+    "vorname": "Steffi",
+    "nachname": "Lemke",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1196
+  },
+  {
+    "fraktion": "BÜNDNIS 90/­DIE GRÜNEN",
+    "redner_id": "11003772",
+    "vorname": "Anton",
+    "nachname": "Hofreiter",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 507
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005510",
+    "vorname": "Konrad",
+    "nachname": "Körner",
+    "anzahl_reden": 40,
+    "wortanzahl_gesamt": 22426
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003638",
+    "vorname": "Jens",
+    "nachname": "Spahn",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 21503
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005261",
+    "vorname": "Mechthilde",
+    "nachname": "Wittmann",
+    "anzahl_reden": 24,
+    "wortanzahl_gesamt": 19781
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005257",
+    "vorname": "Klaus",
+    "nachname": "Wiener",
+    "anzahl_reden": 32,
+    "wortanzahl_gesamt": 19629
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004050",
+    "vorname": "Jürgen",
+    "nachname": "Hardt",
+    "anzahl_reden": 28,
+    "wortanzahl_gesamt": 18474
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003589",
+    "vorname": "Stephan",
+    "nachname": "Mayer",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 17858
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004100",
+    "vorname": "Jan-Marco",
+    "nachname": "Luczak",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 17714
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005190",
+    "vorname": "Lars",
+    "nachname": "Rohwer",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 13886
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005533",
+    "vorname": "Christian",
+    "nachname": "Moser",
+    "anzahl_reden": 28,
+    "wortanzahl_gesamt": 13600
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005507",
+    "vorname": "Hans",
+    "nachname": "Koller",
+    "anzahl_reden": 25,
+    "wortanzahl_gesamt": 12883
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005441",
+    "vorname": "Florian",
+    "nachname": "Dorn",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 12357
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004285",
+    "vorname": "Fritz",
+    "nachname": "Güntzler",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 12318
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004339",
+    "vorname": "Andreas",
+    "nachname": "Lenz",
+    "anzahl_reden": 23,
+    "wortanzahl_gesamt": 12248
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004779",
+    "vorname": "Michael",
+    "nachname": "Kießling",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 11719
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005605",
+    "vorname": "Siegfried",
+    "nachname": "Walch",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 11599
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005602",
+    "vorname": "Johannes",
+    "nachname": "Volkmann",
+    "anzahl_reden": 24,
+    "wortanzahl_gesamt": 11350
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004304",
+    "vorname": "Alexander",
+    "nachname": "Hoffmann",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 11278
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11002765",
+    "vorname": "Norbert",
+    "nachname": "Röttgen",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 10630
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004004",
+    "vorname": "Peter",
+    "nachname": "Aumer",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 10565
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004152",
+    "vorname": "Detlef",
+    "nachname": "Seif",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 10149
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004917",
+    "vorname": "Alexander",
+    "nachname": "Throm",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 10124
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003815",
+    "vorname": "Carsten",
+    "nachname": "Müller",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 10100
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005406",
+    "vorname": "Tijen",
+    "nachname": "Ataoğlu",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 10010
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005477",
+    "vorname": "Heiko",
+    "nachname": "Hain",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 9911
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005069",
+    "vorname": "Inge",
+    "nachname": "Gräßle",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 9642
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005118",
+    "vorname": "Tilman",
+    "nachname": "Kuban",
+    "anzahl_reden": 22,
+    "wortanzahl_gesamt": 9411
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005068",
+    "vorname": "Fabian",
+    "nachname": "Gramling",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 9129
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005030",
+    "vorname": "Simone",
+    "nachname": "Borchardt",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 8576
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003636",
+    "vorname": "Thomas",
+    "nachname": "Silberhorn",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 8576
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004744",
+    "vorname": "Marc",
+    "nachname": "Henrichmann",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 8568
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005563",
+    "vorname": "Carl-Philipp",
+    "nachname": "Sassenrath",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 8504
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005400",
+    "vorname": "Anna",
+    "nachname": "Aeikens",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 8359
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005465",
+    "vorname": "Wilhelm",
+    "nachname": "Gebhard",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 8349
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005138",
+    "vorname": "Klaus",
+    "nachname": "Mack",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 8306
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004366",
+    "vorname": "Florian",
+    "nachname": "Oßner",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 8243
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004832",
+    "vorname": "Sepp",
+    "nachname": "Müller",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 8162
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005106",
+    "vorname": "Ottilie",
+    "nachname": "Klein",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 8146
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005444",
+    "vorname": "Hülya",
+    "nachname": "Düber",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 8115
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005485",
+    "vorname": "Matthias",
+    "nachname": "Hiller",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7902
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004709",
+    "vorname": "Thomas",
+    "nachname": "Erndl",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 7834
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005551",
+    "vorname": "Pascal",
+    "nachname": "Reddig",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 7816
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005182",
+    "vorname": "Martin",
+    "nachname": "Plum",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7630
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005495",
+    "vorname": "Nicklas",
+    "nachname": "Kappe",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 7359
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005258",
+    "vorname": "Tobias",
+    "nachname": "Winkler",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 7278
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004954",
+    "vorname": "Saskia",
+    "nachname": "Ludwig",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 7199
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004110",
+    "vorname": "Mathias",
+    "nachname": "Middelberg",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 7148
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004829",
+    "vorname": "Axel",
+    "nachname": "Müller",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 7023
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004286",
+    "vorname": "Christian",
+    "nachname": "Haase",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 6995
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005471",
+    "vorname": "David",
+    "nachname": "Gregosz",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 6984
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004440",
+    "vorname": "Anja",
+    "nachname": "Weisgerber",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 6840
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005048",
+    "vorname": "Ralph",
+    "nachname": "Edelhäußer",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 6790
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005085",
+    "vorname": "Susanne",
+    "nachname": "Hierl",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 6755
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005582",
+    "vorname": "Nora",
+    "nachname": "Seitz",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 6619
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005266",
+    "vorname": "Nicolas",
+    "nachname": "Zippelius",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6528
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005487",
+    "vorname": "Philip M. A.",
+    "nachname": "Hoffmann",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 6514
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003574",
+    "vorname": "Günter",
+    "nachname": "Krings",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 6504
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005447",
+    "vorname": "Joachim",
+    "nachname": "Ebmeyer",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6331
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003780",
+    "vorname": "Andreas",
+    "nachname": "Jung",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 6229
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004038",
+    "vorname": "Thomas",
+    "nachname": "Gebhart",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6217
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005514",
+    "vorname": "Lukas",
+    "nachname": "Krieger",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 6213
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005160",
+    "vorname": "Florian",
+    "nachname": "Müller",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 6205
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004415",
+    "vorname": "Albert",
+    "nachname": "Stegemann",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 6190
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005436",
+    "vorname": "Sandra",
+    "nachname": "Carstensen",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6020
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004262",
+    "vorname": "Michael",
+    "nachname": "Donth",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 5885
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004617",
+    "vorname": "Ronja",
+    "nachname": "Kemmer",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5799
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004418",
+    "vorname": "Johannes",
+    "nachname": "Steiniger",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 5729
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005481",
+    "vorname": "Diana",
+    "nachname": "Herbstreuth",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5582
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005439",
+    "vorname": "Ellen",
+    "nachname": "Demuth",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5567
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004443",
+    "vorname": "Kai",
+    "nachname": "Whittaker",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5561
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004108",
+    "vorname": "Andreas",
+    "nachname": "Mattfeldt",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 5541
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005435",
+    "vorname": "Benedikt",
+    "nachname": "Büdenbender",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 5538
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005035",
+    "vorname": "Yannick",
+    "nachname": "Bury",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 5516
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005407",
+    "vorname": "Cornell-Anette",
+    "nachname": "Babendererde",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5514
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004853",
+    "vorname": "Stephan",
+    "nachname": "Pilsinger",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 5470
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004305",
+    "vorname": "Hendrik",
+    "nachname": "Hoppenstedt",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 5376
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005579",
+    "vorname": "Marvin",
+    "nachname": "Schulz",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5369
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003706",
+    "vorname": "Artur",
+    "nachname": "Auernhammer",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5295
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005571",
+    "vorname": "Sebastian",
+    "nachname": "Schmidt",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5273
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005536",
+    "vorname": "Florian",
+    "nachname": "Oest",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 5177
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005063",
+    "vorname": "Jonas",
+    "nachname": "Geissler",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5149
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004056",
+    "vorname": "Ansgar",
+    "nachname": "Heveling",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5136
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005254",
+    "vorname": "Maria-Lena",
+    "nachname": "Weiss",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5094
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004383",
+    "vorname": "Alexander",
+    "nachname": "Radwan",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4957
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005587",
+    "vorname": "Katja",
+    "nachname": "Strauss-Köster",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4932
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005593",
+    "vorname": "Hans",
+    "nachname": "Theiss",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 4926
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004169",
+    "vorname": "Stephan",
+    "nachname": "Stracke",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4798
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005110",
+    "vorname": "Anne",
+    "nachname": "König",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4794
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005546",
+    "vorname": "David",
+    "nachname": "Preisendanz",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4780
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004021",
+    "vorname": "Ralph",
+    "nachname": "Brinkhaus",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 4778
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005244",
+    "vorname": "Oliver",
+    "nachname": "Vogt",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 4762
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005050",
+    "vorname": "Alexander",
+    "nachname": "Engelhard",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4670
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003734",
+    "vorname": "Thomas",
+    "nachname": "Bareiß",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 4604
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004264",
+    "vorname": "Hansjörg",
+    "nachname": "Durz",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4543
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005425",
+    "vorname": "Caroline",
+    "nachname": "Bosbach",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 4495
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005545",
+    "vorname": "Oliver",
+    "nachname": "Pöpsel",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4444
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004010",
+    "vorname": "Peter",
+    "nachname": "Beyer",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4341
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005410",
+    "vorname": "Günter",
+    "nachname": "Baumgartner",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4331
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005146",
+    "vorname": "Volker",
+    "nachname": "Mayer-Lay",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4315
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005002",
+    "vorname": "Knut",
+    "nachname": "Abraham",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4173
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004271",
+    "vorname": "Uwe",
+    "nachname": "Feiler",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 4157
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004845",
+    "vorname": "Josef",
+    "nachname": "Oster",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4139
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004365",
+    "vorname": "Wilfried",
+    "nachname": "Oellers",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4076
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004298",
+    "vorname": "Mark",
+    "nachname": "Helfrich",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4019
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004854",
+    "vorname": "Christoph",
+    "nachname": "Ploß",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 4005
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11002754",
+    "vorname": "Thomas",
+    "nachname": "Rachel",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4001
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005185",
+    "vorname": "Markus",
+    "nachname": "Reichel",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3983
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005235",
+    "vorname": "Christina",
+    "nachname": "Stumpp",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3979
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004417",
+    "vorname": "Sebastian",
+    "nachname": "Steineke",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3973
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004673",
+    "vorname": "Marc",
+    "nachname": "Biadacz",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3915
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004241",
+    "vorname": "Stephan",
+    "nachname": "Albani",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3897
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005087",
+    "vorname": "Franziska",
+    "nachname": "Hoppermann",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3887
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004414",
+    "vorname": "Wolfgang",
+    "nachname": "Stefinger",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3883
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004452",
+    "vorname": "Emmi",
+    "nachname": "Zeulner",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3758
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005428",
+    "vorname": "Frederik",
+    "nachname": "Bouffier",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3697
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005610",
+    "vorname": "Johannes",
+    "nachname": "Wiegelmann",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3680
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004924",
+    "vorname": "Kerstin",
+    "nachname": "Vieregge",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3599
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005449",
+    "vorname": "Lars",
+    "nachname": "Ehm",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3598
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004893",
+    "vorname": "Björn",
+    "nachname": "Simon",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3465
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004098",
+    "vorname": "Carsten",
+    "nachname": "Linnemann",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3382
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005475",
+    "vorname": "Georg",
+    "nachname": "Günther",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3325
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005612",
+    "vorname": "Johannes",
+    "nachname": "Winkel",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3272
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005488",
+    "vorname": "Michael",
+    "nachname": "Hose",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3219
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003264",
+    "vorname": "Klaus-Peter",
+    "nachname": "Willsch",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 3186
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004068",
+    "vorname": "Roderich",
+    "nachname": "Kiesewetter",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3071
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004034",
+    "vorname": "Michael",
+    "nachname": "Frieser",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3030
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004684",
+    "vorname": "Carsten",
+    "nachname": "Brodesser",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2996
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005592",
+    "vorname": "Roland",
+    "nachname": "Theis",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2956
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005620",
+    "vorname": "Vanessa",
+    "nachname": "Zobel",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2924
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005413",
+    "vorname": "Sascha",
+    "nachname": "van Beek",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2893
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005570",
+    "vorname": "Henri",
+    "nachname": "Schmidt",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2888
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003544",
+    "vorname": "Olav",
+    "nachname": "Gutting",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2801
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004670",
+    "vorname": "Melanie",
+    "nachname": "Bernstein",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2775
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005491",
+    "vorname": "Alexander",
+    "nachname": "Jordan",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2745
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005506",
+    "vorname": "Daniel",
+    "nachname": "Kölbl",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2734
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003865",
+    "vorname": "Elisabeth",
+    "nachname": "Winkelmeier-Becker",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2664
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004011",
+    "vorname": "Steffen",
+    "nachname": "Bilger",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2649
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005470",
+    "vorname": "Adrian",
+    "nachname": "Grasse",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2576
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004332",
+    "vorname": "Carsten",
+    "nachname": "Körber",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2561
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005093",
+    "vorname": "Anne",
+    "nachname": "Janssen",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2559
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005163",
+    "vorname": "Stefan",
+    "nachname": "Nacke",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2521
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005508",
+    "vorname": "Stefan",
+    "nachname": "Korbach",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2513
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005451",
+    "vorname": "Bastian",
+    "nachname": "Ernst",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2476
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005438",
+    "vorname": "Wolfgang",
+    "nachname": "Dahler",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2434
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005623",
+    "vorname": "Reza",
+    "nachname": "Asghari",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2419
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005417",
+    "vorname": "Florian",
+    "nachname": "Bilic",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2348
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005542",
+    "vorname": "Thomas",
+    "nachname": "Pauls",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2325
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004655",
+    "vorname": "Norbert Maria",
+    "nachname": "Altenkamp",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2263
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005198",
+    "vorname": "Catarina",
+    "nachname": "dos Santos-Wintz",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2200
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004073",
+    "vorname": "Axel",
+    "nachname": "Knoerig",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 2183
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005193",
+    "vorname": "Thomas",
+    "nachname": "Röwekamp",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 2118
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004352",
+    "vorname": "Jan",
+    "nachname": "Metzler",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2083
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005589",
+    "vorname": "Vivian",
+    "nachname": "Tauschwitz",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1883
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005431",
+    "vorname": "Lutz",
+    "nachname": "Brinkmann",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 1858
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004323",
+    "vorname": "Anja",
+    "nachname": "Karliczek",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1835
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005422",
+    "vorname": "Leif Erik",
+    "nachname": "Bodin",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1802
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005461",
+    "vorname": "Christoph",
+    "nachname": "Frauenpreiß",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1787
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005588",
+    "vorname": "Hendrik",
+    "nachname": "Streeck",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1749
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004800",
+    "vorname": "Jens",
+    "nachname": "Lehmann",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1681
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004382",
+    "vorname": "Kerstin",
+    "nachname": "Radomski",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1658
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005537",
+    "vorname": "Harald",
+    "nachname": "Orthey",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 1575
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004656",
+    "vorname": "Philipp",
+    "nachname": "Amthor",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1569
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11002718",
+    "vorname": "Armin",
+    "nachname": "Laschet",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1483
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003742",
+    "vorname": "Michael",
+    "nachname": "Brand",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1445
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005184",
+    "vorname": "Henning",
+    "nachname": "Rehbaum",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 1424
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004425",
+    "vorname": "Astrid",
+    "nachname": "Timmermann-Fechter",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1293
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005033",
+    "vorname": "Marlon",
+    "nachname": "Bröhr",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1258
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004901",
+    "vorname": "Katrin",
+    "nachname": "Staffler",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1183
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004938",
+    "vorname": "Paul",
+    "nachname": "Ziemiak",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1084
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004331",
+    "vorname": "Markus",
+    "nachname": "Koob",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 1017
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005544",
+    "vorname": "Jan-Wilhelm",
+    "nachname": "Pohlmann",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 960
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003620",
+    "vorname": "Albert",
+    "nachname": "Rupprecht",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 902
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11005557",
+    "vorname": "Johannes",
+    "nachname": "Rothenberger",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 830
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004269",
+    "vorname": "Hermann",
+    "nachname": "Färber",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 828
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003566",
+    "vorname": "Julia",
+    "nachname": "Klöckner",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 725
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004052",
+    "vorname": "Mechthild",
+    "nachname": "Heil",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 681
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004883",
+    "vorname": "Felix",
+    "nachname": "Schreiner",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 639
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003613",
+    "vorname": "Daniela",
+    "nachname": "Ludwig",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 472
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004168",
+    "vorname": "Dieter",
+    "nachname": "Stier",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 420
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004018",
+    "vorname": "Reinhard",
+    "nachname": "Brandl",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 387
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004276",
+    "vorname": "Thorsten",
+    "nachname": "Frei",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 336
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004437",
+    "vorname": "Nina",
+    "nachname": "Warken",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 125
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11002735",
+    "vorname": "Friedrich",
+    "nachname": "Merz",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 38
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11003821",
+    "vorname": "Henning",
+    "nachname": "Otte",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 21
+  },
+  {
+    "fraktion": "CDU/CSU",
+    "redner_id": "11004342",
+    "vorname": "Andrea",
+    "nachname": "Lindholz",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 16
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005289",
+    "vorname": "Clara",
+    "nachname": "Bünger",
+    "anzahl_reden": 33,
+    "wortanzahl_gesamt": 17446
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005186",
+    "vorname": "Heidi",
+    "nachname": "Reichinnek",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 16833
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005580",
+    "vorname": "Ines",
+    "nachname": "Schwerdtner",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 13278
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004848",
+    "vorname": "Sören",
+    "nachname": "Pellmann",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 12419
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11003034",
+    "vorname": "Dietmar",
+    "nachname": "Bartsch",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 12346
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005067",
+    "vorname": "Christian",
+    "nachname": "Görke",
+    "anzahl_reden": 27,
+    "wortanzahl_gesamt": 12058
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005604",
+    "vorname": "Sascha",
+    "nachname": "Wagner",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 11764
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005511",
+    "vorname": "Jan",
+    "nachname": "Köstering",
+    "anzahl_reden": 24,
+    "wortanzahl_gesamt": 11674
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005518",
+    "vorname": "Sonja",
+    "nachname": "Lemke",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 10704
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005260",
+    "vorname": "Janine",
+    "nachname": "Wissler",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 9947
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005525",
+    "vorname": "Tamara",
+    "nachname": "Mazzi",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 8899
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004819",
+    "vorname": "Pascal",
+    "nachname": "Meiser",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 8445
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005482",
+    "vorname": "Mareike",
+    "nachname": "Hermeier",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 8174
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005073",
+    "vorname": "Ates",
+    "nachname": "Gürpinar",
+    "anzahl_reden": 23,
+    "wortanzahl_gesamt": 8042
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005501",
+    "vorname": "Ferat",
+    "nachname": "Koçak",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 7364
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004693",
+    "vorname": "Jörg",
+    "nachname": "Cezanne",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 7329
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005453",
+    "vorname": "Fabian",
+    "nachname": "Fahl",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7188
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005539",
+    "vorname": "Luigi",
+    "nachname": "Pantisano",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 6811
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004041",
+    "vorname": "Nicole",
+    "nachname": "Gohlke",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 6680
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005601",
+    "vorname": "Donata",
+    "nachname": "Vogtschmidt",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 6597
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004088",
+    "vorname": "Caren",
+    "nachname": "Lay",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 6377
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004651",
+    "vorname": "Doris",
+    "nachname": "Achelwilm",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 6155
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005411",
+    "vorname": "Desiree",
+    "nachname": "Becker",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 6112
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005538",
+    "vorname": "Cansu",
+    "nachname": "Özdemir",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 5843
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005568",
+    "vorname": "David",
+    "nachname": "Schliesing",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5670
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005421",
+    "vorname": "Violetta",
+    "nachname": "Bock",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 5669
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005464",
+    "vorname": "Kathrin",
+    "nachname": "Gebel",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5572
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005466",
+    "vorname": "Katalin",
+    "nachname": "Gennburg",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5564
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005594",
+    "vorname": "Ulrich",
+    "nachname": "Thoden",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 5540
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005123",
+    "vorname": "Ina",
+    "nachname": "Latendorf",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 5233
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005437",
+    "vorname": "Agnes",
+    "nachname": "Conrad",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 5216
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005450",
+    "vorname": "Mandy",
+    "nachname": "Eißing",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 4882
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005489",
+    "vorname": "Luke",
+    "nachname": "Hoß",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4754
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005603",
+    "vorname": "Sarah",
+    "nachname": "Vollath",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4748
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005426",
+    "vorname": "Jorrit",
+    "nachname": "Bosch",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 4704
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005554",
+    "vorname": "Lea",
+    "nachname": "Reisner",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 4624
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004672",
+    "vorname": "Lorenz Gösta",
+    "nachname": "Beutin",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 4604
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005599",
+    "vorname": "Isabelle",
+    "nachname": "Vandre",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4595
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005448",
+    "vorname": "Mirze",
+    "nachname": "Edis",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 4573
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005409",
+    "vorname": "Marcel",
+    "nachname": "Bauer",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 4480
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005434",
+    "vorname": "Maik",
+    "nachname": "Brückner",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 4251
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004653",
+    "vorname": "Gökay",
+    "nachname": "Akbulut",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4119
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005430",
+    "vorname": "Anne-Mieke",
+    "nachname": "Bremer",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3783
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005534",
+    "vorname": "Charlotte Antonia",
+    "nachname": "Neuhäuser",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 3580
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005598",
+    "vorname": "Aaron",
+    "nachname": "Valent",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 3561
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005625",
+    "vorname": "Lisa",
+    "nachname": "Schubert",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3282
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005457",
+    "vorname": "Katrin",
+    "nachname": "Fey",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 3245
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005583",
+    "vorname": "Julia-Christina",
+    "nachname": "Stange",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 3227
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005467",
+    "vorname": "Vinzenz",
+    "nachname": "Glaser",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3083
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005494",
+    "vorname": "Maren",
+    "nachname": "Kaminski",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 3035
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005505",
+    "vorname": "Cansin",
+    "nachname": "Köktürk",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 2958
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11004001",
+    "vorname": "Jan",
+    "nachname": "van Aken",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2914
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005611",
+    "vorname": "Christin",
+    "nachname": "Willnat",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2703
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005617",
+    "vorname": "Anne",
+    "nachname": "Zerr",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 2592
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11000756",
+    "vorname": "Gregor",
+    "nachname": "Gysi",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2556
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005530",
+    "vorname": "Sahra",
+    "nachname": "Mirow",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2539
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005490",
+    "vorname": "Cem",
+    "nachname": "Ince",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2484
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005575",
+    "vorname": "Evelyn",
+    "nachname": "Schötz",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2045
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005427",
+    "vorname": "Janina",
+    "nachname": "Böttger",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 1409
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005562",
+    "vorname": "Zada",
+    "nachname": "Salihović",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1127
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005527",
+    "vorname": "Stella",
+    "nachname": "Merendino",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1015
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11003824",
+    "vorname": "Bodo",
+    "nachname": "Ramelow",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 525
+  },
+  {
+    "fraktion": "Die Linke",
+    "redner_id": "11005534",
+    "vorname": "Charlotte",
+    "nachname": "Neuhäuser",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 374
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004802",
+    "vorname": "Helge",
+    "nachname": "Lindh",
+    "anzahl_reden": 34,
+    "wortanzahl_gesamt": 20653
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005056",
+    "vorname": "Sebastian",
+    "nachname": "Fiedler",
+    "anzahl_reden": 29,
+    "wortanzahl_gesamt": 18021
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005229",
+    "vorname": "Ralf",
+    "nachname": "Stegner",
+    "anzahl_reden": 24,
+    "wortanzahl_gesamt": 13908
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005038",
+    "vorname": "Hakan",
+    "nachname": "Demir",
+    "anzahl_reden": 29,
+    "wortanzahl_gesamt": 13484
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005115",
+    "vorname": "Dunja",
+    "nachname": "Kreiser",
+    "anzahl_reden": 28,
+    "wortanzahl_gesamt": 13341
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005251",
+    "vorname": "Carmen",
+    "nachname": "Wegge",
+    "anzahl_reden": 27,
+    "wortanzahl_gesamt": 12902
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005077",
+    "vorname": "Frauke",
+    "nachname": "Heiligenstadt",
+    "anzahl_reden": 27,
+    "wortanzahl_gesamt": 12830
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005165",
+    "vorname": "Rasha",
+    "nachname": "Nasr",
+    "anzahl_reden": 27,
+    "wortanzahl_gesamt": 12619
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004396",
+    "vorname": "Nina",
+    "nachname": "Scheer",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 12556
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005267",
+    "vorname": "Armand",
+    "nachname": "Zorn",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 11414
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005005",
+    "vorname": "Adis",
+    "nachname": "Ahmetovic",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 11281
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005191",
+    "vorname": "Sebastian",
+    "nachname": "Roloff",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 11207
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004826",
+    "vorname": "Siemtje",
+    "nachname": "Möller",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 11189
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005043",
+    "vorname": "Felix",
+    "nachname": "Döring",
+    "anzahl_reden": 26,
+    "wortanzahl_gesamt": 10879
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005143",
+    "vorname": "Parsa",
+    "nachname": "Marvi",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 10809
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005140",
+    "vorname": "Holger",
+    "nachname": "Mann",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 10807
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005558",
+    "vorname": "Philipp",
+    "nachname": "Rottwilm",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 10672
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004368",
+    "vorname": "Mahmut",
+    "nachname": "Özdemir",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 10498
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005025",
+    "vorname": "Jakob",
+    "nachname": "Blankenburg",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 10465
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004710",
+    "vorname": "Wiebke",
+    "nachname": "Esdar",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 10444
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005049",
+    "vorname": "Sonja",
+    "nachname": "Eichwede",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 9972
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005036",
+    "vorname": "Isabel",
+    "nachname": "Cademartori",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 9394
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005600",
+    "vorname": "Ingo",
+    "nachname": "Vogel",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 9364
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005131",
+    "vorname": "Esra",
+    "nachname": "Limbacher",
+    "anzahl_reden": 21,
+    "wortanzahl_gesamt": 9307
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005105",
+    "vorname": "Helmut",
+    "nachname": "Kleebank",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 8739
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003809",
+    "vorname": "Matthias",
+    "nachname": "Miersch",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 8454
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005194",
+    "vorname": "Thorsten",
+    "nachname": "Rudolph",
+    "anzahl_reden": 16,
+    "wortanzahl_gesamt": 8417
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004444",
+    "vorname": "Dirk",
+    "nachname": "Wiese",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 8351
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005247",
+    "vorname": "Carolin",
+    "nachname": "Wagner",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 8290
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004270",
+    "vorname": "Johannes",
+    "nachname": "Fechner",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 7662
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005015",
+    "vorname": "Daniel",
+    "nachname": "Baldy",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 7617
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005103",
+    "vorname": "Franziska",
+    "nachname": "Kersten",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 7525
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005174",
+    "vorname": "Christos",
+    "nachname": "Pantazis",
+    "anzahl_reden": 19,
+    "wortanzahl_gesamt": 7344
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005221",
+    "vorname": "Lina",
+    "nachname": "Seitzl",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 7252
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004392",
+    "vorname": "Bernd",
+    "nachname": "Rützel",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7134
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005041",
+    "vorname": "Jan",
+    "nachname": "Dieren",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 7092
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004381",
+    "vorname": "Martin",
+    "nachname": "Rabanus",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 7062
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005249",
+    "vorname": "Maja",
+    "nachname": "Wallstein",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 7059
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004701",
+    "vorname": "Esther",
+    "nachname": "Dilcher",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 6962
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005240",
+    "vorname": "Anja",
+    "nachname": "Troff-Schaffarzyk",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 6814
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005416",
+    "vorname": "Daniel",
+    "nachname": "Bettermann",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 6692
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005208",
+    "vorname": "Christoph",
+    "nachname": "Schmid",
+    "anzahl_reden": 17,
+    "wortanzahl_gesamt": 6536
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005424",
+    "vorname": "Hendrik",
+    "nachname": "Bollmann",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 6460
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005204",
+    "vorname": "Johannes",
+    "nachname": "Schätzl",
+    "anzahl_reden": 15,
+    "wortanzahl_gesamt": 6381
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004949",
+    "vorname": "Isabel",
+    "nachname": "Mackensen-Geis",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 6370
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005088",
+    "vorname": "Jasmina",
+    "nachname": "Hostert",
+    "anzahl_reden": 20,
+    "wortanzahl_gesamt": 6218
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005553",
+    "vorname": "Truels",
+    "nachname": "Reichardt",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 6133
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005241",
+    "vorname": "Derya",
+    "nachname": "Türk-Nachbaur",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 6017
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004614",
+    "vorname": "Angelika",
+    "nachname": "Glöckner",
+    "anzahl_reden": 14,
+    "wortanzahl_gesamt": 5987
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004881",
+    "vorname": "Johannes",
+    "nachname": "Schraps",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 5864
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003758",
+    "vorname": "Martin",
+    "nachname": "Gerster",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 5801
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004424",
+    "vorname": "Michael",
+    "nachname": "Thews",
+    "anzahl_reden": 11,
+    "wortanzahl_gesamt": 5307
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004401",
+    "vorname": "Dagmar",
+    "nachname": "Schmidt",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5271
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005044",
+    "vorname": "Falko",
+    "nachname": "Droßmann",
+    "anzahl_reden": 12,
+    "wortanzahl_gesamt": 5247
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005606",
+    "vorname": "Daniel",
+    "nachname": "Walter",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 5192
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004412",
+    "vorname": "Svenja",
+    "nachname": "Stadler",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5082
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005178",
+    "vorname": "Jens",
+    "nachname": "Peick",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 5001
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005000",
+    "vorname": "Sanae",
+    "nachname": "Abdi",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 4963
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005217 999990074",
+    "vorname": "SvenjaSvenja",
+    "nachname": "SchulzeSchulze",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4919
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005137",
+    "vorname": "Tanja",
+    "nachname": "Machalet",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4883
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005300",
+    "vorname": "Daniel",
+    "nachname": "Rinkert",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4759
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005108",
+    "vorname": "Annika",
+    "nachname": "Klose",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4758
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004825",
+    "vorname": "Claudia",
+    "nachname": "Moll",
+    "anzahl_reden": 13,
+    "wortanzahl_gesamt": 4618
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004639",
+    "vorname": "Jürgen",
+    "nachname": "Coße",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 4445
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005414",
+    "vorname": "Jens",
+    "nachname": "Behrens",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4423
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004296",
+    "vorname": "Gabriela",
+    "nachname": "Heinrich",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4269
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005560",
+    "vorname": "Daniela",
+    "nachname": "Rump",
+    "anzahl_reden": 10,
+    "wortanzahl_gesamt": 4208
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003545",
+    "vorname": "Bettina",
+    "nachname": "Hagedorn",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 4203
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005614",
+    "vorname": "Serdar",
+    "nachname": "Yüksel",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3828
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005236",
+    "vorname": "Ruppert",
+    "nachname": "Stüwe",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3773
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005153",
+    "vorname": "Kathrin",
+    "nachname": "Michel",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3715
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003142",
+    "vorname": "Hubertus",
+    "nachname": "Heil",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3658
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004317",
+    "vorname": "Frank",
+    "nachname": "Junge",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3615
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004878",
+    "vorname": "Uwe",
+    "nachname": "Schmidt",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 3570
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005452",
+    "vorname": "Nancy",
+    "nachname": "Faeser",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 3453
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005084",
+    "vorname": "Nadine",
+    "nachname": "Heselhaus",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 3308
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004257",
+    "vorname": "Lars",
+    "nachname": "Castellucci",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3262
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005154",
+    "vorname": "Matthias David",
+    "nachname": "Mieves",
+    "anzahl_reden": 7,
+    "wortanzahl_gesamt": 3133
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004063",
+    "vorname": "Oliver",
+    "nachname": "Kaczmarek",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 3043
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004407",
+    "vorname": "Andreas",
+    "nachname": "Schwarz",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 3025
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004261",
+    "vorname": "Sabine",
+    "nachname": "Dittmar",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 2897
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004921",
+    "vorname": "Markus",
+    "nachname": "Töns",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2696
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004289",
+    "vorname": "Metin",
+    "nachname": "Hakverdi",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2659
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005314",
+    "vorname": "Heike",
+    "nachname": "Heubach",
+    "anzahl_reden": 9,
+    "wortanzahl_gesamt": 2655
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004267",
+    "vorname": "Saskia",
+    "nachname": "Esken",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2592
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005135",
+    "vorname": "Bettina",
+    "nachname": "Lugk",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2507
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005116",
+    "vorname": "Martin",
+    "nachname": "Kröber",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2442
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004124",
+    "vorname": "Aydan",
+    "nachname": "Özoğuz",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2238
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004942",
+    "vorname": "Marja-Liisa",
+    "nachname": "Völlers",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2065
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005109",
+    "vorname": "Tim",
+    "nachname": "Klüssendorf",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1623
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004844",
+    "vorname": "Josephine",
+    "nachname": "Ortleb",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 1495
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004453",
+    "vorname": "Stefan",
+    "nachname": "Zierke",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1112
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003797",
+    "vorname": "Karl",
+    "nachname": "Lauterbach",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 987
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11005096",
+    "vorname": "Macit",
+    "nachname": "Karaahmetoğlu",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 741
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003804",
+    "vorname": "Katja",
+    "nachname": "Mast",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 588
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004433",
+    "vorname": "Dirk",
+    "nachname": "Vöpel",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 505
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11004150",
+    "vorname": "Stefan",
+    "nachname": "Schwartze",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 349
+  },
+  {
+    "fraktion": "SPD",
+    "redner_id": "11003440",
+    "vorname": "Kerstin",
+    "nachname": "Griese",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 239
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11002735",
+    "vorname": "Friedrich",
+    "nachname": "Merz",
+    "anzahl_reden": 77,
+    "wortanzahl_gesamt": 42525
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003715",
+    "vorname": "Lars",
+    "nachname": "Klingbeil",
+    "anzahl_reden": 83,
+    "wortanzahl_gesamt": 35608
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003516",
+    "vorname": "Alexander",
+    "nachname": "Dobrindt",
+    "anzahl_reden": 90,
+    "wortanzahl_gesamt": 23369
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004182",
+    "vorname": "Johann David",
+    "nachname": "Wadephul",
+    "anzahl_reden": 95,
+    "wortanzahl_gesamt": 22630
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003218",
+    "vorname": "Carsten",
+    "nachname": "Schneider",
+    "anzahl_reden": 75,
+    "wortanzahl_gesamt": 20008
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005543",
+    "vorname": "Boris",
+    "nachname": "Pistorius",
+    "anzahl_reden": 81,
+    "wortanzahl_gesamt": 19705
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004437",
+    "vorname": "Nina",
+    "nachname": "Warken",
+    "anzahl_reden": 81,
+    "wortanzahl_gesamt": 19034
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990152",
+    "vorname": "Karin",
+    "nachname": "Prien",
+    "anzahl_reden": 94,
+    "wortanzahl_gesamt": 17646
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003209",
+    "vorname": "Katherina",
+    "nachname": "Reiche",
+    "anzahl_reden": 80,
+    "wortanzahl_gesamt": 16045
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004146",
+    "vorname": "Patrick",
+    "nachname": "Schnieder",
+    "anzahl_reden": 72,
+    "wortanzahl_gesamt": 14120
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003586",
+    "vorname": "Dorothee",
+    "nachname": "Bär",
+    "anzahl_reden": 39,
+    "wortanzahl_gesamt": 13551
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004384",
+    "vorname": "Alois",
+    "nachname": "Rainer",
+    "anzahl_reden": 60,
+    "wortanzahl_gesamt": 13491
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005219",
+    "vorname": "Stefan",
+    "nachname": "Seidler",
+    "anzahl_reden": 44,
+    "wortanzahl_gesamt": 11715
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005089",
+    "vorname": "Verena",
+    "nachname": "Hubertz",
+    "anzahl_reden": 64,
+    "wortanzahl_gesamt": 11651
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004006",
+    "vorname": "Bärbel",
+    "nachname": "Bas",
+    "anzahl_reden": 43,
+    "wortanzahl_gesamt": 11452
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990151",
+    "vorname": "Stefanie",
+    "nachname": "Hubig",
+    "anzahl_reden": 40,
+    "wortanzahl_gesamt": 11135
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005006",
+    "vorname": "Reem",
+    "nachname": "Alabali Radovan",
+    "anzahl_reden": 35,
+    "wortanzahl_gesamt": 10482
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990153",
+    "vorname": "Karsten",
+    "nachname": "Wildberger",
+    "anzahl_reden": 28,
+    "wortanzahl_gesamt": 9827
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004276",
+    "vorname": "Thorsten",
+    "nachname": "Frei",
+    "anzahl_reden": 50,
+    "wortanzahl_gesamt": 6440
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004048",
+    "vorname": "Florian",
+    "nachname": "Hahn",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 5973
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990154",
+    "vorname": "Wolfram",
+    "nachname": "Weimer",
+    "anzahl_reden": 8,
+    "wortanzahl_gesamt": 4839
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005205",
+    "vorname": "Christiane",
+    "nachname": "Schenderlein",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 3293
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005006",
+    "vorname": "Reem",
+    "nachname": "Alabali-Radovan",
+    "anzahl_reden": 18,
+    "wortanzahl_gesamt": 2898
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004926",
+    "vorname": "Christoph",
+    "nachname": "de Vries",
+    "anzahl_reden": 6,
+    "wortanzahl_gesamt": 2794
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990099",
+    "vorname": "Manuela",
+    "nachname": "Schwesig",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 2704
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004061",
+    "vorname": "Thomas",
+    "nachname": "Jarzombek",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 2679
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004771",
+    "vorname": "Elisabeth",
+    "nachname": "Kaiser",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2581
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004876",
+    "vorname": "Nils",
+    "nachname": "Schmid",
+    "anzahl_reden": 5,
+    "wortanzahl_gesamt": 2291
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005072",
+    "vorname": "Serap",
+    "nachname": "Güler",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 2269
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003613",
+    "vorname": "Daniela",
+    "nachname": "Ludwig",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 2104
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003573",
+    "vorname": "Gunther",
+    "nachname": "Krichbaum",
+    "anzahl_reden": 4,
+    "wortanzahl_gesamt": 1980
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003847",
+    "vorname": "Rita",
+    "nachname": "Schwarzelühr-Sutter",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1727
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003896",
+    "vorname": "Eva",
+    "nachname": "Högl",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 1701
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003514",
+    "vorname": "Gitta",
+    "nachname": "Connemann",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1683
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004426",
+    "vorname": "Carsten",
+    "nachname": "Träger",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 1631
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11005177",
+    "vorname": "Natalie",
+    "nachname": "Pawlik",
+    "anzahl_reden": 3,
+    "wortanzahl_gesamt": 1577
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004182",
+    "vorname": "Johann",
+    "nachname": "Wadephul",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 1355
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990155",
+    "vorname": "Nicole",
+    "nachname": "Hoffmeister-Kraut",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 1004
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004884",
+    "vorname": "Michael",
+    "nachname": "Schrodi",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 969
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004291",
+    "vorname": "Sebastian",
+    "nachname": "Hartmann",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 949
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004087",
+    "vorname": "Ulrich",
+    "nachname": "Lange",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 819
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003496",
+    "vorname": "Sören",
+    "nachname": "Bartol",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 789
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003846",
+    "vorname": "Frank",
+    "nachname": "Schwabe",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 774
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990125",
+    "vorname": "Sven",
+    "nachname": "Schulze",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 771
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003742",
+    "vorname": "Michael",
+    "nachname": "Brand",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 765
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004656",
+    "vorname": "Philipp",
+    "nachname": "Amthor",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 719
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004681",
+    "vorname": "Silvia",
+    "nachname": "Breher",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 701
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003162",
+    "vorname": "Anette",
+    "nachname": "Kramme",
+    "anzahl_reden": 2,
+    "wortanzahl_gesamt": 694
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990156",
+    "vorname": "Katrin",
+    "nachname": "Eder",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 626
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004327",
+    "vorname": "Georg",
+    "nachname": "Kippels",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 542
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003890",
+    "vorname": "Christian",
+    "nachname": "Hirte",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 539
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "999990157",
+    "vorname": "Christian",
+    "nachname": "Heinz",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 499
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11004336",
+    "vorname": "Silke",
+    "nachname": "Launert",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 474
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003440",
+    "vorname": "Kerstin",
+    "nachname": "Griese",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 447
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003804",
+    "vorname": "Katja",
+    "nachname": "Mast",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 343
+  },
+  {
+    "fraktion": "fraktionslos",
+    "redner_id": "11003821",
+    "vorname": "Henning",
+    "nachname": "Otte",
+    "anzahl_reden": 1,
+    "wortanzahl_gesamt": 49
+  }
+]

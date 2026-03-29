@@ -39,3 +39,7 @@ docs/superpowers/
 
 # Git worktrees
 .worktrees/
+
+# Plenarprotokoll XMLs und abgeleitete speeches (zu groß für Git)
+data/*/plenarprotokolle/
+data/*/speeches.csv

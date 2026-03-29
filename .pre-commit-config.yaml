@@ -15,14 +15,14 @@ repos:
 
       - id: ty
         name: ty
-        entry: uv run ty check
+        entry: uv run --group dev ty check
         language: system
         types: [python]
         pass_filenames: false
 
       - id: pytest
         name: pytest
-        entry: uv run pytest tests/test_fetch_data.py
+        entry: uv run --group dev pytest tests/test_fetch_data.py
         language: system
         pass_filenames: false
         always_run: true

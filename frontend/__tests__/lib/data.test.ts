@@ -24,6 +24,19 @@ describe("dataUrl", () => {
   });
 });
 
+describe("dataUrl for speech files", () => {
+  it("builds correct URL for party_word_freq", () => {
+    expect(dataUrl("party_word_freq_{period}.json", 132)).toBe(
+      "/data/party_word_freq_132.json",
+    );
+  });
+  it("builds correct URL for party_speech_stats", () => {
+    expect(dataUrl("party_speech_stats_{period}.json", 161)).toBe(
+      "/data/party_speech_stats_161.json",
+    );
+  });
+});
+
 describe("fetchData", () => {
   const originalFetch = global.fetch;
 

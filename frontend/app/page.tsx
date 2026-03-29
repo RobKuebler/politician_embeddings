@@ -91,6 +91,30 @@ const FEATURES = [
       </svg>
     ),
   },
+  {
+    href: "/speeches",
+    title: "Speeches",
+    description:
+      "Welche Themen prägen jede Fraktion im Plenum? TF-IDF-Wordclouds der parteispezifischen Begriffe und die redeaktivsten Abgeordneten im direkten Vergleich.",
+    tag: "Plenardebatten",
+    iconGradient: "linear-gradient(135deg, #9B59B6 0%, #C39BD3 100%)",
+    tagColor: "#9B59B6",
+    wide: false,
+    icon: (
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Home() {

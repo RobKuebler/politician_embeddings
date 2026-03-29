@@ -222,3 +222,104 @@ def test_party_profile_shape(run_export):
         assert {"categories", "parties", "pct", "dev"}.issubset(pivot.keys())
         assert len(pivot["pct"]) == len(pivot["categories"])
         assert len(pivot["pct"][0]) == len(pivot["parties"])
+
+
+# ---------------------------------------------------------------------------
+# CSV fixtures for speech export tests
+# ---------------------------------------------------------------------------
+
+_WORD_FREQ_CSV = textwrap.dedent("""\
+    fraktion,wort,tfidf,rang
+    SPD,arbeit,0.000612,1
+    SPD,sozial,0.000450,2
+    SPD,rente,0.000380,3
+    AfD,grenze,0.000700,1
+    AfD,migration,0.000600,2
+    AfD,sicherheit,0.000500,3
+""")
+
+_SPEECH_STATS_CSV = textwrap.dedent("""\
+    fraktion,redner_id,vorname,nachname,anzahl_reden,wortanzahl_gesamt
+    SPD,1001,Olaf,Scholz,84,94320
+    SPD,1002,Rolf,Mützenich,60,71100
+    AfD,2001,Alice,Weidel,50,55000
+""")
+
+
+@pytest.fixture
+def speech_export(tmp_path, monkeypatch):
+    """Set up tmp dirs with speech CSV fixtures and run the two export functions."""
+    import src.export_json as ej
+
+    period_dir = tmp_path / str(PERIOD_ID)
+    period_dir.mkdir(parents=True)
+    (period_dir / "party_word_freq.csv").write_text(_WORD_FREQ_CSV, encoding="utf-8")
+    (period_dir / "party_speech_stats.csv").write_text(
+        _SPEECH_STATS_CSV, encoding="utf-8"
+    )
+
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    monkeypatch.setattr(ej, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
+
+    ej.export_party_word_freq(PERIOD_ID)
+    ej.export_party_speech_stats(PERIOD_ID)
+    return out_dir
+
+
+def _load_speech(out_dir, filename):
+    return json.loads((out_dir / filename).read_text())
+
+
+def test_word_freq_structure(speech_export):
+    data = _load_speech(speech_export, f"party_word_freq_{PERIOD_ID}.json")
+    assert isinstance(data, dict)
+    assert set(data.keys()) == {"SPD", "AfD"}
+    spd = data["SPD"]
+    assert isinstance(spd, list)
+    assert len(spd) == 3
+    assert {"wort", "tfidf", "rang"}.issubset(spd[0].keys())
+    assert spd[0]["wort"] == "arbeit"
+    assert spd[0]["rang"] == 1
+
+
+def test_word_freq_missing_csv_does_not_raise(tmp_path, monkeypatch):
+    import src.export_json as ej
+
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    monkeypatch.setattr(ej, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
+    # no CSV present — should log warning, not raise
+    ej.export_party_word_freq(PERIOD_ID)
+    assert not (out_dir / f"party_word_freq_{PERIOD_ID}.json").exists()
+
+
+def test_speech_stats_structure(speech_export):
+    data = _load_speech(speech_export, f"party_speech_stats_{PERIOD_ID}.json")
+    assert isinstance(data, list)
+    assert len(data) == 3
+    required = {
+        "fraktion",
+        "redner_id",
+        "vorname",
+        "nachname",
+        "anzahl_reden",
+        "wortanzahl_gesamt",
+    }
+    assert required.issubset(data[0].keys())
+    # sorted by wortanzahl_gesamt desc within fraktion (as produced by compute_speech_stats)
+    spd_rows = [r for r in data if r["fraktion"] == "SPD"]
+    assert spd_rows[0]["nachname"] == "Scholz"
+
+
+def test_speech_stats_missing_csv_does_not_raise(tmp_path, monkeypatch):
+    import src.export_json as ej
+
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    monkeypatch.setattr(ej, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
+    ej.export_party_speech_stats(PERIOD_ID)
+    assert not (out_dir / f"party_speech_stats_{PERIOD_ID}.json").exists()
