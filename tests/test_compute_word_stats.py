@@ -260,6 +260,7 @@ def test_fetch_word_stats_fehlendes_csv_wirft_systemexit(tmp_path):
 def test_lemmatize_tokens_fasst_flexionsformen_zusammen(monkeypatch):
     """Adjektiv-Flexionsformen werden auf Grundform reduziert."""
     pytest.importorskip("spacy")
+    pytest.importorskip("de_core_news_sm")
     monkeypatch.undo()
 
     tokens = ["rechtsextreme", "rechtsextremen", "rechtsextremem", "rechtsextrem"]
@@ -277,6 +278,7 @@ def test_lemmatize_tokens_fasst_flexionsformen_zusammen(monkeypatch):
 def test_lemmatize_tokens_innen_plural(monkeypatch):
     """Feminine Pluralformen auf -innen werden auf -in reduziert."""
     pytest.importorskip("spacy")
+    pytest.importorskip("de_core_news_sm")
     monkeypatch.undo()
 
     tokens = ["demokratinnen", "politikerinnen", "sozialdemokratinnen"]
@@ -289,6 +291,7 @@ def test_lemmatize_tokens_innen_plural(monkeypatch):
 def test_lemmatize_tokens_identity_fuer_grundformen(monkeypatch):
     """Wörter die bereits Grundform sind, bleiben unverändert."""
     pytest.importorskip("spacy")
+    pytest.importorskip("de_core_news_sm")
     monkeypatch.undo()
 
     tokens = ["klimawandel", "migration", "sicherheit"]

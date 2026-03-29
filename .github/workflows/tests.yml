@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev --group train
 
+      - name: Install spaCy German model
+        run: uv run python -m spacy download de_core_news_sm
+
       - name: Run tests
         run: uv run pytest tests/
 
