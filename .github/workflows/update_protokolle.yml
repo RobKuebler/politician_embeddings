@@ -5,11 +5,16 @@ on:
     - cron: "0 5 * * *" # daily at 5am UTC (after update_data)
   workflow_dispatch: # allow manual trigger
 
+concurrency:
+  group: data-pipeline-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      DIP_API_KEY: ${{ secrets.DIP_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4

@@ -5,6 +5,10 @@ on:
     - cron: "0 4 * * *" # daily at 4am UTC
   workflow_dispatch: # allow manual trigger
 
+concurrency:
+  group: data-pipeline-${{ github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest

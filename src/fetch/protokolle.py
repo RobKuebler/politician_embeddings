@@ -11,6 +11,7 @@ Usage:
 import argparse
 import json
 import logging
+import os
 import subprocess
 import time
 import urllib.parse
@@ -29,7 +30,6 @@ from ..storage import DATA_DIR, current_wahlperiode
 log = logging.getLogger(__name__)
 
 DIP_BASE_URL = "https://search.dip.bundestag.de/api/v1"
-DIP_API_KEY = "OSOegLs.PR2lwJ1dwCeje9vTj7FPOt3hvpYKtwKkhw"
 DIP_PAGE_SIZE = 100
 
 # Reihenfolge der CSV-Spalten
@@ -103,11 +103,19 @@ def fetch_dip_all(endpoint: str, params: dict | None = None) -> list:
     Stops when a page returns fewer than DIP_PAGE_SIZE documents or
     when the response omits the cursor field.
     """
+    api_key = os.environ.get("DIP_API_KEY")
+    if not api_key:
+        msg = (
+            "DIP_API_KEY fehlt. Bitte als Umgebungsvariable "
+            "oder GitHub Secret setzen."
+        )
+        raise RuntimeError(msg)
+
     results = []
     cursor = None
     base_params: dict = {
         "format": "json",
-        "apikey": DIP_API_KEY,
+        "apikey": api_key,
         "limit": DIP_PAGE_SIZE,
     }
     if params:
