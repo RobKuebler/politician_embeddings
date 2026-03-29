@@ -86,18 +86,18 @@ export const CHART_BOTTOM_ROTATED = 100;
 
 // Vote answer → label + color (for heatmap legend)
 export const VOTE_META = {
-  yes: { label: "Ja", color: "#46962B" },
-  no: { label: "Nein", color: "#E3000F" },
-  abstain: { label: "Enthalten", color: "#F5A623" },
+  yes: { label: "Ja", color: "#2563EB" },
+  no: { label: "Nein", color: "#EA580C" },
+  abstain: { label: "Enthalten", color: "#9CA3AF" },
   no_show: { label: "–", color: "#E0E0E0" },
 } as const;
 
 // Discrete 4-step ECharts colorscale for heatmap: no_show=0, no=1, abstain=2, yes=3
 export const VOTE_COLORSCALE = [
   { gte: 0, lt: 1, color: "#E0E0E0" }, // no_show / absent
-  { gte: 1, lt: 2, color: "#E3000F" }, // no
-  { gte: 2, lt: 3, color: "#F5A623" }, // abstain
-  { gte: 3, lte: 3, color: "#46962B" }, // yes
+  { gte: 1, lt: 2, color: "#EA580C" }, // no
+  { gte: 2, lt: 3, color: "#9CA3AF" }, // abstain
+  { gte: 3, lte: 3, color: "#2563EB" }, // yes
 ];
 
 export const VOTE_NUMERIC: Record<string, number> = {

@@ -3,7 +3,13 @@ import { useRef, useEffect } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { VoteRecord, Poll, Politician, stripSoftHyphen } from "@/lib/data";
-import { VOTE_META, VOTE_NUMERIC } from "@/lib/constants";
+import {
+  VOTE_META,
+  VOTE_NUMERIC,
+  PARTY_COLORS,
+  FALLBACK_COLOR,
+  PARTY_ORDER,
+} from "@/lib/constants";
 import {
   ChartTooltip,
   styleAxisText,
@@ -20,18 +26,36 @@ interface Props {
 }
 
 const VOTE_COLOR: Record<string, string> = {
-  yes: "#46962B",
-  no: "#E3000F",
-  abstain: "#F5A623",
+  yes: "#2563EB",
+  no: "#EA580C",
+  abstain: "#9CA3AF",
   no_show: "none",
 };
 
 const ML = 240; // left margin for y-labels
-const MR = 180; // right margin to catch rotated x-label overflow
-const HEADER_H = 110; // header height — must fit labels rotated -30° upward
-const ROW_H = 22; // row height — matches DeviationHeatmap cell height
-const COL_W = 80; // minimum column width
+const MR = 16; // right margin
+const PARTY_BAND_H = 22; // height of the colored party header band
+const MEMBER_LABEL_H = 26; // height of the "A. Lastname" label row
+const HEADER_H = PARTY_BAND_H + MEMBER_LABEL_H;
+const ROW_H = 22;
+const COL_W = 64; // minimum column width — enough for "A. Lastname" labels
 const MAX_VISIBLE_ROWS = 20;
+
+/** Returns "A. Lastname" abbreviation for a full name. */
+function abbreviateName(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return name;
+  return `${parts[0][0]}. ${parts[parts.length - 1]}`;
+}
+
+/** Returns #333 for bright backgrounds (FDP yellow), #fff for dark ones. */
+function contrastColor(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return lum > 0.55 ? "#333333" : "#ffffff";
+}
 
 export function VoteHeatmap({
   votes,
@@ -69,12 +93,35 @@ export function VoteHeatmap({
       voteIndex.get(v.politician_id)!.set(v.poll_id, v.answer);
     }
 
-    const xLabels = selectedPolIds.map((id) => {
-      const pol = polMap.get(id);
-      return pol ? `${pol.name} (${stripSoftHyphen(pol.party)})` : String(id);
+    // Sort politicians by party (PARTY_ORDER), then alphabetically by name within party
+    const partyIndex = Object.fromEntries(PARTY_ORDER.map((p, i) => [p, i]));
+    const sortedPolIds = [...selectedPolIds].sort((a, b) => {
+      const partyA = stripSoftHyphen(polMap.get(a)?.party ?? "");
+      const partyB = stripSoftHyphen(polMap.get(b)?.party ?? "");
+      const idxDiff = (partyIndex[partyA] ?? 99) - (partyIndex[partyB] ?? 99);
+      if (idxDiff !== 0) return idxDiff;
+      return (polMap.get(a)?.name ?? "").localeCompare(
+        polMap.get(b)?.name ?? "",
+      );
     });
 
-    // Use poll_id as scale domain to avoid collisions when truncated topics are identical
+    // x-scale domain: polId strings, so bandwidth lookups are unambiguous
+    const xDomain = sortedPolIds.map((id) => String(id));
+
+    // Build consecutive party groups for the two-level header
+    const partyGroups: { party: string; color: string; polIds: number[] }[] =
+      [];
+    for (const polId of sortedPolIds) {
+      const party = stripSoftHyphen(polMap.get(polId)?.party ?? "");
+      const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const last = partyGroups[partyGroups.length - 1];
+      if (last && last.party === party) {
+        last.polIds.push(polId);
+      } else {
+        partyGroups.push({ party, color, polIds: [polId] });
+      }
+    }
+
     const yIds = pollsToShow.map((p) => String(p.poll_id));
     const yTopicFull = new Map(
       pollsToShow.map((p) => [String(p.poll_id), p.topic]),
@@ -86,16 +133,14 @@ export function VoteHeatmap({
       ]),
     );
 
-    // Ensure minimum column width when many politicians are selected
-    const totalWidth = Math.max(width, ML + selectedPolIds.length * COL_W + MR);
+    const totalWidth = Math.max(width, ML + sortedPolIds.length * COL_W + MR);
     const iW = totalWidth - ML - MR;
     const bodyHeight = ROW_H * pollsToShow.length;
 
-    // Body wrapper must match totalWidth so overflow-x: hidden doesn't clip cells
     if (bodyWrapRef.current)
       bodyWrapRef.current.style.width = `${totalWidth}px`;
 
-    const xScale = d3.scaleBand().domain(xLabels).range([0, iW]).padding(0.05);
+    const xScale = d3.scaleBand().domain(xDomain).range([0, iW]).padding(0.05);
     const yScale = d3
       .scaleBand()
       .domain(yIds)
@@ -104,25 +149,61 @@ export function VoteHeatmap({
 
     const tooltip = d3.select(tooltipRef.current!);
 
-    // ── Header SVG: x-axis labels (sticky) ──────────────────────────────────
+    // ── Header SVG: two-level x-axis (party band + member labels) ───────────
     const headerSvg = d3.select(headerSvgRef.current);
     headerSvg.selectAll("*").remove();
     headerSvg.attr("width", totalWidth).attr("height", HEADER_H);
 
-    // Axis placed at bottom of header so rotated labels extend upward into the header area
-    headerSvg
+    const headerG = headerSvg
       .append("g")
-      .attr("transform", `translate(${ML}, ${HEADER_H})`)
-      .call(d3.axisTop(xScale).tickSize(0))
-      .call((ax) => ax.select(".domain").remove())
-      .call((ax) => {
-        styleAxisText(ax);
-        ax.selectAll("text")
-          .attr("transform", "rotate(-30)")
-          .attr("text-anchor", "start")
-          .attr("dy", "-0.5em")
-          .attr("dx", "0.5em");
-      });
+      .attr("transform", `translate(${ML}, 0)`);
+
+    // Top band: colored rect per party group, clipped to avoid last pixel overlap
+    for (const group of partyGroups) {
+      const firstX = xScale(String(group.polIds[0])) ?? 0;
+      const lastX = xScale(String(group.polIds[group.polIds.length - 1])) ?? 0;
+      const bandW = lastX + xScale.bandwidth() - firstX - 1;
+      const textColor = contrastColor(group.color);
+
+      headerG
+        .append("rect")
+        .attr("x", firstX)
+        .attr("y", 0)
+        .attr("width", bandW)
+        .attr("height", PARTY_BAND_H - 2)
+        .attr("rx", 3)
+        .attr("fill", group.color);
+
+      headerG
+        .append("text")
+        .attr("x", firstX + bandW / 2)
+        .attr("y", PARTY_BAND_H / 2 - 1)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("fill", textColor)
+        .attr("font-size", "10px")
+        .attr("font-weight", "600")
+        .attr("font-family", "sans-serif")
+        .text(group.party);
+    }
+
+    // Bottom row: "A. Lastname" label centered on each column
+    for (const polId of sortedPolIds) {
+      const pol = polMap.get(polId);
+      const label = pol ? abbreviateName(pol.name) : String(polId);
+      const x = (xScale(String(polId)) ?? 0) + xScale.bandwidth() / 2;
+
+      headerG
+        .append("text")
+        .attr("x", x)
+        .attr("y", PARTY_BAND_H + MEMBER_LABEL_H / 2 + 1)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("fill", "#374151")
+        .attr("font-size", "10px")
+        .attr("font-family", "sans-serif")
+        .text(label);
+    }
 
     // ── Body SVG: y-axis + cells ─────────────────────────────────────────────
     const bodySvg = d3.select(bodySvgRef.current);
@@ -160,12 +241,12 @@ export function VoteHeatmap({
     // Cells
     const g = bodySvg.append("g").attr("transform", `translate(${ML}, 0)`);
 
-    type Cell = { xIdx: number; pollId: number; answer: string };
+    type Cell = { polId: number; pollId: number; answer: string };
     const cells: Cell[] = [];
     pollsToShow.forEach((poll) => {
-      selectedPolIds.forEach((polId, xIdx) => {
+      sortedPolIds.forEach((polId) => {
         const answer = voteIndex.get(polId)?.get(poll.poll_id) ?? "no_show";
-        cells.push({ xIdx, pollId: poll.poll_id, answer });
+        cells.push({ polId, pollId: poll.poll_id, answer });
       });
     });
 
@@ -173,7 +254,7 @@ export function VoteHeatmap({
       .data(cells)
       .join("rect")
       .attr("class", "cell")
-      .attr("x", (d) => xScale(xLabels[d.xIdx]) ?? 0)
+      .attr("x", (d) => xScale(String(d.polId)) ?? 0)
       .attr("y", (d) => yScale(String(d.pollId)) ?? 0)
       .attr("width", xScale.bandwidth())
       .attr("height", yScale.bandwidth())
@@ -183,13 +264,17 @@ export function VoteHeatmap({
       .on("mousemove", (event, d) => {
         if (d.answer === "no_show") return;
         const meta = VOTE_META[d.answer as keyof typeof VOTE_META];
+        const pol = polMap.get(d.polId);
+        const name = pol ? pol.name : String(d.polId);
+        const party = pol ? stripSoftHyphen(pol.party) : "";
+        const topic = yTopicFull.get(String(d.pollId)) ?? "";
         const [px, py] = d3.pointer(event, containerRef.current!);
         tooltip
           .style("opacity", "1")
           .style("left", `${px + TOOLTIP_DX}px`)
           .style("top", `${py + TOOLTIP_DY}px`)
           .html(
-            `<b>${xLabels[d.xIdx]}</b><br/>${yTopicFull.get(String(d.pollId)) ?? ""}<br/>${meta.label}`,
+            `<b>${meta.label}</b><br/>${name} · ${party}<br/><span style="font-size:0.85em">${topic}</span>`,
           );
       })
       .on("mouseleave", () => tooltip.style("opacity", "0"));

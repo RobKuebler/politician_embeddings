@@ -23,6 +23,7 @@ import {
   GOVERNING_PARTIES,
   PARTY_COLORS,
   FALLBACK_COLOR,
+  VOTE_META,
 } from "@/lib/constants";
 
 /** Computes per-party cohesion (mean distance to centroid) and centroid positions. */
@@ -418,11 +419,7 @@ export default function VoteMapPage() {
                   <span
                     className="w-3 h-3 rounded-sm inline-block flex-shrink-0"
                     style={{
-                      background: {
-                        yes: "#46962B",
-                        no: "#E3000F",
-                        abstain: "#F5A623",
-                      }[k],
+                      background: VOTE_META[k].color,
                     }}
                   />
                   {{ yes: "Ja", no: "Nein", abstain: "Enthalten" }[k]}
