@@ -23,7 +23,7 @@ from .analysis.transforms import (
     compute_sex_counts,
     compute_title_counts,
 )
-from .cli import add_wahlperiode_argument, build_parser, configure_logging
+from .cli import add_period_argument, build_parser, configure_logging
 from .storage import DATA_DIR, OUTPUTS_DIR
 
 log = logging.getLogger(__name__)
@@ -142,7 +142,7 @@ def _pivot_to_json(
 
 
 def _export_sidejobs(
-    wahlperiode: int,
+    period: int,
     period_dir: Path,
     pols_df: pd.DataFrame,
     period_start: date,
@@ -217,13 +217,13 @@ def _export_sidejobs(
         )
 
     _write(
-        OUTPUT_DIR / f"sidejobs_{wahlperiode}.json",
+        OUTPUT_DIR / f"sidejobs_{period}.json",
         {"jobs": jobs, "coverage": {"total": n_total, "with_amount": n_with}},
     )
 
 
 def _export_party_profile(
-    wahlperiode: int, pols_df: pd.DataFrame, period_start: date
+    period: int, pols_df: pd.DataFrame, period_start: date
 ) -> None:
     """Build and write party_profile JSON for one period.
 
@@ -248,7 +248,7 @@ def _export_party_profile(
     )
 
     _write(
-        OUTPUT_DIR / f"party_profile_{wahlperiode}.json",
+        OUTPUT_DIR / f"party_profile_{period}.json",
         {
             "parties": party_labels_ordered,
             "age": age_df.filter(["name", "party_label", "alter"])
@@ -267,19 +267,19 @@ def _export_party_profile(
     )
 
 
-def export_period(wahlperiode: int, period_start: date, period_end: date) -> bool:
+def export_period(period: int, period_start: date, period_end: date) -> bool:
     """Export all JSON files for one parliament period.
 
     Returns False if embeddings are missing (period skipped).
     """
-    period_dir = DATA_DIR / str(wahlperiode)
-    emb_path = OUTPUTS_DIR / f"politician_embeddings_{wahlperiode}.csv"
+    period_dir = DATA_DIR / str(period)
+    emb_path = OUTPUTS_DIR / f"politician_embeddings_{period}.csv"
 
     if not (period_dir / "politicians.csv").exists():
-        log.warning("No politicians.csv for Wahlperiode %d, skipping", wahlperiode)
+        log.warning("No politicians.csv for period %d, skipping", period)
         return False
     if not emb_path.exists():
-        log.warning("No embeddings for Wahlperiode %d, skipping", wahlperiode)
+        log.warning("No embeddings for period %d, skipping", period)
         return False
 
     pols_df = pd.read_csv(period_dir / "politicians.csv").assign(
@@ -288,7 +288,7 @@ def export_period(wahlperiode: int, period_start: date, period_end: date) -> boo
 
     # ── politicians ───────────────────────────────────────────────────────────
     _write(
-        OUTPUT_DIR / f"politicians_{wahlperiode}.json",
+        OUTPUT_DIR / f"politicians_{period}.json",
         pols_df.filter(
             [
                 "politician_id",
@@ -306,15 +306,13 @@ def export_period(wahlperiode: int, period_start: date, period_end: date) -> boo
     # ── embeddings ────────────────────────────────────────────────────────────
     emb_df = pd.read_csv(emb_path)
     if "z" in emb_df.columns:
-        log.warning(
-            "3D embeddings detected for Wahlperiode %d; exporting 2D only", wahlperiode
-        )
+        log.warning("3D embeddings detected for period %d; exporting 2D only", period)
     if "politician_id" not in emb_df.columns:
         emb_df = emb_df.merge(
             pols_df.filter(["name", "politician_id"]), on="name", how="left"
         )
     _write(
-        OUTPUT_DIR / f"embeddings_{wahlperiode}.json",
+        OUTPUT_DIR / f"embeddings_{period}.json",
         {
             "dimensions": 2,
             "data": emb_df.filter(["politician_id", "x", "y"]).to_dict("records"),
@@ -324,14 +322,14 @@ def export_period(wahlperiode: int, period_start: date, period_end: date) -> boo
     # ── votes ─────────────────────────────────────────────────────────────────
     votes_df = pd.read_csv(period_dir / "votes.csv")
     _write(
-        OUTPUT_DIR / f"votes_{wahlperiode}.json",
+        OUTPUT_DIR / f"votes_{period}.json",
         votes_df.filter(["politician_id", "poll_id", "answer"]).to_dict("records"),
     )
 
     # ── polls ─────────────────────────────────────────────────────────────────
     polls_df = pd.read_csv(period_dir / "polls.csv")
     _write(
-        OUTPUT_DIR / f"polls_{wahlperiode}.json",
+        OUTPUT_DIR / f"polls_{period}.json",
         polls_df.filter(["poll_id", "topic"]).to_dict("records"),
     )
 
@@ -344,69 +342,69 @@ def export_period(wahlperiode: int, period_start: date, period_end: date) -> boo
         ),
         exclude_party="fraktionslos",
     )
-    _write(OUTPUT_DIR / f"cohesion_{wahlperiode}.json", coh_df.to_dict("records"))
+    _write(OUTPUT_DIR / f"cohesion_{period}.json", coh_df.to_dict("records"))
 
     # ── sidejobs ──────────────────────────────────────────────────────────────
-    _export_sidejobs(wahlperiode, period_dir, pols_df, period_start, period_end)
+    _export_sidejobs(period, period_dir, pols_df, period_start, period_end)
 
     # ── party profile ─────────────────────────────────────────────────────────
-    _export_party_profile(wahlperiode, pols_df, period_start)
+    _export_party_profile(period, pols_df, period_start)
 
-    log.info("Exported Wahlperiode %d", wahlperiode)
+    log.info("Exported period %d", period)
     return True
 
 
-def export_party_word_freq(wahlperiode: int) -> None:
+def export_party_word_freq(period: int) -> None:
     """Export party_word_freq.csv to JSON for the frontend.
 
-    Output: frontend/public/data/party_word_freq_{wahlperiode}.json
+    Output: frontend/public/data/party_word_freq_{period}.json
     Format: {fraktion: [{wort, tfidf, rang}, ...], ...}
     """
-    path = DATA_DIR / str(wahlperiode) / "party_word_freq.csv"
+    path = DATA_DIR / str(period) / "party_word_freq.csv"
     if not path.exists():
         log.warning(
-            "party_word_freq.csv für Wahlperiode %d nicht gefunden, übersprungen.",
-            wahlperiode,
+            "party_word_freq.csv not found for period %d, skipping.",
+            period,
         )
         return
     df = pd.read_csv(path)
     result = {}
     for fraktion, group in df.groupby("fraktion"):
         result[fraktion] = group[["wort", "tfidf", "rang"]].to_dict(orient="records")
-    _write(OUTPUT_DIR / f"party_word_freq_{wahlperiode}.json", result)
+    _write(OUTPUT_DIR / f"party_word_freq_{period}.json", result)
 
 
-def export_party_speech_stats(wahlperiode: int) -> None:
+def export_party_speech_stats(period: int) -> None:
     """Export party_speech_stats.csv to JSON for the frontend.
 
-    Output: frontend/public/data/party_speech_stats_{wahlperiode}.json
+    Output: frontend/public/data/party_speech_stats_{period}.json
     Format: [{fraktion, redner_id, vorname, nachname, anzahl_reden,
     wortanzahl_gesamt}, ...]
     """
-    path = DATA_DIR / str(wahlperiode) / "party_speech_stats.csv"
+    path = DATA_DIR / str(period) / "party_speech_stats.csv"
     if not path.exists():
         log.warning(
-            "party_speech_stats.csv für Wahlperiode %d nicht gefunden, übersprungen.",
-            wahlperiode,
+            "party_speech_stats.csv not found for period %d, skipping.",
+            period,
         )
         return
     df = pd.read_csv(path)
     _write(
-        OUTPUT_DIR / f"party_speech_stats_{wahlperiode}.json",
+        OUTPUT_DIR / f"party_speech_stats_{period}.json",
         df.to_dict(orient="records"),
     )
 
 
-def _period_is_exportable(wahlperiode: int) -> bool:
+def _period_is_exportable(period: int) -> bool:
     """Return whether a period has the required export inputs."""
-    period_dir = DATA_DIR / str(wahlperiode)
-    emb_path = OUTPUTS_DIR / f"politician_embeddings_{wahlperiode}.csv"
+    period_dir = DATA_DIR / str(period)
+    emb_path = OUTPUTS_DIR / f"politician_embeddings_{period}.csv"
     return (period_dir / "politicians.csv").exists() and emb_path.exists()
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = build_parser("Exportiere JSON-Dateien für das Frontend.")
-    add_wahlperiode_argument(parser)
+    add_period_argument(parser)
     return parser.parse_args(argv)
 
 
@@ -416,40 +414,40 @@ def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
 
     periods_df = pd.read_csv(DATA_DIR / "periods.csv")
-    if args.wahlperiode is not None and args.wahlperiode not in set(
+    if args.period is not None and args.period not in set(
         periods_df["bundestag_number"].astype(int)
     ):
-        msg = f"Wahlperiode {args.wahlperiode} nicht in periods.csv gefunden."
+        msg = f"Period {args.period} not found in periods.csv."
         raise SystemExit(msg)
 
     available: list[dict] = []
 
     for _, row in periods_df.iterrows():
-        wahlperiode = int(row["bundestag_number"])
-        period_dir = DATA_DIR / str(wahlperiode)
+        period = int(row["bundestag_number"])
+        period_dir = DATA_DIR / str(period)
         p_start = date.fromisoformat(str(row["start_date"]))
         p_end = date.fromisoformat(str(row["end_date"]))
 
-        if _period_is_exportable(wahlperiode):
+        if _period_is_exportable(period):
             available.append(
                 {
-                    "wahlperiode": wahlperiode,
-                    "label": str(row.get("label", f"Wahlperiode {wahlperiode}")),
+                    "wahlperiode": period,
+                    "label": str(row.get("label", f"Wahlperiode {period}")),
                     "has_data": True,
                 }
             )
 
-        if args.wahlperiode is not None and wahlperiode != args.wahlperiode:
+        if args.period is not None and period != args.period:
             continue
 
-        if export_period(wahlperiode, p_start, p_end):
-            export_party_word_freq(wahlperiode)
-            export_party_speech_stats(wahlperiode)
+        if export_period(period, p_start, p_end):
+            export_party_word_freq(period)
+            export_party_speech_stats(period)
             continue
 
         if (period_dir / "politicians.csv").exists():
-            export_party_word_freq(wahlperiode)
-            export_party_speech_stats(wahlperiode)
+            export_party_word_freq(period)
+            export_party_speech_stats(period)
 
     _write(OUTPUT_DIR / "periods.json", available)
     log.info("Done. Exported %d periods.", len(available))

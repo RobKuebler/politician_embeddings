@@ -932,8 +932,8 @@ def test_upsert_periods_null_end_date_does_not_crash(
         ],
     )
 
-    wahlperiode = src.fetch.abgeordnetenwatch.upsert_periods()
-    assert wahlperiode == 16  # FIRST_BUNDESTAG_NUMBER + 0 (only one period in mock)
+    period = src.fetch.abgeordnetenwatch.upsert_periods()
+    assert period == 16  # FIRST_BUNDESTAG_NUMBER + 0 (only one period in mock)
 
 
 # ─── fetch_all_v2: null data field ────────────────────────────────────────────

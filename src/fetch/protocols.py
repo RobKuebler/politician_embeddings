@@ -1,11 +1,11 @@
-"""Fetch Plenarprotokolle from the DIP Bundestag API.
+"""Fetch plenary protocols from the DIP Bundestag API.
 
-Writes CSV to data/{wahlperiode}/dip_plenarprotokolle.csv.
+Writes CSV to data/{period}/dip_plenary_protocols.csv.
 Upsert: only new protocol IDs are appended.
 
 Usage:
-    uv run python -m src.fetch.protokolle --wahlperiode 20
-    uv run python -m src.fetch.protokolle --wahlperiode 20 --limit 3
+    uv run python -m src.fetch.protocols --period 20
+    uv run python -m src.fetch.protocols --period 20 --limit 3
 """
 
 import argparse
@@ -20,12 +20,12 @@ from pathlib import Path
 import pandas as pd
 
 from ..cli import (
-    add_wahlperiode_argument,
+    add_period_argument,
     build_parser,
     configure_logging,
     write_github_output,
 )
-from ..storage import DATA_DIR, current_wahlperiode
+from ..storage import DATA_DIR, current_period
 
 log = logging.getLogger(__name__)
 
@@ -106,8 +106,8 @@ def fetch_dip_all(endpoint: str, params: dict | None = None) -> list:
     api_key = os.environ.get("DIP_API_KEY")
     if not api_key:
         msg = (
-            "DIP_API_KEY fehlt. Bitte als Umgebungsvariable "
-            "oder GitHub Secret setzen."
+            "DIP_API_KEY is missing. Set it as an environment variable "
+            "or GitHub Actions secret."
         )
         raise RuntimeError(msg)
 
@@ -143,7 +143,7 @@ def fetch_dip_all(endpoint: str, params: dict | None = None) -> list:
 
 
 def _doc_to_row(doc: dict) -> dict:
-    """Convert a single DIP plenarprotokoll document to a flat CSV row dict."""
+    """Convert a single DIP plenary protocol document to a flat CSV row dict."""
     fundstelle = doc.get("fundstelle") or {}
     # Sitzungsnummer aus "20/214" → 214
     dok_nr = doc.get("dokumentnummer", "")
@@ -167,12 +167,12 @@ def _doc_to_row(doc: dict) -> dict:
     }
 
 
-def fetch_dip_plenarprotokolle(
-    wahlperiode: int,
+def fetch_dip_protocols(
+    period: int,
     out_dir: Path,
     limit: int | None = None,
 ) -> pd.DataFrame:
-    """Fetch BT Plenarprotokolle for a Wahlperiode, upsert to CSV.
+    """Fetch BT plenary protocols for a period and upsert them to CSV.
 
     Reads existing CSV (if any) to determine which IDs are already stored
     and which date to use as API start filter. Only new records are appended.
@@ -181,7 +181,7 @@ def fetch_dip_plenarprotokolle(
     where it left off; next run re-fetches from f.datum.start but correctly
     skips already-known IDs.
     """
-    csv_path = Path(out_dir) / "dip_plenarprotokolle.csv"
+    csv_path = Path(out_dir) / "dip_plenary_protocols.csv"
 
     existing_ids: set[int] = set()
     latest_datum: str | None = None
@@ -196,7 +196,7 @@ def fetch_dip_plenarprotokolle(
             latest_datum,
         )
 
-    api_params: dict = {"f.wahlperiode": wahlperiode, "f.herausgeber": "BT"}
+    api_params: dict = {"f.wahlperiode": period, "f.herausgeber": "BT"}
     if latest_datum:
         api_params["f.datum.start"] = latest_datum
 
@@ -230,7 +230,7 @@ def fetch_dip_plenarprotokolle(
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = build_parser("Lade neue Bundestags-Plenarprotokolle aus dem DIP API.")
-    add_wahlperiode_argument(parser)
+    add_period_argument(parser)
     parser.add_argument(
         "--limit",
         type=int,
@@ -245,20 +245,21 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    wahlperiode = args.wahlperiode or current_wahlperiode()
-    out_dir = DATA_DIR / str(wahlperiode)
+    period = args.period or current_period()
+    out_dir = DATA_DIR / str(period)
 
-    log.info("Fetching Plenarprotokolle for Wahlperiode %d…", wahlperiode)
-    new_df = fetch_dip_plenarprotokolle(wahlperiode, out_dir, limit=args.limit)
+    log.info("Fetching plenary protocols for period %d...", period)
+    new_df = fetch_dip_protocols(period, out_dir, limit=args.limit)
     if new_df.empty:
-        log.info("Nichts Neues.")
-        write_github_output(changed=False, wahlperiode=wahlperiode)
+        log.info("No new protocols.")
+        write_github_output(changed=False, period=period, wahlperiode=period)
     else:
-        log.info("%d neue Protokolle gespeichert nach %s", len(new_df), out_dir)
+        log.info("Saved %d new protocols to %s", len(new_df), out_dir)
         write_github_output(
             changed=True,
             fetched_protocols=len(new_df),
-            wahlperiode=wahlperiode,
+            period=period,
+            wahlperiode=period,
         )
 
 

@@ -1,12 +1,12 @@
 """Compute TF-IDF word statistics and speech stats from speeches.csv.
 
-Reads data/{wahlperiode}/speeches.csv (written by parse/protokolle.py) and
+Reads data/{period}/speeches.csv (written by parse/protocols.py) and
 produces two CSVs:
   - party_word_freq.csv: top-N TF-IDF words per Fraktion
   - party_speech_stats.csv: speech count + word count per MdB
 
 Usage:
-    uv run python -m src.analysis.word_stats --wahlperiode 20
+    uv run python -m src.analysis.word_stats --period 20
 """
 
 import argparse
@@ -18,8 +18,8 @@ from typing import TYPE_CHECKING
 
 import pandas as pd
 
-from ..cli import add_wahlperiode_argument, build_parser, configure_logging
-from ..storage import DATA_DIR, current_wahlperiode
+from ..cli import add_period_argument, build_parser, configure_logging
+from ..storage import DATA_DIR, current_period
 
 if TYPE_CHECKING:
     import spacy as spacy_type
@@ -459,12 +459,12 @@ def fetch_word_stats(out_dir: Path, top_n: int = 100) -> None:
     """
     speeches_path = Path(out_dir) / "speeches.csv"
     if not speeches_path.exists():
-        msg = f"{speeches_path} nicht gefunden. Erst parse/protokolle.py ausfuehren."
+        msg = f"{speeches_path} not found. Run parse/protocols.py first."
         raise SystemExit(msg)
 
     df = pd.read_csv(speeches_path)
     df = df[~df["fraktion"].isin({"Unbekannt", "fraktionslos"})]
-    log.info("Geladene Reden: %d", len(df))
+    log.info("Loaded speeches: %d", len(df))
 
     party_texts = (
         df.groupby("fraktion")["text"]
@@ -474,17 +474,17 @@ def fetch_word_stats(out_dir: Path, top_n: int = 100) -> None:
     word_freq_df = compute_tfidf(party_texts, stopwords=_STOPWORDS, top_n=top_n)
     word_freq_path = Path(out_dir) / "party_word_freq.csv"
     word_freq_df.to_csv(word_freq_path, index=False)
-    log.info("party_word_freq.csv: %d Eintraege", len(word_freq_df))
+    log.info("party_word_freq.csv: %d entries", len(word_freq_df))
 
     speech_stats_df = compute_speech_stats(df)
     stats_path = Path(out_dir) / "party_speech_stats.csv"
     speech_stats_df.to_csv(stats_path, index=False)
-    log.info("party_speech_stats.csv: %d MdBs", len(speech_stats_df))
+    log.info("party_speech_stats.csv: %d MPs", len(speech_stats_df))
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = build_parser("Berechne TF-IDF-Wortstatistiken und Redestatistiken.")
-    add_wahlperiode_argument(parser)
+    add_period_argument(parser)
     parser.add_argument(
         "--top-n",
         type=int,
@@ -499,12 +499,12 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    wahlperiode = args.wahlperiode or current_wahlperiode()
-    out_dir = DATA_DIR / str(wahlperiode)
+    period = args.period or current_period()
+    out_dir = DATA_DIR / str(period)
 
-    log.info("Wahlperiode %d…", wahlperiode)
+    log.info("Period %d...", period)
     fetch_word_stats(out_dir, top_n=args.top_n)
-    log.info("Fertig.")
+    log.info("Done.")
 
 
 if __name__ == "__main__":

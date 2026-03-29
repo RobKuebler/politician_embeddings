@@ -1,11 +1,11 @@
-"""Tests für src/parse_protokolle.py."""
+"""Tests for src/parse/protocols.py."""
 
 from pathlib import Path
 
 import pandas as pd
 import pytest
 
-import src.parse.protokolle as pp
+import src.parse.protocols as pp
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -102,7 +102,7 @@ def test_parse_sitzung_fehlende_fraktion_ist_fraktionslos(xml_file):
 
 def test_parse_alle_sitzungen_kombiniert(tmp_path):
     """Mehrere XMLs werden kombiniert in speeches.csv geschrieben."""
-    xml_dir = tmp_path / "plenarprotokolle"
+    xml_dir = tmp_path / "plenary_protocols"
     xml_dir.mkdir()
     for nr in [1, 2]:
         xml = MINIMAL_XML.replace('sitzung-nr="3"', f'sitzung-nr="{nr}"')
@@ -172,8 +172,8 @@ def test_parse_sitzung_rede_ohne_redetext_wird_ignoriert(tmp_path):
 
 
 def test_parse_alle_sitzungen_leeres_verzeichnis(tmp_path):
-    """Leeres plenarprotokolle/-Verzeichnis → leerer DataFrame."""
-    xml_dir = tmp_path / "plenarprotokolle"
+    """Empty plenary_protocols/ directory -> empty DataFrame."""
+    xml_dir = tmp_path / "plenary_protocols"
     xml_dir.mkdir()
     df = pp.parse_alle_sitzungen(tmp_path)
     assert len(df) == 0

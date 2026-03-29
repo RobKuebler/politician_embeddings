@@ -12,8 +12,8 @@ DATA_DIR = Path(__file__).parents[1] / "data"
 OUTPUTS_DIR = Path(__file__).parents[1] / "outputs"
 
 
-def current_wahlperiode() -> int:
-    """Return the wahlperiode (bundestag_number) of the currently active legislature.
+def current_period() -> int:
+    """Return the bundestag_number of the currently active legislature.
 
     Reads periods.csv and finds the period whose date range contains today.
     Falls back to the latest known period if today falls outside all known ranges
@@ -28,22 +28,27 @@ def current_wahlperiode() -> int:
     return int(row["bundestag_number"])
 
 
-def period_id_for(wahlperiode: int) -> int:
-    """Return the abgeordnetenwatch API period_id for a given wahlperiode.
+def current_wahlperiode() -> int:
+    """Backward-compatible wrapper for the old helper name."""
+    return current_period()
+
+
+def period_id_for(period: int) -> int:
+    """Return the abgeordnetenwatch API period_id for a given period.
 
     Reads periods.csv. Used internally by fetch/abgeordnetenwatch.py for API calls.
     """
     df = pd.read_csv(DATA_DIR / "periods.csv")
-    match = df[df["bundestag_number"] == wahlperiode]
+    match = df[df["bundestag_number"] == period]
     if match.empty:
-        msg = f"Wahlperiode {wahlperiode} nicht in periods.csv gefunden."
+        msg = f"Period {period} not found in periods.csv."
         raise ValueError(msg)
     return int(match.iloc[0]["period_id"])
 
 
-def load_data(wahlperiode: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Load votes, politicians and polls CSVs for a given wahlperiode."""
-    period_dir = DATA_DIR / str(wahlperiode)
+def load_data(period: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Load votes, politicians and polls CSVs for a given period."""
+    period_dir = DATA_DIR / str(period)
     required_paths = {
         "votes.csv": period_dir / "votes.csv",
         "politicians.csv": period_dir / "politicians.csv",
@@ -53,13 +58,13 @@ def load_data(wahlperiode: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFram
     if missing:
         missing_list = ", ".join(missing)
         msg = (
-            f"Fehlende Eingabedateien für Wahlperiode {wahlperiode}: {missing_list}. "
-            "Zuerst `python -m src.fetch.abgeordnetenwatch` ausführen."
+            f"Missing input files for period {period}: {missing_list}. "
+            "Run `python -m src.fetch.abgeordnetenwatch` first."
         )
         log.error(msg)
         raise SystemExit(msg)
 
-    log.info("Loading data for Wahlperiode %d...", wahlperiode)
+    log.info("Loading data for period %d...", period)
     return (
         pd.read_csv(required_paths["votes.csv"]),
         pd.read_csv(required_paths["politicians.csv"]),
@@ -71,15 +76,23 @@ def save_embeddings(
     model: Any,
     p_df: pd.DataFrame,
     p_ids: np.ndarray,
-    wahlperiode: int,
+    period: int | None = None,
+    *,
+    wahlperiode: int | None = None,
 ) -> None:
     """Export embeddings to CSV with politician metadata. Columns: x, y (z for 3D)."""
+    if period is None:
+        period = wahlperiode
+    if period is None:
+        msg = "save_embeddings() requires a period."
+        raise TypeError(msg)
+
     weights = model.p_embed.weight.detach().numpy()
     n_dims = weights.shape[1]
     coords = {"x": weights[:, 0], "y": weights[:, 1]}
     if n_dims == 3:
         coords["z"] = weights[:, 2]
     emb_df = pd.DataFrame({"politician_id": p_ids, **coords})
-    path = OUTPUTS_DIR / f"politician_embeddings_{wahlperiode}.csv"
+    path = OUTPUTS_DIR / f"politician_embeddings_{period}.csv"
     p_df.merge(emb_df, on="politician_id").to_csv(path, index=False)
     log.info("Embeddings saved to %s", path)

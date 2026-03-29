@@ -1,10 +1,10 @@
-"""Parse Plenarprotokoll XMLs and extract speeches to speeches.csv.
+"""Parse plenary protocol XMLs and extract speeches to speeches.csv.
 
-Reads all *.xml from data/{wahlperiode}/plenarprotokolle/ and writes
-data/{wahlperiode}/speeches.csv (gitignored — can be large).
+Reads all *.xml from data/{period}/plenary_protocols/ and writes
+data/{period}/speeches.csv (gitignored — can be large).
 
 Usage:
-    uv run python -m src.parse.protokolle --wahlperiode 20
+    uv run python -m src.parse.protocols --period 20
 """
 
 import argparse
@@ -15,8 +15,8 @@ from xml.etree import ElementTree as ET
 
 import pandas as pd
 
-from ..cli import add_wahlperiode_argument, build_parser, configure_logging
-from ..storage import DATA_DIR, current_wahlperiode
+from ..cli import add_period_argument, build_parser, configure_logging
+from ..storage import DATA_DIR, current_period
 
 log = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ def _normalize_fraktion(raw: str | None) -> str:
         return _FRAKTION_MAP[normalized]
     if normalized not in _FRAKTION_MAP and re.search(r"[\n\u00a0]", raw):
         log.warning(
-            "Unbekannte Fraktion nach Normalisierung: %r (roh: %r)", normalized, raw
+            "Unknown faction after normalization: %r (raw: %r)", normalized, raw
         )
     return normalized
 
@@ -71,7 +71,7 @@ _COLS = [
 
 
 def parse_sitzung(xml_path: Path) -> list[dict]:
-    """Parse one Plenarprotokoll XML and return list of speech dicts.
+    """Parse one plenary protocol XML and return a list of speech dicts.
 
     Each dict corresponds to one <rede> element. Only paragraphs with
     klasse in _SPEECH_KLASSEN are included in the text (kommentar etc. excluded).
@@ -79,7 +79,7 @@ def parse_sitzung(xml_path: Path) -> list[dict]:
     root = ET.parse(xml_path).getroot()  # noqa: S314 — trusted local files
     sitzung_nr_raw = root.get("sitzung-nr")
     if sitzung_nr_raw is None:
-        log.warning("Kein sitzung-nr in %s, verwende 0", xml_path.name)
+        log.warning("No sitzung-nr in %s, using 0", xml_path.name)
     sitzungsnr = int(sitzung_nr_raw or 0)
     rows = []
 
@@ -128,35 +128,33 @@ def parse_sitzung(xml_path: Path) -> list[dict]:
 
 
 def parse_alle_sitzungen(out_dir: Path) -> pd.DataFrame:
-    """Parse all XMLs in out_dir/plenarprotokolle/ and write speeches.csv.
+    """Parse all XMLs in out_dir/plenary_protocols/ and write speeches.csv.
 
     Returns the combined DataFrame. Always rewrites speeches.csv from scratch
     (XMLs are the source of truth).
     """
-    xml_dir = Path(out_dir) / "plenarprotokolle"
+    xml_dir = Path(out_dir) / "plenary_protocols"
     xml_files = sorted(xml_dir.glob("*.xml"))
     if not xml_files:
-        log.warning("Keine XMLs in %s gefunden.", xml_dir)
+        log.warning("No XML files found in %s.", xml_dir)
         return pd.DataFrame(columns=_COLS)
 
     all_rows: list[dict] = []
     for xml_path in xml_files:
         rows = parse_sitzung(xml_path)
         all_rows.extend(rows)
-        log.info("%s: %d Reden extrahiert", xml_path.name, len(rows))
+        log.info("%s: extracted %d speeches", xml_path.name, len(rows))
 
     df = pd.DataFrame(all_rows, columns=_COLS)
     csv_path = Path(out_dir) / "speeches.csv"
     df.to_csv(csv_path, index=False)
-    log.info(
-        "speeches.csv geschrieben: %d Reden aus %d Sitzungen", len(df), len(xml_files)
-    )
+    log.info("wrote speeches.csv: %d speeches from %d sessions", len(df), len(xml_files))
     return df
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = build_parser("Parse XML-Protokolle und extrahiere Reden.")
-    add_wahlperiode_argument(parser)
+    add_period_argument(parser)
     return parser.parse_args(argv)
 
 
@@ -164,12 +162,12 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    wahlperiode = args.wahlperiode or current_wahlperiode()
-    out_dir = DATA_DIR / str(wahlperiode)
+    period = args.period or current_period()
+    out_dir = DATA_DIR / str(period)
 
-    log.info("Wahlperiode %d…", wahlperiode)
+    log.info("Period %d...", period)
     df = parse_alle_sitzungen(out_dir)
-    log.info("Fertig. %d Reden.", len(df))
+    log.info("Done. %d speeches.", len(df))
 
 
 if __name__ == "__main__":

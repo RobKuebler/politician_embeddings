@@ -193,7 +193,7 @@ def test_save_embeddings_2d(tmp_path, monkeypatch):
         }
     )
 
-    save_embeddings(model, p_df, np.array([10, 20, 30]), wahlperiode=999)
+    save_embeddings(model, p_df, np.array([10, 20, 30]), period=999)
 
     df = pd.read_csv(tmp_path / "politician_embeddings_999.csv")
     assert {"politician_id", "name", "party", "x", "y"} <= set(df.columns)
@@ -212,7 +212,7 @@ def test_save_embeddings_3d(tmp_path, monkeypatch):
         {"politician_id": [1, 2], "name": ["A", "B"], "party": ["X", "Y"]}
     )
 
-    save_embeddings(model, p_df, np.array([1, 2]), wahlperiode=1)
+    save_embeddings(model, p_df, np.array([1, 2]), period=1)
 
     df = pd.read_csv(tmp_path / "politician_embeddings_1.csv")
     assert "z" in df.columns

@@ -30,29 +30,29 @@ jobs:
       - name: Install spaCy German model
         run: uv run python -m spacy download de_core_news_sm
 
-      - name: Fetch new Plenarprotokolle
+      - name: Fetch new plenary protocols
         id: fetch_protocols
-        run: uv run python -m src.fetch.protokolle
+        run: uv run python -m src.fetch.protocols
 
       # Cache key includes the CSV of known protocol IDs — changes when new
       # protocols are fetched, causing the cache to be updated after the run.
       # restore-keys ensures existing XMLs are reused even when key changes.
       # speeches.csv is not cached — parsing all XMLs takes ~3s and is cheaper
       # than storing/restoring a 26 MB file.
-      - name: Cache Plenarprotokoll XMLs
+      - name: Cache plenary protocol XMLs
         uses: actions/cache@v4
         with:
-          path: data/*/plenarprotokolle/
-          key: plenarprotokolle-${{ hashFiles('data/*/dip_plenarprotokolle.csv') }}
-          restore-keys: plenarprotokolle-
+          path: data/*/plenary_protocols/
+          key: plenary-protocols-${{ hashFiles('data/*/dip_plenary_protocols.csv') }}
+          restore-keys: plenary-protocols-
 
       - name: Download new XMLs
         id: fetch_xml
-        run: uv run python -m src.fetch.protokoll_xml
+        run: uv run python -m src.fetch.protocol_xml
 
       - name: Parse speeches from XMLs
         if: steps.fetch_protocols.outputs.changed == 'true' || steps.fetch_xml.outputs.changed == 'true'
-        run: uv run python -m src.parse.protokolle
+        run: uv run python -m src.parse.protocols
 
       - name: Compute TF-IDF word stats
         if: steps.fetch_protocols.outputs.changed == 'true' || steps.fetch_xml.outputs.changed == 'true'

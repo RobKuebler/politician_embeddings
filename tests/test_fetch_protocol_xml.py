@@ -1,17 +1,17 @@
-"""Tests für src/fetch_protokoll_xml.py."""
+"""Tests for src/fetch/protocol_xml.py."""
 
 from pathlib import Path
 
 import pandas as pd
 import pytest
 
-import src.fetch.protokoll_xml as fxml
+import src.fetch.protocol_xml as fxml
 
 
 def _make_csv(tmp_path: Path, rows: list[dict]) -> Path:
-    """Schreibt eine minimale dip_plenarprotokolle.csv."""
+    """Writes a minimal dip_plenary_protocols.csv."""
     df = pd.DataFrame(rows)
-    p = tmp_path / "dip_plenarprotokolle.csv"
+    p = tmp_path / "dip_plenary_protocols.csv"
     df.to_csv(p, index=False)
     return p
 
@@ -52,7 +52,7 @@ def test_curl_download_wirft_bei_fehler(tmp_path, monkeypatch):
 
 
 # ---------------------------------------------------------------------------
-# fetch_protokoll_xmls
+# fetch_protocol_xmls
 # ---------------------------------------------------------------------------
 
 
@@ -73,15 +73,15 @@ def test_erstlauf_laedt_alle(tmp_path, monkeypatch):
         path.write_text("<x/>", encoding="utf-8")
 
     monkeypatch.setattr(fxml, "_curl_download", fake_download)
-    count = fxml.fetch_protokoll_xmls(20, tmp_path)
+    count = fxml.fetch_protocol_xmls(20, tmp_path)
 
     assert count == 2
     assert set(downloaded) == {
         "https://example.com/001.xml",
         "https://example.com/002.xml",
     }
-    assert (tmp_path / "plenarprotokolle" / "001.xml").exists()
-    assert (tmp_path / "plenarprotokolle" / "002.xml").exists()
+    assert (tmp_path / "plenary_protocols" / "001.xml").exists()
+    assert (tmp_path / "plenary_protocols" / "002.xml").exists()
 
 
 def test_upsert_ueberspringt_vorhandene(tmp_path, monkeypatch):
@@ -93,7 +93,7 @@ def test_upsert_ueberspringt_vorhandene(tmp_path, monkeypatch):
             {"sitzungsnummer": 2, "xml_url": "https://example.com/002.xml"},
         ],
     )
-    xml_dir = tmp_path / "plenarprotokolle"
+    xml_dir = tmp_path / "plenary_protocols"
     xml_dir.mkdir()
     (xml_dir / "001.xml").write_text("<existing/>", encoding="utf-8")
 
@@ -104,7 +104,7 @@ def test_upsert_ueberspringt_vorhandene(tmp_path, monkeypatch):
         path.write_text("<x/>", encoding="utf-8")
 
     monkeypatch.setattr(fxml, "_curl_download", fake_download)
-    count = fxml.fetch_protokoll_xmls(20, tmp_path)
+    count = fxml.fetch_protocol_xmls(20, tmp_path)
 
     assert count == 1
     assert downloaded == ["https://example.com/002.xml"]
@@ -113,13 +113,13 @@ def test_upsert_ueberspringt_vorhandene(tmp_path, monkeypatch):
 
 
 def test_kein_csv_wirft_systemexit(tmp_path):
-    """Fehlendes dip_plenarprotokolle.csv → SystemExit."""
+    """Missing dip_plenary_protocols.csv -> SystemExit."""
     with pytest.raises(SystemExit):
-        fxml.fetch_protokoll_xmls(20, tmp_path)
+        fxml.fetch_protocol_xmls(20, tmp_path)
 
 
 def test_leere_xml_url_wird_uebersprungen(tmp_path, monkeypatch):
-    """Protokoll ohne xml_url wird übersprungen."""
+    """Protocol without xml_url is skipped."""
     _make_csv(
         tmp_path,
         [
@@ -135,7 +135,7 @@ def test_leere_xml_url_wird_uebersprungen(tmp_path, monkeypatch):
         path.write_text("<x/>", encoding="utf-8")
 
     monkeypatch.setattr(fxml, "_curl_download", fake_download)
-    count = fxml.fetch_protokoll_xmls(20, tmp_path)
+    count = fxml.fetch_protocol_xmls(20, tmp_path)
 
     assert count == 1
     assert len(downloaded) == 1

@@ -9,8 +9,9 @@ from pathlib import Path
 
 _LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 _LOG_DATE_FORMAT = "%H:%M:%S"
-_WAHLPERIODE_HELP = (
-    "Wahlperiode / Bundestag-Nummer, z.B. 20 oder 21. Ohne Angabe: aktuelle Periode."
+_PERIOD_HELP = (
+    "Bundestag period number, e.g. 20 or 21. "
+    "If omitted, the current period is used."
 )
 
 
@@ -34,14 +35,14 @@ def build_parser(description: str) -> argparse.ArgumentParser:
     )
 
 
-def add_wahlperiode_argument(parser: argparse.ArgumentParser) -> None:
-    """Add the shared --wahlperiode option."""
+def add_period_argument(parser: argparse.ArgumentParser) -> None:
+    """Add the shared period CLI option."""
     parser.add_argument(
-        "--wahlperiode",
+        "--period",
         type=int,
         default=None,
         metavar="INT",
-        help=_WAHLPERIODE_HELP,
+        help=_PERIOD_HELP,
     )
 
 

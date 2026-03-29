@@ -11,7 +11,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
 from ..cli import (
-    add_wahlperiode_argument,
+    add_period_argument,
     build_parser,
     configure_logging,
     write_github_output,
@@ -28,16 +28,16 @@ PAGE_SIZE = 1000  # API supports up to 1000 results per page
 FIRST_BUNDESTAG_NUMBER = 16
 
 
-def _period_id_for(wahlperiode: int) -> int:
-    """Return the abgeordnetenwatch API period_id for a given wahlperiode.
+def _period_id_for(period: int) -> int:
+    """Return the abgeordnetenwatch API period_id for a given period.
 
     Reads DATA_DIR/periods.csv. Isolated from src.storage so that monkeypatching
     DATA_DIR in this module is sufficient for tests.
     """
     df = pd.read_csv(DATA_DIR / "periods.csv")
-    match = df[df["bundestag_number"] == wahlperiode]
+    match = df[df["bundestag_number"] == period]
     if match.empty:
-        msg = f"Wahlperiode {wahlperiode} nicht in periods.csv gefunden."
+        msg = f"Period {period} not found in periods.csv."
         raise ValueError(msg)
     return int(match.iloc[0]["period_id"])
 
@@ -87,11 +87,11 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
 
 
 def upsert_periods() -> int:
-    """Fetch all Bundestag legislature periods, upsert periods.csv, return wahlperiode.
+    """Fetch all Bundestag legislature periods, upsert periods.csv, return period.
 
     Writes data/periods.csv (period_id, bundestag_number, label, start_date, end_date)
     so the dashboard can list all available periods dynamically without hardcoding.
-    Returns the bundestag_number (wahlperiode) of the currently active period.
+    Returns the bundestag_number of the currently active period.
     """
     raw = fetch_all_v2(
         "parliament-periods",
@@ -123,14 +123,14 @@ def upsert_periods() -> int:
     else:
         df_api.to_csv(path, index=False)
 
-    # Find current active period and return its wahlperiode (bundestag_number)
+    # Find current active period and return its bundestag_number.
     today = datetime.now(tz=UTC).date().isoformat()
     for i, p in enumerate(legislatures):
         end = p["end_date_period"] or "9999-12-31"
         if p["start_date_period"] <= today <= end:
-            wahlperiode = i + FIRST_BUNDESTAG_NUMBER
-            log.info("Current period: %s (wahlperiode=%d)", p["label"], wahlperiode)
-            return wahlperiode
+            period = i + FIRST_BUNDESTAG_NUMBER
+            log.info("Current period: %s (period=%d)", p["label"], period)
+            return period
     msg = "No active Bundestag legislative period found."
     raise RuntimeError(msg)
 
@@ -241,15 +241,15 @@ def find_polls_missing_votes(all_poll_ids: list[int], votes_path: Path) -> list[
     return [pid for pid in all_poll_ids if pid not in voted_ids]
 
 
-def upsert_polls(wahlperiode: int) -> tuple[pd.DataFrame, list]:
+def upsert_polls(period: int) -> tuple[pd.DataFrame, list]:
     """Fetch all polls from API, upsert into existing CSV.
 
     Returns (full polls df, list of new poll_ids that weren't in the CSV yet).
     New poll_ids are the ones we still need to fetch votes for.
     """
-    period_id = _period_id_for(wahlperiode)
+    period_id = _period_id_for(period)
     df_api = fetch_polls(period_id)
-    path = DATA_DIR / str(wahlperiode) / "polls.csv"
+    path = DATA_DIR / str(period) / "polls.csv"
 
     if not path.exists():
         df_api.to_csv(path, index=False)
@@ -335,7 +335,7 @@ def fetch_politician_details(politician_ids: list[int]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def upsert_politicians(wahlperiode: int) -> tuple[pd.DataFrame, dict]:
+def upsert_politicians(period: int) -> tuple[pd.DataFrame, dict]:
     """Fetch all politicians from API, upsert into existing CSV.
 
     Updates changed name/party fields, adds newly elected politicians, and
@@ -343,9 +343,9 @@ def upsert_politicians(wahlperiode: int) -> tuple[pd.DataFrame, dict]:
     where occupation is still unknown (incremental, no re-fetch).
     Returns (full politicians df, mandate_id -> politician_id mapping).
     """
-    period_id = _period_id_for(wahlperiode)
+    period_id = _period_id_for(period)
     df_api, mandate_to_politician = fetch_politicians(period_id)
-    path = DATA_DIR / str(wahlperiode) / "politicians.csv"
+    path = DATA_DIR / str(period) / "politicians.csv"
 
     if not path.exists():
         df_merged = df_api.copy()
@@ -406,7 +406,7 @@ def upsert_politicians(wahlperiode: int) -> tuple[pd.DataFrame, dict]:
             for k, v in mandate_to_politician.items()
         ]
     )
-    mandate_df.to_csv(DATA_DIR / str(wahlperiode) / "mandates.csv", index=False)
+    mandate_df.to_csv(DATA_DIR / str(period) / "mandates.csv", index=False)
 
     return df_merged, mandate_to_politician
 
@@ -535,7 +535,7 @@ def _parse_sidejob_dates(extra: str | None) -> tuple[str | None, str | None]:
     return _parse_date(text), None
 
 
-def upsert_sidejobs(wahlperiode: int, mandate_to_politician: dict[int, int]) -> None:
+def upsert_sidejobs(period: int, mandate_to_politician: dict[int, int]) -> None:
     """Fetch all sidejobs, filter to this period's mandates, and save to CSV.
 
     The sidejobs API has no parliament_period filter, so we fetch everything
@@ -598,20 +598,20 @@ def upsert_sidejobs(wahlperiode: int, mandate_to_politician: dict[int, int]) -> 
         "topics",
     ]
     df = pd.DataFrame(rows, columns=_cols)
-    path = DATA_DIR / str(wahlperiode) / "sidejobs.csv"
+    path = DATA_DIR / str(period) / "sidejobs.csv"
     df.to_csv(path, index=False)
-    log.info("Saved %d sidejobs for Wahlperiode %d.", len(df), wahlperiode)
+    log.info("Saved %d sidejobs for period %d.", len(df), period)
 
 
-def upsert_committees(wahlperiode: int, mandate_to_politician: dict[int, int]) -> None:
+def upsert_committees(period: int, mandate_to_politician: dict[int, int]) -> None:
     """Fetch committees and memberships for a period, save as CSVs.
 
     Produces two files:
       - committees.csv: committee_id, label, topics (pipe-separated)
       - committee_memberships.csv: politician_id, committee_id, role
     """
-    period_id = _period_id_for(wahlperiode)
-    log.info("Fetching committees for Wahlperiode %d...", wahlperiode)
+    period_id = _period_id_for(period)
+    log.info("Fetching committees for period %d...", period)
     raw_committees = fetch_all_v2("committees", params={"field_legislature": period_id})
     committee_rows = []
     for c in raw_committees:
@@ -626,7 +626,7 @@ def upsert_committees(wahlperiode: int, mandate_to_politician: dict[int, int]) -
     df_committees = pd.DataFrame(
         committee_rows, columns=["committee_id", "label", "topics"]
     )
-    path = DATA_DIR / str(wahlperiode) / "committees.csv"
+    path = DATA_DIR / str(period) / "committees.csv"
     df_committees.to_csv(path, index=False)
     log.info("Saved %d committees.", len(df_committees))
 
@@ -651,14 +651,14 @@ def upsert_committees(wahlperiode: int, mandate_to_politician: dict[int, int]) -
     df_memberships = pd.DataFrame(
         membership_rows, columns=["politician_id", "committee_id", "role"]
     )
-    path = DATA_DIR / str(wahlperiode) / "committee_memberships.csv"
+    path = DATA_DIR / str(period) / "committee_memberships.csv"
     df_memberships.to_csv(path, index=False)
     log.info("Saved %d committee memberships.", len(df_memberships))
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = build_parser("Lade und aktualisiere Bundestags-Abstimmungsdaten.")
-    add_wahlperiode_argument(parser)
+    add_period_argument(parser)
     return parser.parse_args(argv)
 
 
@@ -667,35 +667,35 @@ def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
     periods_path = DATA_DIR / "periods.csv"
     periods_before = _read_bytes_or_none(periods_path)
-    wahlperiode = args.wahlperiode or upsert_periods()
+    period = args.period or upsert_periods()
     periods_changed = _read_bytes_or_none(periods_path) != periods_before
 
-    period_dir = DATA_DIR / str(wahlperiode)
+    period_dir = DATA_DIR / str(period)
     period_dir.mkdir(parents=True, exist_ok=True)
 
     polls_path = period_dir / "polls.csv"
     polls_before = _read_bytes_or_none(polls_path)
-    df_polls, _ = upsert_polls(wahlperiode)
+    df_polls, _ = upsert_polls(period)
     polls_changed = _read_bytes_or_none(polls_path) != polls_before
 
     politicians_path = period_dir / "politicians.csv"
     politicians_before = _read_bytes_or_none(politicians_path)
     mandates_path = period_dir / "mandates.csv"
     mandates_before = _read_bytes_or_none(mandates_path)
-    _, mandate_to_politician = upsert_politicians(wahlperiode)
+    _, mandate_to_politician = upsert_politicians(period)
     politicians_changed = _read_bytes_or_none(politicians_path) != politicians_before
     mandates_changed = _read_bytes_or_none(mandates_path) != mandates_before
 
     sidejobs_path = period_dir / "sidejobs.csv"
     sidejobs_before = _read_bytes_or_none(sidejobs_path)
-    upsert_sidejobs(wahlperiode, mandate_to_politician)
+    upsert_sidejobs(period, mandate_to_politician)
     sidejobs_changed = _read_bytes_or_none(sidejobs_path) != sidejobs_before
 
     committees_path = period_dir / "committees.csv"
     committees_before = _read_bytes_or_none(committees_path)
     memberships_path = period_dir / "committee_memberships.csv"
     memberships_before = _read_bytes_or_none(memberships_path)
-    upsert_committees(wahlperiode, mandate_to_politician)
+    upsert_committees(period, mandate_to_politician)
     committees_changed = _read_bytes_or_none(committees_path) != committees_before
     memberships_changed = (
         _read_bytes_or_none(memberships_path) != memberships_before
@@ -735,10 +735,11 @@ def main(argv: list[str] | None = None) -> None:
         model_inputs_changed=model_inputs_changed,
         votes_changed=votes_changed,
         fetched_polls=len(missing),
-        wahlperiode=wahlperiode,
+        period=period,
+        wahlperiode=period,
     )
 
-    log.info("Done! Data saved to %s", DATA_DIR / str(wahlperiode))
+    log.info("Done! Data saved to %s", DATA_DIR / str(period))
 
 
 if __name__ == "__main__":

@@ -47,20 +47,20 @@ uv run python -m spacy download de_core_news_sm
 
 ### Datenpipeline
 
-Die Schritte müssen in dieser Reihenfolge ausgeführt werden. Die Python-CLIs werden als Module gestartet, also mit `uv run python -m ...`. Alle Pipeline-Schritte akzeptieren `--wahlperiode INT`; bei `src.export` ist das optional und ohne Angabe werden alle exportierbaren Perioden verarbeitet. Jeweils `--help` für alle Optionen.
+Die Schritte müssen in dieser Reihenfolge ausgeführt werden. Die Python-CLIs werden als Module gestartet, also mit `uv run python -m ...`. Alle Pipeline-Schritte akzeptieren `--period INT`; bei `src.export` ist das optional und ohne Angabe werden alle exportierbaren Perioden verarbeitet. Jeweils `--help` für alle Optionen.
 
 ```bash
 # 1. Abstimmungen, Politiker, Nebenjobs und Ausschüsse von abgeordnetenwatch.de laden
 uv run python -m src.fetch.abgeordnetenwatch
 
-# 2. Plenarprotokoll-Liste vom DIP Bundestag API laden
-uv run python -m src.fetch.protokolle
+# 2. Plenary protocol list vom DIP Bundestag API laden
+uv run python -m src.fetch.protocols
 
-# 3. Protokoll-XMLs herunterladen (liest dip_plenarprotokolle.csv aus Schritt 2)
-uv run python -m src.fetch.protokoll_xml
+# 3. Protocol XMLs herunterladen (liest dip_plenary_protocols.csv aus Schritt 2)
+uv run python -m src.fetch.protocol_xml
 
 # 4. XMLs parsen → speeches.csv
-uv run python -m src.parse.protokolle
+uv run python -m src.parse.protocols
 
 # 5. TF-IDF Wortstatistiken aus speeches.csv berechnen
 uv run python -m src.analysis.word_stats
@@ -83,10 +83,10 @@ cd frontend && npm install && npm run dev
 src/
   fetch/
     abgeordnetenwatch.py  Abstimmungen, Politiker, Nebenjobs, Ausschüsse
-    protokolle.py         Plenarprotokoll-Liste vom DIP API
-    protokoll_xml.py      Protokoll-XMLs herunterladen
+    protocols.py          Plenary protocol list from the DIP API
+    protocol_xml.py       Download protocol XMLs
   parse/
-    protokolle.py         XMLs parsen → speeches.csv
+    protocols.py          Parse XMLs -> speeches.csv
   analysis/
     word_stats.py         TF-IDF Wortstatistiken berechnen
     transforms.py         Reine Datentransformationen (Cohesion, Pivot, ...)

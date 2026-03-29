@@ -1,8 +1,8 @@
-"""Tests für src/fetch_protokolle.py."""
+"""Tests for src/fetch/protocols.py."""
 
 import pandas as pd
 
-import src.fetch.protokolle as fp
+import src.fetch.protocols as fp
 
 # ---------------------------------------------------------------------------
 # Hilfsfunktionen
@@ -21,17 +21,17 @@ def _make_doc(
     id_: str,
     sitzungsnummer: int,
     datum: str,
-    wahlperiode: int = 20,
+    period: int = 20,
     sitzungsbemerkung: str = "",
     vorgangsbezug_anzahl: int = 0,
 ) -> dict:
     """Baut ein minimales Plenarprotokoll-Dokument."""
     return {
         "id": id_,
-        "dokumentnummer": f"{wahlperiode}/{sitzungsnummer}",
-        "titel": f"Protokoll der {sitzungsnummer}. Sitzung des {wahlperiode}. Deutschen Bundestages",
+        "dokumentnummer": f"{period}/{sitzungsnummer}",
+        "titel": f"Protokoll der {sitzungsnummer}. Sitzung des {period}. Deutschen Bundestages",
         "datum": datum,
-        "wahlperiode": wahlperiode,
+        "wahlperiode": period,
         "herausgeber": "BT",
         "sitzungsbemerkung": sitzungsbemerkung,
         "vorgangsbezug_anzahl": vorgangsbezug_anzahl,
@@ -39,8 +39,8 @@ def _make_doc(
         "xml_hash": "def456",
         "aktualisiert": "2025-01-02T10:00:00+01:00",
         "fundstelle": {
-            "pdf_url": f"https://dserver.bundestag.de/btp/{wahlperiode}/{wahlperiode}{sitzungsnummer:03d}.pdf",
-            "xml_url": f"https://dserver.bundestag.de/btp/{wahlperiode}/{wahlperiode}{sitzungsnummer:03d}.xml",
+            "pdf_url": f"https://dserver.bundestag.de/btp/{period}/{period}{sitzungsnummer:03d}.pdf",
+            "xml_url": f"https://dserver.bundestag.de/btp/{period}/{period}{sitzungsnummer:03d}.xml",
         },
     }
 
@@ -132,7 +132,7 @@ def test_fetch_dip_all_mehrere_seiten(monkeypatch):
 
 
 # ---------------------------------------------------------------------------
-# fetch_dip_plenarprotokolle — Erstlauf (kein bestehendes CSV)
+# fetch_dip_protocols — initial run (no existing CSV)
 # ---------------------------------------------------------------------------
 
 
@@ -146,18 +146,18 @@ def test_erstlauf_ohne_csv(monkeypatch, tmp_path):
 
     monkeypatch.setattr(fp, "_curl_get", lambda url, p: _make_page(docs))
 
-    df = fp.fetch_dip_plenarprotokolle(20, tmp_path)
+    df = fp.fetch_dip_protocols(20, tmp_path)
     assert len(df) == 3
     assert set(df["id"]) == {1, 2, 3}
 
-    csv_path = tmp_path / "dip_plenarprotokolle.csv"
+    csv_path = tmp_path / "dip_plenary_protocols.csv"
     assert csv_path.exists()
     loaded = pd.read_csv(csv_path)
     assert len(loaded) == 3
 
 
 # ---------------------------------------------------------------------------
-# fetch_dip_plenarprotokolle — Upsert (bestehende Daten)
+# fetch_dip_protocols — upsert (existing data)
 # ---------------------------------------------------------------------------
 
 
@@ -170,7 +170,7 @@ def test_upsert_fuegt_nur_neue_hinzu(monkeypatch, tmp_path):
             fp._doc_to_row(_make_doc("2", 2, "2021-11-10")),
         ]
     )
-    csv_path = tmp_path / "dip_plenarprotokolle.csv"
+    csv_path = tmp_path / "dip_plenary_protocols.csv"
     existing.to_csv(csv_path, index=False)
 
     # API gibt 1, 2 und das neue 3 zurück
@@ -187,7 +187,7 @@ def test_upsert_fuegt_nur_neue_hinzu(monkeypatch, tmp_path):
         return _make_page(docs)
 
     monkeypatch.setattr(fp, "_curl_get", fake_curl_get)
-    df = fp.fetch_dip_plenarprotokolle(20, tmp_path)
+    df = fp.fetch_dip_protocols(20, tmp_path)
 
     # Nur Protokoll 3 neu
     assert len(df) == 1
@@ -205,11 +205,11 @@ def test_upsert_keine_aenderung_wenn_nichts_neues(monkeypatch, tmp_path):
     """Wenn API keine neuen IDs liefert, bleibt CSV unverändert."""
     docs = [_make_doc("1", 1, "2021-10-27")]
     existing = pd.DataFrame([fp._doc_to_row(docs[0])])
-    csv_path = tmp_path / "dip_plenarprotokolle.csv"
+    csv_path = tmp_path / "dip_plenary_protocols.csv"
     existing.to_csv(csv_path, index=False)
 
     monkeypatch.setattr(fp, "_curl_get", lambda url, p: _make_page(docs))
-    df = fp.fetch_dip_plenarprotokolle(20, tmp_path)
+    df = fp.fetch_dip_protocols(20, tmp_path)
 
     assert len(df) == 0
     loaded = pd.read_csv(csv_path)
@@ -230,13 +230,13 @@ def test_limit_begrenzt_neue_eintraege(monkeypatch, tmp_path):
     ]
 
     monkeypatch.setattr(fp, "_curl_get", lambda url, p: _make_page(docs))
-    df = fp.fetch_dip_plenarprotokolle(20, tmp_path, limit=2)
+    df = fp.fetch_dip_protocols(20, tmp_path, limit=2)
 
     assert len(df) == 2
     # Älteste zuerst (aufsteigend nach datum)
     assert list(df["sitzungsnummer"]) == [1, 2]
 
-    loaded = pd.read_csv(tmp_path / "dip_plenarprotokolle.csv")
+    loaded = pd.read_csv(tmp_path / "dip_plenary_protocols.csv")
     assert len(loaded) == 2
 
 
@@ -253,7 +253,7 @@ def test_bundesrat_wird_ignoriert(monkeypatch, tmp_path):
     ]
 
     monkeypatch.setattr(fp, "_curl_get", lambda url, p: _make_page(docs))
-    df = fp.fetch_dip_plenarprotokolle(20, tmp_path)
+    df = fp.fetch_dip_protocols(20, tmp_path)
 
     assert len(df) == 1
     assert df.iloc[0]["id"] == 1

@@ -195,7 +195,7 @@ def test_sidejobs_shape(run_export):
     assert "coverage" in data
     assert {"total", "with_amount"}.issubset(data["coverage"].keys())
     assert len(data["jobs"]) > 0, (
-        "Expected wahlperiode 21 to have sidejobs with income amounts"
+        "Expected period 21 to have sidejobs with income amounts"
     )
     job = data["jobs"][0]
     assert {
@@ -325,7 +325,7 @@ def test_speech_stats_missing_csv_does_not_raise(tmp_path, monkeypatch):
     assert not (out_dir / f"party_speech_stats_{WAHLPERIODE}.json").exists()
 
 
-def test_main_can_limit_export_to_one_wahlperiode(tmp_path, monkeypatch):
+def test_main_can_limit_export_to_one_period(tmp_path, monkeypatch):
     import src.export as ej
 
     data_dir = tmp_path / "data"
@@ -342,8 +342,8 @@ def test_main_can_limit_export_to_one_wahlperiode(tmp_path, monkeypatch):
     (data_dir / "periods.csv").parent.mkdir(parents=True, exist_ok=True)
     (data_dir / "periods.csv").write_text(periods_csv, encoding="utf-8")
 
-    for wahlperiode in (20, 21):
-        period_dir = data_dir / str(wahlperiode)
+    for period in (20, 21):
+        period_dir = data_dir / str(period)
         period_dir.mkdir(parents=True, exist_ok=True)
         (period_dir / "politicians.csv").write_text(_POLITICIANS_CSV, encoding="utf-8")
         (period_dir / "votes.csv").write_text(_VOTES_CSV, encoding="utf-8")
@@ -354,7 +354,7 @@ def test_main_can_limit_export_to_one_wahlperiode(tmp_path, monkeypatch):
         (period_dir / "party_speech_stats.csv").write_text(
             _SPEECH_STATS_CSV, encoding="utf-8"
         )
-        (outputs_dir / f"politician_embeddings_{wahlperiode}.csv").write_text(
+        (outputs_dir / f"politician_embeddings_{period}.csv").write_text(
             _EMBEDDINGS_CSV, encoding="utf-8"
         )
 
@@ -362,7 +362,7 @@ def test_main_can_limit_export_to_one_wahlperiode(tmp_path, monkeypatch):
     monkeypatch.setattr(ej, "OUTPUTS_DIR", outputs_dir)
     monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
 
-    ej.main(["--wahlperiode", "21"])
+    ej.main(["--period", "21"])
 
     assert not (out_dir / "politicians_20.json").exists()
     assert (out_dir / "politicians_21.json").exists()

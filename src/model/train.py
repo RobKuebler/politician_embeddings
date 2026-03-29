@@ -1,7 +1,7 @@
 import argparse
 import logging
 
-from ..cli import add_wahlperiode_argument, build_parser, configure_logging
+from ..cli import add_period_argument, build_parser, configure_logging
 
 log = logging.getLogger(__name__)
 
@@ -14,7 +14,7 @@ MIN_IMPROVEMENT = 0.01
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = build_parser("Trainiere das Embedding-Modell auf Abstimmungsdaten.")
-    add_wahlperiode_argument(parser)
+    add_period_argument(parser)
     parser.add_argument(
         "--factors",
         type=int,
@@ -51,17 +51,15 @@ def main(argv: list[str] | None = None) -> None:
 
     import lightning as L
 
-    from ..storage import OUTPUTS_DIR, current_wahlperiode, load_data, save_embeddings
+    from ..storage import OUTPUTS_DIR, current_period, load_data, save_embeddings
     from .model import prepare_votes, train
 
-    wahlperiode = args.wahlperiode or current_wahlperiode()
+    period = args.period or current_period()
     L.seed_everything(42)
     OUTPUTS_DIR.mkdir(exist_ok=True)
-    df_votes, p_df, poll_df = load_data(wahlperiode)
+    df_votes, p_df, poll_df = load_data(period)
     if df_votes.empty:
-        log.warning(
-            "No voting data found for Wahlperiode %d. Skipping training.", wahlperiode
-        )
+        log.warning("No voting data found for period %d. Skipping training.", period)
         return
 
     df_votes, p_ids, poll_ids = prepare_votes(df_votes, p_df, poll_df)
@@ -75,7 +73,7 @@ def main(argv: list[str] | None = None) -> None:
         lr=args.lr,
         min_improvement=args.min_improvement,
     )
-    save_embeddings(model, p_df, p_ids, wahlperiode)
+    save_embeddings(model, p_df, p_ids, period)
 
 
 if __name__ == "__main__":
