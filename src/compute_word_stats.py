@@ -434,7 +434,7 @@ def fetch_word_stats(out_dir: Path, top_n: int = 100) -> None:
         raise SystemExit(msg)
 
     df = pd.read_csv(speeches_path)
-    df = df[df["fraktion"] != "Unbekannt"]
+    df = df[~df["fraktion"].isin({"Unbekannt", "fraktionslos"})]
     log.info("Geladene Reden: %d", len(df))
 
     # TF-IDF: combine all speech text per party
