@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { SidejobRecord, stripSoftHyphen } from "@/lib/data";
@@ -108,11 +108,30 @@ export function IncomeByCategoryChart({
   const { ref: containerRef, width } = useContainerWidth();
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [activeParties, setActiveParties] = useState<Set<string>>(
+    () => new Set(parties),
+  );
+
+  // Reset selection when the parties prop changes (e.g. period switch)
+  useEffect(() => {
+    setActiveParties(new Set(parties));
+  }, [parties]);
+
+  function toggleParty(party: string) {
+    setActiveParties((prev) => {
+      if (prev.has(party) && prev.size === 1) return prev; // keep at least one
+      const next = new Set(prev);
+      next.has(party) ? next.delete(party) : next.add(party);
+      return next;
+    });
+  }
+
+  const visibleParties = parties.filter((p) => activeParties.has(p));
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
     const allCats = Array.from(new Set(jobs.map((j) => j.category_label)));
-    // Build rows first so we can sort by total income descending
+    // Build rows with all party data so toggling doesn't require re-aggregation
     const rows = allCats
       .map((cat) => {
         const row: Record<string, string | number> = { cat };
@@ -125,9 +144,10 @@ export function IncomeByCategoryChart({
         });
         return row;
       })
+      // Sort by total of visible parties so the chart reflects the current selection
       .sort((a, b) => {
-        const totA = parties.reduce((s, p) => s + (a[p] as number), 0);
-        const totB = parties.reduce((s, p) => s + (b[p] as number), 0);
+        const totA = visibleParties.reduce((s, p) => s + (a[p] as number), 0);
+        const totB = visibleParties.reduce((s, p) => s + (b[p] as number), 0);
         return totB - totA;
       });
     const cats = rows.map((r) => r.cat as string);
@@ -137,7 +157,7 @@ export function IncomeByCategoryChart({
       width,
       categories: cats,
       categoryKey: "cat",
-      seriesKeys: parties,
+      seriesKeys: visibleParties,
       colorFn: (key) => PARTY_COLORS[key] ?? FALLBACK_COLOR,
       dataRows: rows,
       tooltipHtml: (cat, party, value) =>
@@ -145,7 +165,7 @@ export function IncomeByCategoryChart({
       tooltip: d3.select(tooltipRef.current!),
       container: containerRef.current!,
     });
-  }, [jobs, parties, width]);
+  }, [jobs, parties, visibleParties, width]);
 
   return (
     <div>
@@ -157,24 +177,36 @@ export function IncomeByCategoryChart({
         <ChartTooltip tooltipRef={tooltipRef} />
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
-        {parties.map((party) => (
-          <span
-            key={party}
-            className="flex items-center gap-1 text-[10px] text-muted"
-          >
+        {parties.map((party) => {
+          const active = activeParties.has(party);
+          return (
             <span
+              key={party}
+              onClick={() => toggleParty(party)}
+              className="flex items-center gap-1 text-[10px]"
               style={{
-                display: "inline-block",
-                width: 10,
-                height: 10,
-                borderRadius: 2,
-                background: PARTY_COLORS[party] ?? FALLBACK_COLOR,
-                flexShrink: 0,
+                cursor: "pointer",
+                opacity: active ? 1 : 0.35,
+                color: "var(--color-muted)",
+                userSelect: "none",
               }}
-            />
-            {party}
-          </span>
-        ))}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 10,
+                  height: 10,
+                  borderRadius: 2,
+                  background: active
+                    ? (PARTY_COLORS[party] ?? FALLBACK_COLOR)
+                    : "#ccc",
+                  flexShrink: 0,
+                }}
+              />
+              {party}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
@@ -192,11 +224,30 @@ export function TopTopicsChart({
   const { ref: containerRef, width } = useContainerWidth();
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [activeParties, setActiveParties] = useState<Set<string>>(
+    () => new Set(parties),
+  );
+
+  // Reset selection when the parties prop changes (e.g. period switch)
+  useEffect(() => {
+    setActiveParties(new Set(parties));
+  }, [parties]);
+
+  function toggleParty(party: string) {
+    setActiveParties((prev) => {
+      if (prev.has(party) && prev.size === 1) return prev; // keep at least one
+      const next = new Set(prev);
+      next.has(party) ? next.delete(party) : next.add(party);
+      return next;
+    });
+  }
+
+  const visibleParties = parties.filter((p) => activeParties.has(p));
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
 
-    // Aggregate income per topic per party, take top 15 by total
+    // Aggregate income per topic per party
     const topicMap = new Map<string, Map<string, number>>();
     for (const j of jobs) {
       for (const topic of j.topics) {
@@ -205,10 +256,12 @@ export function TopTopicsChart({
         m.set(j.party, (m.get(j.party) ?? 0) + j.prorated_income);
       }
     }
+
+    // Top 15 ranked by total across visible parties so toggling updates the ranking
     const topTopics = Array.from(topicMap.entries())
       .map(([topic, pm]) => ({
         topic,
-        total: Array.from(pm.values()).reduce((a, b) => a + b, 0),
+        total: visibleParties.reduce((a, p) => a + (pm.get(p) ?? 0), 0),
       }))
       .sort((a, b) => b.total - a.total)
       .slice(0, 15)
@@ -227,7 +280,7 @@ export function TopTopicsChart({
       width,
       categories: topTopics,
       categoryKey: "topic",
-      seriesKeys: parties,
+      seriesKeys: visibleParties,
       colorFn: (key) => PARTY_COLORS[key] ?? FALLBACK_COLOR,
       dataRows: rows,
       tooltipHtml: (topic, party, value) =>
@@ -235,7 +288,7 @@ export function TopTopicsChart({
       tooltip: d3.select(tooltipRef.current!),
       container: containerRef.current!,
     });
-  }, [jobs, parties, width]);
+  }, [jobs, parties, visibleParties, width]);
 
   return (
     <div>
@@ -247,24 +300,36 @@ export function TopTopicsChart({
         <ChartTooltip tooltipRef={tooltipRef} />
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
-        {parties.map((party) => (
-          <span
-            key={party}
-            className="flex items-center gap-1 text-[10px] text-muted"
-          >
+        {parties.map((party) => {
+          const active = activeParties.has(party);
+          return (
             <span
+              key={party}
+              onClick={() => toggleParty(party)}
+              className="flex items-center gap-1 text-[10px]"
               style={{
-                display: "inline-block",
-                width: 10,
-                height: 10,
-                borderRadius: 2,
-                background: PARTY_COLORS[party] ?? FALLBACK_COLOR,
-                flexShrink: 0,
+                cursor: "pointer",
+                opacity: active ? 1 : 0.35,
+                color: "var(--color-muted)",
+                userSelect: "none",
               }}
-            />
-            {party}
-          </span>
-        ))}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 10,
+                  height: 10,
+                  borderRadius: 2,
+                  background: active
+                    ? (PARTY_COLORS[party] ?? FALLBACK_COLOR)
+                    : "#ccc",
+                  flexShrink: 0,
+                }}
+              />
+              {party}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
