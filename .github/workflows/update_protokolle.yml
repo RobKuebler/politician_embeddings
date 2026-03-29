@@ -25,6 +25,18 @@ jobs:
       - name: Fetch new Plenarprotokolle (WP21)
         run: uv run python -m src.fetch_protokolle --wahlperiode 21
 
+      # Cache key includes the CSV of known protocol IDs — changes when new
+      # protocols are fetched, causing the cache to be updated after the run.
+      # restore-keys ensures existing XMLs are reused even when key changes.
+      - name: Cache Plenarprotokoll XMLs and speeches (WP21)
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/161/plenarprotokolle/
+            data/161/speeches.csv
+          key: plenarprotokolle-wp21-${{ hashFiles('data/161/dip_plenarprotokolle.csv') }}
+          restore-keys: plenarprotokolle-wp21-
+
       - name: Download new XMLs (WP21)
         id: fetch_xml
         run: |
