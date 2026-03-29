@@ -39,29 +39,22 @@ jobs:
 
       - name: Download new XMLs
         id: fetch_xml
-        run: |
-          output=$(uv run python -m src.fetch.protokoll_xml 2>&1)
-          echo "$output"
-          if echo "$output" | grep -q "0 neue XMLs"; then
-            echo "new_xmls=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "new_xmls=true" >> "$GITHUB_OUTPUT"
-          fi
+        run: uv run python -m src.fetch.protokoll_xml
 
       - name: Parse speeches from XMLs
-        if: steps.fetch_xml.outputs.new_xmls == 'true'
+        if: steps.fetch_xml.outputs.changed == 'true'
         run: uv run python -m src.parse.protokolle
 
       - name: Compute TF-IDF word stats
-        if: steps.fetch_xml.outputs.new_xmls == 'true'
+        if: steps.fetch_xml.outputs.changed == 'true'
         run: uv run python -m src.analysis.word_stats
 
       - name: Export JSON for frontend
-        if: steps.fetch_xml.outputs.new_xmls == 'true'
+        if: steps.fetch_xml.outputs.changed == 'true'
         run: uv run python -m src.export
 
       - name: Commit and push
-        if: steps.fetch_xml.outputs.new_xmls == 'true'
+        if: steps.fetch_xml.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

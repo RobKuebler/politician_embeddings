@@ -4,9 +4,10 @@ Reads all *.xml from data/{wahlperiode}/plenarprotokolle/ and writes
 data/{wahlperiode}/speeches.csv (gitignored — can be large).
 
 Usage:
-    uv run src/parse/protokolle.py --wahlperiode 20
+    uv run python -m src.parse.protokolle --wahlperiode 20
 """
 
+import argparse
 import logging
 import re
 from pathlib import Path
@@ -14,6 +15,7 @@ from xml.etree import ElementTree as ET
 
 import pandas as pd
 
+from ..cli import add_wahlperiode_argument, build_parser, configure_logging
 from ..storage import DATA_DIR, current_wahlperiode
 
 log = logging.getLogger(__name__)
@@ -152,17 +154,15 @@ def parse_alle_sitzungen(out_dir: Path) -> pd.DataFrame:
     return df
 
 
-if __name__ == "__main__":
-    import argparse
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Parse XML-Protokolle und extrahiere Reden.")
+    add_wahlperiode_argument(parser)
+    return parser.parse_args(argv)
 
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    parser = argparse.ArgumentParser(description="Parse Plenarprotokolle")
-    parser.add_argument("--wahlperiode", type=int, default=None)
-    args = parser.parse_args()
+
+def main(argv: list[str] | None = None) -> None:
+    configure_logging()
+    args = parse_args(argv)
 
     wahlperiode = args.wahlperiode or current_wahlperiode()
     out_dir = DATA_DIR / str(wahlperiode)
@@ -170,3 +170,7 @@ if __name__ == "__main__":
     log.info("Wahlperiode %d…", wahlperiode)
     df = parse_alle_sitzungen(out_dir)
     log.info("Fertig. %d Reden.", len(df))
+
+
+if __name__ == "__main__":
+    main()

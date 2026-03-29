@@ -44,15 +44,26 @@ def period_id_for(wahlperiode: int) -> int:
 def load_data(wahlperiode: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Load votes, politicians and polls CSVs for a given wahlperiode."""
     period_dir = DATA_DIR / str(wahlperiode)
-    votes_path = period_dir / "votes.csv"
-    if not votes_path.exists():
-        log.error("%s not found! Run fetch_data.py first.", votes_path)
-        raise SystemExit(1)
+    required_paths = {
+        "votes.csv": period_dir / "votes.csv",
+        "politicians.csv": period_dir / "politicians.csv",
+        "polls.csv": period_dir / "polls.csv",
+    }
+    missing = [name for name, path in required_paths.items() if not path.exists()]
+    if missing:
+        missing_list = ", ".join(missing)
+        msg = (
+            f"Fehlende Eingabedateien für Wahlperiode {wahlperiode}: {missing_list}. "
+            "Zuerst `python -m src.fetch.abgeordnetenwatch` ausführen."
+        )
+        log.error(msg)
+        raise SystemExit(msg)
+
     log.info("Loading data for Wahlperiode %d...", wahlperiode)
     return (
-        pd.read_csv(votes_path),
-        pd.read_csv(period_dir / "politicians.csv"),
-        pd.read_csv(period_dir / "polls.csv"),
+        pd.read_csv(required_paths["votes.csv"]),
+        pd.read_csv(required_paths["politicians.csv"]),
+        pd.read_csv(required_paths["polls.csv"]),
     )
 
 

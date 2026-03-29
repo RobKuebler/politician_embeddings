@@ -10,13 +10,14 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
+from ..cli import (
+    add_wahlperiode_argument,
+    build_parser,
+    configure_logging,
+    write_github_output,
+)
 from ..storage import DATA_DIR
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%H:%M:%S",
-)
 log = logging.getLogger(__name__)
 
 BASE_URL = "https://www.abgeordnetenwatch.de/api/v2"
@@ -648,23 +649,15 @@ def upsert_committees(wahlperiode: int, mandate_to_politician: dict[int, int]) -
     log.info("Saved %d committee memberships.", len(df_memberships))
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Fetch/update Bundestag voting data from abgeordnetenwatch.de.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        "--wahlperiode",
-        type=int,
-        default=None,
-        metavar="INT",
-        help="Wahlperiode / Bundestag-Nummer (z.B. 20 oder 21; default: aktuell)",
-    )
-    return parser.parse_args()
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Lade und aktualisiere Bundestags-Abstimmungsdaten.")
+    add_wahlperiode_argument(parser)
+    return parser.parse_args(argv)
 
 
-def main() -> None:
-    args = parse_args()
+def main(argv: list[str] | None = None) -> None:
+    configure_logging()
+    args = parse_args(argv)
     wahlperiode = args.wahlperiode or upsert_periods()
 
     (DATA_DIR / str(wahlperiode)).mkdir(parents=True, exist_ok=True)
@@ -678,6 +671,7 @@ def main() -> None:
     missing = find_polls_missing_votes(df_polls["poll_id"].tolist(), votes_path)
     if not missing:
         log.info("All votes up to date, nothing to fetch.")
+        write_github_output(changed=False, wahlperiode=wahlperiode)
     else:
         log.info("%d poll(s) need vote fetching.", len(missing))
         fetch_votes(
@@ -685,6 +679,11 @@ def main() -> None:
             mandate_to_politician,
             votes_path,
             append=votes_path.exists(),
+        )
+        write_github_output(
+            changed=True,
+            fetched_polls=len(missing),
+            wahlperiode=wahlperiode,
         )
 
     log.info("Done! Data saved to %s", DATA_DIR / str(wahlperiode))

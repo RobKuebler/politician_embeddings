@@ -4,15 +4,22 @@ Reads dip_plenarprotokolle.csv and downloads missing XMLs.
 Already-present files are skipped (upsert by file existence).
 
 Usage:
-    uv run src/fetch/protokoll_xml.py --wahlperiode 20
+    uv run python -m src.fetch.protokoll_xml --wahlperiode 20
 """
 
+import argparse
 import logging
 import subprocess
 from pathlib import Path
 
 import pandas as pd
 
+from ..cli import (
+    add_wahlperiode_argument,
+    build_parser,
+    configure_logging,
+    write_github_output,
+)
 from ..storage import DATA_DIR, current_wahlperiode
 
 log = logging.getLogger(__name__)
@@ -75,21 +82,24 @@ def fetch_protokoll_xmls(wahlperiode: int, out_dir: Path) -> int:  # noqa: ARG00
     return downloaded
 
 
-if __name__ == "__main__":
-    import argparse
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Lade fehlende XML-Dateien zu Bundestags-Plenarprotokollen.")
+    add_wahlperiode_argument(parser)
+    return parser.parse_args(argv)
 
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    parser = argparse.ArgumentParser(description="Download Plenarprotokoll XMLs")
-    parser.add_argument("--wahlperiode", type=int, default=None)
-    args = parser.parse_args()
+
+def main(argv: list[str] | None = None) -> None:
+    configure_logging()
+    args = parse_args(argv)
 
     wahlperiode = args.wahlperiode or current_wahlperiode()
     out_dir = DATA_DIR / str(wahlperiode)
 
     log.info("Wahlperiode %d…", wahlperiode)
     n = fetch_protokoll_xmls(wahlperiode, out_dir)
+    write_github_output(changed=n > 0, downloaded_xmls=n, wahlperiode=wahlperiode)
     log.info("Fertig. %d neue XMLs.", n)
+
+
+if __name__ == "__main__":
+    main()

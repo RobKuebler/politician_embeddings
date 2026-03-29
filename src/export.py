@@ -4,6 +4,7 @@ Run after fetch/abgeordnetenwatch.py and model/train.py.
 Writes to frontend/public/data/.
 """
 
+import argparse
 import json
 import logging
 import math
@@ -22,6 +23,7 @@ from .analysis.transforms import (
     compute_sex_counts,
     compute_title_counts,
 )
+from .cli import add_wahlperiode_argument, build_parser, configure_logging
 from .storage import DATA_DIR, OUTPUTS_DIR
 
 log = logging.getLogger(__name__)
@@ -395,20 +397,40 @@ def export_party_speech_stats(wahlperiode: int) -> None:
     )
 
 
-def main() -> None:
-    """Export all periods that have politicians + embeddings."""
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+def _period_is_exportable(wahlperiode: int) -> bool:
+    """Return whether a period has the required export inputs."""
+    period_dir = DATA_DIR / str(wahlperiode)
+    emb_path = OUTPUTS_DIR / f"politician_embeddings_{wahlperiode}.csv"
+    return (period_dir / "politicians.csv").exists() and emb_path.exists()
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Exportiere JSON-Dateien für das Frontend.")
+    add_wahlperiode_argument(parser)
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Export JSON files for one or all periods."""
+    configure_logging()
+    args = parse_args(argv)
 
     periods_df = pd.read_csv(DATA_DIR / "periods.csv")
+    if args.wahlperiode is not None and args.wahlperiode not in set(
+        periods_df["bundestag_number"].astype(int)
+    ):
+        msg = f"Wahlperiode {args.wahlperiode} nicht in periods.csv gefunden."
+        raise SystemExit(msg)
+
     available: list[dict] = []
 
     for _, row in periods_df.iterrows():
         wahlperiode = int(row["bundestag_number"])
-        if not (DATA_DIR / str(wahlperiode) / "politicians.csv").exists():
-            continue
+        period_dir = DATA_DIR / str(wahlperiode)
         p_start = date.fromisoformat(str(row["start_date"]))
         p_end = date.fromisoformat(str(row["end_date"]))
-        if export_period(wahlperiode, p_start, p_end):
+
+        if _period_is_exportable(wahlperiode):
             available.append(
                 {
                     "wahlperiode": wahlperiode,
@@ -416,8 +438,18 @@ def main() -> None:
                     "has_data": True,
                 }
             )
-        export_party_word_freq(wahlperiode)
-        export_party_speech_stats(wahlperiode)
+
+        if args.wahlperiode is not None and wahlperiode != args.wahlperiode:
+            continue
+
+        if export_period(wahlperiode, p_start, p_end):
+            export_party_word_freq(wahlperiode)
+            export_party_speech_stats(wahlperiode)
+            continue
+
+        if (period_dir / "politicians.csv").exists():
+            export_party_word_freq(wahlperiode)
+            export_party_speech_stats(wahlperiode)
 
     _write(OUTPUT_DIR / "periods.json", available)
     log.info("Done. Exported %d periods.", len(available))

@@ -4,10 +4,11 @@ Writes CSV to data/{wahlperiode}/dip_plenarprotokolle.csv.
 Upsert: only new protocol IDs are appended.
 
 Usage:
-    uv run src/fetch/protokolle.py --wahlperiode 20
-    uv run src/fetch/protokolle.py --wahlperiode 20 --limit 3
+    uv run python -m src.fetch.protokolle --wahlperiode 20
+    uv run python -m src.fetch.protokolle --wahlperiode 20 --limit 3
 """
 
+import argparse
 import json
 import logging
 import subprocess
@@ -17,6 +18,12 @@ from pathlib import Path
 
 import pandas as pd
 
+from ..cli import (
+    add_wahlperiode_argument,
+    build_parser,
+    configure_logging,
+    write_github_output,
+)
 from ..storage import DATA_DIR, current_wahlperiode
 
 log = logging.getLogger(__name__)
@@ -213,29 +220,22 @@ def fetch_dip_plenarprotokolle(
     return new_df
 
 
-if __name__ == "__main__":
-    import argparse
-
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        datefmt="%H:%M:%S",
-    )
-
-    parser = argparse.ArgumentParser(description="Fetch DIP Plenarprotokolle")
-    parser.add_argument(
-        "--wahlperiode",
-        type=int,
-        default=None,
-        help="Bundestag Wahlperiode (z.B. 20 oder 21); default: aktuelle Periode",
-    )
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Lade neue Bundestags-Plenarprotokolle aus dem DIP API.")
+    add_wahlperiode_argument(parser)
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
-        help="Maximale Anzahl neuer Protokolle (für Tests)",
+        metavar="INT",
+        help="Maximale Anzahl neuer Protokolle, nur für Tests",
     )
-    args = parser.parse_args()
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> None:
+    configure_logging()
+    args = parse_args(argv)
 
     wahlperiode = args.wahlperiode or current_wahlperiode()
     out_dir = DATA_DIR / str(wahlperiode)
@@ -244,5 +244,15 @@ if __name__ == "__main__":
     new_df = fetch_dip_plenarprotokolle(wahlperiode, out_dir, limit=args.limit)
     if new_df.empty:
         log.info("Nichts Neues.")
+        write_github_output(changed=False, wahlperiode=wahlperiode)
     else:
         log.info("%d neue Protokolle gespeichert nach %s", len(new_df), out_dir)
+        write_github_output(
+            changed=True,
+            fetched_protocols=len(new_df),
+            wahlperiode=wahlperiode,
+        )
+
+
+if __name__ == "__main__":
+    main()

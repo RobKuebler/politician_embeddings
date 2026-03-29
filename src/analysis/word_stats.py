@@ -6,9 +6,10 @@ produces two CSVs:
   - party_speech_stats.csv: speech count + word count per MdB
 
 Usage:
-    uv run src/analysis/word_stats.py --wahlperiode 20
+    uv run python -m src.analysis.word_stats --wahlperiode 20
 """
 
+import argparse
 import logging
 import math
 from collections import Counter
@@ -17,6 +18,7 @@ from typing import TYPE_CHECKING
 
 import pandas as pd
 
+from ..cli import add_wahlperiode_argument, build_parser, configure_logging
 from ..storage import DATA_DIR, current_wahlperiode
 
 if TYPE_CHECKING:
@@ -480,20 +482,22 @@ def fetch_word_stats(out_dir: Path, top_n: int = 100) -> None:
     log.info("party_speech_stats.csv: %d MdBs", len(speech_stats_df))
 
 
-if __name__ == "__main__":
-    import argparse
-
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    parser = argparse.ArgumentParser(description="Compute word stats from speeches")
-    parser.add_argument("--wahlperiode", type=int, default=None)
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Berechne TF-IDF-Wortstatistiken und Redestatistiken.")
+    add_wahlperiode_argument(parser)
     parser.add_argument(
-        "--top-n", type=int, default=100, help="Top-N Woerter pro Partei (default: 100)"
+        "--top-n",
+        type=int,
+        default=100,
+        metavar="INT",
+        help="Top-N Wörter pro Partei",
     )
-    args = parser.parse_args()
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> None:
+    configure_logging()
+    args = parse_args(argv)
 
     wahlperiode = args.wahlperiode or current_wahlperiode()
     out_dir = DATA_DIR / str(wahlperiode)
@@ -501,3 +505,7 @@ if __name__ == "__main__":
     log.info("Wahlperiode %d…", wahlperiode)
     fetch_word_stats(out_dir, top_n=args.top_n)
     log.info("Fertig.")
+
+
+if __name__ == "__main__":
+    main()

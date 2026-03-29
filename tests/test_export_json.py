@@ -323,3 +323,49 @@ def test_speech_stats_missing_csv_does_not_raise(tmp_path, monkeypatch):
     monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
     ej.export_party_speech_stats(WAHLPERIODE)
     assert not (out_dir / f"party_speech_stats_{WAHLPERIODE}.json").exists()
+
+
+def test_main_can_limit_export_to_one_wahlperiode(tmp_path, monkeypatch):
+    import src.export as ej
+
+    data_dir = tmp_path / "data"
+    outputs_dir = tmp_path / "outputs"
+    out_dir = tmp_path / "frontend" / "public" / "data"
+    outputs_dir.mkdir(exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    periods_csv = textwrap.dedent("""\
+        period_id,label,bundestag_number,start_date,end_date
+        132,20. Wahlperiode,20,2021-10-26,2025-10-22
+        161,21. Wahlperiode,21,2025-10-23,2029-10-22
+    """)
+    (data_dir / "periods.csv").parent.mkdir(parents=True, exist_ok=True)
+    (data_dir / "periods.csv").write_text(periods_csv, encoding="utf-8")
+
+    for wahlperiode in (20, 21):
+        period_dir = data_dir / str(wahlperiode)
+        period_dir.mkdir(parents=True, exist_ok=True)
+        (period_dir / "politicians.csv").write_text(_POLITICIANS_CSV, encoding="utf-8")
+        (period_dir / "votes.csv").write_text(_VOTES_CSV, encoding="utf-8")
+        (period_dir / "polls.csv").write_text(_POLLS_CSV, encoding="utf-8")
+        (period_dir / "party_word_freq.csv").write_text(
+            _WORD_FREQ_CSV, encoding="utf-8"
+        )
+        (period_dir / "party_speech_stats.csv").write_text(
+            _SPEECH_STATS_CSV, encoding="utf-8"
+        )
+        (outputs_dir / f"politician_embeddings_{wahlperiode}.csv").write_text(
+            _EMBEDDINGS_CSV, encoding="utf-8"
+        )
+
+    monkeypatch.setattr(ej, "DATA_DIR", data_dir)
+    monkeypatch.setattr(ej, "OUTPUTS_DIR", outputs_dir)
+    monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
+
+    ej.main(["--wahlperiode", "21"])
+
+    assert not (out_dir / "politicians_20.json").exists()
+    assert (out_dir / "politicians_21.json").exists()
+
+    periods = json.loads((out_dir / "periods.json").read_text(encoding="utf-8"))
+    assert {row["wahlperiode"] for row in periods} == {20, 21}

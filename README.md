@@ -47,29 +47,29 @@ uv run python -m spacy download de_core_news_sm
 
 ### Datenpipeline
 
-Die Schritte müssen in dieser Reihenfolge ausgeführt werden. Alle Scripts akzeptieren `--wahlperiode INT` (default: aktuelle Periode). Jeweils `--help` für alle Optionen.
+Die Schritte müssen in dieser Reihenfolge ausgeführt werden. Die Python-CLIs werden als Module gestartet, also mit `uv run python -m ...`. Alle Pipeline-Schritte akzeptieren `--wahlperiode INT`; bei `src.export` ist das optional und ohne Angabe werden alle exportierbaren Perioden verarbeitet. Jeweils `--help` für alle Optionen.
 
 ```bash
 # 1. Abstimmungen, Politiker, Nebenjobs und Ausschüsse von abgeordnetenwatch.de laden
-uv run src/fetch/abgeordnetenwatch.py
+uv run python -m src.fetch.abgeordnetenwatch
 
 # 2. Plenarprotokoll-Liste vom DIP Bundestag API laden
-uv run src/fetch/protokolle.py
+uv run python -m src.fetch.protokolle
 
 # 3. Protokoll-XMLs herunterladen (liest dip_plenarprotokolle.csv aus Schritt 2)
-uv run src/fetch/protokoll_xml.py
+uv run python -m src.fetch.protokoll_xml
 
 # 4. XMLs parsen → speeches.csv
-uv run src/parse/protokolle.py
+uv run python -m src.parse.protokolle
 
 # 5. TF-IDF Wortstatistiken aus speeches.csv berechnen
-uv run src/analysis/word_stats.py
+uv run python -m src.analysis.word_stats
 
 # 6. Embedding-Modell trainieren (benötigt PyTorch; --group train)
-uv run --group train src/model/train.py
+uv run --group train python -m src.model.train
 
 # 7. JSON-Dateien für das Frontend exportieren
-uv run src/export.py
+uv run python -m src.export
 ```
 
 ```bash

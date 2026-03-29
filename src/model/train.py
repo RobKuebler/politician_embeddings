@@ -1,11 +1,8 @@
 import argparse
 import logging
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%H:%M:%S",
-)
+from ..cli import add_wahlperiode_argument, build_parser, configure_logging
+
 log = logging.getLogger(__name__)
 
 N_FACTORS = 2
@@ -15,18 +12,9 @@ LR = 0.01
 MIN_IMPROVEMENT = 0.01
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Train politician embedding model on Bundestag voting data.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        "--wahlperiode",
-        type=int,
-        default=None,
-        metavar="INT",
-        help="Wahlperiode / Bundestag-Nummer (z.B. 20 oder 21; default: aktuell)",
-    )
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = build_parser("Trainiere das Embedding-Modell auf Abstimmungsdaten.")
+    add_wahlperiode_argument(parser)
     parser.add_argument(
         "--factors",
         type=int,
@@ -54,11 +42,12 @@ def parse_args() -> argparse.Namespace:
         metavar="FLOAT",
         help="Min relative loss improvement per epoch (e.g. 0.01 = 1%%)",
     )
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
-def main() -> None:
-    args = parse_args()  # exits here if -h
+def main(argv: list[str] | None = None) -> None:
+    configure_logging()
+    args = parse_args(argv)
 
     import lightning as L
 
