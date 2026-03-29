@@ -28,19 +28,27 @@ log = logging.getLogger(__name__)
 
 # Lazy-loaded spaCy model — avoids import cost when module is imported but not used.
 _nlp: "spacy_type.Language | None" = None
+_nlp_unavailable = False
 
 
-def _get_nlp() -> "spacy_type.Language":
+def _get_nlp() -> "spacy_type.Language | None":
     """Load German spaCy model on first call and cache it.
 
     Loads de_core_news_sm with parser, NER and sentencizer disabled
     for speed — only tokenizer + lemmatizer are needed.
+    If the model package is not installed, return None and let callers
+    use the lightweight heuristic fallback instead.
     """
-    global _nlp  # noqa: PLW0603
-    if _nlp is None:
+    global _nlp, _nlp_unavailable  # noqa: PLW0603
+    if _nlp is None and not _nlp_unavailable:
         import spacy
 
-        _nlp = spacy.load("de_core_news_sm", disable=["parser", "ner", "senter"])
+        try:
+            _nlp = spacy.load("de_core_news_sm", disable=["parser", "ner", "senter"])
+        except OSError:
+            _nlp_unavailable = True
+            log.warning("spaCy model de_core_news_sm fehlt; verwende heuristische "
+                        "Lemmatisierung.")
     return _nlp
 
 
@@ -107,6 +115,48 @@ def _spacy_adj_context_pass(
     return lemma_map
 
 
+_ADJ_SUFFIXES = ("en", "em", "er", "es", "e")
+
+
+def _heuristic_adj_lemma(word: str, vocabulary: set[str]) -> str:
+    """Reduce obvious adjective inflections using token-set evidence.
+
+    The fallback is intentionally conservative: it only strips common adjective
+    endings when the shorter base also appears in the vocabulary or when
+    another token in the current batch shares the same base plus a known ending.
+    """
+    for suffix in _ADJ_SUFFIXES:
+        if not word.endswith(suffix):
+            continue
+        base = word[: -len(suffix)]
+        if len(base) < 4 or not base.isalpha():
+            continue
+        if base in vocabulary:
+            return base
+        if any(
+            other != word
+            and other.startswith(base)
+            and other[len(base) :] in _ADJ_SUFFIXES
+            for other in vocabulary
+        ):
+            return base
+    return word
+
+
+def _heuristic_lemmatize_tokens(tokens: list[str]) -> list[str]:
+    """Fallback lemmatizer used when the German spaCy model is unavailable."""
+    unique = set(tokens)
+    lemma_map = {
+        word: word[:-3] if word.endswith("innen") and len(word) >= 7 else word
+        for word in unique
+    }
+    for word in unique:
+        if lemma_map[word] != word:
+            continue
+        lemma_map[word] = _heuristic_adj_lemma(word, unique)
+    return [lemma_map.get(token, token) for token in tokens]
+
+
 def _lemmatize_tokens(tokens: list[str]) -> list[str]:
     """Lemmatize German tokens using spaCy with a three-stage pipeline.
 
@@ -117,6 +167,8 @@ def _lemmatize_tokens(tokens: list[str]) -> list[str]:
     if not tokens:
         return tokens
     nlp = _get_nlp()
+    if nlp is None:
+        return _heuristic_lemmatize_tokens(tokens)
     unique = list(set(tokens))
 
     # Stage 1: German feminine plurals bypass spaCy
