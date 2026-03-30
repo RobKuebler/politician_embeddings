@@ -35,6 +35,7 @@ jobs:
         run: uv run python -m src.model.train
 
       - name: Export JSON for frontend
+        if: steps.fetch.outputs.changed == 'true'
         run: uv run python -m src.export
 
       - name: Commit and push
