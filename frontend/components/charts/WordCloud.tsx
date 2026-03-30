@@ -9,6 +9,7 @@ interface Props {
   words: WordFreqEntry[];
   color: string;
   height?: number;
+  onClick?: () => void;
 }
 
 // Minimal shape of a d3-cloud Word (mirrors the d3-cloud internal interface).
@@ -33,7 +34,7 @@ function mulberry32(seed: number) {
   };
 }
 
-export function WordCloud({ words, color, height = 200 }: Props) {
+export function WordCloud({ words, color, height = 200, onClick }: Props) {
   const { ref: containerRef, width } = useContainerWidth();
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -96,7 +97,12 @@ export function WordCloud({ words, color, height = 200 }: Props) {
   }, [width, height, words, color]);
 
   return (
-    <div ref={containerRef} className="w-full" style={{ height }}>
+    <div
+      ref={containerRef}
+      className="w-full"
+      style={{ height, cursor: onClick ? "zoom-in" : undefined }}
+      onClick={onClick}
+    >
       <svg ref={svgRef} style={{ display: "block" }} />
     </div>
   );

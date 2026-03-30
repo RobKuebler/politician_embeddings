@@ -21,6 +21,17 @@ export default function SpeechesPage() {
   const [speechStats, setSpeechStats] = useState<SpeechStatsFile | null>(null);
   const [loading, setLoading] = useState(true);
   const [unavailable, setUnavailable] = useState(false);
+  const [expandedParty, setExpandedParty] = useState<string | null>(null);
+
+  // Close lightbox on Escape
+  useEffect(() => {
+    if (!expandedParty) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpandedParty(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [expandedParty]);
 
   useEffect(() => {
     if (!activePeriodId) return;
@@ -145,8 +156,13 @@ export default function SpeechesPage() {
                   </span>
                 </div>
 
-                {/* Word cloud */}
-                <WordCloud words={words} color={color} height={200} />
+                {/* Word cloud — click to expand */}
+                <WordCloud
+                  words={words}
+                  color={color}
+                  height={200}
+                  onClick={() => setExpandedParty(party)}
+                />
 
                 {/* Speaker list */}
                 <div>
@@ -165,6 +181,68 @@ export default function SpeechesPage() {
       )}
 
       <Footer />
+
+      {/* Word cloud lightbox */}
+      {expandedParty &&
+        (() => {
+          const allWords = normalizedWordFreq[expandedParty] ?? [];
+          const color = PARTY_COLORS[expandedParty] ?? FALLBACK_COLOR;
+          return (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center"
+              style={{
+                background: "rgba(0,0,0,0.65)",
+                backdropFilter: "blur(4px)",
+              }}
+              onClick={() => setExpandedParty(null)}
+            >
+              <div
+                className="relative bg-white flex flex-col"
+                style={{
+                  borderRadius: 20,
+                  width: "min(90vw, 760px)",
+                  maxHeight: "85vh",
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between px-6 pt-5 pb-3">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="shrink-0 rounded-full"
+                      style={{ width: 4, height: 20, background: color }}
+                    />
+                    <span
+                      className="font-extrabold text-[17px]"
+                      style={{ color: "#1E1B5E" }}
+                    >
+                      {expandedParty}
+                    </span>
+                    <span
+                      className="text-[12px] ml-1"
+                      style={{ color: "#9A9790" }}
+                    >
+                      Top {allWords.length} Begriffe
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setExpandedParty(null)}
+                    className="text-[20px] leading-none"
+                    style={{ color: "#9A9790", lineHeight: 1 }}
+                    aria-label="Schließen"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                {/* Expanded cloud */}
+                <div className="px-4 pb-5">
+                  <WordCloud words={allWords} color={color} height={420} />
+                </div>
+              </div>
+            </div>
+          );
+        })()}
     </>
   );
 }
