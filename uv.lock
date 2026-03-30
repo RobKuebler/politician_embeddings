@@ -638,7 +638,6 @@ source = { editable = "." }
 dependencies = [
     { name = "numpy" },
     { name = "pandas" },
-    { name = "pytest" },
     { name = "requests" },
     { name = "spacy" },
 ]
@@ -661,7 +660,6 @@ train = [
 requires-dist = [
     { name = "numpy", specifier = ">=2.4.2" },
     { name = "pandas", specifier = ">=3.0.1" },
-    { name = "pytest", specifier = ">=9.0.2" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "spacy", specifier = ">=3.8.0" },
 ]

@@ -25,7 +25,7 @@ jobs:
           version: "latest"
 
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --frozen
 
       - name: Install spaCy German model
         run: uv run python -m spacy download de_core_news_sm
