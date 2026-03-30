@@ -55,4 +55,5 @@ docs/superpowers/
 
 # Plenarprotokoll XMLs und abgeleitete speeches (zu groß für Git)
 data/*/plenarprotokolle/
+data/*/plenary_protocols/
 data/*/speeches.csv
