@@ -23,6 +23,16 @@ interface CloudWordBase {
 // Combines WordFreqEntry with the d3-cloud Word shape for layout computation.
 type CloudWord = WordFreqEntry & CloudWordBase;
 
+// Deterministic PRNG (mulberry32) so the cloud layout is stable across renders.
+function mulberry32(seed: number) {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 0x100000000;
+  };
+}
+
 export function WordCloud({ words, color, height = 200 }: Props) {
   const { ref: containerRef, width } = useContainerWidth();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -48,6 +58,7 @@ export function WordCloud({ words, color, height = 200 }: Props) {
       )
       .padding(3)
       .rotate(0)
+      .random(mulberry32(42))
       .font("Plus Jakarta Sans")
       .fontSize((d) => d.size ?? 11)
       .on("end", draw);
