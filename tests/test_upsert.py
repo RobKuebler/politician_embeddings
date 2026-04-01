@@ -128,15 +128,7 @@ def test_fetch_votes_missing_mandate_key_skipped(requests_mock, tmp_path):
 def test_refresh_polls_schreibt_csv(requests_mock, monkeypatch, tmp_path):
     """Polls werden von API geladen und als CSV gespeichert."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     (tmp_path / "20").mkdir()
     _mock_polls(
         requests_mock, [{"id": 1, "label": "Poll A"}, {"id": 2, "label": "Poll B"}]
@@ -153,15 +145,7 @@ def test_refresh_polls_schreibt_csv(requests_mock, monkeypatch, tmp_path):
 def test_refresh_polls_poll_id_stays_integer(requests_mock, monkeypatch, tmp_path):
     """poll_id muss int64 bleiben — float würde Downstream-Joins brechen."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     (tmp_path / "20").mkdir()
     _mock_polls(requests_mock, [{"id": 1, "label": "A"}, {"id": 2, "label": "B"}])
 
@@ -196,15 +180,7 @@ def _politicians_csv(period_dir, rows):
 def test_refresh_politicians_first_run(requests_mock, monkeypatch, tmp_path):
     """First run: politicians.csv created and details fetched."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     (tmp_path / "20").mkdir()
     _mock_mandates(requests_mock, [_mandate(100, 1, "Alice", "SPD")])
     _mock_details(
@@ -232,15 +208,7 @@ def test_refresh_politicians_first_run(requests_mock, monkeypatch, tmp_path):
 def test_refresh_politicians_party_korrekt(requests_mock, monkeypatch, tmp_path):
     """Party aus API wird korrekt gespeichert."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     (tmp_path / "20").mkdir()
     _mock_mandates(requests_mock, [_mandate(100, 1, "Alice", "CDU")])
     _mock_details(
@@ -267,9 +235,8 @@ def test_refresh_politicians_party_korrekt(requests_mock, monkeypatch, tmp_path)
 # ─── refresh_periods: correctness ──────────────────────────────────────────────
 
 
-def test_refresh_periods_filters_out_elections(requests_mock, monkeypatch, tmp_path):
-    """Only type=='legislature' rows go into periods.csv; elections are excluded."""
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
+def test_refresh_periods_filters_out_elections(requests_mock):
+    """Only type=='legislature' rows are returned; elections are excluded."""
     _mock_periods(
         requests_mock,
         [
@@ -284,19 +251,13 @@ def test_refresh_periods_filters_out_elections(requests_mock, monkeypatch, tmp_p
         ],
     )
 
-    src.fetch.abgeordnetenwatch.refresh_periods()
-
-    saved = pd.read_csv(tmp_path / "periods.csv")
-    assert 999 not in saved["period_id"].to_numpy()
-    assert len(saved) == 1
+    df = src.fetch.abgeordnetenwatch.fetch_periods_df()
+    assert 999 not in df["period_id"].to_numpy()
+    assert len(df) == 1
 
 
-def test_refresh_periods_bundestag_number_assigned_correctly(
-    requests_mock, monkeypatch, tmp_path
-):
-    """bundestag_number starts at FIRST_BUNDESTAG_NUMBER=16, increments
-    chronologically."""
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
+def test_refresh_periods_bundestag_number_assigned_correctly(requests_mock):
+    """bundestag_number starts at FIRST_BUNDESTAG_NUMBER=16, increments chronologically."""
     _mock_periods(
         requests_mock,
         [
@@ -306,38 +267,30 @@ def test_refresh_periods_bundestag_number_assigned_correctly(
         ],
     )
 
-    src.fetch.abgeordnetenwatch.refresh_periods()
-
-    saved = pd.read_csv(tmp_path / "periods.csv").sort_values("start_date")
-    assert saved["bundestag_number"].tolist() == [16, 17, 18]
+    df = src.fetch.abgeordnetenwatch.fetch_periods_df().sort_values("start_date")
+    assert df["bundestag_number"].tolist() == [16, 17, 18]
 
 
-def test_refresh_periods_label_aktuell(requests_mock, monkeypatch, tmp_path):
-    """Label aus der API wird frisch geschrieben."""
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
+def test_refresh_periods_label_aktuell(requests_mock):
+    """Label aus der API wird korrekt zurückgegeben."""
     _mock_periods(
         requests_mock, [_legislature(111, "16. WP Neu", "2005-10-18", "2099-12-31")]
     )
 
-    src.fetch.abgeordnetenwatch.refresh_periods()
-
-    saved = pd.read_csv(tmp_path / "periods.csv")
-    assert len(saved) == 1
-    assert saved.iloc[0]["label"] == "16. WP Neu"
+    df = src.fetch.abgeordnetenwatch.fetch_periods_df()
+    assert len(df) == 1
+    assert df.iloc[0]["label"] == "16. WP Neu"
 
 
-def test_refresh_periods_period_id_stays_integer(requests_mock, monkeypatch, tmp_path):
+def test_refresh_periods_period_id_stays_integer(requests_mock):
     """period_id und bundestag_number müssen int64 bleiben."""
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     _mock_periods(
         requests_mock, [_legislature(111, "16. WP", "2005-10-18", "2099-12-31")]
     )
 
-    src.fetch.abgeordnetenwatch.refresh_periods()
-
-    saved = pd.read_csv(tmp_path / "periods.csv")
-    assert pd.api.types.is_integer_dtype(saved["period_id"])
-    assert pd.api.types.is_integer_dtype(saved["bundestag_number"])
+    df = src.fetch.abgeordnetenwatch.fetch_periods_df()
+    assert pd.api.types.is_integer_dtype(df["period_id"])
+    assert pd.api.types.is_integer_dtype(df["bundestag_number"])
 
 
 # ─── refresh_sidejobs: date parsing from label ─────────────────────────────────
@@ -520,15 +473,7 @@ def test_fetch_votes_missing_vote_key_skips_that_row(requests_mock, tmp_path):
 def test_fetch_committees_empty_result(requests_mock, monkeypatch, tmp_path):
     """If API returns 0 committees, both returned DataFrames are empty with correct columns."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     requests_mock.get(f"{BASE_URL}/committees", json={"data": []})
     requests_mock.get(f"{BASE_URL}/committee-memberships", json={"data": []})
 
@@ -545,15 +490,7 @@ def test_fetch_committees_null_candidacy_mandate_no_crash(
 ):
     """candidacy_mandate=null in API response must be handled gracefully."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     requests_mock.get(f"{BASE_URL}/committees", json={"data": []})
     requests_mock.get(
         f"{BASE_URL}/committee-memberships",
@@ -575,15 +512,7 @@ def test_fetch_committees_null_candidacy_mandate_no_crash(
 def test_fetch_committees_null_committee_no_crash(requests_mock, monkeypatch, tmp_path):
     """committee=null in a membership row must be skipped gracefully, not crash."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
+    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "_period_id_for", lambda p: 111)
     requests_mock.get(f"{BASE_URL}/committees", json={"data": []})
     requests_mock.get(
         f"{BASE_URL}/committee-memberships",
@@ -606,14 +535,11 @@ def test_fetch_committees_null_committee_no_crash(requests_mock, monkeypatch, tm
 # ─── refresh_periods: null end_date_period ────────────────────────────────────
 
 
-def test_refresh_periods_null_end_date_does_not_crash(
-    requests_mock, monkeypatch, tmp_path
-):
+def test_refresh_periods_null_end_date_does_not_crash(requests_mock):
     """ASSUMPTION: end_date_period is always a string.
     REALITY: for an ongoing legislature the API may return end_date_period=null.
     'today <= None' raises TypeError — crashing the entire refresh_periods() call.
     """
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     _mock_periods(
         requests_mock,
         [

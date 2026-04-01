@@ -24,6 +24,7 @@ from .analysis.transforms import (
     compute_title_counts,
 )
 from .cli import add_period_argument, build_parser, configure_logging
+from .fetch.abgeordnetenwatch import fetch_periods_df
 from .storage import DATA_DIR, OUTPUTS_DIR
 
 log = logging.getLogger(__name__)
@@ -413,11 +414,11 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    periods_df = pd.read_csv(DATA_DIR / "periods.csv")
+    periods_df = fetch_periods_df()
     if args.period is not None and args.period not in set(
         periods_df["bundestag_number"].astype(int)
     ):
-        msg = f"Period {args.period} not found in periods.csv."
+        msg = f"Period {args.period} not found."
         raise SystemExit(msg)
 
     available: list[dict] = []

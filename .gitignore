@@ -58,11 +58,10 @@ data/*/plenarprotokolle/
 data/*/plenary_protocols/
 data/*/speeches.csv
 
-# Werden bei jedem CI-Run frisch geladen
+# Werden bei jedem CI-Run frisch geladen (nie auf Disk persistiert)
 data/*/committees.csv
 data/*/committee_memberships.csv
 data/*/polls.csv
 data/*/politicians.csv
 data/*/mandates.csv
 data/*/sidejobs.csv
-data/periods.csv

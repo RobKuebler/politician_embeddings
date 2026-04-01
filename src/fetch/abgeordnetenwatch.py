@@ -28,16 +28,38 @@ PAGE_SIZE = 1000  # API supports up to 1000 results per page
 FIRST_BUNDESTAG_NUMBER = 16
 
 
-def _period_id_for(period: int) -> int:
-    """Return the abgeordnetenwatch API period_id for a given period.
+def fetch_periods_df() -> pd.DataFrame:
+    """Fetch all Bundestag legislature periods from API and return as DataFrame.
 
-    Reads DATA_DIR/periods.csv. Isolated from src.storage so that monkeypatching
-    DATA_DIR in this module is sufficient for tests.
+    Returns columns: period_id, label, bundestag_number, start_date, end_date.
+    Always fetches fresh — the data is small and changes rarely.
     """
-    df = pd.read_csv(DATA_DIR / "periods.csv")
+    raw = fetch_all_v2(
+        "parliament-periods",
+        params={"parliament": BUNDESTAG_PARLIAMENT_ID},
+    )
+    legislatures = [p for p in raw if p["type"] == "legislature"]
+    legislatures.sort(key=lambda p: p["start_date_period"])
+    return pd.DataFrame(
+        [
+            {
+                "period_id": p["id"],
+                "label": p["label"],
+                "bundestag_number": i + FIRST_BUNDESTAG_NUMBER,
+                "start_date": p["start_date_period"],
+                "end_date": p["end_date_period"],
+            }
+            for i, p in enumerate(legislatures)
+        ]
+    )
+
+
+def _period_id_for(period: int) -> int:
+    """Return the abgeordnetenwatch API period_id for a given Bundestag number."""
+    df = fetch_periods_df()
     match = df[df["bundestag_number"] == period]
     if match.empty:
-        msg = f"Period {period} not found in periods.csv."
+        msg = f"Period {period} not found."
         raise ValueError(msg)
     return int(match.iloc[0]["period_id"])
 
@@ -87,43 +109,17 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
 
 
 def refresh_periods() -> int:
-    """Fetch all Bundestag legislature periods, write periods.csv.
+    """Fetch all Bundestag legislature periods and return the current bundestag_number.
 
-    Writes data/periods.csv (period_id, bundestag_number, label, start_date, end_date)
-    so the dashboard can list all available periods dynamically without hardcoding.
-    Returns the bundestag_number of the currently active period.
-    so the dashboard can list all available periods dynamically without hardcoding.
-    Returns the bundestag_number of the currently active period.
+    No CSV is written — the data is small and always fetched fresh.
     """
-    raw = fetch_all_v2(
-        "parliament-periods",
-        params={"parliament": BUNDESTAG_PARLIAMENT_ID},
-    )
-    legislatures = [p for p in raw if p["type"] == "legislature"]
-
-    # Sort chronologically so position index == Bundestag ordinal number (1-based)
-    legislatures.sort(key=lambda p: p["start_date_period"])
-    df = pd.DataFrame(
-        [
-            {
-                "period_id": p["id"],
-                "label": p["label"],
-                "bundestag_number": i + FIRST_BUNDESTAG_NUMBER,
-                "start_date": p["start_date_period"],
-                "end_date": p["end_date_period"],
-            }
-            for i, p in enumerate(legislatures)
-        ]
-    )
-    df.to_csv(DATA_DIR / "periods.csv", index=False)
-
-    # Find current active period and return its bundestag_number.
+    df = fetch_periods_df()
     today = datetime.now(tz=UTC).date().isoformat()
-    for i, p in enumerate(legislatures):
-        end = p["end_date_period"] or "9999-12-31"
-        if p["start_date_period"] <= today <= end:
-            period = i + FIRST_BUNDESTAG_NUMBER
-            log.info("Current period: %s (period=%d)", p["label"], period)
+    for _, row in df.iterrows():
+        end = row["end_date"] or "9999-12-31"
+        if str(row["start_date"]) <= today <= str(end):
+            period = int(row["bundestag_number"])
+            log.info("Current period: %s (period=%d)", row["label"], period)
             return period
     msg = "No active Bundestag legislative period found."
     raise RuntimeError(msg)
