@@ -86,7 +86,7 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
     return all_data
 
 
-def upsert_periods() -> int:
+def refresh_periods() -> int:
     """Fetch all Bundestag legislature periods, write periods.csv.
 
     Writes data/periods.csv (period_id, bundestag_number, label, start_date, end_date)
@@ -235,7 +235,7 @@ def find_polls_missing_votes(all_poll_ids: list[int], votes_path: Path) -> list[
     return [pid for pid in all_poll_ids if pid not in voted_ids]
 
 
-def upsert_polls(period: int) -> pd.DataFrame:
+def refresh_polls(period: int) -> pd.DataFrame:
     """Fetch all polls from API and write to CSV. Returns the polls DataFrame."""
     period_id = _period_id_for(period)
     df = fetch_polls(period_id)
@@ -308,7 +308,7 @@ def fetch_politician_details(politician_ids: list[int]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def upsert_politicians(period: int) -> tuple[pd.DataFrame, dict]:
+def refresh_politicians(period: int) -> tuple[pd.DataFrame, dict]:
     """Fetch all politicians and their details from API, write to CSV.
 
     Returns (full politicians df, mandate_id -> politician_id mapping).
@@ -319,13 +319,6 @@ def upsert_politicians(period: int) -> tuple[pd.DataFrame, dict]:
     df = df.merge(df_details, on="politician_id", how="left")
     df.to_csv(DATA_DIR / str(period) / "politicians.csv", index=False)
     log.info("Wrote %d politicians.", len(df))
-
-    pd.DataFrame(
-        [
-            {"mandate_id": k, "politician_id": v}
-            for k, v in mandate_to_politician.items()
-        ]
-    ).to_csv(DATA_DIR / str(period) / "mandates.csv", index=False)
 
     return df, mandate_to_politician
 
@@ -454,7 +447,7 @@ def _parse_sidejob_dates(extra: str | None) -> tuple[str | None, str | None]:
     return _parse_date(text), None
 
 
-def upsert_sidejobs(period: int, mandate_to_politician: dict[int, int]) -> None:
+def refresh_sidejobs(period: int, mandate_to_politician: dict[int, int]) -> None:
     """Fetch all sidejobs, filter to this period's mandates, and save to CSV.
 
     The sidejobs API has no parliament_period filter, so we fetch everything
@@ -582,13 +575,13 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    period = args.period or upsert_periods()
+    period = args.period or refresh_periods()
     period_dir = DATA_DIR / str(period)
     period_dir.mkdir(parents=True, exist_ok=True)
 
-    df_polls = upsert_polls(period)
-    _, mandate_to_politician = upsert_politicians(period)
-    upsert_sidejobs(period, mandate_to_politician)
+    df_polls = refresh_polls(period)
+    _, mandate_to_politician = refresh_politicians(period)
+    refresh_sidejobs(period, mandate_to_politician)
 
     votes_path = period_dir / "votes.csv"
     votes_before = _read_bytes_or_none(votes_path)

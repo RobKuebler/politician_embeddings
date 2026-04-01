@@ -39,9 +39,11 @@ jobs:
         run: uv run python -m src.fetch.abgeordnetenwatch
 
       - name: Download new plenary protocol XMLs
+        id: fetch_xml
         run: uv run python -m src.fetch.protocol_xml
 
       - name: Compute TF-IDF word stats
+        if: steps.fetch_xml.outputs.changed == 'true'
         run: uv run python -m src.analysis.word_stats
 
       - name: Train model
