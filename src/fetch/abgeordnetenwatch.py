@@ -3,6 +3,9 @@
 Provides functions to load legislators, polls, votes, sidejobs, and committees
 for a given Bundestag legislature period. All data is returned as DataFrames or
 written to disk; no storage side-effects unless explicitly documented.
+
+Exception: fetch_votes() writes to disk — it appends vote rows to votes.csv
+incrementally so that interrupted runs can resume without re-fetching.
 """
 
 import csv
@@ -18,9 +21,6 @@ from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
 log = logging.getLogger(__name__)
-
-DATA_DIR = Path(__file__).parents[2] / "data"
-OUTPUTS_DIR = Path(__file__).parents[2] / "outputs"
 
 BASE_URL = "https://www.abgeordnetenwatch.de/api/v2"
 BUNDESTAG_PARLIAMENT_ID = 5
@@ -579,13 +579,3 @@ def fetch_committees(
     )
     log.info("Fetched %d committee memberships.", len(df_memberships))
     return df_committees, df_memberships
-
-
-def current_period() -> int:
-    """Return the bundestag_number of the currently active legislature."""
-    return refresh_periods()
-
-
-def current_wahlperiode() -> int:
-    """Backward-compatible wrapper for the old helper name."""
-    return current_period()

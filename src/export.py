@@ -24,7 +24,8 @@ from .analysis.transforms import (
     compute_title_counts,
 )
 from .cli import add_period_argument, build_parser, configure_logging
-from .fetch.abgeordnetenwatch import DATA_DIR, OUTPUTS_DIR, fetch_periods_df
+from .fetch.abgeordnetenwatch import fetch_periods_df
+from .paths import DATA_DIR, OUTPUTS_DIR
 
 log = logging.getLogger(__name__)
 
@@ -355,11 +356,14 @@ def export_period(
 
     # ── polls ─────────────────────────────────────────────────────────────────
     if df_polls is None:
-        df_polls = pd.read_csv(period_dir / "polls.csv")
-    polls_df = df_polls
+        polls_path = period_dir / "polls.csv"
+        if not polls_path.exists():
+            log.warning("No polls.csv for period %d, skipping", period)
+            return False
+        df_polls = pd.read_csv(polls_path)
     _write(
         OUTPUT_DIR / f"polls_{period}.json",
-        polls_df.filter(["poll_id", "topic"]).to_dict("records"),
+        df_polls.filter(["poll_id", "topic"]).to_dict("records"),
     )
 
     # ── cohesion ──────────────────────────────────────────────────────────────
@@ -424,11 +428,20 @@ def export_party_speech_stats(period: int) -> None:
     )
 
 
+def export_periods(available: list[dict]) -> None:
+    """Write the periods.json index file consumed by the frontend."""
+    _write(OUTPUT_DIR / "periods.json", available)
+
+
 def _period_is_exportable(period: int) -> bool:
     """Return whether a period has the required export inputs."""
     period_dir = DATA_DIR / str(period)
     emb_path = OUTPUTS_DIR / f"politician_embeddings_{period}.csv"
-    return (period_dir / "politicians.csv").exists() and emb_path.exists()
+    return (
+        (period_dir / "politicians.csv").exists()
+        and (period_dir / "votes.csv").exists()
+        and emb_path.exists()
+    )
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -454,7 +467,9 @@ def main(argv: list[str] | None = None) -> None:
     for _, row in periods_df.iterrows():
         period = int(row["bundestag_number"])
         p_start = date.fromisoformat(str(row["start_date"]))
-        p_end = date.fromisoformat(str(row["end_date"]))
+        raw_end = row["end_date"]
+        now = datetime.now(tz=UTC).date()
+        p_end = date.fromisoformat(str(raw_end)) if pd.notna(raw_end) else now
 
         if _period_is_exportable(period):
             available.append(
@@ -472,7 +487,7 @@ def main(argv: list[str] | None = None) -> None:
         export_party_word_freq(period)
         export_party_speech_stats(period)
 
-    _write(OUTPUT_DIR / "periods.json", available)
+    export_periods(available)
     log.info("Done. Exported %d periods.", len(available))
 
 

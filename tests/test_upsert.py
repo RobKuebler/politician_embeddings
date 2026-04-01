@@ -512,6 +512,36 @@ def test_refresh_periods_null_end_date_does_not_crash(requests_mock):
     assert period == 20  # parsed from label "20. WP"
 
 
+def test_refresh_periods_recess_falls_back_to_latest(requests_mock):
+    """ASSUMPTION: today always falls within an active legislature.
+    REALITY: during parliamentary recess (after dissolution, before new Bundestag)
+    no period matches today — df.iloc[0] on an empty active set raises IndexError.
+    After fix: falls back to the last known period (df.iloc[-1]).
+    """
+    _mock_periods(
+        requests_mock,
+        [
+            {
+                "id": 111,
+                "type": "legislature",
+                "label": "19. WP",
+                "start_date_period": "2017-10-24",
+                "end_date_period": "2021-10-25",  # fully in the past
+            },
+            {
+                "id": 222,
+                "type": "legislature",
+                "label": "20. WP",
+                "start_date_period": "2021-10-26",
+                "end_date_period": "2025-10-28",  # also in the past — simulates recess
+            },
+        ],
+    )
+
+    period = src.fetch.abgeordnetenwatch.refresh_periods()
+    assert period == 20  # last known period returned during recess
+
+
 # ─── fetch_all_v2: null data field ────────────────────────────────────────────
 
 

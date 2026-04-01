@@ -29,6 +29,10 @@ Thumbs.db
 .playwright-cli/
 frontend/.playwright-cli/
 
+# Playwright test output
+playwright-report/
+test-results/
+
 # Next.js build output
 .next/
 

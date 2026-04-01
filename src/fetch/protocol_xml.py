@@ -22,7 +22,8 @@ from ..cli import (
     configure_logging,
     write_github_output,
 )
-from ..fetch.abgeordnetenwatch import DATA_DIR, current_period
+from ..fetch.abgeordnetenwatch import refresh_periods
+from ..paths import DATA_DIR
 
 log = logging.getLogger(__name__)
 
@@ -194,7 +195,7 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    period = args.period or current_period()
+    period = args.period or refresh_periods()
     out_dir = DATA_DIR / str(period)
 
     log.info("Period %d...", period)

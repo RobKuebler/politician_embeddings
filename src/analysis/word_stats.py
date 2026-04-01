@@ -20,8 +20,9 @@ from typing import TYPE_CHECKING
 import pandas as pd
 
 from ..cli import add_period_argument, build_parser, configure_logging
-from ..fetch.abgeordnetenwatch import DATA_DIR, current_period
+from ..fetch.abgeordnetenwatch import refresh_periods
 from ..parse.protocols import parse_alle_sitzungen
+from ..paths import DATA_DIR
 
 if TYPE_CHECKING:
     from HanTa.HanoverTagger import HanoverTagger
@@ -582,7 +583,7 @@ def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
 
-    period = args.period or current_period()
+    period = args.period or refresh_periods()
     out_dir = DATA_DIR / str(period)
 
     log.info("Period %d...", period)

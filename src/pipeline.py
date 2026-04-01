@@ -7,7 +7,7 @@ votes.csv is read/written to disk (it accumulates incrementally across runs).
 
 import argparse
 import logging
-from datetime import date
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -19,14 +19,12 @@ from .cli import (
     write_github_output,
 )
 from .export import (
-    OUTPUT_DIR,
-    _write,
     export_party_speech_stats,
     export_party_word_freq,
     export_period,
+    export_periods,
 )
 from .fetch.abgeordnetenwatch import (
-    DATA_DIR,
     fetch_periods_df,
     fetch_votes,
     find_polls_missing_votes,
@@ -35,7 +33,8 @@ from .fetch.abgeordnetenwatch import (
     refresh_polls,
     refresh_sidejobs,
 )
-from .model.model import OUTPUTS_DIR, save_embeddings
+from .model.model import save_embeddings
+from .paths import DATA_DIR, OUTPUTS_DIR
 
 
 def _read_bytes_or_none(path: Path) -> bytes | None:
@@ -59,6 +58,7 @@ def _train(
     min_improvement: float = 0.01,
 ) -> None:
     """Train the embedding model and save results to outputs/."""
+    # Deferred: lightning is slow to import and not needed when training is skipped.
     import lightning as L
 
     from .model.model import prepare_votes, train
@@ -111,14 +111,20 @@ def main(argv: list[str] | None = None) -> None:
     votes_changed = _read_bytes_or_none(votes_path) != votes_before
 
     # ── train ──────────────────────────────────────────────────────────────────
-    if votes_changed:
-        df_votes = pd.read_csv(votes_path)
-        if not df_votes.empty:
-            _train(period, df_votes, df_politicians, df_polls)
+    emb_path = OUTPUTS_DIR / f"politician_embeddings_{period}.csv"
+    if votes_changed or not emb_path.exists():
+        if not votes_path.exists():
+            log.warning("No votes.csv for period %d, cannot train.", period)
         else:
-            log.warning("votes.csv is empty for period %d, skipping training.", period)
+            df_votes = pd.read_csv(votes_path)
+            if not df_votes.empty:
+                _train(period, df_votes, df_politicians, df_polls)
+            else:
+                log.warning(
+                    "votes.csv is empty for period %d, skipping training.", period
+                )
     else:
-        log.info("Votes unchanged, skipping training.")
+        log.info("Votes unchanged and embeddings present, skipping training.")
 
     # ── export ─────────────────────────────────────────────────────────────────
     periods_df = fetch_periods_df()
@@ -128,7 +134,9 @@ def main(argv: list[str] | None = None) -> None:
     for _, row in periods_df.iterrows():
         p = int(row["bundestag_number"])
         p_start = date.fromisoformat(str(row["start_date"]))
-        p_end = date.fromisoformat(str(row["end_date"]))
+        raw_end = row["end_date"]
+        now = datetime.now(tz=UTC).date()
+        p_end = date.fromisoformat(str(raw_end)) if pd.notna(raw_end) else now
 
         kwargs = {}
         if p == period:
@@ -152,7 +160,7 @@ def main(argv: list[str] | None = None) -> None:
             export_party_word_freq(p)
             export_party_speech_stats(p)
 
-    _write(OUTPUT_DIR / "periods.json", available)
+    export_periods(available)
     log.info("Done. Exported %d periods.", len(available))
 
     write_github_output(

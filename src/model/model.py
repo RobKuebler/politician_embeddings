@@ -7,7 +7,7 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 
-from ..fetch.abgeordnetenwatch import OUTPUTS_DIR
+from ..paths import OUTPUTS_DIR
 
 log = logging.getLogger(__name__)
 

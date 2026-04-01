@@ -61,14 +61,14 @@ def main(argv: list[str] | None = None) -> None:
     import lightning as L
 
     from ..fetch.abgeordnetenwatch import (
-        DATA_DIR,
-        current_period,
+        refresh_periods,
         refresh_politicians,
         refresh_polls,
     )
-    from .model import OUTPUTS_DIR, prepare_votes, save_embeddings, train
+    from ..paths import DATA_DIR, OUTPUTS_DIR
+    from .model import prepare_votes, save_embeddings, train
 
-    period = args.period or current_period()
+    period = args.period or refresh_periods()
     votes_path = DATA_DIR / str(period) / "votes.csv"
     if not votes_path.exists():
         log.warning("No votes.csv for period %d. Run the pipeline first.", period)
