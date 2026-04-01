@@ -90,9 +90,19 @@ def test_tokenize_genderstern_bleibt():
 
 
 def test_tokenize_gender_slash():
-    # Lehrer/innen → Slash wird zu Leerzeichen → "lehrer" und "innen" getrennt
+    # Lehrer/innen wird als zusammenhängende Genderform erhalten
     tokens = cws._tokenize("Lehrer/innen sollen besser bezahlt werden")
-    assert "lehrer" in tokens
+    assert "lehrer*innen" in tokens
+    assert "lehrer" not in tokens
+    assert "innen" not in tokens
+
+
+def test_tokenize_gender_slash_mit_bindestrich():
+    # Besucher/-innen soll nicht zu "besucher" + "innen" zerfallen
+    tokens = cws._tokenize("Besucher/-innen fordern mehr Sicherheit")
+    assert "besucher*innen" in tokens
+    assert "besucher" not in tokens
+    assert "innen" not in tokens
 
 
 def test_tokenize_gender_doppelpunkt_bleibt():
@@ -125,9 +135,9 @@ def test_tfidf_diskriminierende_woerter_ranken_hoeher():
     spd_top = df[df["fraktion"] == "SPD"].sort_values("rang")["wort"].tolist()
     afd_top = df[df["fraktion"] == "AfD"].sort_values("rang")["wort"].tolist()
 
-    # Parteispezifische Wörter an der Spitze
-    assert spd_top[0] in {"klimawandel", "sozial", "arbeit"}
-    assert afd_top[0] in {"grenze", "migration", "sicherheit"}
+    # Parteispezifische Begriffe bzw. Konzepte sollen vorne liegen.
+    assert any(w in spd_top[:3] for w in ("klimawandel", "sozial", "arbeit"))
+    assert any(w in afd_top[:3] for w in ("grenze", "migration", "sicherheit"))
     # Gemeinsames Wort nicht vorne
     assert "bundestag" not in spd_top[:3]
     assert "bundestag" not in afd_top[:3]
@@ -153,6 +163,12 @@ def test_tfidf_stopwords_werden_entfernt():
     assert "klimawandel" in df["wort"].to_numpy()
 
 
+def test_tfidf_ascii_stopword_erfasst_umlautform():
+    party_texts = {"SPD": "für klimawandel für wirtschaft"}
+    df = cws.compute_tfidf(party_texts, stopwords=cws._STOPWORDS, top_n=10)
+    assert "für" not in df["wort"].to_numpy()
+
+
 def test_tfidf_top_n_begrenzt_eintraege():
     # Use 50 distinct alphabetic words to test top_n limiting
     alpha = "abcdefghijklmnopqrstuvwxyz"
@@ -160,6 +176,35 @@ def test_tfidf_top_n_begrenzt_eintraege():
     party_texts: dict[str, str] = {"SPD": " ".join(words)}
     df = cws.compute_tfidf(party_texts, stopwords=set(), top_n=10)
     assert len(df[df["fraktion"] == "SPD"]) == 10
+
+
+def test_tfidf_nimmt_wiederholte_bigrams_als_konzepte_auf():
+    party_texts = {
+        "SPD": (
+            "erneuerbare energien fördern "
+            "erneuerbare energien ausbauen "
+            "erneuerbare energien absichern"
+        ),
+        "AfD": "grenze sichern migration begrenzen ordnung herstellen",
+    }
+    df = cws.compute_tfidf(party_texts, stopwords=set(), top_n=10)
+
+    spd_words = df[df["fraktion"] == "SPD"]["wort"].tolist()
+    assert "erneuerbare energien" in spd_words
+
+
+def test_build_phrase_tokens_filtert_anrede_und_fraktionsmuster():
+    tokens = [
+        "afd-fraktion",
+        "präsident",
+        "wirtschaft",
+        "wachstum",
+        "wirtschaft",
+        "wachstum",
+    ]
+    phrases = cws._build_phrase_tokens(tokens)
+    assert "afd-fraktion präsident" not in phrases
+    assert "wirtschaft wachstum" in phrases
 
 
 # ---------------------------------------------------------------------------
@@ -231,8 +276,8 @@ def test_speech_stats_spalten_korrekt():
 # ---------------------------------------------------------------------------
 
 
-def test_fetch_word_stats_schreibt_csvs(tmp_path):
-    """fetch_word_stats liest speeches.csv und schreibt beide Output-CSVs."""
+def test_fetch_word_stats_schreibt_csvs(tmp_path, monkeypatch):
+    """fetch_word_stats parst XMLs und schreibt beide Output-CSVs."""
     speeches = pd.DataFrame(
         [
             {
@@ -257,9 +302,7 @@ def test_fetch_word_stats_schreibt_csvs(tmp_path):
             },
         ]
     )
-    (tmp_path / "speeches.csv").write_text(
-        speeches.to_csv(index=False), encoding="utf-8"
-    )
+    monkeypatch.setattr(cws, "parse_alle_sitzungen", lambda out_dir: speeches)
 
     cws.fetch_word_stats(tmp_path, top_n=5)
 
@@ -277,12 +320,6 @@ def test_fetch_word_stats_schreibt_csvs(tmp_path):
     }
     assert len(wf) == 10  # 5 Woerter x 2 Parteien
     assert len(ss) == 2  # 1 Redner pro Partei
-
-
-def test_fetch_word_stats_fehlendes_csv_wirft_systemexit(tmp_path):
-    """Fehlendes speeches.csv → SystemExit."""
-    with pytest.raises(SystemExit):
-        cws.fetch_word_stats(tmp_path)
 
 
 # ---------------------------------------------------------------------------

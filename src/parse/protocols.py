@@ -1,7 +1,6 @@
-"""Parse plenary protocol XMLs and extract speeches to speeches.csv.
+"""Parse plenary protocol XMLs and print speech counts (for debugging).
 
-Reads all *.xml from data/{period}/plenary_protocols/ and writes
-data/{period}/speeches.csv (gitignored — can be large).
+Reads all *.xml from data/{period}/plenary_protocols/.
 
 Usage:
     uv run python -m src.parse.protocols --period 20
@@ -128,10 +127,9 @@ def parse_sitzung(xml_path: Path) -> list[dict]:
 
 
 def parse_alle_sitzungen(out_dir: Path) -> pd.DataFrame:
-    """Parse all XMLs in out_dir/plenary_protocols/ and write speeches.csv.
+    """Parse all XMLs in out_dir/plenary_protocols/ and return a DataFrame.
 
-    Returns the combined DataFrame. Always rewrites speeches.csv from scratch
-    (XMLs are the source of truth).
+    Returns one row per speech. Does not write any files.
     """
     xml_dir = Path(out_dir) / "plenary_protocols"
     xml_files = sorted(xml_dir.glob("*.xml"))
@@ -146,9 +144,7 @@ def parse_alle_sitzungen(out_dir: Path) -> pd.DataFrame:
         log.info("%s: extracted %d speeches", xml_path.name, len(rows))
 
     df = pd.DataFrame(all_rows, columns=_COLS)
-    csv_path = Path(out_dir) / "speeches.csv"
-    df.to_csv(csv_path, index=False)
-    log.info("wrote speeches.csv: %d speeches from %d sessions", len(df), len(xml_files))
+    log.info("parsed %d speeches from %d sessions", len(df), len(xml_files))
     return df
 
 

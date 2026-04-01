@@ -227,52 +227,18 @@ def test_find_polls_missing_votes_all_present(tmp_path):
     assert result == []
 
 
-def test_find_polls_missing_votes_self_heals_after_failed_fetch(
-    requests_mock, tmp_path, monkeypatch
-):
-    """Core bug scenario: poll is in polls.csv but has no votes.
+def test_find_polls_missing_votes_erkennt_luecke_nach_fehlgeschlagenem_fetch(tmp_path):
+    """Poll in der Liste, aber kein Eintrag in votes.csv — muss als fehlend erkannt werden.
 
-    After a failed vote fetch, upsert_polls marks the poll as "known".
-    find_polls_missing_votes must still detect it as missing by checking
-    votes.csv instead of polls.csv.
+    Testet den Self-Healing-Mechanismus: find_polls_missing_votes liest votes.csv,
+    nicht polls.csv, sodass ein fehlgeschlagener Vote-Fetch beim nächsten Lauf
+    automatisch wiederholt wird.
     """
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [132],
-            "label": ["21. WP"],
-            "bundestag_number": [21],
-            "start_date": ["2021-10-26"],
-            "end_date": ["2025-10-22"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "21"
-    period_dir.mkdir()
-
-    # API returns polls 1 and 2
-    requests_mock.get(
-        f"{BASE_URL}/polls",
-        json={
-            "data": [
-                {"id": 1, "label": "Poll 1"},
-                {"id": 2, "label": "Poll 2"},
-            ]
-        },
-    )
-
-    # Run 1: upsert_polls writes both polls to polls.csv
-    df_polls, _ = src.fetch.abgeordnetenwatch.upsert_polls(21)
-
-    # Simulate: votes fetched for poll 1 only (poll 2 failed)
-    votes_path = period_dir / "votes.csv"
+    votes_path = tmp_path / "votes.csv"
+    # Nur Poll 1 hat Votes — Poll 2 ist nach einem fehlgeschlagenen Fetch nicht da
     pd.DataFrame({"politician_id": [10], "poll_id": [1], "answer": ["yes"]}).to_csv(
         votes_path, index=False
     )
 
-    # Run 2: upsert_polls returns no "new" polls (both in polls.csv)
-    _, new_from_upsert = src.fetch.abgeordnetenwatch.upsert_polls(21)
-    assert new_from_upsert == []  # upsert_polls can't detect the gap
-
-    # But find_polls_missing_votes correctly identifies poll 2 as missing
-    missing = find_polls_missing_votes(df_polls["poll_id"].tolist(), votes_path)
+    missing = find_polls_missing_votes([1, 2], votes_path)
     assert missing == [2]

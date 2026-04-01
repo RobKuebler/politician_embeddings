@@ -87,9 +87,11 @@ def fetch_all_v2(endpoint: str, params: dict | None = None) -> list:
 
 
 def upsert_periods() -> int:
-    """Fetch all Bundestag legislature periods, upsert periods.csv, return period.
+    """Fetch all Bundestag legislature periods, write periods.csv.
 
     Writes data/periods.csv (period_id, bundestag_number, label, start_date, end_date)
+    so the dashboard can list all available periods dynamically without hardcoding.
+    Returns the bundestag_number of the currently active period.
     so the dashboard can list all available periods dynamically without hardcoding.
     Returns the bundestag_number of the currently active period.
     """
@@ -99,11 +101,9 @@ def upsert_periods() -> int:
     )
     legislatures = [p for p in raw if p["type"] == "legislature"]
 
-    # Upsert into periods.csv
-    path = DATA_DIR / "periods.csv"
     # Sort chronologically so position index == Bundestag ordinal number (1-based)
     legislatures.sort(key=lambda p: p["start_date_period"])
-    df_api = pd.DataFrame(
+    df = pd.DataFrame(
         [
             {
                 "period_id": p["id"],
@@ -115,13 +115,7 @@ def upsert_periods() -> int:
             for i, p in enumerate(legislatures)
         ]
     )
-    if path.exists():
-        df_existing = pd.read_csv(path).set_index("period_id")
-        df_merged = df_api.set_index("period_id").combine_first(df_existing)
-        df_merged.update(df_api.set_index("period_id"))
-        df_merged.reset_index().to_csv(path, index=False)
-    else:
-        df_api.to_csv(path, index=False)
+    df.to_csv(DATA_DIR / "periods.csv", index=False)
 
     # Find current active period and return its bundestag_number.
     today = datetime.now(tz=UTC).date().isoformat()
@@ -241,34 +235,13 @@ def find_polls_missing_votes(all_poll_ids: list[int], votes_path: Path) -> list[
     return [pid for pid in all_poll_ids if pid not in voted_ids]
 
 
-def upsert_polls(period: int) -> tuple[pd.DataFrame, list]:
-    """Fetch all polls from API, upsert into existing CSV.
-
-    Returns (full polls df, list of new poll_ids that weren't in the CSV yet).
-    New poll_ids are the ones we still need to fetch votes for.
-    """
+def upsert_polls(period: int) -> pd.DataFrame:
+    """Fetch all polls from API and write to CSV. Returns the polls DataFrame."""
     period_id = _period_id_for(period)
-    df_api = fetch_polls(period_id)
-    path = DATA_DIR / str(period) / "polls.csv"
-
-    if not path.exists():
-        df_api.to_csv(path, index=False)
-        log.info("No existing polls CSV — wrote %d polls.", len(df_api))
-        return df_api, df_api["poll_id"].tolist()
-
-    df_existing = pd.read_csv(path)
-    known_ids = set(df_existing["poll_id"])
-    new_poll_ids = [pid for pid in df_api["poll_id"] if pid not in known_ids]
-
-    # Update existing rows (e.g. topic label changed) and append new ones
-    df_merged = df_existing.set_index("poll_id")
-    df_merged.update(df_api.set_index("poll_id"))
-    if new_poll_ids:
-        new_rows = df_api[df_api["poll_id"].isin(new_poll_ids)].set_index("poll_id")
-        df_merged = pd.concat([df_merged, new_rows])
-    df_merged.reset_index().to_csv(path, index=False)
-    log.info("%d new poll(s), %d updated.", len(new_poll_ids), len(df_existing))
-    return df_merged.reset_index(), new_poll_ids
+    df = fetch_polls(period_id)
+    df.to_csv(DATA_DIR / str(period) / "polls.csv", index=False)
+    log.info("Wrote %d polls.", len(df))
+    return df
 
 
 DETAIL_BATCH_SIZE = 200  # ids per id[in] request; keeps URLs well under limits
@@ -336,79 +309,25 @@ def fetch_politician_details(politician_ids: list[int]) -> pd.DataFrame:
 
 
 def upsert_politicians(period: int) -> tuple[pd.DataFrame, dict]:
-    """Fetch all politicians from API, upsert into existing CSV.
+    """Fetch all politicians and their details from API, write to CSV.
 
-    Updates changed name/party fields, adds newly elected politicians, and
-    fetches detail fields (occupation, year_of_birth, etc.) for politicians
-    where occupation is still unknown (incremental, no re-fetch).
     Returns (full politicians df, mandate_id -> politician_id mapping).
     """
     period_id = _period_id_for(period)
-    df_api, mandate_to_politician = fetch_politicians(period_id)
-    path = DATA_DIR / str(period) / "politicians.csv"
+    df, mandate_to_politician = fetch_politicians(period_id)
+    df_details = fetch_politician_details(df["politician_id"].tolist())
+    df = df.merge(df_details, on="politician_id", how="left")
+    df.to_csv(DATA_DIR / str(period) / "politicians.csv", index=False)
+    log.info("Wrote %d politicians.", len(df))
 
-    if not path.exists():
-        df_merged = df_api.copy()
-        log.info("No existing politicians CSV — wrote %d politicians.", len(df_api))
-    else:
-        # Specify dtype=object for string columns so pandas doesn't coerce all-NaN
-        # columns to float64. Without this, a column like field_title that has only
-        # NaN values in the CSV is read as float64, and a subsequent .update() with
-        # string values (e.g. "Dr.") raises TypeError.
-        df_existing = pd.read_csv(
-            path,
-            dtype={
-                "occupation": object,
-                "field_title": object,
-                "sex": object,
-                "education": object,
-            },
-        )
-        df_indexed = df_existing.set_index("politician_id")
-        df_indexed.update(df_api.set_index("politician_id"))
-
-        new_politicians = df_api[
-            ~df_api["politician_id"].isin(df_existing["politician_id"])
-        ]
-        if not new_politicians.empty:
-            df_indexed = pd.concat(
-                [df_indexed, new_politicians.set_index("politician_id")]
-            )
-            log.info("%d new politician(s) added.", len(new_politicians))
-        else:
-            log.info("No new politicians.")
-        df_merged = df_indexed.reset_index()
-
-    # Ensure detail columns exist (backwards compatible with old CSVs)
-    detail_cols = ["occupation", "year_of_birth", "field_title", "sex", "education"]
-    for col in detail_cols:
-        if col not in df_merged.columns:
-            df_merged[col] = pd.NA
-
-    # Only fetch details for politicians where occupation is not yet known
-    missing_ids = df_merged.loc[
-        df_merged["occupation"].isna(), "politician_id"
-    ].tolist()
-    if missing_ids:
-        log.info("%d politician(s) missing details, fetching...", len(missing_ids))
-        df_details = fetch_politician_details(missing_ids)
-        df_merged = df_merged.set_index("politician_id")
-        df_merged.update(df_details.set_index("politician_id"))
-        df_merged = df_merged.reset_index()
-
-    df_merged.to_csv(path, index=False)
-
-    # Save mandate->politician mapping so upsert_sidejobs can build a cross-period
-    # lookup
-    mandate_df = pd.DataFrame(
+    pd.DataFrame(
         [
             {"mandate_id": k, "politician_id": v}
             for k, v in mandate_to_politician.items()
         ]
-    )
-    mandate_df.to_csv(DATA_DIR / str(period) / "mandates.csv", index=False)
+    ).to_csv(DATA_DIR / str(period) / "mandates.csv", index=False)
 
-    return df_merged, mandate_to_politician
+    return df, mandate_to_politician
 
 
 # German month names → month number for parsing job_title_extra date strings.
@@ -603,12 +522,12 @@ def upsert_sidejobs(period: int, mandate_to_politician: dict[int, int]) -> None:
     log.info("Saved %d sidejobs for period %d.", len(df), period)
 
 
-def upsert_committees(period: int, mandate_to_politician: dict[int, int]) -> None:
-    """Fetch committees and memberships for a period, save as CSVs.
+def fetch_committees(
+    period: int, mandate_to_politician: dict[int, int]
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Fetch committees and memberships for a period from the API.
 
-    Produces two files:
-      - committees.csv: committee_id, label, topics (pipe-separated)
-      - committee_memberships.csv: politician_id, committee_id, role
+    Returns (df_committees, df_memberships). Does not write any files.
     """
     period_id = _period_id_for(period)
     log.info("Fetching committees for period %d...", period)
@@ -626,9 +545,7 @@ def upsert_committees(period: int, mandate_to_politician: dict[int, int]) -> Non
     df_committees = pd.DataFrame(
         committee_rows, columns=["committee_id", "label", "topics"]
     )
-    path = DATA_DIR / str(period) / "committees.csv"
-    df_committees.to_csv(path, index=False)
-    log.info("Saved %d committees.", len(df_committees))
+    log.info("Fetched %d committees.", len(df_committees))
 
     log.info("Fetching committee memberships...")
     raw_memberships = fetch_all_v2(
@@ -651,9 +568,8 @@ def upsert_committees(period: int, mandate_to_politician: dict[int, int]) -> Non
     df_memberships = pd.DataFrame(
         membership_rows, columns=["politician_id", "committee_id", "role"]
     )
-    path = DATA_DIR / str(period) / "committee_memberships.csv"
-    df_memberships.to_csv(path, index=False)
-    log.info("Saved %d committee memberships.", len(df_memberships))
+    log.info("Fetched %d committee memberships.", len(df_memberships))
+    return df_committees, df_memberships
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -665,41 +581,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> None:
     configure_logging()
     args = parse_args(argv)
-    periods_path = DATA_DIR / "periods.csv"
-    periods_before = _read_bytes_or_none(periods_path)
-    period = args.period or upsert_periods()
-    periods_changed = _read_bytes_or_none(periods_path) != periods_before
 
+    period = args.period or upsert_periods()
     period_dir = DATA_DIR / str(period)
     period_dir.mkdir(parents=True, exist_ok=True)
 
-    polls_path = period_dir / "polls.csv"
-    polls_before = _read_bytes_or_none(polls_path)
-    df_polls, _ = upsert_polls(period)
-    polls_changed = _read_bytes_or_none(polls_path) != polls_before
-
-    politicians_path = period_dir / "politicians.csv"
-    politicians_before = _read_bytes_or_none(politicians_path)
-    mandates_path = period_dir / "mandates.csv"
-    mandates_before = _read_bytes_or_none(mandates_path)
+    df_polls = upsert_polls(period)
     _, mandate_to_politician = upsert_politicians(period)
-    politicians_changed = _read_bytes_or_none(politicians_path) != politicians_before
-    mandates_changed = _read_bytes_or_none(mandates_path) != mandates_before
-
-    sidejobs_path = period_dir / "sidejobs.csv"
-    sidejobs_before = _read_bytes_or_none(sidejobs_path)
     upsert_sidejobs(period, mandate_to_politician)
-    sidejobs_changed = _read_bytes_or_none(sidejobs_path) != sidejobs_before
-
-    committees_path = period_dir / "committees.csv"
-    committees_before = _read_bytes_or_none(committees_path)
-    memberships_path = period_dir / "committee_memberships.csv"
-    memberships_before = _read_bytes_or_none(memberships_path)
-    upsert_committees(period, mandate_to_politician)
-    committees_changed = _read_bytes_or_none(committees_path) != committees_before
-    memberships_changed = (
-        _read_bytes_or_none(memberships_path) != memberships_before
-    )
 
     votes_path = period_dir / "votes.csv"
     votes_before = _read_bytes_or_none(votes_path)
@@ -716,23 +605,9 @@ def main(argv: list[str] | None = None) -> None:
         log.info("All votes up to date, nothing to fetch.")
     votes_changed = _read_bytes_or_none(votes_path) != votes_before
 
-    model_inputs_changed = polls_changed or politicians_changed or votes_changed
-    data_changed = any(
-        (
-            periods_changed,
-            polls_changed,
-            politicians_changed,
-            mandates_changed,
-            sidejobs_changed,
-            committees_changed,
-            memberships_changed,
-            votes_changed,
-        )
-    )
-
     write_github_output(
-        changed=data_changed,
-        model_inputs_changed=model_inputs_changed,
+        changed=True,  # always export: other data changes independently of votes
+        model_inputs_changed=votes_changed,
         votes_changed=votes_changed,
         fetched_polls=len(missing),
         period=period,

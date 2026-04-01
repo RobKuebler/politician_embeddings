@@ -125,8 +125,8 @@ def test_fetch_votes_missing_mandate_key_skipped(requests_mock, tmp_path):
 # ─── upsert_polls: correctness ────────────────────────────────────────────────
 
 
-def test_upsert_polls_first_run_all_polls_new(requests_mock, monkeypatch, tmp_path):
-    """First run: all polls returned as new, CSV created correctly."""
+def test_upsert_polls_schreibt_csv(requests_mock, monkeypatch, tmp_path):
+    """Polls werden von API geladen und als CSV gespeichert."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     pd.DataFrame(
         {
@@ -142,16 +142,16 @@ def test_upsert_polls_first_run_all_polls_new(requests_mock, monkeypatch, tmp_pa
         requests_mock, [{"id": 1, "label": "Poll A"}, {"id": 2, "label": "Poll B"}]
     )
 
-    _df, new_ids = src.fetch.abgeordnetenwatch.upsert_polls(20)
+    df = src.fetch.abgeordnetenwatch.upsert_polls(20)
 
-    assert sorted(new_ids) == [1, 2]
+    assert set(df["poll_id"]) == {1, 2}
     saved = pd.read_csv(tmp_path / "20" / "polls.csv")
     assert len(saved) == 2
     assert set(saved["poll_id"]) == {1, 2}
 
 
-def test_upsert_polls_updates_topic(requests_mock, monkeypatch, tmp_path):
-    """Existing poll with updated topic: topic is updated, no duplicate row."""
+def test_upsert_polls_poll_id_stays_integer(requests_mock, monkeypatch, tmp_path):
+    """poll_id muss int64 bleiben — float würde Downstream-Joins brechen."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     pd.DataFrame(
         {
@@ -162,77 +162,14 @@ def test_upsert_polls_updates_topic(requests_mock, monkeypatch, tmp_path):
             "end_date": ["2099-12-31"],
         }
     ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    pd.DataFrame({"poll_id": [1], "topic": ["Old Topic"]}).to_csv(
-        period_dir / "polls.csv", index=False
-    )
-    _mock_polls(
-        requests_mock, [{"id": 1, "label": "New Topic"}, {"id": 2, "label": "Poll B"}]
-    )
-
-    _df, new_ids = src.fetch.abgeordnetenwatch.upsert_polls(20)
-
-    saved = pd.read_csv(period_dir / "polls.csv")
-    assert len(saved) == 2  # not 3 (no duplicate for poll 1)
-    assert saved.loc[saved["poll_id"] == 1, "topic"].iloc[0] == "New Topic"
-    assert new_ids == [2]
-
-
-def test_upsert_polls_no_new_polls_returns_empty_list(
-    requests_mock, monkeypatch, tmp_path
-):
-    """When all polls already known, new_poll_ids is empty."""
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    pd.DataFrame({"poll_id": [1, 2], "topic": ["A", "B"]}).to_csv(
-        period_dir / "polls.csv", index=False
-    )
-    _mock_polls(requests_mock, [{"id": 1, "label": "A"}, {"id": 2, "label": "B"}])
-
-    _, new_ids = src.fetch.abgeordnetenwatch.upsert_polls(20)
-    assert new_ids == []
-
-
-def test_upsert_polls_poll_id_stays_integer_after_upsert(
-    requests_mock, monkeypatch, tmp_path
-):
-    """ASSUMPTION: poll_id stays int64 after upsert CSV roundtrip.
-    REALITY: pandas can silently coerce int to float64 via index operations.
-    """
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    pd.DataFrame({"poll_id": [1], "topic": ["A"]}).to_csv(
-        period_dir / "polls.csv", index=False
-    )
+    (tmp_path / "20").mkdir()
     _mock_polls(requests_mock, [{"id": 1, "label": "A"}, {"id": 2, "label": "B"}])
 
     src.fetch.abgeordnetenwatch.upsert_polls(20)
 
-    saved = pd.read_csv(period_dir / "polls.csv")
+    saved = pd.read_csv(tmp_path / "20" / "polls.csv")
     assert pd.api.types.is_integer_dtype(saved["poll_id"]), (
-        f"poll_id dtype is {saved['poll_id'].dtype}, expected int — "
-        "a float here would silently break downstream joins"
+        f"poll_id dtype is {saved['poll_id'].dtype}, expected int"
     )
 
 
@@ -293,8 +230,8 @@ def test_upsert_politicians_first_run(requests_mock, monkeypatch, tmp_path):
     assert (tmp_path / "20" / "mandates.csv").exists()
 
 
-def test_upsert_politicians_party_update(requests_mock, monkeypatch, tmp_path):
-    """Politician who switched parties: party updated, existing occupation preserved."""
+def test_upsert_politicians_party_korrekt(requests_mock, monkeypatch, tmp_path):
+    """Party aus API wird korrekt gespeichert."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     pd.DataFrame(
         {
@@ -305,179 +242,27 @@ def test_upsert_politicians_party_update(requests_mock, monkeypatch, tmp_path):
             "end_date": ["2099-12-31"],
         }
     ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    _politicians_csv(
-        period_dir, [[1, "Alice", "SPD", "Lehrerin", 1975, None, "f", None]]
-    )
-    # API now says CDU — no details fetch expected (occupation already known)
+    (tmp_path / "20").mkdir()
     _mock_mandates(requests_mock, [_mandate(100, 1, "Alice", "CDU")])
-
-    _df, _ = src.fetch.abgeordnetenwatch.upsert_politicians(20)
-
-    saved = pd.read_csv(period_dir / "politicians.csv")
-    assert saved.iloc[0]["party"] == "CDU"
-    assert saved.iloc[0]["occupation"] == "Lehrerin"  # must not be overwritten
-
-
-def test_upsert_politicians_new_politician_appended(
-    requests_mock, monkeypatch, tmp_path
-):
-    """New politician not yet in CSV is added and details fetched."""
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    _politicians_csv(
-        period_dir, [[1, "Alice", "SPD", "Lehrerin", 1975, None, "f", None]]
-    )
-    _mock_mandates(
-        requests_mock,
-        [
-            _mandate(100, 1, "Alice", "SPD"),
-            _mandate(200, 2, "Bob", "CDU"),
-        ],
-    )
-    _mock_details(
-        requests_mock,
-        [
-            {
-                "id": 2,
-                "occupation": "Jurist",
-                "year_of_birth": 1980,
-                "field_title": "Dr.",
-                "sex": "m",
-                "education": "Uni",
-            },
-        ],
-    )
-
-    _df, mapping = src.fetch.abgeordnetenwatch.upsert_politicians(20)
-
-    saved = pd.read_csv(period_dir / "politicians.csv")
-    assert len(saved) == 2
-    assert set(saved["politician_id"]) == {1, 2}
-    assert mapping[200] == 2
-
-
-def test_upsert_politicians_details_only_for_null_occupation(
-    requests_mock, monkeypatch, tmp_path
-):
-    """CRITICAL: fetch_politician_details called only for occupation IS NULL.
-    If it's called for Alice too, her occupation gets overwritten by the mock
-    (which only knows Bob), exposing the bug.
-    """
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    _politicians_csv(
-        period_dir,
-        [
-            [1, "Alice", "SPD", "Lehrerin", 1975, None, "f", None],  # occupation known
-            [2, "Bob", "CDU", None, None, None, None, None],  # occupation missing
-        ],
-    )
-    _mock_mandates(
-        requests_mock,
-        [
-            _mandate(100, 1, "Alice", "SPD"),
-            _mandate(200, 2, "Bob", "CDU"),
-        ],
-    )
-    # Only Bob's details in the mock response
-    _mock_details(
-        requests_mock,
-        [
-            {
-                "id": 2,
-                "occupation": "Jurist",
-                "year_of_birth": 1980,
-                "field_title": None,
-                "sex": "m",
-                "education": None,
-            },
-        ],
-    )
-
-    _df, _ = src.fetch.abgeordnetenwatch.upsert_politicians(20)
-
-    saved = pd.read_csv(period_dir / "politicians.csv")
-    alice = saved[saved["politician_id"] == 1].iloc[0]
-    bob = saved[saved["politician_id"] == 2].iloc[0]
-    assert alice["occupation"] == "Lehrerin", (
-        "Alice's occupation must not be overwritten"
-    )
-    assert bob["occupation"] == "Jurist", "Bob's occupation must be filled from details"
-
-
-def test_upsert_politicians_empty_string_occupation_is_refetched(
-    requests_mock, monkeypatch, tmp_path
-):
-    """KNOWN LIMITATION: occupation='' in CSV is read back as NaN by pandas (default
-    na_values include empty strings). This means a politician whose API occupation is
-    null will have occupation=NaN in every run and their details will be re-fetched
-    each time. This is wasteful but not data-corrupting.
-
-    Test documents this behavior so any future fix is detectable.
-    """
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [20],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
-    _politicians_csv(
-        period_dir,
-        [
-            [1, "Alice", "SPD", "", 1975, None, "f", None],  # empty string occupation
-        ],
-    )
-    _mock_mandates(requests_mock, [_mandate(100, 1, "Alice", "SPD")])
-    # Mock details — API returns null occupation for Alice
     _mock_details(
         requests_mock,
         [
             {
                 "id": 1,
-                "occupation": None,
+                "occupation": "Lehrerin",
                 "year_of_birth": 1975,
                 "field_title": None,
                 "sex": "f",
                 "education": None,
-            },
+            }
         ],
     )
 
     _df, _ = src.fetch.abgeordnetenwatch.upsert_politicians(20)
 
-    saved = pd.read_csv(period_dir / "politicians.csv")
-    # Empty string was converted to NaN by read_csv → details were re-fetched →
-    # API returned null → occupation is still NaN (not "").
-    # A fix would change this to "" or preserve it across the CSV roundtrip.
-    assert pd.isna(saved.iloc[0]["occupation"])
+    saved = pd.read_csv(tmp_path / "20" / "politicians.csv")
+    assert saved.iloc[0]["party"] == "CDU"
+    assert saved.iloc[0]["occupation"] == "Lehrerin"
 
 
 # ─── upsert_periods: correctness ──────────────────────────────────────────────
@@ -528,25 +313,11 @@ def test_upsert_periods_bundestag_number_assigned_correctly(
     assert saved["bundestag_number"].tolist() == [16, 17, 18]
 
 
-def test_upsert_periods_label_updated_on_upsert(requests_mock, monkeypatch, tmp_path):
-    """Existing period with updated label: label is updated in CSV, no duplicate."""
+def test_upsert_periods_label_aktuell(requests_mock, monkeypatch, tmp_path):
+    """Label aus der API wird frisch geschrieben."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    # Pre-write CSV (simulating a previous run)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP Alt"],
-            "bundestag_number": [16],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-
     _mock_periods(
-        requests_mock,
-        [
-            _legislature(111, "16. WP Neu", "2005-10-18", "2099-12-31"),
-        ],
+        requests_mock, [_legislature(111, "16. WP Neu", "2005-10-18", "2099-12-31")]
     )
 
     src.fetch.abgeordnetenwatch.upsert_periods()
@@ -556,68 +327,18 @@ def test_upsert_periods_label_updated_on_upsert(requests_mock, monkeypatch, tmp_
     assert saved.iloc[0]["label"] == "16. WP Neu"
 
 
-def test_upsert_periods_period_id_stays_integer_after_upsert(
-    requests_mock, monkeypatch, tmp_path
-):
-    """ASSUMPTION: period_id and bundestag_number remain int64 after CSV upsert.
-    combine_first can silently upcast int->float64 when NaN values appear during merge.
-    """
+def test_upsert_periods_period_id_stays_integer(requests_mock, monkeypatch, tmp_path):
+    """period_id und bundestag_number müssen int64 bleiben."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111],
-            "label": ["16. WP"],
-            "bundestag_number": [16],
-            "start_date": ["2005-10-18"],
-            "end_date": ["2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-
     _mock_periods(
-        requests_mock,
-        [
-            _legislature(111, "16. WP", "2005-10-18", "2099-12-31"),
-        ],
+        requests_mock, [_legislature(111, "16. WP", "2005-10-18", "2099-12-31")]
     )
+
     src.fetch.abgeordnetenwatch.upsert_periods()
 
     saved = pd.read_csv(tmp_path / "periods.csv")
-    assert pd.api.types.is_integer_dtype(saved["period_id"]), (
-        f"period_id is {saved['period_id'].dtype} — float would corrupt ID comparisons"
-    )
-    assert pd.api.types.is_integer_dtype(saved["bundestag_number"]), (
-        f"bundestag_number is {saved['bundestag_number'].dtype}"
-    )
-
-
-def test_upsert_periods_existing_only_rows_preserved(
-    requests_mock, monkeypatch, tmp_path
-):
-    """If a period exists in CSV but not in API response, it is preserved (not deleted).
-    Edge case: old legislature no longer returned by API.
-    """
-    monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
-    pd.DataFrame(
-        {
-            "period_id": [111, 222],
-            "label": ["16. WP", "17. WP"],
-            "bundestag_number": [16, 17],
-            "start_date": ["2005-10-18", "2009-10-27"],
-            "end_date": ["2009-10-27", "2099-12-31"],
-        }
-    ).to_csv(tmp_path / "periods.csv", index=False)
-
-    # API only returns period 222 (111 somehow disappeared)
-    _mock_periods(
-        requests_mock,
-        [
-            _legislature(222, "17. WP", "2009-10-27", "2099-12-31"),
-        ],
-    )
-    src.fetch.abgeordnetenwatch.upsert_periods()
-
-    saved = pd.read_csv(tmp_path / "periods.csv")
-    assert 111 in saved["period_id"].to_numpy(), "Existing-only period preserved"
+    assert pd.api.types.is_integer_dtype(saved["period_id"])
+    assert pd.api.types.is_integer_dtype(saved["bundestag_number"])
 
 
 # ─── upsert_sidejobs: date parsing from label ─────────────────────────────────
@@ -794,15 +515,11 @@ def test_fetch_votes_missing_vote_key_skips_that_row(requests_mock, tmp_path):
     assert df.iloc[0]["answer"] == "yes"
 
 
-# ─── upsert_committees: empty DataFrames ─────────────────────────────────────
+# ─── fetch_committees ────────────────────────────────────────────────────────
 
 
-def test_upsert_committees_empty_result_has_headers(
-    requests_mock, monkeypatch, tmp_path
-):
-    """If API returns 0 committees, committees.csv must still have column headers.
-    pd.DataFrame([]).to_csv() produces a file with no columns → EmptyDataError on read.
-    """
+def test_fetch_committees_empty_result(requests_mock, monkeypatch, tmp_path):
+    """If API returns 0 committees, both returned DataFrames are empty with correct columns."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     pd.DataFrame(
         {
@@ -813,29 +530,21 @@ def test_upsert_committees_empty_result_has_headers(
             "end_date": ["2099-12-31"],
         }
     ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
     requests_mock.get(f"{BASE_URL}/committees", json={"data": []})
     requests_mock.get(f"{BASE_URL}/committee-memberships", json={"data": []})
 
-    src.fetch.abgeordnetenwatch.upsert_committees(20, {})
+    df_c, df_m = src.fetch.abgeordnetenwatch.fetch_committees(20, {})
 
-    committees = pd.read_csv(period_dir / "committees.csv")
-    assert set(committees.columns) == {"committee_id", "label", "topics"}
-    assert len(committees) == 0
-
-    memberships = pd.read_csv(period_dir / "committee_memberships.csv")
-    assert set(memberships.columns) == {"politician_id", "committee_id", "role"}
-    assert len(memberships) == 0
+    assert set(df_c.columns) == {"committee_id", "label", "topics"}
+    assert len(df_c) == 0
+    assert set(df_m.columns) == {"politician_id", "committee_id", "role"}
+    assert len(df_m) == 0
 
 
-def test_upsert_committees_null_candidacy_mandate_no_crash(
+def test_fetch_committees_null_candidacy_mandate_no_crash(
     requests_mock, monkeypatch, tmp_path
 ):
-    """ASSUMPTION: candidacy_mandate is always a dict.
-    REALITY: the API may return candidacy_mandate=null (key present, value None).
-    m.get("candidacy_mandate", {}) returns None for null, not {}, so .get("id") crashes.
-    """
+    """candidacy_mandate=null in API response must be handled gracefully."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     pd.DataFrame(
         {
@@ -846,8 +555,6 @@ def test_upsert_committees_null_candidacy_mandate_no_crash(
             "end_date": ["2099-12-31"],
         }
     ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
     requests_mock.get(f"{BASE_URL}/committees", json={"data": []})
     requests_mock.get(
         f"{BASE_URL}/committee-memberships",
@@ -862,16 +569,11 @@ def test_upsert_committees_null_candidacy_mandate_no_crash(
         },
     )
 
-    # Must not raise AttributeError: 'NoneType' object has no attribute 'get'
-    src.fetch.abgeordnetenwatch.upsert_committees(20, {1: 99})
-
-    memberships = pd.read_csv(period_dir / "committee_memberships.csv")
-    assert len(memberships) == 0  # row skipped — no matching politician
+    _, df_m = src.fetch.abgeordnetenwatch.fetch_committees(20, {1: 99})
+    assert len(df_m) == 0  # row skipped — no matching politician
 
 
-def test_upsert_committees_null_committee_no_crash(
-    requests_mock, monkeypatch, tmp_path
-):
+def test_fetch_committees_null_committee_no_crash(requests_mock, monkeypatch, tmp_path):
     """committee=null in a membership row must be skipped gracefully, not crash."""
     monkeypatch.setattr(src.fetch.abgeordnetenwatch, "DATA_DIR", tmp_path)
     pd.DataFrame(
@@ -883,8 +585,6 @@ def test_upsert_committees_null_committee_no_crash(
             "end_date": ["2099-12-31"],
         }
     ).to_csv(tmp_path / "periods.csv", index=False)
-    period_dir = tmp_path / "20"
-    period_dir.mkdir()
     requests_mock.get(f"{BASE_URL}/committees", json={"data": []})
     requests_mock.get(
         f"{BASE_URL}/committee-memberships",
@@ -899,13 +599,9 @@ def test_upsert_committees_null_committee_no_crash(
         },
     )
 
-    # Must not raise AttributeError: 'NoneType' object has no attribute 'get'
-    src.fetch.abgeordnetenwatch.upsert_committees(20, {1: 99})
-
-    memberships = pd.read_csv(period_dir / "committee_memberships.csv")
-    # Row was written, but committee_id is None
-    assert len(memberships) == 1
-    assert pd.isna(memberships.iloc[0]["committee_id"])
+    _, df_m = src.fetch.abgeordnetenwatch.fetch_committees(20, {1: 99})
+    assert len(df_m) == 1
+    assert pd.isna(df_m.iloc[0]["committee_id"])
 
 
 # ─── upsert_periods: null end_date_period ────────────────────────────────────

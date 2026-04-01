@@ -1,7 +1,6 @@
-"""Compute TF-IDF word statistics and speech stats from speeches.csv.
+"""Compute TF-IDF word statistics and speech stats from plenary protocol XMLs.
 
-Reads data/{period}/speeches.csv (written by parse/protocols.py) and
-produces two CSVs:
+Parses data/{period}/plenary_protocols/*.xml directly and produces two CSVs:
   - party_word_freq.csv: top-N TF-IDF words per Fraktion
   - party_speech_stats.csv: speech count + word count per MdB
 
@@ -14,12 +13,14 @@ import logging
 import math
 import re
 from collections import Counter
+from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 import pandas as pd
 
 from ..cli import add_period_argument, build_parser, configure_logging
+from ..parse.protocols import parse_alle_sitzungen
 from ..storage import DATA_DIR, current_period
 
 if TYPE_CHECKING:
@@ -227,14 +228,31 @@ _STOPWORDS: set[str] = {
     "herzlich",
     "beispielsweise",
     "stelle",
+    "innen",
+    "dürfen",
+    "müssen",
+    "können",
+    "während",
+    "über",
+    "für",
+    "natürlich",
+    "mögen",
     # Parliamentary-specific
     "herr",
     "frau",
     "damen",
     "herren",
+    "dame",
+    "gast",
+    "gäste",
     "kolleginnen",
     "kollegen",
     "kollege",
+    "kollegin",
+    "präsident",
+    "präsidentin",
+    "vizepräsident",
+    "vizepräsidentin",
     "bitte",
     "danke",
     "vielen",
@@ -242,6 +260,15 @@ _STOPWORDS: set[str] = {
     "lieben",
     "geehrter",
     "geehrte",
+    "geehrt",
+    "geschätzt",
+    "verehrt",
+    "verehren",
+    "zuschauer",
+    "zuschauerin",
+    "zuhörer",
+    "zuhörerin",
+    "zuhörend",
     "bundesregierung",
     "bundesminister",
     "bundesministerin",
@@ -274,6 +301,40 @@ _STOPWORDS: set[str] = {
     "seine",
 }
 
+_PHRASE_TOKEN_BLACKLIST = {
+    "dame",
+    "gast",
+    "gäste",
+    "geehrt",
+    "geschätzt",
+    "kollege",
+    "kollegen",
+    "kollegin",
+    "kolleginnen",
+    "präsident",
+    "präsidentin",
+    "verehrt",
+    "verehren",
+    "vizepräsident",
+    "vizepräsidentin",
+    "zuhörer",
+    "zuhörerin",
+    "zuhörend",
+    "zuschauer",
+    "zuschauerin",
+}
+
+
+def _with_umlaut_variants(words: set[str]) -> set[str]:
+    """Add common umlaut spellings for ASCII stopwords like fuer/über."""
+    expanded = set(words)
+    for word in words:
+        expanded.add(word.replace("ae", "ä").replace("oe", "ö").replace("ue", "ü"))
+    return expanded
+
+
+_STOPWORDS = _with_umlaut_variants(_STOPWORDS)
+
 _WORD_FREQ_COLS = ["fraktion", "wort", "tfidf", "rang"]
 _SPEECH_STATS_COLS = [
     "fraktion",
@@ -296,6 +357,23 @@ _VALID_TOKEN = re.compile(r"^[^\W\d_]+(?:[-*:][^\W\d_]+)*$", re.UNICODE)
 # „Klimawandel" → Klimawandel | Hallo! → Hallo | 21.Wahlperiode → Wahlperiode
 _EDGE_STRIP_RE = re.compile(r"^[\W\d_]+|[\W\d_]+$", re.UNICODE)
 
+# Kurzformen wie "Besucher/-innen" oder "Lehrer/innen" vor dem generischen
+# Slash-Splitting in eine zusammenhängende Genderform überführen.
+_SLASH_GENDER_RE = re.compile(
+    r"\b([^\W\d_]{3,})/(?:-)?(innen|in)\b", re.IGNORECASE | re.UNICODE
+)
+
+
+def _normalize_slash_gender(text: str) -> str:
+    """Rewrite slash-shortcuts for gendered forms into a single token.
+
+    Examples:
+      Besucher/-innen → Besucher*innen
+      Lehrer/innen    → Lehrer*innen
+    """
+
+    return _SLASH_GENDER_RE.sub(r"\1*\2", text)
+
 
 def _preprocess_text(text: str) -> str:
     """Normalize whitespace variants and separator characters before tokenizing.
@@ -303,8 +381,10 @@ def _preprocess_text(text: str) -> str:
     Converts non-breaking spaces to regular spaces so they split correctly.
     En-dash and em-dash are sentence separators in Bundestag transcripts
     (not part of words) and are replaced with spaces.
-    Slashes are replaced with spaces so CDU/CSU → two separate tokens.
+    Slash-gender shortcuts like Besucher/-innen are normalized to a single token.
+    All remaining slashes are replaced with spaces so CDU/CSU → two tokens.
     """
+    text = _normalize_slash_gender(text)
     return (
         text.replace("\u00a0", " ")
         .replace("\u202f", " ")  # non-breaking spaces
@@ -318,7 +398,8 @@ def _tokenize(text: str) -> list[str]:
     """Split text into clean lowercase tokens of at least 3 characters.
 
     Processing per token:
-    1. Preprocess text: normalize whitespace, replace en-dashes and slashes.
+    1. Preprocess text: normalize whitespace, keep slash-gender shortcuts together,
+       replace en-dashes and all remaining slashes.
     2. Strip non-letter characters from token edges (quotes, punctuation, digits).
     3. Strip leading/trailing hyphens and gender markers that ended up at the edge.
     4. Validate: token must consist only of letters, or letters connected by
@@ -334,12 +415,50 @@ def _tokenize(text: str) -> list[str]:
     return tokens
 
 
+def _iter_bigrams(tokens: list[str]) -> Iterable[tuple[str, str]]:
+    """Yield adjacent token pairs in order."""
+    import itertools
+
+    return itertools.pairwise(tokens)
+
+
+def _is_phrase_token_candidate(token: str) -> bool:
+    """Return whether a token is suitable inside a concept phrase."""
+    if token in _PHRASE_TOKEN_BLACKLIST:
+        return False
+    return not token.endswith(("fraktion", "bundestagsfraktion"))
+
+
+def _build_phrase_tokens(tokens: list[str], min_count: int = 2) -> list[str]:
+    """Return repeated adjacent bigrams as additional concept candidates.
+
+    Only bigrams that occur at least ``min_count`` times within the same party
+    are kept. This avoids flooding the cloud with one-off adjacency noise while
+    still surfacing recurring concepts like "innere sicherheit".
+    """
+    if len(tokens) < 2:
+        return []
+
+    candidate_bigrams = [
+        (first, second)
+        for first, second in _iter_bigrams(tokens)
+        if _is_phrase_token_candidate(first) and _is_phrase_token_candidate(second)
+    ]
+    bigram_counts = Counter(candidate_bigrams)
+    phrases = []
+    for first, second in candidate_bigrams:
+        if bigram_counts[(first, second)] >= min_count:
+            phrases.append(f"{first} {second}")
+    return phrases
+
+
 def compute_tfidf(
     party_texts: dict[str, str],
     stopwords: set[str],
     top_n: int = 100,
     *,
     lemmatize: bool = True,
+    include_bigrams: bool = True,
 ) -> pd.DataFrame:
     """Compute TF-IDF top words per party.
 
@@ -348,6 +467,9 @@ def compute_tfidf(
     Words in stopwords are excluded before computation.
     When lemmatize=True (default), German tokens are lemmatized via HanTa
     before counting so inflected forms merge (e.g. "rechtsextreme" → "rechtsextrem").
+    When include_bigrams=True (default), repeated adjacent content-word pairs are
+    added as additional phrase candidates so concept clouds can surface terms like
+    "innere sicherheit".
 
     Returns DataFrame with columns: fraktion, wort, tfidf, rang.
     """
@@ -368,6 +490,11 @@ def compute_tfidf(
         party: [t for t in tokens if t not in stopwords]
         for party, tokens in party_tokens.items()
     }
+    if include_bigrams:
+        party_tokens = {
+            party: tokens + _build_phrase_tokens(tokens)
+            for party, tokens in party_tokens.items()
+        }
 
     n_parties = len(party_tokens)
     df_counts: Counter = Counter()
@@ -415,16 +542,8 @@ def compute_speech_stats(speeches_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def fetch_word_stats(out_dir: Path, top_n: int = 100) -> None:
-    """Read speeches.csv and write party_word_freq.csv + party_speech_stats.csv.
-
-    Raises SystemExit if speeches.csv does not exist.
-    """
-    speeches_path = Path(out_dir) / "speeches.csv"
-    if not speeches_path.exists():
-        msg = f"{speeches_path} not found. Run parse/protocols.py first."
-        raise SystemExit(msg)
-
-    df = pd.read_csv(speeches_path)
+    """Parse XMLs and write party_word_freq.csv + party_speech_stats.csv."""
+    df = parse_alle_sitzungen(out_dir)
     df = df[~df["fraktion"].isin({"Unbekannt", "fraktionslos"})]
     log.info("Loaded speeches: %d", len(df))
 

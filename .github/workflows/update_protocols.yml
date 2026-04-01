@@ -27,28 +27,19 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
-      - name: Fetch new plenary protocols
-        id: fetch_protocols
-        run: uv run python -m src.fetch.protocols
-
-      # Cache key includes the CSV of known protocol IDs — changes when new
-      # protocols are fetched, causing the cache to be updated after the run.
-      # restore-keys ensures existing XMLs are reused even when key changes.
-      # speeches.csv is not cached — parsing all XMLs takes ~3s and is cheaper
-      # than storing/restoring a 26 MB file.
+      # restore-keys ensures existing XMLs are reused across runs.
+      # A new cache entry is saved after each run (keyed by run_id) so the
+      # next run always starts with the full set of previously downloaded XMLs.
       - name: Cache plenary protocol XMLs
         uses: actions/cache@v4
         with:
           path: data/*/plenary_protocols/
-          key: plenary-protocols-${{ hashFiles('data/*/dip_plenary_protocols.csv') }}
+          key: plenary-protocols-${{ github.run_id }}
           restore-keys: plenary-protocols-
 
       - name: Download new XMLs
         id: fetch_xml
         run: uv run python -m src.fetch.protocol_xml
-
-      - name: Parse speeches from XMLs
-        run: uv run python -m src.parse.protocols
 
       - name: Compute TF-IDF word stats
         run: uv run python -m src.analysis.word_stats

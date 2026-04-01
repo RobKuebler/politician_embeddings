@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-import pandas as pd
 import pytest
 
 import src.parse.protocols as pp
@@ -101,7 +100,7 @@ def test_parse_sitzung_fehlende_fraktion_ist_fraktionslos(xml_file):
 
 
 def test_parse_alle_sitzungen_kombiniert(tmp_path):
-    """Mehrere XMLs werden kombiniert in speeches.csv geschrieben."""
+    """Mehrere XMLs werden kombiniert und als DataFrame zurückgegeben."""
     xml_dir = tmp_path / "plenary_protocols"
     xml_dir.mkdir()
     for nr in [1, 2]:
@@ -110,12 +109,7 @@ def test_parse_alle_sitzungen_kombiniert(tmp_path):
 
     df = pp.parse_alle_sitzungen(tmp_path)
     assert len(df) == 6  # 3 Reden x 2 Sitzungen
-
-    csv_path = tmp_path / "speeches.csv"
-    assert csv_path.exists()
-    loaded = pd.read_csv(csv_path)
-    assert len(loaded) == 6
-    assert set(loaded.columns) == {
+    assert set(df.columns) == {
         "sitzungsnummer",
         "rede_id",
         "redner_id",
@@ -125,6 +119,7 @@ def test_parse_alle_sitzungen_kombiniert(tmp_path):
         "wortanzahl",
         "text",
     }
+    assert not (tmp_path / "speeches.csv").exists()
 
 
 def test_parse_sitzung_rede_ohne_redner_wird_ignoriert(tmp_path):
