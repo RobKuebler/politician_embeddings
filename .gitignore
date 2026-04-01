@@ -44,8 +44,6 @@ htmlcov/
 
 checkpoints/
 
-# data CSVs are committed and updated by the fetch_data CI job
-
 # Superpowers brainstorming sessions
 .superpowers/
 docs/superpowers/
@@ -53,15 +51,10 @@ docs/superpowers/
 # Git worktrees
 .worktrees/
 
-# Plenarprotokoll XMLs und abgeleitete speeches (zu groß für Git)
-data/*/plenarprotokolle/
+# Plenarprotokoll XMLs — zu groß für Git, per CI-Cache verwaltet
 data/*/plenary_protocols/
-data/*/speeches.csv
 
-# Werden bei jedem CI-Run frisch geladen (nie auf Disk persistiert)
-data/*/committees.csv
-data/*/committee_memberships.csv
+# Werden bei jedem CI-Run frisch aus der API geladen, nicht persistiert
 data/*/polls.csv
 data/*/politicians.csv
-data/*/mandates.csv
 data/*/sidejobs.csv
