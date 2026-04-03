@@ -14,6 +14,7 @@ import { SpeakerBars } from "@/components/charts/SpeakerBars";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { SpeechShareBars } from "@/components/charts/SpeechShareBars";
 import { sortParties, PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
 
 export default function SpeechesPage() {
@@ -108,6 +109,8 @@ export default function SpeechesPage() {
         title="Wer redet worüber?"
         description="Welche Themen prägen jede Fraktion im Plenum? TF-IDF-Wordclouds der parteispezifischen Begriffe und die redeaktivsten Abgeordneten."
       />
+
+      {!loading && speechStats && <SpeechShareBars speechStats={speechStats} />}
 
       {unavailable ? (
         <p className="text-[14px]" style={{ color: "#9A9790" }}>
