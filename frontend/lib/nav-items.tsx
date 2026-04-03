@@ -90,6 +90,26 @@ export const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
+    href: "/comments",
+    label: "Plenardynamik",
+    icon: (active, size = 24) => (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={active ? 2.2 : 1.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M17 6.1H3" />
+        <path d="M21 12.1H3" />
+        <path d="M15.1 18H3" />
+      </svg>
+    ),
+  },
+  {
     href: "/speeches",
     label: "Plenardebatten",
     icon: (active, size = 24) => (

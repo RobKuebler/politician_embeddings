@@ -115,6 +115,27 @@ export function stripSoftHyphen(s: string): string {
   return stripped;
 }
 
+/** kommentare.json — applause, interjections, laughter cross-party data */
+export interface KommentareData {
+  /** Party names in display order, matching PARTY_COLORS keys */
+  parties: string[];
+  /** Per-party counts for each event type */
+  summary: {
+    party: string;
+    Beifall: number;
+    Zwischenruf: number;
+    Lachen: number;
+    Heiterkeit: number;
+    Widerspruch: number;
+  }[];
+  /**
+   * Cross-party matrix per event type.
+   * cross[type][acting_idx][speaker_idx] = count of events from acting_party
+   * during speaker_party's speech.
+   */
+  cross: Record<string, number[][]>;
+}
+
 /**
  * Fetch a JSON file from /data/ and return parsed data.
  * Throws on non-200 response so callers can handle errors uniformly.

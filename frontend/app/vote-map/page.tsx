@@ -19,6 +19,7 @@ import { PoliticianSearch } from "@/components/charts/PoliticianSearch";
 import { PollFilter } from "@/components/charts/PollFilter";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
+import { PageHeader } from "@/components/ui/PageHeader";
 import {
   GOVERNING_PARTIES,
   PARTY_COLORS,
@@ -274,25 +275,12 @@ export default function VoteMapPage() {
 
   return (
     <>
-      <div className="mb-8 pl-4 border-l-4" style={{ borderColor: "#4C46D9" }}>
-        <p
-          className="text-[11px] font-bold tracking-[0.15em] uppercase mb-1"
-          style={{ color: "#4C46D9" }}
-        >
-          KI-Analyse
-        </p>
-        <h1
-          className="text-[28px] font-black tracking-tight leading-tight mb-1"
-          style={{ color: "#1E1B5E" }}
-        >
-          Abstimmungslandkarte
-        </h1>
-        <p className="text-[14px]" style={{ color: "#9A9790" }}>
-          Ein KI-Modell hat das Abstimmungsverhalten aller Abgeordneten in einen
-          zweidimensionalen Raum eingebettet. Abgeordnete, die häufig gleich
-          abstimmen, landen nah beieinander — unabhängig von Fraktionsgrenzen.
-        </p>
-      </div>
+      <PageHeader
+        color="#4C46D9"
+        label="Abstimmungsverhalten"
+        title="Wer stimmt mit wem?"
+        description="Ein KI-Modell hat das Abstimmungsverhalten aller Abgeordneten in einen zweidimensionalen Raum eingebettet. Abgeordnete, die häufig gleich abstimmen, landen nah beieinander — unabhängig von Fraktionsgrenzen."
+      />
 
       {/* Coalition banner */}
       {activePeriodId && GOVERNING_PARTIES[activePeriodId] && (

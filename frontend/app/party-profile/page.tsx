@@ -7,6 +7,7 @@ import { GenderChart } from "@/components/charts/GenderChart";
 import { DeviationHeatmap } from "@/components/charts/DeviationHeatmap";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { sortParties } from "@/lib/constants";
 import { stripSoftHyphen } from "@/lib/data";
 
@@ -48,25 +49,12 @@ export default function PartyProfilePage() {
 
   return (
     <>
-      <div className="mb-8 pl-4 border-l-4" style={{ borderColor: "#16A085" }}>
-        <p
-          className="text-[11px] font-bold tracking-[0.15em] uppercase mb-1"
-          style={{ color: "#16A085" }}
-        >
-          Demografie
-        </p>
-        <h1
-          className="text-[28px] font-black tracking-tight leading-tight mb-1"
-          style={{ color: "#1E1B5E" }}
-        >
-          Parteiprofil
-        </h1>
-        <p className="text-[14px]" style={{ color: "#9A9790" }}>
-          Wer sitzt im Bundestag? Diese Seite vergleicht Altersstruktur,
-          Geschlechterverteilung, Berufsfelder und Bildungshintergrund der
-          Fraktionen und zeigt, wie sie sich vom Gesamtparlament unterscheiden.
-        </p>
-      </div>
+      <PageHeader
+        color="#16A085"
+        label="Demografie"
+        title="Wer sitzt im Bundestag?"
+        description="Wer sitzt im Bundestag? Diese Seite vergleicht Altersstruktur, Geschlechterverteilung, Berufsfelder und Bildungshintergrund der Fraktionen und zeigt, wie sie sich vom Gesamtparlament unterscheiden."
+      />
 
       {loading || !data ? (
         <div className="flex flex-col gap-5">

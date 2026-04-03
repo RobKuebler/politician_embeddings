@@ -17,6 +17,7 @@ import {
 } from "@/components/charts/SidejobsCharts";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { PARTY_ORDER } from "@/lib/constants";
 
 /** Animates a number from 0 to `target` over ~1.2 s using easeOutExpo. */
@@ -102,27 +103,12 @@ export default function SidejobsPage() {
 
   return (
     <>
-      <div className="mb-8 pl-4 border-l-4" style={{ borderColor: "#E67E22" }}>
-        <p
-          className="text-[11px] font-bold tracking-[0.15em] uppercase mb-1"
-          style={{ color: "#E67E22" }}
-        >
-          Transparenz
-        </p>
-        <h1
-          className="text-[28px] font-black tracking-tight leading-tight mb-1"
-          style={{ color: "#1E1B5E" }}
-        >
-          Nebeneinkünfte
-        </h1>
-        <p className="text-[14px]" style={{ color: "#9A9790" }}>
-          Bundestagsabgeordnete sind gesetzlich verpflichtet, entgeltliche
-          Nebentätigkeiten ab 1.000 € monatlich zu melden (§ 44a AbgG). Diese
-          Auswertung basiert auf den öffentlich zugänglichen Meldungen und
-          zeigt, in welchen Parteien, Branchen und Themenfeldern Nebeneinkünfte
-          besonders verbreitet sind.
-        </p>
-      </div>
+      <PageHeader
+        color="#E67E22"
+        label="Transparenz"
+        title="Wer verdient noch dazu?"
+        description="Bundestagsabgeordnete sind gesetzlich verpflichtet, entgeltliche Nebentätigkeiten ab 1.000 € monatlich zu melden (§ 44a AbgG). Diese Auswertung basiert auf den öffentlich zugänglichen Meldungen und zeigt, in welchen Parteien, Branchen und Themenfeldern Nebeneinkünfte besonders verbreitet sind."
+      />
 
       {/* Hero card — total income */}
       <div

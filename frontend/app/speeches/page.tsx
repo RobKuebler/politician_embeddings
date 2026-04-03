@@ -13,6 +13,7 @@ import { WordCloud } from "@/components/charts/WordCloud";
 import { SpeakerBars } from "@/components/charts/SpeakerBars";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { sortParties, PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
 
 export default function SpeechesPage() {
@@ -101,24 +102,12 @@ export default function SpeechesPage() {
   return (
     <>
       {/* Page header */}
-      <div className="mb-8 pl-4 border-l-4" style={{ borderColor: "#9B59B6" }}>
-        <p
-          className="text-[11px] font-bold tracking-[0.15em] uppercase mb-1"
-          style={{ color: "#9B59B6" }}
-        >
-          Plenardebatten
-        </p>
-        <h1
-          className="text-[28px] font-black tracking-tight leading-tight mb-1"
-          style={{ color: "#1E1B5E" }}
-        >
-          Plenardebatten
-        </h1>
-        <p className="text-[14px]" style={{ color: "#9A9790" }}>
-          Welche Themen prägen jede Fraktion im Plenum? TF-IDF-Wordclouds der
-          parteispezifischen Begriffe und die redeaktivsten Abgeordneten.
-        </p>
-      </div>
+      <PageHeader
+        color="#9B59B6"
+        label="Wortanalyse"
+        title="Wer redet worüber?"
+        description="Welche Themen prägen jede Fraktion im Plenum? TF-IDF-Wordclouds der parteispezifischen Begriffe und die redeaktivsten Abgeordneten."
+      />
 
       {unavailable ? (
         <p className="text-[14px]" style={{ color: "#9A9790" }}>
