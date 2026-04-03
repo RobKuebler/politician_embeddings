@@ -84,11 +84,11 @@ def run_export(tmp_path, monkeypatch):
 
 
 def _load(run_export: Path, name: str) -> Any:
-    return json.loads((run_export / name).read_text())
+    return json.loads((run_export / str(WAHLPERIODE) / name).read_text())
 
 
 def test_politicians_shape(run_export):
-    data = _load(run_export, f"politicians_{WAHLPERIODE}.json")
+    data = _load(run_export, "politicians.json")
     assert isinstance(data, list)
     assert len(data) > 0
     required = {
@@ -105,7 +105,7 @@ def test_politicians_shape(run_export):
 
 
 def test_embeddings_shape(run_export):
-    data = _load(run_export, f"embeddings_{WAHLPERIODE}.json")
+    data = _load(run_export, "embeddings.json")
     assert data["dimensions"] == 2
     assert len(data["data"]) > 0
     assert {"politician_id", "x", "y"}.issubset(data["data"][0].keys())
@@ -113,20 +113,20 @@ def test_embeddings_shape(run_export):
 
 
 def test_votes_shape(run_export):
-    data = _load(run_export, f"votes_{WAHLPERIODE}.json")
+    data = _load(run_export, "votes.json")
     assert isinstance(data, list)
     assert len(data) > 0
     assert {"politician_id", "poll_id", "answer"}.issubset(data[0].keys())
 
 
 def test_polls_shape(run_export):
-    data = _load(run_export, f"polls_{WAHLPERIODE}.json")
+    data = _load(run_export, "polls.json")
     assert isinstance(data, list)
     assert {"poll_id", "topic"}.issubset(data[0].keys())
 
 
 def test_cohesion_shape(run_export):
-    data = _load(run_export, f"cohesion_{WAHLPERIODE}.json")
+    data = _load(run_export, "cohesion.json")
     assert isinstance(data, list)
     assert len(data) > 0
     assert {"party", "label", "streuung"}.issubset(data[0].keys())
@@ -174,7 +174,7 @@ def test_sidejobs_interval_float64_proration(tmp_path, monkeypatch):
     # Period: Jan-Jun 2025 (6 months). date_start=2025-01-01, date_end=2025-06-30.
     ej.export_period(pid, date(2025, 1, 1), date(2025, 6, 30))
 
-    data = json.loads((out_dir / f"sidejobs_{pid}.json").read_text())
+    data = json.loads((out_dir / str(pid) / "sidejobs.json").read_text())
     jobs = {j["politician_id"]: j for j in data["jobs"]}
 
     # interval=1 (monthly 1000 EUR) active Jan-Jun = 6 months -> 6000 EUR
@@ -190,7 +190,7 @@ def test_sidejobs_interval_float64_proration(tmp_path, monkeypatch):
 
 
 def test_sidejobs_shape(run_export):
-    data = _load(run_export, f"sidejobs_{WAHLPERIODE}.json")
+    data = _load(run_export, "sidejobs.json")
     assert "jobs" in data
     assert "coverage" in data
     assert {"total", "with_amount"}.issubset(data["coverage"].keys())
@@ -209,7 +209,7 @@ def test_sidejobs_shape(run_export):
 
 
 def test_party_profile_shape(run_export):
-    data = _load(run_export, f"party_profile_{WAHLPERIODE}.json")
+    data = _load(run_export, "party_profile.json")
     assert "parties" in data
     assert "age" in data
     assert "sex" in data
@@ -269,11 +269,11 @@ def speech_export(tmp_path, monkeypatch):
 
 
 def _load_speech(out_dir, filename):
-    return json.loads((out_dir / filename).read_text())
+    return json.loads((out_dir / str(WAHLPERIODE) / filename).read_text())
 
 
 def test_word_freq_structure(speech_export):
-    data = _load_speech(speech_export, f"party_word_freq_{WAHLPERIODE}.json")
+    data = _load_speech(speech_export, "party_word_freq.json")
     assert isinstance(data, dict)
     assert set(data.keys()) == {"SPD", "AfD"}
     spd = data["SPD"]
@@ -293,11 +293,11 @@ def test_word_freq_missing_csv_does_not_raise(tmp_path, monkeypatch):
     monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
     # no CSV present — should log warning, not raise
     ej.export_party_word_freq(WAHLPERIODE)
-    assert not (out_dir / f"party_word_freq_{WAHLPERIODE}.json").exists()
+    assert not (out_dir / str(WAHLPERIODE) / "party_word_freq.json").exists()
 
 
 def test_speech_stats_structure(speech_export):
-    data = _load_speech(speech_export, f"party_speech_stats_{WAHLPERIODE}.json")
+    data = _load_speech(speech_export, "party_speech_stats.json")
     assert isinstance(data, list)
     assert len(data) == 3
     required = {
@@ -322,7 +322,7 @@ def test_speech_stats_missing_csv_does_not_raise(tmp_path, monkeypatch):
     monkeypatch.setattr(ej, "DATA_DIR", tmp_path)
     monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
     ej.export_party_speech_stats(WAHLPERIODE)
-    assert not (out_dir / f"party_speech_stats_{WAHLPERIODE}.json").exists()
+    assert not (out_dir / str(WAHLPERIODE) / "party_speech_stats.json").exists()
 
 
 def test_main_can_limit_export_to_one_period(tmp_path, monkeypatch):
@@ -364,8 +364,8 @@ def test_main_can_limit_export_to_one_period(tmp_path, monkeypatch):
 
     ej.main(["--period", "21"])
 
-    assert not (out_dir / "politicians_20.json").exists()
-    assert (out_dir / "politicians_21.json").exists()
+    assert not (out_dir / "20" / "politicians.json").exists()
+    assert (out_dir / "21" / "politicians.json").exists()
 
     periods = json.loads((out_dir / "periods.json").read_text(encoding="utf-8"))
     assert {row["wahlperiode"] for row in periods} == {20, 21}
