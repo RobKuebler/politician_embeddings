@@ -52,7 +52,7 @@ def _make_doc(
 def test_curl_get_gibt_json_zurueck(monkeypatch):
     """_curl_get parst curl-Output als JSON."""
 
-    def fake_run(cmd, **kwargs):
+    def fake_run(cmd, **_kwargs):
         return subprocess.CompletedProcess(cmd, 0, b'{"numFound": 1}', b"")
 
     monkeypatch.setattr("subprocess.run", fake_run)
@@ -63,7 +63,7 @@ def test_curl_get_gibt_json_zurueck(monkeypatch):
 def test_curl_get_wirft_bei_curl_fehler(monkeypatch):
     """_curl_get wirft RuntimeError wenn curl exit != 0."""
 
-    def fake_run(cmd, **kwargs):
+    def fake_run(cmd, **_kwargs):
         return subprocess.CompletedProcess(cmd, 1, b"", b"connection refused")
 
     monkeypatch.setattr("subprocess.run", fake_run)
@@ -122,7 +122,7 @@ def test_fetch_dip_all_mehrere_seiten(monkeypatch):
 def test_curl_download_schreibt_datei(tmp_path, monkeypatch):
     """_curl_download schreibt den curl-Output in die Zieldatei."""
 
-    def fake_run(cmd, **kwargs):
+    def fake_run(cmd, **_kwargs):
         out_idx = cmd.index("-o") + 1
         Path(cmd[out_idx]).write_text("<xml/>", encoding="utf-8")
         return subprocess.CompletedProcess(cmd, 0, b"", b"")
@@ -136,7 +136,7 @@ def test_curl_download_schreibt_datei(tmp_path, monkeypatch):
 def test_curl_download_wirft_bei_fehler(tmp_path, monkeypatch):
     """_curl_download wirft RuntimeError wenn curl exit != 0."""
 
-    def fake_run(cmd, **kwargs):
+    def fake_run(cmd, **_kwargs):
         return subprocess.CompletedProcess(
             cmd, 1, b"", b"curl: (6) Could not resolve host"
         )
@@ -154,7 +154,7 @@ def test_curl_download_wirft_bei_fehler(tmp_path, monkeypatch):
 def test_erstlauf_laedt_alle(tmp_path, monkeypatch):
     """Erstlauf ohne existierende XMLs: alle werden heruntergeladen."""
     docs = [_make_doc("1", 1, "2021-10-27"), _make_doc("2", 2, "2021-11-10")]
-    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *a, **kw: docs)
+    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *_a, **_kw: docs)
 
     downloaded = []
 
@@ -173,7 +173,7 @@ def test_erstlauf_laedt_alle(tmp_path, monkeypatch):
 def test_upsert_ueberspringt_vorhandene(tmp_path, monkeypatch):
     """Bereits vorhandene XMLs werden nicht erneut heruntergeladen."""
     docs = [_make_doc("1", 1, "2021-10-27"), _make_doc("2", 2, "2021-11-10")]
-    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *a, **kw: docs)
+    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *_a, **_kw: docs)
 
     xml_dir = tmp_path / "plenary_protocols"
     xml_dir.mkdir()
@@ -199,7 +199,7 @@ def test_bundesrat_wird_ignoriert(tmp_path, monkeypatch):
         _make_doc("1", 1, "2021-10-27"),
         _make_doc("99", 99, "2021-10-27", herausgeber="BR"),
     ]
-    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *a, **kw: docs)
+    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *_a, **_kw: docs)
 
     downloaded = []
 
@@ -220,7 +220,7 @@ def test_leere_xml_url_wird_uebersprungen(tmp_path, monkeypatch):
         {**_make_doc("1", 1, "2021-10-27"), "fundstelle": {"xml_url": ""}},
         _make_doc("2", 2, "2021-11-10"),
     ]
-    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *a, **kw: docs)
+    monkeypatch.setattr(fxml, "fetch_dip_all", lambda *_a, **_kw: docs)
 
     downloaded = []
 

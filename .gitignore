@@ -52,3 +52,4 @@ docs/superpowers/
 # Plenarprotokoll XMLs — zu groß für Git, per CI-Cache verwaltet
 data/*/plenary_protocols/
 
+.skylos/

@@ -102,7 +102,7 @@ def env(tmp_path, monkeypatch):
         pl, "refresh_sidejobs", lambda p, m: pd.DataFrame(columns=_sidejob_cols)
     )
     monkeypatch.setattr(pl, "find_polls_missing_votes", lambda ids, path: [])
-    monkeypatch.setattr(pl, "_train", lambda *a, **k: None)
+    monkeypatch.setattr(pl, "_train", lambda *_a, **_k: None)
     monkeypatch.setattr(pl, "write_github_output", lambda **k: None)
     return data_dir, outputs_dir, out_dir
 
@@ -130,7 +130,7 @@ def test_missing_embeddings_triggers_training(env, monkeypatch):
     monkeypatch.setattr(pl, "fetch_periods_df", lambda: _periods_df("2025-10-22"))
 
     trained = []
-    monkeypatch.setattr(pl, "_train", lambda *a, **k: trained.append(True))
+    monkeypatch.setattr(pl, "_train", lambda *_a, **_k: trained.append(True))
     pl.main(["--period", str(PERIOD)])
     assert trained, "Training must run when embeddings file is absent"
 
@@ -146,7 +146,7 @@ def test_training_skipped_when_votes_unchanged_and_embeddings_present(env, monke
     monkeypatch.setattr(pl, "fetch_periods_df", lambda: _periods_df("2025-10-22"))
 
     trained = []
-    monkeypatch.setattr(pl, "_train", lambda *a, **k: trained.append(True))
+    monkeypatch.setattr(pl, "_train", lambda *_a, **_k: trained.append(True))
     pl.main(["--period", str(PERIOD)])
     assert not trained, (
         "Training must be skipped when votes unchanged and embeddings exist"

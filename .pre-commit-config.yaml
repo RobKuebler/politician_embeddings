@@ -27,6 +27,13 @@ repos:
         pass_filenames: false
         always_run: true
 
+      - id: vulture
+        name: vulture
+        entry: uv run --group dev vulture src tests --min-confidence 80
+        language: system
+        types: [python]
+        pass_filenames: false
+
       - id: prettier
         name: prettier
         entry: npx --prefix frontend prettier --write

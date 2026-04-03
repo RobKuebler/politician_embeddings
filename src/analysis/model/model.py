@@ -77,7 +77,7 @@ class RelativeEarlyStopping(L.Callback):
     def on_train_epoch_end(
         self,
         trainer: L.Trainer,
-        pl_module: L.LightningModule,  # noqa: ARG002
+        _pl_module: L.LightningModule,
     ) -> None:
         """Stop training if relative loss improvement falls below min_rel."""
         loss = trainer.callback_metrics.get("train_loss")
