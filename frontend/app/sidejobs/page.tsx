@@ -74,12 +74,8 @@ export default function SidejobsPage() {
     if (!activePeriodId) return;
     setLoading(true);
     Promise.all([
-      fetchData<SidejobsFile>(
-        dataUrl("sidejobs_{period}.json", activePeriodId),
-      ),
-      fetchData<Politician[]>(
-        dataUrl("politicians_{period}.json", activePeriodId),
-      ),
+      fetchData<SidejobsFile>(dataUrl("sidejobs.json", activePeriodId)),
+      fetchData<Politician[]>(dataUrl("politicians.json", activePeriodId)),
     ])
       .then(([sj, pols]) => {
         setSjData({

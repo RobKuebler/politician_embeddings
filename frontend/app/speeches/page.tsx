@@ -38,11 +38,9 @@ export default function SpeechesPage() {
     setLoading(true);
     setUnavailable(false);
     Promise.all([
-      fetchData<WordFreqFile>(
-        dataUrl("party_word_freq_{period}.json", activePeriodId),
-      ),
+      fetchData<WordFreqFile>(dataUrl("party_word_freq.json", activePeriodId)),
       fetchData<SpeechStatsFile>(
-        dataUrl("party_speech_stats_{period}.json", activePeriodId),
+        dataUrl("party_speech_stats.json", activePeriodId),
       ),
     ])
       .then(([wf, ss]) => {

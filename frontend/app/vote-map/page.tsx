@@ -163,12 +163,8 @@ export default function VoteMapPage() {
     setSelectedParties([]);
     setVotes(null);
     Promise.all([
-      fetchData<EmbeddingsFile>(
-        dataUrl("embeddings_{period}.json", activePeriodId),
-      ),
-      fetchData<Politician[]>(
-        dataUrl("politicians_{period}.json", activePeriodId),
-      ),
+      fetchData<EmbeddingsFile>(dataUrl("embeddings.json", activePeriodId)),
+      fetchData<Politician[]>(dataUrl("politicians.json", activePeriodId)),
     ])
       .then(([emb, pols]) => {
         setEmbeddings(emb);
@@ -184,8 +180,8 @@ export default function VoteMapPage() {
     if (votes || !activePeriodId) return;
     setLoadingVotes(true);
     Promise.all([
-      fetchData<VoteRecord[]>(dataUrl("votes_{period}.json", activePeriodId)),
-      fetchData<Poll[]>(dataUrl("polls_{period}.json", activePeriodId)),
+      fetchData<VoteRecord[]>(dataUrl("votes.json", activePeriodId)),
+      fetchData<Poll[]>(dataUrl("polls.json", activePeriodId)),
     ])
       .then(([v, p]) => {
         setVotes(v);

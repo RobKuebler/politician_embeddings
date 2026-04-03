@@ -18,9 +18,7 @@ export default function PartyProfilePage() {
   useEffect(() => {
     if (!activePeriodId) return;
     setLoading(true);
-    fetchData<PartyProfileFile>(
-      dataUrl("party_profile_{period}.json", activePeriodId),
-    )
+    fetchData<PartyProfileFile>(dataUrl("party_profile.json", activePeriodId))
       .then((d) => {
         const norm = stripSoftHyphen;
         setData({
