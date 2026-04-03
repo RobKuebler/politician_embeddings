@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/ui/Sidebar";
-import { BottomNav } from "@/components/ui/BottomNav";
 import { MobileHeader } from "@/components/ui/MobileHeader";
 import { PeriodProvider } from "@/lib/period-context";
 import { Analytics } from "@vercel/analytics/next";
@@ -36,12 +35,11 @@ export default function RootLayout({
         <PeriodProvider>
           <div className="flex min-h-screen">
             <Sidebar />
-            <main className="flex-1 min-w-0 px-4 pt-[76px] py-6 md:pt-6 md:px-8 mobile-safe-pb md:pb-10">
+            <main className="flex-1 min-w-0 px-4 pt-[76px] py-6 md:pt-6 md:px-8 md:pb-10">
               <div className="fade-up">{children}</div>
             </main>
           </div>
           <MobileHeader />
-          <BottomNav />
         </PeriodProvider>
         <Analytics />
         <SpeedInsights />
