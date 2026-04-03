@@ -106,6 +106,17 @@ export interface SpeakerRecord {
 /** party_speech_stats.json (under /data/{period}/) — flat array sorted by fraktion then wortanzahl_gesamt desc */
 export type SpeechStatsFile = SpeakerRecord[];
 
+export interface KeywordTimelineFile {
+  meta: {
+    /** ISO month strings: ["2021-10", "2021-11", ...] */
+    months: string[];
+    /** Total word count per month — parallel to months array */
+    total_words_per_month: number[];
+  };
+  /** term → counts array parallel to meta.months */
+  terms: Record<string, number[]>;
+}
+
 // ── Data loading utilities ──────────────────────────────────────────────────
 
 /** Normalize a raw party name from the API: strip soft-hyphens and apply short display names. */

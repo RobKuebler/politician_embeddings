@@ -361,6 +361,25 @@ def export_party_speech_stats(period: int) -> None:
     )
 
 
+def export_keyword_timeline(period: int) -> None:
+    """Export keyword_timeline.json for the frontend.
+
+    Output: frontend/public/data/{period}/keyword_timeline.json
+    Skipped silently if no protocol XMLs exist for the period.
+    """
+    from .analysis.keyword_timeline import fetch_keyword_timeline
+
+    xml_dir = DATA_DIR / str(period) / "plenary_protocols"
+    if not xml_dir.exists() or not any(xml_dir.glob("*.xml")):
+        log.warning(
+            "No protocol XMLs for period %d, skipping keyword timeline.", period
+        )
+        return
+
+    data = fetch_keyword_timeline(DATA_DIR / str(period))
+    _write(_period_output_dir(period) / "keyword_timeline.json", data)
+
+
 def export_periods(available: list[dict]) -> None:
     """Write the periods.json index file consumed by the frontend."""
     _write(OUTPUT_DIR / "periods.json", available)
@@ -419,6 +438,7 @@ def main(argv: list[str] | None = None) -> None:
         export_period(period, p_start, p_end)
         export_party_word_freq(period)
         export_party_speech_stats(period)
+        export_keyword_timeline(period)
 
     export_periods(available)
     log.info("Done. Exported %d periods.", len(available))
