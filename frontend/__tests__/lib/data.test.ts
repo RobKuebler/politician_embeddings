@@ -15,24 +15,22 @@ describe("stripSoftHyphen", () => {
 
 describe("dataUrl", () => {
   it("builds correct URL for a period-specific file", () => {
-    expect(dataUrl("politicians_{period}.json", 161)).toBe(
-      "/data/politicians_161.json",
-    );
+    expect(dataUrl("politicians.json", 161)).toBe("/data/161/politicians.json");
   });
-  it("builds correct URL for periods.json (no substitution needed)", () => {
-    expect(dataUrl("periods.json", 161)).toBe("/data/periods.json");
+  it("builds correct URL with a different period", () => {
+    expect(dataUrl("embeddings.json", 20)).toBe("/data/20/embeddings.json");
   });
 });
 
 describe("dataUrl for speech files", () => {
   it("builds correct URL for party_word_freq", () => {
-    expect(dataUrl("party_word_freq_{period}.json", 132)).toBe(
-      "/data/party_word_freq_132.json",
+    expect(dataUrl("party_word_freq.json", 132)).toBe(
+      "/data/132/party_word_freq.json",
     );
   });
   it("builds correct URL for party_speech_stats", () => {
-    expect(dataUrl("party_speech_stats_{period}.json", 161)).toBe(
-      "/data/party_speech_stats_161.json",
+    expect(dataUrl("party_speech_stats.json", 161)).toBe(
+      "/data/161/party_speech_stats.json",
     );
   });
 });

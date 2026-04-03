@@ -132,13 +132,9 @@ export default function Home() {
   useEffect(() => {
     if (!activePeriodId) return;
     Promise.all([
-      fetchData<Politician[]>(
-        dataUrl("politicians_{period}.json", activePeriodId),
-      ),
-      fetchData<SidejobsFile>(
-        dataUrl("sidejobs_{period}.json", activePeriodId),
-      ),
-      fetchData<Poll[]>(dataUrl("polls_{period}.json", activePeriodId)),
+      fetchData<Politician[]>(dataUrl("politicians.json", activePeriodId)),
+      fetchData<SidejobsFile>(dataUrl("sidejobs.json", activePeriodId)),
+      fetchData<Poll[]>(dataUrl("polls.json", activePeriodId)),
     ])
       .then(([pols, sj, polls]) => {
         setStats({

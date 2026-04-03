@@ -1,0 +1,17 @@
+[
+  { "party": "BSW", "streuung": 0.7866894777032638, "label": "BSW" },
+  { "party": "AfD", "streuung": 1.0766750524189235, "label": "AfD" },
+  {
+    "party": "Die Linke.",
+    "streuung": 1.2553039923092941,
+    "label": "Die Linke."
+  },
+  { "party": "FDP", "streuung": 1.365423554063594, "label": "FDP" },
+  { "party": "CDU/CSU", "streuung": 2.3177570035602404, "label": "CDU/CSU" },
+  { "party": "SPD", "streuung": 2.5191035585686983, "label": "SPD" },
+  {
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "streuung": 2.63962380576028,
+    "label": "BÜNDNIS 90/DIE GRÜNEN"
+  }
+]

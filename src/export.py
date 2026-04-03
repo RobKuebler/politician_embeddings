@@ -31,6 +31,14 @@ log = logging.getLogger(__name__)
 
 OUTPUT_DIR = Path(__file__).parents[1] / "frontend" / "public" / "data"
 
+
+def _period_output_dir(period: int) -> Path:
+    """Return the output subdirectory for a period, creating it if needed."""
+    d = OUTPUT_DIR / str(period)
+    d.mkdir(exist_ok=True)
+    return d
+
+
 # Mirrors pages/constants.py — soft-hyphen (\xad) in GRÜNEN is intentional.
 PARTY_ORDER = [
     "CDU/CSU",
@@ -229,7 +237,7 @@ def _export_sidejobs(
     ]
 
     _write(
-        OUTPUT_DIR / f"sidejobs_{period}.json",
+        _period_output_dir(period) / "sidejobs.json",
         {"jobs": jobs, "coverage": {"total": n_total, "with_amount": n_with}},
     )
 
@@ -260,7 +268,7 @@ def _export_party_profile(
     )
 
     _write(
-        OUTPUT_DIR / f"party_profile_{period}.json",
+        _period_output_dir(period) / "party_profile.json",
         {
             "parties": party_labels_ordered,
             "age": age_df.filter(["name", "party_label", "alter"])
@@ -312,7 +320,7 @@ def export_period(
 
     # ── politicians ───────────────────────────────────────────────────────────
     _write(
-        OUTPUT_DIR / f"politicians_{period}.json",
+        _period_output_dir(period) / "politicians.json",
         pols_df.filter(
             [
                 "politician_id",
@@ -336,7 +344,7 @@ def export_period(
             pols_df.filter(["name", "politician_id"]), on="name", how="left"
         )
     _write(
-        OUTPUT_DIR / f"embeddings_{period}.json",
+        _period_output_dir(period) / "embeddings.json",
         {
             "dimensions": 2,
             "data": emb_df.filter(["politician_id", "x", "y"]).to_dict("records"),
@@ -350,7 +358,7 @@ def export_period(
         return False
     votes_df = pd.read_csv(votes_path)
     _write(
-        OUTPUT_DIR / f"votes_{period}.json",
+        _period_output_dir(period) / "votes.json",
         votes_df.filter(["politician_id", "poll_id", "answer"]).to_dict("records"),
     )
 
@@ -362,7 +370,7 @@ def export_period(
             return False
         df_polls = pd.read_csv(polls_path)
     _write(
-        OUTPUT_DIR / f"polls_{period}.json",
+        _period_output_dir(period) / "polls.json",
         df_polls.filter(["poll_id", "topic"]).to_dict("records"),
     )
 
@@ -375,7 +383,7 @@ def export_period(
         ),
         exclude_party="fraktionslos",
     )
-    _write(OUTPUT_DIR / f"cohesion_{period}.json", coh_df.to_dict("records"))
+    _write(_period_output_dir(period) / "cohesion.json", coh_df.to_dict("records"))
 
     # ── sidejobs ──────────────────────────────────────────────────────────────
     _export_sidejobs(period, period_dir, pols_df, period_start, period_end, df_sidejobs)
@@ -390,7 +398,7 @@ def export_period(
 def export_party_word_freq(period: int) -> None:
     """Export party_word_freq.csv to JSON for the frontend.
 
-    Output: frontend/public/data/party_word_freq_{period}.json
+    Output: frontend/public/data/{period}/party_word_freq.json
     Format: {fraktion: [{wort, tfidf, rang}, ...], ...}
     """
     path = DATA_DIR / str(period) / "party_word_freq.csv"
@@ -404,13 +412,13 @@ def export_party_word_freq(period: int) -> None:
     result = {}
     for fraktion, group in df.groupby("fraktion"):
         result[fraktion] = group[["wort", "tfidf", "rang"]].to_dict(orient="records")
-    _write(OUTPUT_DIR / f"party_word_freq_{period}.json", result)
+    _write(_period_output_dir(period) / "party_word_freq.json", result)
 
 
 def export_party_speech_stats(period: int) -> None:
     """Export party_speech_stats.csv to JSON for the frontend.
 
-    Output: frontend/public/data/party_speech_stats_{period}.json
+    Output: frontend/public/data/{period}/party_speech_stats.json
     Format: [{fraktion, redner_id, vorname, nachname, anzahl_reden,
     wortanzahl_gesamt}, ...]
     """
@@ -423,7 +431,7 @@ def export_party_speech_stats(period: int) -> None:
         return
     df = pd.read_csv(path)
     _write(
-        OUTPUT_DIR / f"party_speech_stats_{period}.json",
+        _period_output_dir(period) / "party_speech_stats.json",
         df.to_dict(orient="records"),
     )
 

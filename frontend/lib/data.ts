@@ -91,7 +91,7 @@ export interface WordFreqEntry {
   rang: number;
 }
 
-/** party_word_freq_{period}.json — keys are raw fraktion names (may contain soft-hyphen) */
+/** party_word_freq.json (under /data/{period}/) — keys are raw fraktion names (may contain soft-hyphen) */
 export type WordFreqFile = Record<string, WordFreqEntry[]>;
 
 export interface SpeakerRecord {
@@ -103,7 +103,7 @@ export interface SpeakerRecord {
   wortanzahl_gesamt: number;
 }
 
-/** party_speech_stats_{period}.json — flat array sorted by fraktion then wortanzahl_gesamt desc */
+/** party_speech_stats.json (under /data/{period}/) — flat array sorted by fraktion then wortanzahl_gesamt desc */
 export type SpeechStatsFile = SpeakerRecord[];
 
 // ── Data loading utilities ──────────────────────────────────────────────────
@@ -125,8 +125,7 @@ export async function fetchData<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-/** Build the URL for a period-specific JSON file. */
+/** Build the URL for a period-specific JSON file under /data/{periodId}/. */
 export function dataUrl(filename: string, periodId: number): string {
-  const base = filename.replace("{period}", String(periodId));
-  return `/data/${base}`;
+  return `/data/${periodId}/${filename}`;
 }
