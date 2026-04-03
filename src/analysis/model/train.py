@@ -10,7 +10,7 @@ import logging
 
 import pandas as pd
 
-from ..cli import add_period_argument, build_parser, configure_logging
+from ...cli import add_period_argument, build_parser, configure_logging
 
 log = logging.getLogger(__name__)
 
@@ -60,12 +60,12 @@ def main(argv: list[str] | None = None) -> None:
 
     import lightning as L
 
-    from ..fetch.abgeordnetenwatch import (
+    from ...fetch.abgeordnetenwatch import (
         refresh_periods,
         refresh_politicians,
         refresh_polls,
     )
-    from ..paths import DATA_DIR, OUTPUTS_DIR
+    from ...paths import DATA_DIR, OUTPUTS_DIR
     from .model import prepare_votes, save_embeddings, train
 
     period = args.period or refresh_periods()

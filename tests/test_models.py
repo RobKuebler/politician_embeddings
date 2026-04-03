@@ -3,7 +3,7 @@ import pandas as pd
 import pytest
 import torch
 
-from src.model.model import (
+from src.analysis.model.model import (
     PoliticianEmbeddingModel,
     RelativeEarlyStopping,
     VoteDataset,
@@ -180,7 +180,7 @@ def test_early_stopping_missing_metric():
 
 def test_save_embeddings_2d(tmp_path, monkeypatch):
     """2D model produces CSV with x and y columns, no z."""
-    import src.model.model as storage
+    import src.analysis.model.model as storage
 
     monkeypatch.setattr(storage, "OUTPUTS_DIR", tmp_path)
 
@@ -203,7 +203,7 @@ def test_save_embeddings_2d(tmp_path, monkeypatch):
 
 def test_save_embeddings_3d(tmp_path, monkeypatch):
     """3D model produces CSV with z column."""
-    import src.model.model as storage
+    import src.analysis.model.model as storage
 
     monkeypatch.setattr(storage, "OUTPUTS_DIR", tmp_path)
 

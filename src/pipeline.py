@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from .analysis.model.model import save_embeddings
 from .cli import (
     add_period_argument,
     build_parser,
@@ -34,7 +35,6 @@ from .fetch.abgeordnetenwatch import (
     refresh_polls,
     refresh_sidejobs,
 )
-from .model.model import save_embeddings
 from .paths import DATA_DIR, OUTPUTS_DIR
 
 
@@ -113,7 +113,7 @@ def _train(
     # Deferred: lightning is slow to import and not needed when training is skipped.
     import lightning as L
 
-    from .model.model import prepare_votes, train
+    from .analysis.model.model import prepare_votes, train
 
     L.seed_everything(42)
     OUTPUTS_DIR.mkdir(exist_ok=True)
