@@ -19,6 +19,7 @@ from .cli import (
     write_github_output,
 )
 from .export import (
+    OUTPUT_DIR,
     export_party_speech_stats,
     export_party_word_freq,
     export_period,
@@ -43,6 +44,53 @@ def _read_bytes_or_none(path: Path) -> bytes | None:
 
 
 log = logging.getLogger(__name__)
+
+
+def _export_period_or_check(
+    period: int,
+    p: int,
+    p_start: date,
+    p_end: date,
+    df_politicians: pd.DataFrame,
+    df_polls: pd.DataFrame,
+    df_sidejobs: pd.DataFrame,
+) -> bool:
+    """Export current period or check if non-current period output exists.
+
+    For the current period: call export_period() with in-memory DataFrames
+    and export speech stats.
+    For non-current periods: verify all 9 output JSON files exist in the
+    per-period subdirectory.
+
+    Returns True if the period was successfully exported or output files exist.
+    """
+    if p == period:
+        exported = export_period(
+            p,
+            p_start,
+            p_end,
+            df_politicians=df_politicians,
+            df_polls=df_polls,
+            df_sidejobs=df_sidejobs,
+        )
+        if exported:
+            export_party_word_freq(p)
+            export_party_speech_stats(p)
+        return exported
+    # Non-current period: include if all output files already exist.
+    period_out = OUTPUT_DIR / str(p)
+    output_files = [
+        "politicians.json",
+        "embeddings.json",
+        "votes.json",
+        "polls.json",
+        "sidejobs.json",
+        "cohesion.json",
+        "party_profile.json",
+        "party_word_freq.json",
+        "party_speech_stats.json",
+    ]
+    return all((period_out / f).exists() for f in output_files)
 
 
 def _train(
@@ -130,6 +178,7 @@ def main(argv: list[str] | None = None) -> None:
     periods_df = fetch_periods_df()
 
     # Export all periods; pass in-memory DataFrames for the current one.
+    # For other periods, skip re-export if their output JSON already exists.
     available: list[dict] = []
     for _, row in periods_df.iterrows():
         p = int(row["bundestag_number"])
@@ -138,15 +187,16 @@ def main(argv: list[str] | None = None) -> None:
         now = datetime.now(tz=UTC).date()
         p_end = date.fromisoformat(str(raw_end)) if pd.notna(raw_end) else now
 
-        kwargs = {}
-        if p == period:
-            kwargs = {
-                "df_politicians": df_politicians,
-                "df_polls": df_polls,
-                "df_sidejobs": df_sidejobs,
-            }
+        exported = _export_period_or_check(
+            period,
+            p,
+            p_start,
+            p_end,
+            df_politicians,
+            df_polls,
+            df_sidejobs,
+        )
 
-        exported = export_period(p, p_start, p_end, **kwargs)
         if exported:
             available.append(
                 {
@@ -155,10 +205,6 @@ def main(argv: list[str] | None = None) -> None:
                     "has_data": True,
                 }
             )
-            # Only export speech data for periods that passed the full export
-            # check — avoids writing partial JSON for periods absent from periods.json.
-            export_party_word_freq(p)
-            export_party_speech_stats(p)
 
     export_periods(available)
     log.info("Done. Exported %d periods.", len(available))
