@@ -50,11 +50,11 @@ def compute_keyword_timeline(
 
     # Count term occurrences per month across all speeches
     term_counts: dict[str, list[int]] = defaultdict(lambda: [0] * n)
-    for _, row in df.iterrows():
-        idx = month_to_idx.get(str(row["month"]))
+    for row in df.itertuples(index=False):  # type: ignore[call-overload]
+        idx = month_to_idx.get(row.month)  # type: ignore[attr-defined]
         if idx is None:
             continue
-        tokens = _tokenize(str(row["text"]))
+        tokens = _tokenize(row.text)  # type: ignore[attr-defined]
         for term, count in Counter(t for t in tokens if t not in stopwords).items():
             term_counts[term][idx] += count
 
