@@ -1,0 +1,7332 @@
+[
+  {
+    "politician_id": 78869,
+    "name": "Ursula Groden-Kranich",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Bankkauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 175585,
+    "name": "Johannes F. Kretschmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1978.0,
+    "occupation": null,
+    "education": "M.A. Religionswissenschaft, Rumänistik und Linguistik",
+    "field_title": null
+  },
+  {
+    "politician_id": 175520,
+    "name": "Lucia Schanbacher",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Sozialwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79255,
+    "name": "Uwe Kekeritz",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1953.0,
+    "occupation": "MdB",
+    "education": "Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175752,
+    "name": "Julian Simon Grünke",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1995.0,
+    "occupation": null,
+    "education": "Studium der Politikwissenschaft und Betriebswirtschaftslehre",
+    "field_title": null
+  },
+  {
+    "politician_id": 175942,
+    "name": "Manfred Schiller",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": null,
+    "education": "Radio- und Fernsehtechniker",
+    "field_title": null
+  },
+  {
+    "politician_id": 122121,
+    "name": "Volker Münz",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Diplom-Ökonom",
+    "field_title": null
+  },
+  {
+    "politician_id": 147459,
+    "name": "Fabian Griewel",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1997.0,
+    "occupation": "MdB",
+    "education": "Geograph und Historiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 78922,
+    "name": "Ingo Wellenreuther",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Vorsitzender Richter am Landgericht a.D.",
+    "field_title": null
+  },
+  {
+    "politician_id": 175432,
+    "name": "Heike Heubach",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Industriekauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 146135,
+    "name": "Jörg Cezanne",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1958.0,
+    "occupation": "Mitglied des Bundestags",
+    "education": "Soziologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 180762,
+    "name": "Angela Hohmann",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": null,
+    "education": "Sozialversicherungsfachangestellte",
+    "field_title": null
+  },
+  {
+    "politician_id": 145961,
+    "name": "Franziska Krumwiede-Steiner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": "Dr. phil.",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175589,
+    "name": "Jürgen Kretz",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 175477,
+    "name": "Nadine Ruf",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1978.0,
+    "occupation": "Geschäftsführerin der Arbeitsgemeinschaft der Ausländerbeiräte Hessen",
+    "education": "Diplom-Betriebswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145886,
+    "name": "Bettina Wiesmann",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 145889,
+    "name": "Astrid Mannes",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Magister in den Fächern Geschichte, Politikwissenschaft und Öffentliches Recht",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79073,
+    "name": "Martin Rabanus",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Ministerialrat",
+    "field_title": null
+  },
+  {
+    "politician_id": 136239,
+    "name": "Ottmar von Holtz",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Diplom-Ökonom",
+    "field_title": null
+  },
+  {
+    "politician_id": 79254,
+    "name": "Stefan Kaufmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79095,
+    "name": "Ingrid Pahlmann",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1957.0,
+    "occupation": "MdB",
+    "education": "Staatlich geprüfte ländliche Hauswirtschaftsleiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 170200,
+    "name": "Tim Wagner",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Vermögensberater",
+    "field_title": null
+  },
+  {
+    "politician_id": 118231,
+    "name": "Christian Bartelt",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "Zahnarzt und MdB",
+    "education": "Studium der Zahnmedizin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146323,
+    "name": "Katharina Willkomm",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175827,
+    "name": "Alexander Föhr",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "Leitender Angestellter",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 165158,
+    "name": "Rainer Rothfuß",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Geograph",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145860,
+    "name": "Melanie Bernstein",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Kulturwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175420,
+    "name": "Dirk-Ulrich Mende",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1957.0,
+    "occupation": "Geschäftsführer Niedersächsicher Städtetag",
+    "education": "Volljurist (2. Staatsexamen) ",
+    "field_title": null
+  },
+  {
+    "politician_id": 179603,
+    "name": "Emily Vontz",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 2000.0,
+    "occupation": "Mitglied des Bundestages",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175390,
+    "name": "Alexander Bartz",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146806,
+    "name": "Daniel Rinkert",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 158872,
+    "name": "Nils Gründer",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1997.0,
+    "occupation": "Account-Manager, Student",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 147377,
+    "name": "Michael Sacher",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Buchhändler",
+    "field_title": null
+  },
+  {
+    "politician_id": 79415,
+    "name": "Daniela De Ridder",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Unternehmensberaterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175334,
+    "name": "Clara Bünger",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "Abgeordnete",
+    "education": "Volljuristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175709,
+    "name": "Claudia Raffelhüschen",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB, Dozentin",
+    "education": "Dipl.-Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78863,
+    "name": "Jürgen Hardt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Dipl. Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 78936,
+    "name": "Beate Walter-Rosenheimer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Diplom Psychologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 138540,
+    "name": "Markus Uhl",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79011,
+    "name": "Nadine Schön",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Diplom-Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146018,
+    "name": "Sascha Müller",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Sportjournalist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79000,
+    "name": "Andreas Schwarz",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Dipl. Betriebswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79097,
+    "name": "Aydan Özoğuz",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": null,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175594,
+    "name": "Kassem Taher Saleh",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Diplom-Ingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 79090,
+    "name": "Lisa Paus",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Diplom Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175877,
+    "name": "Ottilie Klein",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 125186,
+    "name": "Jonas Geissler",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB und Regierungsrat a.D.",
+    "education": "Promotion",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79149,
+    "name": "Carsten Linnemann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79332,
+    "name": "Christian Haase",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Dipl. Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79023,
+    "name": "Nina Scheer",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Musikstudium, Jurastudium, Politikwissenschaftliche Promotion",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79333,
+    "name": "Bettina Hagedorn",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Ausgebildete Goldschmiedin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175458,
+    "name": "Kristian Klinck",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Studienrat",
+    "field_title": null
+  },
+  {
+    "politician_id": 79065,
+    "name": "Sönke Rix",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Erzieher",
+    "field_title": null
+  },
+  {
+    "politician_id": 139064,
+    "name": "Robert Habeck",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "Bundesminister für Wirtschaft und Klimaschutz & MdB",
+    "education": "Philosoph & Schriftsteller",
+    "field_title": null
+  },
+  {
+    "politician_id": 108761,
+    "name": "Markus Frohnmaier",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Rechtswissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 175774,
+    "name": "Martin Gassner-Herz",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "Verwaltungsangestellter",
+    "education": "MA Politikwissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 175696,
+    "name": "Ann-Veruschka Jurisch",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1972.0,
+    "occupation": null,
+    "education": "Juristin (Dr. jur.)",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 146028,
+    "name": "Tobias B. Bacherle",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1994.0,
+    "occupation": "MdB",
+    "education": "Politik- und Medienwissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 150296,
+    "name": "Christian Wirth",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79275,
+    "name": "Dieter Janecek",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 122063,
+    "name": "Tobias Matthias Peterka",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78886,
+    "name": "Katrin Göring-Eckardt",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 145783,
+    "name": "Jürgen Pohl",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB, Rechtsanwalt",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 120819,
+    "name": "Ali Al-Dailami",
+    "party": "BSW",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "Angestellter",
+    "education": "Restaurantfachmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 135302,
+    "name": "Janine Wissler",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Dipl. Politologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145984,
+    "name": "Boris Mijatović",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 175428,
+    "name": "Franziska Mascheck",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Sozialarbeiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 122880,
+    "name": "Daniela Kluckert",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "Bundestagsabgeordnete",
+    "education": "Diplom Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 134400,
+    "name": "Christoph Meyer",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB, Rechtsanwalt",
+    "education": "Bankkaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79217,
+    "name": "Renate Künast",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Juristin und Sozialarbeiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175488,
+    "name": "Ruppert Stüwe",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Dipl. Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175401,
+    "name": "Annika Klose",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "Sozialwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79091,
+    "name": "Petra Pau",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Lehrerin, Gesellschaftswissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 29199,
+    "name": "Anke Domscheit-Berg",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB, Publizistin",
+    "education": "M.A. European Business Administration",
+    "field_title": null
+  },
+  {
+    "politician_id": 175923,
+    "name": "Hannes Gnauck",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Soldat auf Zeit",
+    "field_title": null
+  },
+  {
+    "politician_id": 78882,
+    "name": "Matthias W. Birkwald",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Diplom-Sozialwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 173148,
+    "name": "Emilia Fester",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1998.0,
+    "occupation": "Regieassistentin für Kindertheater",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175596,
+    "name": "Katharina Beck",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "Unternehmensberaterin für Nachhaltigkeit",
+    "education": "Diplom Regionalwissenschaftlerin, Finanzbetriebswirtin (IWW)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175851,
+    "name": "Franziska Hoppermann",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 176316,
+    "name": "Stefan Seidler",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Master of Science",
+    "field_title": null
+  },
+  {
+    "politician_id": 79125,
+    "name": "Cornelia Möhring",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Dipl. Sozialökonomin",
+    "field_title": null
+  },
+  {
+    "politician_id": 147321,
+    "name": "Gereon Bollmann",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1953.0,
+    "occupation": "Richter am Oberlandesgericht (a.D.), MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 150295,
+    "name": "Uwe Witt",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Staatl. gepr. Techniker, Dipl.-Personalbetriebswirt (IDB)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175542,
+    "name": "Bruno Hönel",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1996.0,
+    "occupation": null,
+    "education": "Psychologe (M.Sc.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175557,
+    "name": "Denise Loop",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1994.0,
+    "occupation": "Angestellte im öffentlichen Dienst",
+    "education": "Sozialarbeiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78819,
+    "name": "Konstantin von Notz",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 120104,
+    "name": "Ingrid Nestle",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Diplom-Wirtschaftsingenieurin",
+    "field_title": null
+  },
+  {
+    "politician_id": 139271,
+    "name": "Luise Amtsberg",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Islamwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175778,
+    "name": "Max Mordhorst",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1996.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 118250,
+    "name": "Christine Aschenberg-Dugnus",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB, Rechtsanwältin",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 151468,
+    "name": "Gyde Jensen-Bornhöft",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Master of Arts - Internationale Politik/Internationales Recht",
+    "field_title": null
+  },
+  {
+    "politician_id": 122157,
+    "name": "Wolfgang Kubicki",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1952.0,
+    "occupation": "MdB, Bundestagsvizepräsident",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 130900,
+    "name": "Petra Nicolaisen",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Industriekauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 79362,
+    "name": "Ingo Gädechens",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78818,
+    "name": "Johann Wadephul",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 108605,
+    "name": "Alexander Throm",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 108738,
+    "name": "Fabian Gramling",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79444,
+    "name": "Steffen Bilger",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 177578,
+    "name": "Christina Stumpp",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Steuerrechtlerin LL.B., Verwaltungswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145893,
+    "name": "Marc Biadacz",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Sozialwissenschaftler (M.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175873,
+    "name": "Maximilian Mörseburg",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 78953,
+    "name": "Volker Ullrich",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Jurist, Dipl. Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79203,
+    "name": "Paul Lehrieder",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 78919,
+    "name": "Anja Weisgerber",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79468,
+    "name": "Dorothee Bär",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Diplom-Politologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79047,
+    "name": "Albert Rupprecht",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Dipl. Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79067,
+    "name": "Alois Rainer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Metzgermeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 145903,
+    "name": "Thomas Erndl",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Diplom Ingenieur (FH) Mikroelektronik",
+    "field_title": null
+  },
+  {
+    "politician_id": 79069,
+    "name": "Alexander Radwan",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt und Diplom-Ingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 79329,
+    "name": "Florian Hahn",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Electronic Marketing Fachwirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 145901,
+    "name": "Stephan Pilsinger",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Arzt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175580,
+    "name": "Jamila Anna Schäfer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78988,
+    "name": "Wolfgang Stefinger",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 145899,
+    "name": "Bernhard Loos",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Wirtschaftswissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 32337,
+    "name": "Stephan Brandner",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt und Industriekaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79103,
+    "name": "Omid Nouripour",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79327,
+    "name": "Metin Hakverdi",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 67018,
+    "name": "Dorothee Martin",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1978.0,
+    "occupation": "MdHB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 66475,
+    "name": "Till Steffen",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt und Fachanwalt für Verwaltungsrecht",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175423,
+    "name": "Erik von Malottki",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "Studium der Geschichte und der Politikwissenschaft (Master of Arts)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175398,
+    "name": "Anna Kassautzki",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Studium der Staatswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79268,
+    "name": "Frank Junge",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Diplom Sportlehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 175503,
+    "name": "Tim Klüssendorf",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "Referent des Bürgermeisters",
+    "education": "Volks- und Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175405,
+    "name": "Bengt Bergt",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Technischer Übersetzer",
+    "field_title": null
+  },
+  {
+    "politician_id": 139062,
+    "name": "Ralf Stegner",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Studium der Politikwissenschaft, Geschichte und Germanistik",
+    "field_title": null
+  },
+  {
+    "politician_id": 146775,
+    "name": "Mathias Stein",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Wasserbauer , Bautechniker ",
+    "field_title": null
+  },
+  {
+    "politician_id": 79299,
+    "name": "Mark Helfrich",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kaufmann (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 139019,
+    "name": "Astrid Damerow",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Bankkauffrau, Business-Coach und -Trainerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 147569,
+    "name": "Michael Espendiller",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Promovierter Mathematiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145747,
+    "name": "Jörg Schneider",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 121673,
+    "name": "Martin Erwin Renner",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1954.0,
+    "occupation": "MdB",
+    "education": "Diplom-Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 147218,
+    "name": "Fabian Jacobi",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 66285,
+    "name": "Kay Gottschalk",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 145742,
+    "name": "Rüdiger Lucassen",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1951.0,
+    "occupation": "MdB, Obmann im Verteidigungsausschuss",
+    "education": "Wirschafts- und Organisationswissenschaften (Dipl.-Kfm.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 30002,
+    "name": "Manfred Todtenhausen",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1950.0,
+    "occupation": "MdB",
+    "education": "Elektromeister ",
+    "field_title": null
+  },
+  {
+    "politician_id": 175745,
+    "name": "Jens Teutrine",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 146348,
+    "name": "Olaf in der Beek",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Unternehmer; Studium BWL (ohne Abschluss)",
+    "field_title": null
+  },
+  {
+    "politician_id": 130489,
+    "name": "Christian Sauter",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 121536,
+    "name": "Katrin Helling-Plahr",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB, Rechtsanwältin",
+    "education": "Volljuristin, LL.M., Fachanwältin Medizinrecht",
+    "field_title": null
+  },
+  {
+    "politician_id": 146352,
+    "name": "Carl-Julius Cronenberg",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB, Unternehmer",
+    "education": "Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 137432,
+    "name": "Bernd Reuther",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 146325,
+    "name": "Markus Herbrand",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Steuerberater",
+    "field_title": null
+  },
+  {
+    "politician_id": 137163,
+    "name": "Karlheinz Busen",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1951.0,
+    "occupation": "MdB",
+    "education": "Diplom-Ingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 146329,
+    "name": "Nicole Westig",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Studium Romanistik und öffentliches Recht",
+    "field_title": null
+  },
+  {
+    "politician_id": 118538,
+    "name": "Frank Schäffler",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Industriekaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 146326,
+    "name": "Reinhard Houben",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Diplom Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 119145,
+    "name": "Otto Fricke",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB, Rechtsanwalt",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 118195,
+    "name": "Bijan Djir-Sarai",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "Hauptamtlicher Dezernent für Informations- und Informationstechnologie, Kataster- und Ordnungsamt, Gebäudewirtschaft und Controlling in der Kreisverwaltung des Rhein-Kreises Neuss",
+    "education": "Diplom-Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 120155,
+    "name": "Johannes Vogel",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 118987,
+    "name": "Marco Buschmann",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 119742,
+    "name": "Christian Lindner",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB, FDP-Parteivorsitzender",
+    "education": "Politikwissenschaften, Staatsrecht und Philosophie",
+    "field_title": null
+  },
+  {
+    "politician_id": 175461,
+    "name": "Luiza Licina-Bode",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Volljuristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175515,
+    "name": "Ye-One Rhie",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "M.A.Kommunikationswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 121492,
+    "name": "Jürgen Coße",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Bürokaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 175516,
+    "name": "Zanda Martens",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146817,
+    "name": "Nezahat Baradari",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Fachärztin für Kinder- und Jugendmedizin, Ernährungsmedizin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175490,
+    "name": "Sarah Lahrkamp",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78910,
+    "name": "Gülistan Yüksel",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "pharmazeutisch-kaufmännische Assistentin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79301,
+    "name": "Wolfgang Hellmich",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Lehramtsstudium",
+    "field_title": null
+  },
+  {
+    "politician_id": 175445,
+    "name": "Jessica Rosenthal",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "2. Staatsexamen Lehramt Gymnasium/Gesamtschule in den Fächern Deutsch und Geschichte",
+    "field_title": null
+  },
+  {
+    "politician_id": 130158,
+    "name": "Dagmar Andres",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB ",
+    "education": "Steuerfachangestellte, Bilanzbuchhalterin, Betriebswirtin Fachrichtung Steuerwesen",
+    "field_title": null
+  },
+  {
+    "politician_id": 79111,
+    "name": "Dietmar Nietan",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175406,
+    "name": "Bettina Lugk",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "Bundestagsabgeordnete",
+    "education": "Geowissenschaftlerin, Verwaltungsfachwirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175476,
+    "name": "Nadine Heselhaus",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1978.0,
+    "occupation": "Gemeindeprüferin",
+    "education": "Diplom-Verwaltungswirtin (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79421,
+    "name": "Bernhard Daldrup",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1956.0,
+    "occupation": "MdB, Obmann des Ausschusses für Bau, Wohnen, Stadtentwicklung und Kommunen Landesgeschäftsführer der Sozialdemokratischen Gemeinschaft für Kommunalpolitik Nordrhein- Westfalen",
+    "education": "Politikwissenschaftler (M.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79027,
+    "name": "Udo Schiefner",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Technischer Angestellter Qualitätssicherung",
+    "field_title": null
+  },
+  {
+    "politician_id": 78913,
+    "name": "Dirk Wiese",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1983.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79349,
+    "name": "Kerstin Griese",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB, Parlamentarische Staatssekretärin",
+    "education": "Historikerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79326,
+    "name": "Sebastian Hartmann",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Organisationsberater",
+    "field_title": null
+  },
+  {
+    "politician_id": 131019,
+    "name": "Svenja Schulze",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "Bundesministerin für Wirtschaftliche Zusammenarbeit und Entwicklung und MdB",
+    "education": "Germanistin und Politikwissenschaftlerin (Magister) und Unternehmensberaterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79272,
+    "name": "Hubert Hüppe",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1956.0,
+    "occupation": "Rz",
+    "education": "Diplom-Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79070,
+    "name": "Kerstin Radomski",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Lehrerin für Biologie und Erdkunde",
+    "field_title": null
+  },
+  {
+    "politician_id": 145876,
+    "name": "Oliver Vogt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Diplom-Physiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 130574,
+    "name": "Stefan Nacke",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Sozialethiker, Dr. phil.",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145877,
+    "name": "Kerstin Vieregge",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Betriebswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145873,
+    "name": "Michael Breilmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1983.0,
+    "occupation": "Mitglied des Deutschen Bundestags",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175836,
+    "name": "Catarina dos Santos-Wintz",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1994.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78958,
+    "name": "Astrid Timmermann-Fechter",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Selbstständige Unternehmerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 130691,
+    "name": "Serap Güler",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Studium Germanistik und Kommunikation",
+    "field_title": null
+  },
+  {
+    "politician_id": 66273,
+    "name": "Bernd Baumann",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Promotion Wirtschaftswissenschaften",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 66565,
+    "name": "Zaklin Nastić",
+    "party": "BSW",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Studium in Slawistik",
+    "field_title": null
+  },
+  {
+    "politician_id": 79471,
+    "name": "Niels Annen",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "BA Geschichte und Spanisch, M.A. International Public Policy",
+    "field_title": null
+  },
+  {
+    "politician_id": 66002,
+    "name": "Christoph de Vries",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Diplom-Soziologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 66005,
+    "name": "Christoph Ploß",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": "Historiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 121017,
+    "name": "Claudia Müller",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Betriebswirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 122336,
+    "name": "Ina Latendorf",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "Mitglied des Bundestags",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79454,
+    "name": "Dietmar Bartsch",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Wirtschaftswissenschaftler",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 123546,
+    "name": "Ulrike Schielke-Ziesing",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Verwaltungswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 123532,
+    "name": "Enrico Komning",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Fachanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 123559,
+    "name": "Leif-Erik Holm",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Ökonom M. Sc.",
+    "field_title": null
+  },
+  {
+    "politician_id": 165049,
+    "name": "Simone Borchardt",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB | gesundheitspolitische Sprecherin der CDU/CSU-Bundestagsfraktion",
+    "education": "Master of Health Business Administration",
+    "field_title": null
+  },
+  {
+    "politician_id": 79123,
+    "name": "Dietrich Monstadt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1957.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 145862,
+    "name": "Philipp Amthor",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 138463,
+    "name": "Esra Limbacher",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "Mdb",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79477,
+    "name": "Christian Petry",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Dipl. Verwaltungswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146867,
+    "name": "Josephine Ortleb",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "Fachwirtin im Gastgewerbe",
+    "field_title": null
+  },
+  {
+    "politician_id": 79465,
+    "name": "Thomas Bareiß",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Dipl. Betriebswirt (BA)",
+    "field_title": null
+  },
+  {
+    "politician_id": 145896,
+    "name": "Axel Müller",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175888,
+    "name": "Volker Mayer-Lay",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79062,
+    "name": "Josef Rief",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Landwirtschaftsmeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 79480,
+    "name": "Ronja Kemmer",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 118138,
+    "name": "Annette Widmann-Mauz",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB, Staatsministerin a.D.",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79397,
+    "name": "Michael Donth",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 108783,
+    "name": "Felix Schreiner",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78867,
+    "name": "Andreas Jung",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79378,
+    "name": "Thorsten Frei",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175867,
+    "name": "Maria-Lena Weiss",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175892,
+    "name": "Yannick Bury",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1990.0,
+    "occupation": "MdB",
+    "education": "Master of Science VWL",
+    "field_title": null
+  },
+  {
+    "politician_id": 175543,
+    "name": "Chantal Kopf",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1995.0,
+    "occupation": "MdB",
+    "education": "M.A. in Politikwissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 175863,
+    "name": "Klaus Mack",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Diplom Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79226,
+    "name": "Gunther Krichbaum",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79336,
+    "name": "Olav Gutting",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 165004,
+    "name": "Moritz Oppelt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 78805,
+    "name": "Nina Warken",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175436,
+    "name": "Isabel Cademartori",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1988.0,
+    "occupation": "MdB",
+    "education": "B.Sc. Betriebswirtschaftslehre & M.Sc. Wirtschaftspädagogik",
+    "field_title": null
+  },
+  {
+    "politician_id": 79429,
+    "name": "Franziska Brantner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Promotion Politik",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78817,
+    "name": "Kai Whittaker",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175876,
+    "name": "Nicolas Zippelius",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Bachelor Politik- und Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 175679,
+    "name": "Zoe Mayer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1995.0,
+    "occupation": "MdB",
+    "education": "Doktorin der Ingenieurwissenschaften",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79246,
+    "name": "Roderich Kiesewetter",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Oberst a.D./ Dipl. Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 28896,
+    "name": "Inge Gräßle",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Studium der Romanischen Sprachen, Geschichte und Politikwissenschaft",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78939,
+    "name": "Christian von Stetten",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "selbstständiger Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79389,
+    "name": "Hermann Färber",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Landwirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79343,
+    "name": "Markus Grübel",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB, Beauftragter der Bundesregierung für weltweite Religionsfreiheit",
+    "education": "Notar",
+    "field_title": null
+  },
+  {
+    "politician_id": 79102,
+    "name": "Cem Özdemir",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "Bundesminister für Ernährung und Landwirtschaft sowie Bildung, MdB",
+    "education": "Erzieher, Studium der Sozialpädagogik",
+    "field_title": null
+  },
+  {
+    "politician_id": 78976,
+    "name": "Stephan Stracke",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 133683,
+    "name": "Mechthilde Wittmann",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Bankkauffrau, Studium BWL, Jura und Maschinenbau",
+    "field_title": null
+  },
+  {
+    "politician_id": 175826,
+    "name": "Alexander Engelhard",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Müller, Dipl.-Wirtschaftsingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 79214,
+    "name": "Ulrich Lange",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79404,
+    "name": "Hansjörg Durz",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Dipl. Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79295,
+    "name": "Alexander Hoffmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79192,
+    "name": "Andrea Lindholz",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175880,
+    "name": "Ralph Edelhäußer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79370,
+    "name": "Michael Frieser",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 145904,
+    "name": "Sebastian Brehm",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Dipl. Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 142259,
+    "name": "Tobias Winkler",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Dipl. sc. pol. Univ.",
+    "field_title": null
+  },
+  {
+    "politician_id": 78810,
+    "name": "Artur Auernhammer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Landwirtschaftsmeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 78904,
+    "name": "Emmi Zeulner",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Examinierte Gesundheits- und Krankenpflegerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79369,
+    "name": "Hans-Peter Friedrich",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1957.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 78812,
+    "name": "Silke Launert",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78831,
+    "name": "Thomas Silberhorn",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175872,
+    "name": "Martina Englhardt-Kopf",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Handelslehrerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 120442,
+    "name": "Peter Aumer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Master of Buisness Administration",
+    "field_title": null
+  },
+  {
+    "politician_id": 142212,
+    "name": "Susanne Hierl",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78974,
+    "name": "Max Straubinger",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1954.0,
+    "occupation": "MdB",
+    "education": "Landwirtschaftsmeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 79108,
+    "name": "Florian Oßner",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt (Uni)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79412,
+    "name": "Alexander Dobrindt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Diplom-Soziologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 79068,
+    "name": "Peter Ramsauer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1954.0,
+    "occupation": "MdB",
+    "education": "Diplomkaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 145902,
+    "name": "Michael Kießling",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Dipl. Bauingenier (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79146,
+    "name": "Daniela Ludwig",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Diplom-Juristin Univ",
+    "field_title": null
+  },
+  {
+    "politician_id": 79427,
+    "name": "Reinhard Brandl",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Dipl. Wirtschaftsingenieur",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145898,
+    "name": "Katrin Staffler",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Biochemikerin M.Sc.",
+    "field_title": null
+  },
+  {
+    "politician_id": 79274,
+    "name": "Erich Irlstorfer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "Kaufmännischer Angestellter",
+    "education": "Bürokaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79194,
+    "name": "Andreas Lenz",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Diplom-Betriebswirt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79134,
+    "name": "Stephan Mayer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 78864,
+    "name": "Thomas Hitschler",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 79481,
+    "name": "Angelika Glöckner",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Verwaltungsfachwirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175471,
+    "name": "Matthias Mieves",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 78797,
+    "name": "Johannes Steiniger",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Gymnasiallehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 175412,
+    "name": "Christian Schreider",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 78847,
+    "name": "Jan Metzler",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Dipl. Betriebswirt (FH) und MA International Management",
+    "field_title": null
+  },
+  {
+    "politician_id": 175416,
+    "name": "Daniel Baldy",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1994.0,
+    "occupation": null,
+    "education": "Lehrer für Gymnasien",
+    "field_title": null
+  },
+  {
+    "politician_id": 110102,
+    "name": "Tanja Machalet",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Dipl. Volkswirtin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175512,
+    "name": "Verena Hubertz",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Studium der Betriebswirtschaftlehre",
+    "field_title": null
+  },
+  {
+    "politician_id": 78836,
+    "name": "Patrick Schnieder",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 146835,
+    "name": "Joe Weingarten",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Diplom-Verwaltungswissenschaftler, Ministerialdirigent",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175870,
+    "name": "Marlon Bröhr",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "Landrat des Rhein-Hunsrück-Kreises",
+    "education": "Zahnarzt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145890,
+    "name": "Josef Oster",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Diplom-Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79317,
+    "name": "Mechthild Heil",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Dipl. Ingenieurin",
+    "field_title": null
+  },
+  {
+    "politician_id": 170287,
+    "name": "Frank Ullrich",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1958.0,
+    "occupation": "Dipl. Sportlehrer/ Trainer/ Pensionär",
+    "education": "Diplomsportlehrer / Trainer ",
+    "field_title": null
+  },
+  {
+    "politician_id": 121837,
+    "name": "Michael Kaufmann",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Ingenieur",
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 79014,
+    "name": "Carsten Schneider",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB, Parlamentsgeschäftsführer im Bundestag",
+    "education": "Bankkaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 150299,
+    "name": "Marcus Bühl",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB, selbstständig im Bereich Neue Medien",
+    "education": "Dipl. Informatiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 175435,
+    "name": "Holger Becker",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Promovierter Physiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145784,
+    "name": "Klaus Stöber",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "Steuerberater",
+    "education": "Diplom-Ökonom",
+    "field_title": null
+  },
+  {
+    "politician_id": 79344,
+    "name": "Manfred Grund",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Dipl. Elektroingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 79135,
+    "name": "Michael Meister",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Diplom-Mathematiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78792,
+    "name": "Jens Zimmermann",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 175393,
+    "name": "Andreas Larem",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Groß- und Außenhandelskaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 145888,
+    "name": "Björn Simon",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175472,
+    "name": "Melanie Wegling",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1990.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin | M.A. Modern East Asian Studies",
+    "field_title": null
+  },
+  {
+    "politician_id": 175403,
+    "name": "Armand Zorn",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1988.0,
+    "occupation": "MdB",
+    "education": "Politologe, Ökonom und Wirtschaftsjurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 145885,
+    "name": "Norbert Maria Altenkamp",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Diplom Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175441,
+    "name": "Lennard Oehl",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 78914,
+    "name": "Klaus-Peter Willsch",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Dipl. Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146824,
+    "name": "Natalie Pawlik",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "Geschichts- und Kulturwissenschaften B.A.",
+    "field_title": null
+  },
+  {
+    "politician_id": 79237,
+    "name": "Markus Koob",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Studium der Politikwissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 78840,
+    "name": "Bettina Müller",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Krankenschwester, Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78881,
+    "name": "Michael Brand",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "Mitglied Deutscher Bundestag",
+    "education": "Studium der Politikwissenschaft, Geschichte und Rechtswissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 175425,
+    "name": "Felix Döring",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Gymnasiallehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 79036,
+    "name": "Dagmar Schmidt",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Historikerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78884,
+    "name": "Sören Bartol",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Diplom-Politologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 79376,
+    "name": "Edgar Franke",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79042,
+    "name": "Michael Roth",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB, Vorsitzender des Auswärtigen Ausschusses",
+    "education": "Diplom-Politologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 146823,
+    "name": "Esther Dilcher",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78793,
+    "name": "Yvonne Magwas",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Diplom Soziologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 176762,
+    "name": "Matthias Moosdorf",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Diplom",
+    "field_title": null
+  },
+  {
+    "politician_id": 31274,
+    "name": "Thomas Dietz",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 165157,
+    "name": "Mike Moncsek",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "Mitarbeiter im EU-Parlament",
+    "education": "Kfz-Mechaniker",
+    "field_title": null
+  },
+  {
+    "politician_id": 79483,
+    "name": "Detlef Müller",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Lokomoticführer",
+    "field_title": null
+  },
+  {
+    "politician_id": 175907,
+    "name": "Carolin Bachmann",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1988.0,
+    "occupation": "MdB",
+    "education": "ausgebildete Investmendfondsmanagerin Bachelor Business Administration",
+    "field_title": null
+  },
+  {
+    "politician_id": 30936,
+    "name": "Lars Rohwer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 175869,
+    "name": "Markus Reichel",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "Selbstständiger Unternehmer",
+    "education": "Promovierter Wirtschaftsmathematiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175967,
+    "name": "Steffen Janich",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Polizeibeamter",
+    "field_title": null
+  },
+  {
+    "politician_id": 145755,
+    "name": "Tino Chrupalla",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Maler- und Lackierermeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 145754,
+    "name": "Karsten Hilse",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Waffenmeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 175902,
+    "name": "Barbara Benkstein",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "Wissenschaftliche Referentin",
+    "education": "Bibliothekarin (Diplom)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175916,
+    "name": "Edgar Naujok",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "Unternehmer",
+    "education": "DV Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 146117,
+    "name": "Sören Pellmann",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "Bundestagabgeordneter",
+    "education": "Studium Rechtswissenschaft, Lehramt an Förderschulen",
+    "field_title": null
+  },
+  {
+    "politician_id": 118790,
+    "name": "Jens Lehmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Instandhaltungsmechaniker und staatl. geprüfter Erzieher",
+    "field_title": null
+  },
+  {
+    "politician_id": 168306,
+    "name": "René Bochmann",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Bürokaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 145878,
+    "name": "Paul Ziemiak",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175894,
+    "name": "Florian Müller",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Bachelor of Arts Arbeitsmarktmanagement und Master of Arts",
+    "field_title": null
+  },
+  {
+    "politician_id": 78855,
+    "name": "Volkmar Klein",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Diplom-Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 118559,
+    "name": "Friedrich Merz",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 145879,
+    "name": "Hans-Jürgen Thies",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB, Rechtsanwalt",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 78960,
+    "name": "Michael Thews",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Diplom Chemie-Ingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 78859,
+    "name": "Oliver Kaczmarek",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "1. Staatsexamen für Lehrämter der Sekundarstufen II und I",
+    "field_title": null
+  },
+  {
+    "politician_id": 79077,
+    "name": "Sabine Poschmann",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Betriebswirtin (VWA)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175443,
+    "name": "Jens Peick",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Diplom Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79118,
+    "name": "Michelle Müntefering",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Journalistin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79018,
+    "name": "Axel Schäfer",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1952.0,
+    "occupation": "MdB",
+    "education": "Studieninstitut für kommunale Verwaltung (Fachhochschule)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175404,
+    "name": "Axel Echeverria",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Historiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 175505,
+    "name": "Timo Schisanowski",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Wirtschaftsjurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 130418,
+    "name": "Jürgen Berghahn",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdL",
+    "education": "Elektroinstallateur",
+    "field_title": null
+  },
+  {
+    "politician_id": 79080,
+    "name": "Achim Post",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Diplom-Soziologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 78999,
+    "name": "Stefan Schwartze",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Industriemechaniker",
+    "field_title": null
+  },
+  {
+    "politician_id": 146813,
+    "name": "Wiebke Esdar",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Promovierte Psychologin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79434,
+    "name": "Ralph Brinkhaus",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Diplom-Ökonom, Steuerberater",
+    "field_title": null
+  },
+  {
+    "politician_id": 130301,
+    "name": "Henning Rehbaum",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Betriebswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79240,
+    "name": "Maria Klein-Schmeink",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Soziologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79249,
+    "name": "Anja Karliczek",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 145874,
+    "name": "Marc Henrichmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Volljurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175831,
+    "name": "Anne König",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Gesamtschulrektorin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79359,
+    "name": "Michael Gerdes",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Bergmann, Elektrohauer",
+    "field_title": null
+  },
+  {
+    "politician_id": 78993,
+    "name": "Jens Spahn",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 136824,
+    "name": "Markus Töns",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "M.A. Politikwissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 175407,
+    "name": "Brian Nickholz",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Industriekaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 78998,
+    "name": "Frank Schwabe",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Gästeführer",
+    "field_title": null
+  },
+  {
+    "politician_id": 79322,
+    "name": "Matthias Hauer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "Bundestagsabgeordneter, Rechtsanwalt",
+    "education": "Volljurist, Fachanwalt für Bank- und Kaptitalmarktrecht",
+    "field_title": null
+  },
+  {
+    "politician_id": 79313,
+    "name": "Dirk Heidenblut",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Geschäftsführer beim Arbeiter-Samariter-Bund",
+    "field_title": null
+  },
+  {
+    "politician_id": 175491,
+    "name": "Sebastian Fiedler",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78938,
+    "name": "Dirk Vöpel",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78834,
+    "name": "Mahmut Özdemir",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "Rechtsreferendar (beurlaubt), MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79455,
+    "name": "Bärbel Bas",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Personalmanagement-Ökonomin (VWA)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175438,
+    "name": "Jan Dieren",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 145872,
+    "name": "Stefan Rouenhoff",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Ausgebildeter Bauzeichner, Diplom-Volkswirt, Politikwissenschaftler (MA)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175871,
+    "name": "Martin Plum",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Richter am Arbeitsgericht a.D.",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79307,
+    "name": "Ansgar Heveling",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechts- und Verwaltungswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79227,
+    "name": "Günter Krings",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78870,
+    "name": "Hermann Gröhe",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79064,
+    "name": "Andreas Rimkus",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Elektromeister in der Energiewirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 79277,
+    "name": "Thomas Jarzombek",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "IT-Berater",
+    "field_title": null
+  },
+  {
+    "politician_id": 79446,
+    "name": "Peter Beyer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 175862,
+    "name": "Klaus Wiener",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Ausbildung zum Energieanlagenelektroniker, Studium und Promotion im Fach Volkswirtschaftslehre",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 147327,
+    "name": "Ingo Schäfer",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Betriebsschlosser, Feuerwehrmann, Personalrat",
+    "field_title": null
+  },
+  {
+    "politician_id": 146804,
+    "name": "Helge Lindh",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79215,
+    "name": "Karl Lauterbach",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "Bundesminister für Gesundheit, MdB",
+    "education": null,
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 145871,
+    "name": "Hermann-Josef Tebroke",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Studium der Betriebswirtschaftslehre",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145870,
+    "name": "Carsten Brodesser",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79043,
+    "name": "Norbert Röttgen",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78916,
+    "name": "Elisabeth Winkelmeier-Becker",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften, Richterin am Amtsgericht a.D.",
+    "field_title": null
+  },
+  {
+    "politician_id": 175599,
+    "name": "Katrin Uhlig",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78838,
+    "name": "Rolf Mützenich",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Poltikwissenschaftler",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145948,
+    "name": "Sven Lehmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler (M.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175489,
+    "name": "Sanae Abdi",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78825,
+    "name": "Detlef Seif",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79242,
+    "name": "Georg Kippels",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79071,
+    "name": "Thomas Rachel",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Studium der Politologie, der Geschichte und des Staatsrechts",
+    "field_title": null
+  },
+  {
+    "politician_id": 79106,
+    "name": "Wilfried Oellers",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146801,
+    "name": "Claudia Moll",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "staatlich anerkannte examinierte Altenpflegerin, Fachkraft für Gerontopsychiatrie",
+    "field_title": null
+  },
+  {
+    "politician_id": 78850,
+    "name": "Gesine Lötzsch",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Philologin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 117510,
+    "name": "Mario Czaja",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Diplom-Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79334,
+    "name": "Gregor Gysi",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1948.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 117431,
+    "name": "Canan Bayram",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB, selbstständige Rechtsanwältin",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175431,
+    "name": "Hakan Demir",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 175456,
+    "name": "Kevin Kühnert",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 117519,
+    "name": "Michael Müller",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "kaufmännische Lehre",
+    "field_title": null
+  },
+  {
+    "politician_id": 123288,
+    "name": "Thomas Heilmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB, Mitglied im Fraktionsvorstand von CDU/CSU",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 175433,
+    "name": "Helmut Kleebank",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Lehramt (Mathematik, Physik), Krankenpfleger",
+    "field_title": null
+  },
+  {
+    "politician_id": 79346,
+    "name": "Monika Grütters",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB, Staatsministerin für Kultur und Medien",
+    "education": "Studium der Germanistik, Kunstgeschichte und Politikwissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 117547,
+    "name": "Stefan Gelbhaar",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 164996,
+    "name": "Hanna Steinmüller",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Sozialwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 152771,
+    "name": "Robert Farle",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1950.0,
+    "occupation": "MdL",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 78979,
+    "name": "Dieter Stier",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Dipl. Ing. agr.",
+    "field_title": null
+  },
+  {
+    "politician_id": 79409,
+    "name": "Karamba Diaby",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Diplom-Chemiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145732,
+    "name": "Kay-Uwe Ziegler",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Veterinäringenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 145867,
+    "name": "Sepp Müller",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "diplomierter Bankbetriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175467,
+    "name": "Martin Kröber",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79433,
+    "name": "Heike Brehmer",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Dipl. Betriebswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146793,
+    "name": "Franziska Kersten",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Tierärztin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175434,
+    "name": "Herbert Wollmann",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1951.0,
+    "occupation": "MdB",
+    "education": "Arzt, Facharzt Innere, Kardiologie, Radiologie",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 146792,
+    "name": "Hannes Walter",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "Mitglied des Bundestages",
+    "education": "Duale Ausbildung als Kfz-Mechaniker und Master of Science in BWL",
+    "field_title": null
+  },
+  {
+    "politician_id": 175464,
+    "name": "Maja Wallstein",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175469,
+    "name": "Mathias Papendieck",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 133049,
+    "name": "Sylvia Lehmann",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1954.0,
+    "occupation": "MdB",
+    "education": "Ingenieurökonomin",
+    "field_title": null
+  },
+  {
+    "politician_id": 66924,
+    "name": "Olaf Scholz",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1958.0,
+    "occupation": "Bundeskanzler der Bundesrepublik Deutschland,MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175496,
+    "name": "Sonja Eichwede",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Volljuristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 31119,
+    "name": "Simona Koß",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Lehrerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 176737,
+    "name": "Ariane Fäscher",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Studium der Publizistik, Politik und Betriebswirtschaft, Abschluss Magister Artium",
+    "field_title": null
+  },
+  {
+    "politician_id": 78902,
+    "name": "Stefan Zierke",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Werkzeugmacher Reiseverkehrskaufmann und Tourismusfachwirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175514,
+    "name": "Wiebke Papenbrock",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": null,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 140944,
+    "name": "Uwe Schmidt",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "Mitglied des Bundestages",
+    "education": "Hafenfacharbeiter",
+    "field_title": null
+  },
+  {
+    "politician_id": 29176,
+    "name": "Sarah Ryglewski",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Diplompolitologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 136025,
+    "name": "Frauke Heiligenstadt",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Diplom-Verwaltungswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 136381,
+    "name": "Christos Pantazis",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Arzt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 149682,
+    "name": "Dunja Kreiser",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Abwassermeisterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78926,
+    "name": "Bernd Westphal",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Gewerkschaftssekretär, Chemielaborant",
+    "field_title": null
+  },
+  {
+    "politician_id": 79133,
+    "name": "Matthias Miersch",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 29441,
+    "name": "Johannes Schraps",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaften, M.A.",
+    "field_title": null
+  },
+  {
+    "politician_id": 79316,
+    "name": "Hubertus Heil",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "Bundesminister für Arbeit und Soziales, MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 79100,
+    "name": "Henning Otte",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann, Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 175485,
+    "name": "Rebecca Schamber",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Diplomjuristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175389,
+    "name": "Adis Ahmetović",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Master of Education",
+    "field_title": null
+  },
+  {
+    "politician_id": 146784,
+    "name": "Marja-Liisa Völlers",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175465,
+    "name": "Manuel Gava",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "Vertriebs- und Verkaufsleiter Backring Nord",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175437,
+    "name": "Jakob Blankenburg",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1997.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaft, B.A.",
+    "field_title": null
+  },
+  {
+    "politician_id": 78996,
+    "name": "Svenja Stadler",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Senior-PR-Beraterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79241,
+    "name": "Lars Klingbeil",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB, Generalsekretär",
+    "education": "Studium der Politischen Wissenschaft, der Soziologie und der Geschichte (M.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79141,
+    "name": "Andreas Mattfeldt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Industriekaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 79239,
+    "name": "Axel Knoerig",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Magister in Politikwissenschaft mit Schwerpunkt Kommunal- und Verwaltungswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 145863,
+    "name": "Silvia Breher",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78981,
+    "name": "Albert Stegemann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Landwirtschaftsmeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 79345,
+    "name": "Oliver Grundmann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt, Chemielaborant",
+    "field_title": null
+  },
+  {
+    "politician_id": 175415,
+    "name": "Daniel Schneider",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79127,
+    "name": "Susanne Mittag",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Polizeibeamtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79066,
+    "name": "Dennis Rohde",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 146780,
+    "name": "Siemtje Möller",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Lehrerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79418,
+    "name": "Gitta Connemann",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin, Verkäuferin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79032,
+    "name": "Johann Saathoff",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Diplom-Verwaltungswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 66491,
+    "name": "Linda Heitmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "Geschäftsführerin in der Suchtkrankenhilfe",
+    "education": "Dipl. Politologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175424,
+    "name": "Falko Droßmann",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Historiker, Soldat",
+    "field_title": null
+  },
+  {
+    "politician_id": 175447,
+    "name": "Johannes Arlt",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Studium der Staatswissenschaften (Dipl.-Staatsw. (univ.), Master in War Studies (M.Sc.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175453,
+    "name": "Katrin Zschau",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175486,
+    "name": "Reem Alabali Radovan",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1990.0,
+    "occupation": "MdB",
+    "education": "Studium der Politikwissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 108661,
+    "name": "Jessica Tatti",
+    "party": "BSW",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Sozialarbeiterin B.A.",
+    "field_title": null
+  },
+  {
+    "politician_id": 108563,
+    "name": "Gökay Akbulut",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": null,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 108427,
+    "name": "Bernd Riexinger",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB, Parteivorsitzender der Partei Die Linke ",
+    "education": "Bankkaufmann, Gewerkschaftssekretär",
+    "field_title": null
+  },
+  {
+    "politician_id": 145839,
+    "name": "Jürgen Braun",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB, selbstständiger Kommunikationsberater",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 108924,
+    "name": "Thomas Seitz",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Volljurist (Rechtsassessor)",
+    "field_title": null
+  },
+  {
+    "politician_id": 29476,
+    "name": "Christina Baum",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1956.0,
+    "occupation": "MdB",
+    "education": "Fachzahnärztin für Allgemeine Stomatologie",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145844,
+    "name": "Malte Kaufmann",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 108754,
+    "name": "Marc Bernhard",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt, MBA",
+    "field_title": null
+  },
+  {
+    "politician_id": 145835,
+    "name": "Dirk Spaniel",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Dr.-Ing. (Maschinenbau)",
+    "field_title": null
+  },
+  {
+    "politician_id": 145840,
+    "name": "Martin Hess",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Polizeibeamter",
+    "field_title": null
+  },
+  {
+    "politician_id": 108379,
+    "name": "Alice Weidel",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB, Fraktionsvorsitzende AfD im Bundestag",
+    "education": "Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175793,
+    "name": "Rainer Semet",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1957.0,
+    "occupation": "Berufsschullehrer",
+    "education": "Wirtschaftsingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 175759,
+    "name": "Konrad Stockmeier",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "Marktforscher",
+    "education": "Diplom-Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146416,
+    "name": "Valentin Abel",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "M.Sc. Betriebswirtschaftslehre",
+    "field_title": null
+  },
+  {
+    "politician_id": 165654,
+    "name": "Stephan Seiter",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "Professor für Volkswirtschaftslehre und Quantitative Methoden",
+    "education": "Dipl. Ökonom",
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 146425,
+    "name": "Christoph Hoffmann",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1957.0,
+    "occupation": "MdB",
+    "education": "Dr. Forest Dipl. Forstwirt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 108620,
+    "name": "Jens Brandenburg",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Politikwissenschaftler (Dr.), Unternehmensberater",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 121876,
+    "name": "Renata Alt",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Chemie-Ingenieurin",
+    "field_title": null
+  },
+  {
+    "politician_id": 108832,
+    "name": "Benjamin Strasser",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 118359,
+    "name": "Florian Toncar",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "Mitglied des Bundestages",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 119147,
+    "name": "Pascal Kober",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Studium der Evangelischen Theologie",
+    "field_title": null
+  },
+  {
+    "politician_id": 119079,
+    "name": "Michael Link",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 120169,
+    "name": "Judith Skudelny",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": null,
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146043,
+    "name": "Anja Reinalter",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1970.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Professorin für Soziale Arbeit",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175649,
+    "name": "Sebastian Schäfer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Wirtschaftswissenschaftler",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175626,
+    "name": "Melis Sekmen",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "angehende Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146042,
+    "name": "Marcel Emmerich",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Wissenschaftlicher Referent",
+    "field_title": null
+  },
+  {
+    "politician_id": 164990,
+    "name": "Ricarda Lang",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1994.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79364,
+    "name": "Matthias Gastel",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Sozialpädagoge, -Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 146027,
+    "name": "Anna Christmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB, Politikwissenschaftlerin",
+    "education": "Promotion",
+    "field_title": null
+  },
+  {
+    "politician_id": 79405,
+    "name": "Harald Ebner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Diplom-Agraringenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 79117,
+    "name": "Beate Müller-Gemmeke",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Dipl. Sozialpädagogin (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 29534,
+    "name": "Sandra Detzer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Politik- und Volkswirtschaftlerin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78878,
+    "name": "Agnieszka Brugger",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB und Stellvertretende Fraktionsvorsitzende",
+    "education": "Politikwissenschaft, Philosophie und Öffentliches Recht",
+    "field_title": null
+  },
+  {
+    "politician_id": 108581,
+    "name": "Heike Engelhardt",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Grund. und Hauptschullehrerin, Redakteurin, Coach und Prozessbegleiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175457,
+    "name": "Kevin Leiser",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Gymnasiallehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 175419,
+    "name": "Derya Türk-Nachbaur",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB und Pädagogische Fachkraft",
+    "education": "Versicherungsfachfrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 79266,
+    "name": "Josip Juratovic",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175521,
+    "name": "Robin Mesarosch",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175519,
+    "name": "Lina Seitzl",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "wissenschaftliche Mitarbeiterin und Hochschuldozentin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 121602,
+    "name": "Macit Karaahmetoğlu",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79474,
+    "name": "Heike Baehrens",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Bankkauffrau, Diplom-Religionspädagogin",
+    "field_title": null
+  },
+  {
+    "politician_id": 121799,
+    "name": "Parsa Marvi",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Diplom-Betriebswirt (BA)",
+    "field_title": null
+  },
+  {
+    "politician_id": 79252,
+    "name": "Gabriele Katzmarek",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Gewerkschaftssekretärin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79416,
+    "name": "Lars Castellucci",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Professor für Nachhaltiges Management, Integrations- und Diversity Management",
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 146856,
+    "name": "Jasmina Hostert",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79356,
+    "name": "Martin Gerster",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 146860,
+    "name": "Leni Breymaier",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Einzelhandelskauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 79390,
+    "name": "Johannes Fechner",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79140,
+    "name": "Katja Mast",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Bankkauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 79053,
+    "name": "Martin Rosemann",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79001,
+    "name": "Rita Schwarzelühr-Sutter",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "Parlamentarische Staatssekretärin, MdB",
+    "education": "Diplom-Betriebswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 108960,
+    "name": "Nils Schmid",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79387,
+    "name": "Saskia Esken",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "staatl. gepr. Informatikerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 120429,
+    "name": "Oliver Luksic",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 78888,
+    "name": "Thomas Lutze",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Maschinenbauer, Bürokaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 141210,
+    "name": "Ates Gürpinar",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "Angestellter",
+    "education": "Medienwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 146166,
+    "name": "Susanne Ferschl",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Chemielaborantin, Business Coach, Mediatorin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79385,
+    "name": "Klaus Ernst",
+    "party": "BSW",
+    "sex": "m",
+    "year_of_birth": 1954.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt und Diplom-Sozialökonom",
+    "field_title": null
+  },
+  {
+    "politician_id": 79353,
+    "name": "Nicole Gohlke",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Kommunikationswissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175610,
+    "name": "Leon Eckert",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1995.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Betriebswirt (B.Sc.) & Historiker (B.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 146013,
+    "name": "Tina Winklmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Verfahrensmechanikerin für Kunststoff- und Kautschuktechnik",
+    "field_title": null
+  },
+  {
+    "politician_id": 175584,
+    "name": "Johannes Wagner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "Arzt in Weiterbildung zum Kinderarzt",
+    "education": "Humanmediziner",
+    "field_title": null
+  },
+  {
+    "politician_id": 158733,
+    "name": "Marlene Schönberger",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1990.0,
+    "occupation": "Politikwissenschaftlerin an der LMU München",
+    "education": "Politikwissenschaftlerin M.A.",
+    "field_title": null
+  },
+  {
+    "politician_id": 146020,
+    "name": "Niklas Wagener",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1998.0,
+    "occupation": "Student",
+    "education": "Forstwirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 133673,
+    "name": "Tessa Ganserer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1977.0,
+    "occupation": "MdL, Queerpolitische Sprecherin, stv. Vorsitzende des Ausschusses \"Fragen des Öffentlicher Dienstes\"",
+    "education": "Diplom Ingenieurin Wald- und Forstwirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 120205,
+    "name": "Karl Bär",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 178140,
+    "name": "Saskia Weishaupt",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1993.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 121977,
+    "name": "Stefan Schmidt",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB",
+    "education": "Lehramt Hauptschullehrer, Schwerpunkt Sozialkunde",
+    "field_title": null
+  },
+  {
+    "politician_id": 120254,
+    "name": "Lisa Badum",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 118494,
+    "name": "Erhard Grundl",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB, Sprecher für Kulturpolitik",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79408,
+    "name": "Ekin Deligöz",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Diplom Verwaltungswissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79294,
+    "name": "Anton Hofreiter",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB, Vorsitzender des Ausschusses für die Angelegenheiten der Europäischen Union",
+    "education": "Promovierter Biologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 79041,
+    "name": "Claudia Roth",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Dramaturgin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175781,
+    "name": "Muhanad Al-Halak",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Abwassermeister",
+    "field_title": null
+  },
+  {
+    "politician_id": 134283,
+    "name": "Thomas Hacker",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann, Diplom-Kaufmann, Steuerberaterexamen",
+    "field_title": null
+  },
+  {
+    "politician_id": 175760,
+    "name": "Kristine Lütke",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "Pflegeunternehmerin",
+    "education": "Dipl. Sozialpädagogin (FH), M.Sc. Gerontologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146407,
+    "name": "Maximilian Funke-Kaiser",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": "Betriebswirt",
+    "education": "Studium der informationsorientierten BWL",
+    "field_title": null
+  },
+  {
+    "politician_id": 146406,
+    "name": "Andrew Ullmann",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Universitätsprofessor für Infektiologie an der Julius-Maximilians-Universität Würzburg und Facharzt für Innere Medizin, Hämatologie, internistische Onkologie und Infektiologie",
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 142152,
+    "name": "Sandra Bubendorfer-Licht",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "Mitglied im Landesvorstand bei der FDP Bayern & Mitglied im Deutschen Bundestag der FDP",
+    "education": "Dolmetscherin",
+    "field_title": null
+  },
+  {
+    "politician_id": 142264,
+    "name": "Ulrich Lechte",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 141981,
+    "name": "Nicole Bauer",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Diplom-Wirtschaftsingenieurin mit Elektronik, System und Technologien (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 119361,
+    "name": "Stephan Thomae",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB, Rechtsanwalt",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 146388,
+    "name": "Lukas Köhler",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "promovierter Philosoph",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 134049,
+    "name": "Karsten Klein",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": null,
+    "education": "Diplom Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 134052,
+    "name": "Katja Hessel",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB, Parl. Staatssekretärin beim Bundesminister der Finanzen",
+    "education": "Fachanwältin für Steuerrecht und Steuerberaterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 141323,
+    "name": "Daniel Föst",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "Selbstständiger Unternehmer",
+    "education": "Unternehmer",
+    "field_title": null
+  },
+  {
+    "politician_id": 175922,
+    "name": "Gerrit Huy",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1953.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Mathematikerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145833,
+    "name": "Peter Felser",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB, Unternehmer",
+    "education": "Diplom Pädagoge (univ.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 145808,
+    "name": "Gerold Otten",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Oberst d.R. a.D.",
+    "field_title": null
+  },
+  {
+    "politician_id": 145830,
+    "name": "Rainer Kraft",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Promovierter Diplom-Chemiker",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145806,
+    "name": "Wolfgang Wiehle",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Diplom-Informatiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 145803,
+    "name": "Johannes Huber",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Diplom-Soziologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 145823,
+    "name": "Martin Sichert",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 121997,
+    "name": "Stephan Protschka",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 145817,
+    "name": "Peter Boehringer",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Diplom Informatiker und Kaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 175439,
+    "name": "Jan Plobner",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175410,
+    "name": "Carolin Wagner",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Germanistin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 146852,
+    "name": "Markus Hümpfer",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "Ingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 175409,
+    "name": "Carmen Wegge",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146847,
+    "name": "Jörg Nürnberger",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 78991,
+    "name": "Martina Stamm-Fibich",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175522,
+    "name": "Johannes Schätzl",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1993.0,
+    "occupation": "MdB",
+    "education": "Informatiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 78883,
+    "name": "Ulrike Bahr",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Lehrerin Englisch / Geschichte, Deutsch, Musik",
+    "field_title": null
+  },
+  {
+    "politician_id": 146838,
+    "name": "Andreas Mehltretter",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79411,
+    "name": "Sabine Dittmar",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Ärztin",
+    "field_title": null
+  },
+  {
+    "politician_id": 121738,
+    "name": "Michael Schrodi",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Gymnasiallehrer für Deutsch, Geschichte und Sozialkunde",
+    "field_title": null
+  },
+  {
+    "politician_id": 79026,
+    "name": "Marianne Schieder",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78970,
+    "name": "Claudia Tausend",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Diplom in Wirtschafts- und Sozialgeographie",
+    "field_title": null
+  },
+  {
+    "politician_id": 141311,
+    "name": "Christoph Schmid",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79320,
+    "name": "Gabriela Heinrich",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": "Bundestagsabgeordnete",
+    "education": "Dipl.-Medienberaterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79051,
+    "name": "Bernd Rützel",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Technischer Oberamtsrat a.D.",
+    "field_title": null
+  },
+  {
+    "politician_id": 79331,
+    "name": "Rita Hagl-Kehl",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": null,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 146839,
+    "name": "Sebastian Roloff",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79223,
+    "name": "Anette Kramme",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78821,
+    "name": "Carsten Träger",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Diplom-Kommunikationswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79234,
+    "name": "Bärbel Kofler",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Sprachwissenschaftlerin, Dipl. Informatikerin (FH), Bankkauffrau",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78816,
+    "name": "Alexander Ulrich",
+    "party": "BSW",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "Gewerkschaftssekretär",
+    "education": "Werkzeugmacher",
+    "field_title": null
+  },
+  {
+    "politician_id": 146003,
+    "name": "Misbah Khan",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1989.0,
+    "occupation": "Bildungsreferentin im Landesjugendamt RLP im Bereich religiös begründete Radikalisierung",
+    "education": "Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175537,
+    "name": "Armin Grau",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "Arzt, MdB",
+    "education": "Neurologe",
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 79046,
+    "name": "Corinna Rüffer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79193,
+    "name": "Tobias Lindner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Technischer Diplom-Volkswirt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79040,
+    "name": "Tabea Rößner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Musikwissenschaftlerin (M.A.) und Journalistin",
+    "field_title": null
+  },
+  {
+    "politician_id": 120284,
+    "name": "Manuel Höferlin",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Rechtswissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 110218,
+    "name": "Sandra Weeser",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Betriebswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146383,
+    "name": "Mario Brandenburg",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Wirtschaftsinformatik (M.Sc.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 146378,
+    "name": "Carina Konrad",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Diplom Agraringenieurin (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 110052,
+    "name": "Volker Wissing",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "Bundesminister für Digitales und Verkehr sowie Justiz, MdB, Generalsekretär der FDP",
+    "education": "Rechtsanwalt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175904,
+    "name": "Bernd Schattner",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "Geschäftsführer",
+    "education": "Verwaltungsfachangestellter",
+    "field_title": null
+  },
+  {
+    "politician_id": 145789,
+    "name": "Andreas Bleck",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1988.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 145791,
+    "name": "Nicole Höchst",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Lehrerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145795,
+    "name": "Sebastian Münzenmaier",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB, Fraktionsgeschäftsführer",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175459,
+    "name": "Lena Werner",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1994.0,
+    "occupation": null,
+    "education": "Hotelfachfrau, Projektmanagerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146833,
+    "name": "Martin Diedenhofen",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1995.0,
+    "occupation": "Student",
+    "education": "Student",
+    "field_title": null
+  },
+  {
+    "politician_id": 146837,
+    "name": "Isabel Mackensen-Geis",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "Fachreferentin / Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175502,
+    "name": "Thorsten Rudolph",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirt und promovierter Literaturwissenschaftler",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79366,
+    "name": "Thomas Gebhart",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Studium BWL und Politikwissenschaft",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 110066,
+    "name": "Julia Klöckner",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Theologin und Politikwissenschaftlerin (M.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 146375,
+    "name": "Gerald Ullrich",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Elektronikingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 175506,
+    "name": "Tina Rudolph",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Ärztin",
+    "field_title": null
+  },
+  {
+    "politician_id": 146830,
+    "name": "Elisabeth Kaiser",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB, Parlamentarische Staatssekretärin",
+    "education": "Studium der Staatswissenschaften, Politik und Verwaltungswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 78892,
+    "name": "Martina Renner",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "wissenschaftliche Referentin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79198,
+    "name": "Ralph Lenkert",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Werkzeugmacher/Techniker für Maschinenbau",
+    "field_title": null
+  },
+  {
+    "politician_id": 31605,
+    "name": "Susanne Hennig-Wellsow",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Pädagogik/Erziehungswissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 78957,
+    "name": "Antje Tillmann",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Dipl. Finanzwirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78865,
+    "name": "Christian Hirte",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt und Fachanwalt für Steuerrecht",
+    "field_title": null
+  },
+  {
+    "politician_id": 175538,
+    "name": "Awet Tesfaiesus",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1974.0,
+    "occupation": "Partnerin einer Kanzlei",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175555,
+    "name": "Deborah Düring",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1994.0,
+    "occupation": "Studentin Friedens- und Konfliktforschung (Master) & Studentische Hilfskraft bei Survival International",
+    "education": "Sozialwissenschaftlerin (B.A. Sozialwissenschaft)",
+    "field_title": null
+  },
+  {
+    "politician_id": 159644,
+    "name": "Philip Krämer",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1992.0,
+    "occupation": "Mitglied des Bundestages 20. Wahlperiode",
+    "education": "Kulturmanager",
+    "field_title": null
+  },
+  {
+    "politician_id": 118131,
+    "name": "Anna Lührmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "Juniorprofessorin (Uni Göteborg)",
+    "education": "Politikwissenschaftlerin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79479,
+    "name": "Wolfgang Strengmann-Kuhn",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Wirtschaftswissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 79004,
+    "name": "Kordula Schulz-Asche",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1956.0,
+    "occupation": "MdB",
+    "education": "Krankenschwester, Kommunikationswissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 135209,
+    "name": "Bettina Hoffmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "Parlamentarische Staatssekretärin",
+    "education": "Diplom-Biologin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 135407,
+    "name": "Peter Heidt",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "Rechtsanwalt",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175755,
+    "name": "Katja Adler",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1974.0,
+    "occupation": "Beamtin",
+    "education": "Diplom-Verwaltungswirtin (FH), M. A. Soziale Verhaltenswissenschaften, Politikwissenschaften und Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 135322,
+    "name": "Jürgen Lenders",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdL, Selbstständiger Kaufmann",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 119621,
+    "name": "Alexander Müller",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "Mitglied des Deutschen Bundestags",
+    "education": "Diplom-Informatiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 122050,
+    "name": "Till Mansmann",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Diplom Physiker (Universität Frankfurt/Main)",
+    "field_title": null
+  },
+  {
+    "politician_id": 29256,
+    "name": "Thorsten Lieb",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "Rechtsanwalt",
+    "education": "Volljurist, Wirtschaftsjurist (Univ. Bayreuth)",
+    "field_title": null
+  },
+  {
+    "politician_id": 119708,
+    "name": "Bettina Stark-Watzinger",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145767,
+    "name": "Albrecht Glaser",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1942.0,
+    "occupation": "MdB",
+    "education": "Assessor Jur.",
+    "field_title": null
+  },
+  {
+    "politician_id": 145764,
+    "name": "Jan Ralf Nolte",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1988.0,
+    "occupation": "MdB",
+    "education": "Kaufmännischer Assistent für Fremdsprachen und Bürokommunikation",
+    "field_title": null
+  },
+  {
+    "politician_id": 145770,
+    "name": "Uwe Schulz",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Siehe Lebenslauf",
+    "field_title": null
+  },
+  {
+    "politician_id": 150292,
+    "name": "Joana Cotar",
+    "party": "fraktionslos",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Politologin und Germanistin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145771,
+    "name": "Mariana Harder-Kühnel",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1974.0,
+    "occupation": "MdB, Rechtsanwältin",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79312,
+    "name": "Stefan Heck",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 78851,
+    "name": "Katja Leikert",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79150,
+    "name": "Patricia Lips",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Handelsfachwirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79432,
+    "name": "Helge Braun",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "Bundesminister für besondere Aufgaben und Chef des Bundeskanzleramts, MdB",
+    "education": "Arzt",
+    "field_title": "Prof. Dr."
+  },
+  {
+    "politician_id": 175627,
+    "name": "Merle Spellerberg",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1996.0,
+    "occupation": "MdB",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175541,
+    "name": "Bernhard Herrmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Ing. für Wasserbau",
+    "field_title": null
+  },
+  {
+    "politician_id": 31707,
+    "name": "Paula Piechotta",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "Ärztin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 30864,
+    "name": "Nico Tippelt",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Musikpädagoge",
+    "field_title": null
+  },
+  {
+    "politician_id": 175820,
+    "name": "Ulrike Harzer",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 146359,
+    "name": "Philipp Hartewig",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1994.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146360,
+    "name": "Frank Müller-Rosentritt",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Diplom Betriebswirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 31751,
+    "name": "Torsten Herbst",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Dipl. Kaufmann (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175518,
+    "name": "Fabian Funke",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1997.0,
+    "occupation": "MdB",
+    "education": "Bachelor Internationale Beziehungen",
+    "field_title": null
+  },
+  {
+    "politician_id": 175478,
+    "name": "Nadja Sthamer",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1990.0,
+    "occupation": "MdB",
+    "education": "Religionswissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175408,
+    "name": "Carlos Kasper",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1994.0,
+    "occupation": "MdB",
+    "education": "Zollbeamter",
+    "field_title": null
+  },
+  {
+    "politician_id": 175484,
+    "name": "Rasha Nasr",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1992.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 168396,
+    "name": "Kathrin Michel",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Industriekauffrau, Personalmanagerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 30917,
+    "name": "Holger Mann",
+    "party": "SPD",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "M.A. Politikwissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79328,
+    "name": "André Hahn",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Ausbildung zum Schriftsetzer; Lehramtsstudium Deutsch und Geschichte; Forschungsstudium Politikwissenschaft",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79205,
+    "name": "Caren Lay",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1972.0,
+    "occupation": "Bundestagsabgeordnete",
+    "education": "Dipl.-Soziologin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79238,
+    "name": "Carsten Körber",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Studium der Politikwissenschaft und Betriebswirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 170325,
+    "name": "Christiane Schenderlein",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB und MdL",
+    "education": "Politikwissenschaftlerin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 78932,
+    "name": "Marco Wanderwitz",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 150288,
+    "name": "Götz Frömming",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Studiendirektor",
+    "field_title": null
+  },
+  {
+    "politician_id": 141110,
+    "name": "Gottfried Curio",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Diplom-Mathematiker, Diplom-Physiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 29202,
+    "name": "Beatrix von Storch",
+    "party": "AfD",
+    "sex": "f",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175526,
+    "name": "Andreas Audretsch",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 79147,
+    "name": "Jan-Marco Luczak",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Jurist, Rechtsanwalt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79199,
+    "name": "Steffi Lemke",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "Mitglied des Deutschen Bundestages",
+    "education": "Zootechnikerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175737,
+    "name": "Ingo Bodtke",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "selbst. Kaufmann für Versicherungen & Finanzen",
+    "education": "Ing. für Fleischwirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 121638,
+    "name": "Marcus Faber",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Dr. rer. pol.",
+    "field_title": null
+  },
+  {
+    "politician_id": 124218,
+    "name": "Katrin Budde",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Ing. für Arbeitsgestaltung",
+    "field_title": null
+  },
+  {
+    "politician_id": 78824,
+    "name": "Petra Sitte",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Dipl. Ökonomin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78854,
+    "name": "Jan Korte",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Politikwissenschaftler MA",
+    "field_title": null
+  },
+  {
+    "politician_id": 152755,
+    "name": "Jan Wenzel Schmidt",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "Handelsfachwirt, Meister für Schutz und Sicherheit",
+    "field_title": null
+  },
+  {
+    "politician_id": 150298,
+    "name": "Martin Reichardt",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Offizier und Pädagoge",
+    "field_title": null
+  },
+  {
+    "politician_id": 78992,
+    "name": "Tino Sorge",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175629,
+    "name": "Michael Kellner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "Bundestagsabgeordneter und Parlamentarischer Staatssekretär",
+    "education": "Politikwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 79475,
+    "name": "Annalena Baerbock",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Völkerrechtlerin (LL.M.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 177310,
+    "name": "Friedhelm Boginski",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "Bürgermeister",
+    "education": "Lehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 132971,
+    "name": "Linda Teuteberg",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB, Rechtsanwältin",
+    "education": "Studium Rechtswissenschaften / VWL",
+    "field_title": null
+  },
+  {
+    "politician_id": 132869,
+    "name": "Christian Görke",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Lehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 150291,
+    "name": "Norbert Kleinwächter",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": "MdB",
+    "education": "Lehrer",
+    "field_title": null
+  },
+  {
+    "politician_id": 31221,
+    "name": "Steffen Kotré",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Diplom-Ingenieur",
+    "field_title": null
+  },
+  {
+    "politician_id": 145723,
+    "name": "René Springer",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Meister Elektrotechnik / Politikwissenschaftler M.A.",
+    "field_title": null
+  },
+  {
+    "politician_id": 31216,
+    "name": "Alexander Gauland",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1941.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 29084,
+    "name": "Knut Abraham",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79029,
+    "name": "Jana Schimke",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "MdB",
+    "education": "Dipl. Politikwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79391,
+    "name": "Uwe Feiler",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1965.0,
+    "occupation": "MdB",
+    "education": "Dipl. Finanzwirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 79233,
+    "name": "Jens Koeppen",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdB",
+    "education": "Meister Industrieelektronik; Meister Elektroinstallateurhandwerk",
+    "field_title": null
+  },
+  {
+    "politician_id": 73691,
+    "name": "Volker Redder",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "Geschäftsf. Gesellschafter",
+    "education": "Dipl.-Biologe, Dipl.-Informatiker, Dr.-Ing.",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 73426,
+    "name": "Kirsten Kappert-Gonther",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Fachärztin für Psychiatrie und Psychotherapie",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 73300,
+    "name": "Thomas Röwekamp",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt und Notar",
+    "field_title": null
+  },
+  {
+    "politician_id": 149570,
+    "name": "Heidi Reichinnek",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1988.0,
+    "occupation": "Mitglied des Bundestags",
+    "education": "pädagogische Mitarbeiterin in der Jugendhilfe",
+    "field_title": null
+  },
+  {
+    "politician_id": 136366,
+    "name": "Victor Perli",
+    "party": "Die Linke.",
+    "sex": "m",
+    "year_of_birth": 1982.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Politikwissenschaftler (M.A.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 146055,
+    "name": "Amira Mohamed Ali",
+    "party": "BSW",
+    "sex": "f",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB, Vorsitzende von Bündnis Sahra Wagenknecht",
+    "education": "Rechtsanwältin",
+    "field_title": null
+  },
+  {
+    "politician_id": 149539,
+    "name": "Susanne Menge",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB",
+    "education": "Studienrätin; Fächer: Politik/Wirtschaft, Werte und Normen, Sport",
+    "field_title": null
+  },
+  {
+    "politician_id": 175587,
+    "name": "Julian Pahlke",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1991.0,
+    "occupation": "MdB",
+    "education": "BA International Management, BA International Business Administration and Modern Language, MA Business, Language and Culture, MA International Management Studies",
+    "field_title": null
+  },
+  {
+    "politician_id": 145921,
+    "name": "Swantje Michaelsen",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "Geschäftsführerin ADFC Hannover",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 136302,
+    "name": "Stefan Wenzel",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1962.0,
+    "occupation": "MdL, Minister für Umwelt, Energie und Klimaschutz a.D.",
+    "education": "Agrarökonom (Dipl. Ing.)",
+    "field_title": null
+  },
+  {
+    "politician_id": 175593,
+    "name": "Karoline Otte",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1996.0,
+    "occupation": "MdB",
+    "education": "Kreisinspektorin",
+    "field_title": null
+  },
+  {
+    "politician_id": 136080,
+    "name": "Helge Limburg",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": null,
+    "occupation": null,
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 79247,
+    "name": "Katja Keul",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175563,
+    "name": "Frank Bsirske",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1952.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Politologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 78944,
+    "name": "Julia Verlinden",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "Mitglied des Bundestags, stellvertretende Fraktionsvorsitzende von Bündnis 90/Die Grünen",
+    "education": "Diplom Umweltwissenschaften & Promotion",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145913,
+    "name": "Christina-Johanne Schröder",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB",
+    "education": "Sozialwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78856,
+    "name": "Sven-Christian Kindler",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1985.0,
+    "occupation": "MdB",
+    "education": "Betriebswirtschaftslehre",
+    "field_title": null
+  },
+  {
+    "politician_id": 136013,
+    "name": "Filiz Polat",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Diplom-Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175915,
+    "name": "Dirk Brandes",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1974.0,
+    "occupation": "Fraktionsgeschäftsführer",
+    "education": "Betriebswirt VWL, Industriekaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 121468,
+    "name": "Jörn König",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1967.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Ing. Elektrotechnik (MBA)",
+    "field_title": null
+  },
+  {
+    "politician_id": 145711,
+    "name": "Dietmar Friedhoff",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Ing, Oberstleutnant d.R.",
+    "field_title": null
+  },
+  {
+    "politician_id": 122027,
+    "name": "Thomas Ehrhorn",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Berufspilot",
+    "field_title": null
+  },
+  {
+    "politician_id": 175920,
+    "name": "Frank Rinck",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1986.0,
+    "occupation": null,
+    "education": "Landwirt",
+    "field_title": null
+  },
+  {
+    "politician_id": 175931,
+    "name": "Joachim Wundrak",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1955.0,
+    "occupation": "MdB",
+    "education": "Generalleutnant a. D.",
+    "field_title": null
+  },
+  {
+    "politician_id": 175693,
+    "name": "Anikó Glogowski-Merten",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Kunstwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 120356,
+    "name": "Matthias Seestern-Pauly",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB",
+    "education": "Studium Lehramt",
+    "field_title": null
+  },
+  {
+    "politician_id": 135980,
+    "name": "Gero Hocker",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Diplom Ökonom und Bankkaufmann",
+    "field_title": null
+  },
+  {
+    "politician_id": 175758,
+    "name": "Knut Gerschau",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "Unternehmer",
+    "education": "Wirtschaftswissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 29297,
+    "name": "Konstantin Kuhle",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 146300,
+    "name": "Anja Schulz",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1985.0,
+    "occupation": "Bundestagsabgeordnete",
+    "education": "Bankkauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 136537,
+    "name": "Jens Beeck",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1969.0,
+    "occupation": "Jurist",
+    "education": "MdB, Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 135929,
+    "name": "Christian Dürr",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB, Vorsitzender der FDP-Fraktion im Bundestag",
+    "education": "Dipl.-Ökonom",
+    "field_title": null
+  },
+  {
+    "politician_id": 175480,
+    "name": "Peggy Schierenbeck",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Unternehmerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 175397,
+    "name": "Anke Hennig",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "qualifizierte Kindertagespflegeperson",
+    "field_title": null
+  },
+  {
+    "politician_id": 175394,
+    "name": "Anja Troff-Schaffarzyk",
+    "party": "SPD",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Dipl.-Pädagogin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79476,
+    "name": "Stephan Albani",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1968.0,
+    "occupation": "MdB",
+    "education": "Diplom-Physiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 79335,
+    "name": "Fritz Güntzler",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Studium der BWL und Wirtschaftsprüfer",
+    "field_title": null
+  },
+  {
+    "politician_id": 149653,
+    "name": "Mareike Lotte Wulf",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1979.0,
+    "occupation": "Geschäftsführerin Bereich Bildung bei den Unternehmerverbänden Niedersachsen (UVN)",
+    "education": "Diplom Sozialwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79116,
+    "name": "Carsten Müller",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1970.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann, Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 29490,
+    "name": "Tilman Kuban",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 175830,
+    "name": "Anne Janssen",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1982.0,
+    "occupation": "MdB",
+    "education": "Bachelor und Master of Arts",
+    "field_title": null
+  },
+  {
+    "politician_id": 79393,
+    "name": "Enak Ferlemann",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann, Studium der Rechtswissenschaft, Politologie und Philosophie",
+    "field_title": null
+  },
+  {
+    "politician_id": 79132,
+    "name": "Mathias Middelberg",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1964.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 119082,
+    "name": "Michael Grosse-Brömer",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1960.0,
+    "occupation": "MdB, Erster Parlamentarischer Geschäftsführer",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79293,
+    "name": "Hendrik Hoppenstedt",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 130124,
+    "name": "Christian Leye",
+    "party": "BSW",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "Mitglied des Bundestages",
+    "education": "Master International Economics",
+    "field_title": null
+  },
+  {
+    "politician_id": 78948,
+    "name": "Kathrin Vogler",
+    "party": "Die Linke.",
+    "sex": "f",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Studium der Soziologie",
+    "field_title": null
+  },
+  {
+    "politician_id": 79281,
+    "name": "Andrej Hunko",
+    "party": "BSW",
+    "sex": "m",
+    "year_of_birth": 1963.0,
+    "occupation": "MdB",
+    "education": "Mediengestalter",
+    "field_title": null
+  },
+  {
+    "politician_id": 79420,
+    "name": "Sevim Dağdelen",
+    "party": "BSW",
+    "sex": "f",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Journalistin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78934,
+    "name": "Sahra Wagenknecht",
+    "party": "BSW",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Philosophie- und Literaturstudium, Promotion in Wirtschaftswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 175527,
+    "name": "Anja Liebert",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1969.0,
+    "occupation": "MdB",
+    "education": "Sprach- und Literaturwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 130480,
+    "name": "Lukas Benner",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1996.0,
+    "occupation": "Doktorand",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175642,
+    "name": "Sabine Grützmacher",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1986.0,
+    "occupation": "Geschäftsführerin (Bereich Sozialmanagement)",
+    "education": "Sozialarbeiterin (FH), Master International vergleichende Soziologie/Pädagogik (Medienpädagogik)",
+    "field_title": null
+  },
+  {
+    "politician_id": 119861,
+    "name": "Janosch Dahmen",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1981.0,
+    "occupation": "MdB & Notfallmediziner",
+    "education": "Arzt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175606,
+    "name": "Laura Kraft",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1990.0,
+    "occupation": "MdB",
+    "education": "Literaturwissenschaftlerin",
+    "field_title": null
+  },
+  {
+    "politician_id": 78852,
+    "name": "Markus Kurth",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Diplom-Politologe",
+    "field_title": null
+  },
+  {
+    "politician_id": 175532,
+    "name": "Anne-Monika Spallek",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1968.0,
+    "occupation": "Unternehmensberaterin, Leiterin eines Pferdebetriebes",
+    "education": "Mathematikerin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175598,
+    "name": "Kathrin Henneberger",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "Projektkoordinatorin Klimagerechtigkeit",
+    "education": null,
+    "field_title": null
+  },
+  {
+    "politician_id": 175645,
+    "name": "Schahina Gambir",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1991.0,
+    "occupation": "Wirtschafts- und Politikwissenschaftlerin (Bachelor), Gender Studies (Master)",
+    "education": "Veranstaltungskauffrau",
+    "field_title": null
+  },
+  {
+    "politician_id": 121603,
+    "name": "Maik Außendorf",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1971.0,
+    "occupation": "MdB",
+    "education": "Diplom-Mathematiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 175643,
+    "name": "Sara Nanni",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1987.0,
+    "occupation": "MdB",
+    "education": "Friedens- und Konfliktforscherin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79358,
+    "name": "Kai Gehring",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1977.0,
+    "occupation": "MdB",
+    "education": "Diplom Sozialwissenschaftler",
+    "field_title": null
+  },
+  {
+    "politician_id": 175624,
+    "name": "Max Lucks",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1997.0,
+    "occupation": "MdB",
+    "education": "B.A. Sozialwissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 121794,
+    "name": "Ophelia Nick",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Tierärztin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 175603,
+    "name": "Lamya Kaddor",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1978.0,
+    "occupation": "MdB",
+    "education": "Islamwissenschaftlerin, Lehrerin für Islamische Religion, Autorin",
+    "field_title": null
+  },
+  {
+    "politician_id": 164992,
+    "name": "Nyke Slawik",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1994.0,
+    "occupation": "Bundestagsabgeordnete",
+    "education": "Wissenschaftliche Mitarbeiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 145969,
+    "name": "Robin Wagener",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1980.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 79021,
+    "name": "Ulle Schauws",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1966.0,
+    "occupation": "MdB",
+    "education": "Film-, Fernseh-, Politikwissenschaften und Geschichte",
+    "field_title": null
+  },
+  {
+    "politician_id": 147328,
+    "name": "Jan-Niclas Gesenhues",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1990.0,
+    "occupation": "MdB",
+    "education": "Volkswirt",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 145959,
+    "name": "Felix Banaszak",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "m",
+    "year_of_birth": 1989.0,
+    "occupation": "MdB",
+    "education": "Sozial- und Kulturanthropologie & Politikwissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 79403,
+    "name": "Katharina Dröge",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1984.0,
+    "occupation": "MdB und Fraktionsvorsitzende",
+    "education": "Diplom-Volkswirtin",
+    "field_title": null
+  },
+  {
+    "politician_id": 79129,
+    "name": "Irene Mihalic",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1976.0,
+    "occupation": "MdB",
+    "education": "Polizeibeamtin",
+    "field_title": "Dr."
+  },
+  {
+    "politician_id": 79325,
+    "name": "Britta Haßelmann",
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "sex": "f",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Dipl. Sozialarbeiterin",
+    "field_title": null
+  },
+  {
+    "politician_id": 147331,
+    "name": "Stefan Keuter",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1972.0,
+    "occupation": "MdB",
+    "education": "Bankkaufmann und Diplom-Betriebswirt (FH)",
+    "field_title": null
+  },
+  {
+    "politician_id": 147226,
+    "name": "Jochen Haug",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1973.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 175918,
+    "name": "Eugen Schmidt",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "Softwareentwickler",
+    "education": "Dipl.-Informatiker",
+    "field_title": null
+  },
+  {
+    "politician_id": 150294,
+    "name": "Harald Weyel",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1959.0,
+    "occupation": "MdB",
+    "education": "Professor der Betriebswirtschaft",
+    "field_title": null
+  },
+  {
+    "politician_id": 130094,
+    "name": "Roger Beckamp",
+    "party": "AfD",
+    "sex": "m",
+    "year_of_birth": 1975.0,
+    "occupation": "MdB",
+    "education": "Rechtsanwalt für Immobilien- und Baurecht",
+    "field_title": null
+  },
+  {
+    "politician_id": 145751,
+    "name": "Matthias Helferich",
+    "party": "fraktionslos",
+    "sex": "m",
+    "year_of_birth": 1988.0,
+    "occupation": "Bundestagsabgeordneter",
+    "education": "Rechtsanwalt",
+    "field_title": null
+  },
+  {
+    "politician_id": 78920,
+    "name": "Sabine Weiss",
+    "party": "CDU/CSU",
+    "sex": "f",
+    "year_of_birth": 1958.0,
+    "occupation": "MdB",
+    "education": "Studium der Rechtswissenschaften",
+    "field_title": null
+  },
+  {
+    "politician_id": 130072,
+    "name": "Armin Laschet",
+    "party": "CDU/CSU",
+    "sex": "m",
+    "year_of_birth": 1961.0,
+    "occupation": "MdB",
+    "education": "Jurist",
+    "field_title": null
+  },
+  {
+    "politician_id": 146289,
+    "name": "Ria Schröder",
+    "party": "FDP",
+    "sex": "f",
+    "year_of_birth": 1992.0,
+    "occupation": "Juristin",
+    "education": "Juristin",
+    "field_title": null
+  },
+  {
+    "politician_id": 66705,
+    "name": "Michael Kruse",
+    "party": "FDP",
+    "sex": "m",
+    "year_of_birth": 1983.0,
+    "occupation": "MdB, kaufm. Geschäftsführer",
+    "education": "Dipl.-Volkswirt",
+    "field_title": null
+  }
+]

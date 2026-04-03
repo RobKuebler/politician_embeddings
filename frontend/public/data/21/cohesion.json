@@ -1,0 +1,11 @@
+[
+  { "party": "SPD", "streuung": 0.2551108069390334, "label": "SPD" },
+  { "party": "CDU/CSU", "streuung": 0.29927246957067477, "label": "CDU/CSU" },
+  {
+    "party": "BÜNDNIS 90/­DIE GRÜNEN",
+    "streuung": 0.5384379211951139,
+    "label": "BÜNDNIS 90/DIE GRÜNEN"
+  },
+  { "party": "AfD", "streuung": 0.8676199647229557, "label": "AfD" },
+  { "party": "Die Linke", "streuung": 1.3766932395389586, "label": "Die Linke" }
+]
