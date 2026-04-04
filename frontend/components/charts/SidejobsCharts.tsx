@@ -1,102 +1,78 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
-import * as d3 from "d3";
-import { useContainerWidth } from "@/hooks/useContainerWidth";
+import { PARTY_COLORS, FALLBACK_COLOR, sortParties } from "@/lib/constants";
 import { SidejobRecord, stripSoftHyphen } from "@/lib/data";
-import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
-  sortParties,
-  COLOR_SECONDARY,
-} from "@/lib/constants";
-import {
-  ChartTooltip,
-  drawSimpleHorizontalBarChart,
-  drawStackedHorizontalBarChart,
-  drawSimpleVerticalBarChart,
-  drawPartyColoredStackedBarChart,
-} from "@/lib/chart-utils";
+import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
 
-// ── Chart 1: Income by party (sum + mean) ─────────────────────────────────────
+function formatEur(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M €`;
+  if (n >= 1_000) return `${Math.round(n / 1_000)}K €`;
+  return `${Math.round(n)} €`;
+}
 
-export function IncomeByPartyChart({
-  jobs,
-  parties,
-  politicians,
-}: {
-  jobs: SidejobRecord[];
-  parties: string[];
-  politicians: { politician_id: number; name: string; party: string }[];
-}) {
-  const { ref: containerRef, width } = useContainerWidth();
-  const svgSumRef = useRef<SVGSVGElement>(null);
-  const svgMeanRef = useRef<SVGSVGElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+/** Small colored dot used as party legend marker in group headers. */
+function PartyDot({ color }: { color: string }) {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        width: 8,
+        height: 8,
+        borderRadius: "50%",
+        background: color,
+        flexShrink: 0,
+      }}
+    />
+  );
+}
 
-  useEffect(() => {
-    if (!width) return;
-    // Total income per party, divided by all politicians in that party (incl. those with no sidejobs).
-    const partySize = new Map<string, number>();
-    for (const pol of politicians) {
-      const party = stripSoftHyphen(pol.party);
-      partySize.set(party, (partySize.get(party) ?? 0) + 1);
-    }
-    const totals = parties.map((p) =>
-      jobs
-        .filter((j) => j.party === p)
-        .reduce((s, j) => s + j.prorated_income, 0),
-    );
-    const means = parties.map((p, i) => {
-      const n = partySize.get(p) ?? 0;
-      return n > 0 ? totals[i] / n : 0;
-    });
+// ── Chart 1: Sidejobs per party ───────────────────────────────────────────────
 
-    // Draws a bar chart in PARTY_ORDER (seat count order).
-    // Vertical on desktop, horizontal on mobile — handled by drawSimpleVerticalBarChart.
-    const draw = (svgEl: SVGSVGElement, values: number[]) => {
-      drawSimpleVerticalBarChart({
-        svgEl,
-        width,
-        labels: parties,
-        values,
-        colors: parties.map((p) => PARTY_COLORS[p] ?? FALLBACK_COLOR),
-        tooltipHtml: (label, value) =>
-          `<b>${label}</b><br/>${Math.round(value).toLocaleString("de")} €`,
-        tooltip: d3.select(tooltipRef.current!),
-        container: containerRef.current!,
-      });
-    };
-
-    if (svgSumRef.current) draw(svgSumRef.current, totals);
-    if (svgMeanRef.current) draw(svgMeanRef.current, means);
-  }, [jobs, parties, politicians, width]);
+export function SidejobsByPartyChart({ jobs }: { jobs: SidejobRecord[] }) {
+  const counts: Record<string, number> = {};
+  for (const j of jobs) {
+    const party = stripSoftHyphen(j.party);
+    if (party === "fraktionslos") continue;
+    counts[party] = (counts[party] ?? 0) + 1;
+  }
+  const parties = sortParties(Object.keys(counts));
+  const max = Math.max(...parties.map((p) => counts[p]), 1);
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
-      <div className="flex flex-col gap-4">
-        <div>
-          <p className="text-xs font-medium text-gray-500 mb-1">Summe</p>
-          <svg
-            ref={svgSumRef}
-            style={{ display: "block", width: "100%", overflow: "visible" }}
-          />
-        </div>
-        <div>
-          <p className="text-xs font-medium text-gray-500 mb-1">
-            Ø pro Abgeordnetem
-          </p>
-          <svg
-            ref={svgMeanRef}
-            style={{ display: "block", width: "100%", overflow: "visible" }}
-          />
-        </div>
-      </div>
-      <ChartTooltip tooltipRef={tooltipRef} />
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {parties.map((party) => (
+        <HorizontalBarRow
+          key={party}
+          label={party}
+          labelWidth={80}
+          value={counts[party]}
+          max={max}
+          color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+          displayValue={String(counts[party])}
+          barHeight={8}
+        />
+      ))}
     </div>
   );
 }
 
-// ── Chart 2: Income by category (stacked horizontal bars) ────────────────────
+/**
+ * Alias for the sidejobs page which imports IncomeByPartyChart.
+ * Extra props (parties, politicians) are accepted but not used since
+ * the chart now shows job counts rather than income totals.
+ */
+export function IncomeByPartyChart({
+  jobs,
+}: {
+  jobs: SidejobRecord[];
+  parties?: string[];
+  politicians?: { politician_id: number; name: string; party: string }[];
+}) {
+  return <SidejobsByPartyChart jobs={jobs} />;
+}
+
+// ── Chart 2: Income by category ───────────────────────────────────────────────
+// Category as section header, one bar per party below.
+// Bottom "Gesamt" section sums all categories per party.
 
 export function IncomeByCategoryChart({
   jobs,
@@ -105,114 +81,129 @@ export function IncomeByCategoryChart({
   jobs: SidejobRecord[];
   parties: string[];
 }) {
-  const { ref: containerRef, width } = useContainerWidth();
-  const svgRef = useRef<SVGSVGElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const [activeParties, setActiveParties] = useState<Set<string>>(
-    () => new Set(parties),
-  );
-
-  // Reset selection when the parties prop changes (e.g. period switch)
-  useEffect(() => {
-    setActiveParties(new Set(parties));
-  }, [parties]);
-
-  function toggleParty(party: string) {
-    setActiveParties((prev) => {
-      if (prev.has(party) && prev.size === 1) return prev; // keep at least one
-      const next = new Set(prev);
-      next.has(party) ? next.delete(party) : next.add(party);
-      return next;
-    });
+  // Aggregate income per category per party
+  const catMap = new Map<string, Map<string, number>>();
+  for (const j of jobs) {
+    const party = stripSoftHyphen(j.party);
+    if (!parties.includes(party)) continue;
+    if (!catMap.has(j.category_label)) catMap.set(j.category_label, new Map());
+    const m = catMap.get(j.category_label)!;
+    m.set(party, (m.get(party) ?? 0) + j.prorated_income);
   }
 
-  const visibleParties = parties.filter((p) => activeParties.has(p));
+  // Sort categories by total income descending
+  const sortedCats = Array.from(catMap.entries())
+    .map(([cat, pm]) => ({
+      cat,
+      total: Array.from(pm.values()).reduce((a, b) => a + b, 0),
+    }))
+    .sort((a, b) => b.total - a.total)
+    .map((x) => x.cat);
 
-  useEffect(() => {
-    if (!width || !svgRef.current) return;
-    const allCats = Array.from(new Set(jobs.map((j) => j.category_label)));
-    // Build rows with all party data so toggling doesn't require re-aggregation
-    const rows = allCats
-      .map((cat) => {
-        const row: Record<string, string | number> = { cat };
-        parties.forEach((party) => {
-          row[party] = Math.round(
-            jobs
-              .filter((j) => j.party === party && j.category_label === cat)
-              .reduce((s, j) => s + j.prorated_income, 0),
-          );
-        });
-        return row;
-      })
-      // Sort by total of visible parties so the chart reflects the current selection
-      .sort((a, b) => {
-        const totA = visibleParties.reduce((s, p) => s + (a[p] as number), 0);
-        const totB = visibleParties.reduce((s, p) => s + (b[p] as number), 0);
-        return totB - totA;
-      });
-    const cats = rows.map((r) => r.cat as string);
+  // Totals per party across all categories (for Gesamt section)
+  const totalByParty: Record<string, number> = {};
+  for (const [, pm] of catMap)
+    for (const [party, income] of pm)
+      totalByParty[party] = (totalByParty[party] ?? 0) + income;
 
-    drawStackedHorizontalBarChart({
-      svgEl: svgRef.current,
-      width,
-      categories: cats,
-      categoryKey: "cat",
-      seriesKeys: visibleParties,
-      colorFn: (key) => PARTY_COLORS[key] ?? FALLBACK_COLOR,
-      dataRows: rows,
-      tooltipHtml: (cat, party, value) =>
-        `<b>${party}</b><br/>${cat}<br/>${value.toLocaleString("de")} €`,
-      tooltip: d3.select(tooltipRef.current!),
-      container: containerRef.current!,
-    });
-  }, [jobs, parties, visibleParties, width]);
+  const sortedParties = sortParties(parties);
+  const gesamtMax = Math.max(
+    ...sortedParties.map((p) => totalByParty[p] ?? 0),
+    1,
+  );
 
   return (
-    <div>
-      <div ref={containerRef} style={{ position: "relative" }}>
-        <svg
-          ref={svgRef}
-          style={{ display: "block", width: "100%", overflow: "visible" }}
-        />
-        <ChartTooltip tooltipRef={tooltipRef} />
-      </div>
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
-        {parties.map((party) => {
-          const active = activeParties.has(party);
-          return (
-            <span
-              key={party}
-              onClick={() => toggleParty(party)}
-              className="flex items-center gap-1 text-[10px]"
+    <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+      {sortedCats.map((cat) => {
+        const pm = catMap.get(cat)!;
+        const catMax = Math.max(...sortedParties.map((p) => pm.get(p) ?? 0), 1);
+        return (
+          <div key={cat} style={{ marginBottom: 16 }}>
+            <p
               style={{
-                cursor: "pointer",
-                opacity: active ? 1 : 0.35,
-                color: "var(--color-muted)",
-                userSelect: "none",
+                fontSize: 12,
+                fontWeight: 700,
+                color: "#555",
+                marginBottom: 8,
               }}
             >
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 10,
-                  height: 10,
-                  borderRadius: 2,
-                  background: active
-                    ? (PARTY_COLORS[party] ?? FALLBACK_COLOR)
-                    : "#ccc",
-                  flexShrink: 0,
-                }}
-              />
-              {party}
-            </span>
-          );
-        })}
+              {cat}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {sortedParties.map((party) => {
+                const income = pm.get(party) ?? 0;
+                return (
+                  <div
+                    key={party}
+                    style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  >
+                    <PartyDot color={PARTY_COLORS[party] ?? FALLBACK_COLOR} />
+                    <HorizontalBarRow
+                      label={party}
+                      labelWidth={72}
+                      value={income}
+                      max={catMax}
+                      color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+                      displayValue={formatEur(income)}
+                      barHeight={7}
+                      valueWidth={52}
+                      style={{ flex: 1, minWidth: 0 }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+
+      {/* Gesamt section */}
+      <div
+        style={{ borderTop: "1px solid #F0EEE9", paddingTop: 14, marginTop: 2 }}
+      >
+        <p
+          style={{
+            fontSize: 10,
+            fontWeight: 700,
+            color: "#9A9790",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            marginBottom: 10,
+          }}
+        >
+          Gesamt alle Kategorien
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {sortedParties.map((party) => {
+            const total = totalByParty[party] ?? 0;
+            return (
+              <div
+                key={party}
+                style={{ display: "flex", alignItems: "center", gap: 8 }}
+              >
+                <PartyDot color={PARTY_COLORS[party] ?? FALLBACK_COLOR} />
+                <HorizontalBarRow
+                  label={party}
+                  labelWidth={72}
+                  value={total}
+                  max={gesamtMax}
+                  color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+                  displayValue={formatEur(total)}
+                  barHeight={7}
+                  valueWidth={52}
+                  style={{ flex: 1, minWidth: 0 }}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 }
 
-// ── Chart 3: Top topics (stacked horizontal bars) ─────────────────────────────
+// ── Chart 3: Top topics ───────────────────────────────────────────────────────
+// Topic as section header, one bar per party below.
 
 export function TopTopicsChart({
   jobs,
@@ -221,203 +212,149 @@ export function TopTopicsChart({
   jobs: SidejobRecord[];
   parties: string[];
 }) {
-  const { ref: containerRef, width } = useContainerWidth();
-  const svgRef = useRef<SVGSVGElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const [activeParties, setActiveParties] = useState<Set<string>>(
-    () => new Set(parties),
-  );
-
-  // Reset selection when the parties prop changes (e.g. period switch)
-  useEffect(() => {
-    setActiveParties(new Set(parties));
-  }, [parties]);
-
-  function toggleParty(party: string) {
-    setActiveParties((prev) => {
-      if (prev.has(party) && prev.size === 1) return prev; // keep at least one
-      const next = new Set(prev);
-      next.has(party) ? next.delete(party) : next.add(party);
-      return next;
-    });
+  // Aggregate income per topic per party
+  const topicMap = new Map<string, Map<string, number>>();
+  for (const j of jobs) {
+    const party = stripSoftHyphen(j.party);
+    if (!parties.includes(party)) continue;
+    for (const topic of j.topics) {
+      if (!topicMap.has(topic)) topicMap.set(topic, new Map());
+      const m = topicMap.get(topic)!;
+      m.set(party, (m.get(party) ?? 0) + j.prorated_income);
+    }
   }
 
-  const visibleParties = parties.filter((p) => activeParties.has(p));
+  // Top 10 topics by total income
+  const topTopics = Array.from(topicMap.entries())
+    .map(([topic, pm]) => ({
+      topic,
+      total: Array.from(pm.values()).reduce((a, b) => a + b, 0),
+    }))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 10)
+    .map((x) => x.topic);
 
-  useEffect(() => {
-    if (!width || !svgRef.current) return;
-
-    // Aggregate income per topic per party
-    const topicMap = new Map<string, Map<string, number>>();
-    for (const j of jobs) {
-      for (const topic of j.topics) {
-        if (!topicMap.has(topic)) topicMap.set(topic, new Map());
-        const m = topicMap.get(topic)!;
-        m.set(j.party, (m.get(j.party) ?? 0) + j.prorated_income);
-      }
-    }
-
-    // Top 15 ranked by total across visible parties so toggling updates the ranking
-    const topTopics = Array.from(topicMap.entries())
-      .map(([topic, pm]) => ({
-        topic,
-        total: visibleParties.reduce((a, p) => a + (pm.get(p) ?? 0), 0),
-      }))
-      .sort((a, b) => b.total - a.total)
-      .slice(0, 15)
-      .map((t) => t.topic);
-
-    const rows = topTopics.map((topic) => {
-      const row: Record<string, string | number> = { topic };
-      parties.forEach((party) => {
-        row[party] = Math.round(topicMap.get(topic)?.get(party) ?? 0);
-      });
-      return row;
-    });
-
-    drawStackedHorizontalBarChart({
-      svgEl: svgRef.current,
-      width,
-      categories: topTopics,
-      categoryKey: "topic",
-      seriesKeys: visibleParties,
-      colorFn: (key) => PARTY_COLORS[key] ?? FALLBACK_COLOR,
-      dataRows: rows,
-      tooltipHtml: (topic, party, value) =>
-        `<b>${party}</b><br/>${topic}<br/>${value.toLocaleString("de")} €`,
-      tooltip: d3.select(tooltipRef.current!),
-      container: containerRef.current!,
-    });
-  }, [jobs, parties, visibleParties, width]);
+  const sortedParties = sortParties(parties);
 
   return (
-    <div>
-      <div ref={containerRef} style={{ position: "relative" }}>
-        <svg
-          ref={svgRef}
-          style={{ display: "block", width: "100%", overflow: "visible" }}
-        />
-        <ChartTooltip tooltipRef={tooltipRef} />
-      </div>
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
-        {parties.map((party) => {
-          const active = activeParties.has(party);
-          return (
-            <span
-              key={party}
-              onClick={() => toggleParty(party)}
-              className="flex items-center gap-1 text-[10px]"
+    <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+      {topTopics.map((topic) => {
+        const pm = topicMap.get(topic)!;
+        const topicMax = Math.max(
+          ...sortedParties.map((p) => pm.get(p) ?? 0),
+          1,
+        );
+        return (
+          <div key={topic} style={{ marginBottom: 16 }}>
+            <p
               style={{
-                cursor: "pointer",
-                opacity: active ? 1 : 0.35,
-                color: "var(--color-muted)",
-                userSelect: "none",
+                fontSize: 12,
+                fontWeight: 700,
+                color: "#555",
+                marginBottom: 8,
+                lineHeight: 1.4,
               }}
             >
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 10,
-                  height: 10,
-                  borderRadius: 2,
-                  background: active
-                    ? (PARTY_COLORS[party] ?? FALLBACK_COLOR)
-                    : "#ccc",
-                  flexShrink: 0,
-                }}
-              />
-              {party}
-            </span>
-          );
-        })}
-      </div>
+              {topic}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {sortedParties.map((party) => {
+                const income = pm.get(party) ?? 0;
+                return (
+                  <div
+                    key={party}
+                    style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  >
+                    <PartyDot color={PARTY_COLORS[party] ?? FALLBACK_COLOR} />
+                    <HorizontalBarRow
+                      label={party}
+                      labelWidth={72}
+                      value={income}
+                      max={topicMax}
+                      color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+                      displayValue={formatEur(income)}
+                      barHeight={7}
+                      valueWidth={52}
+                      style={{ flex: 1, minWidth: 0 }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-// ── Chart 4: Top earners (horizontal bars) ────────────────────────────────────
+// ── Chart 4: Top earners ──────────────────────────────────────────────────────
 
 export function TopEarnersChart({
   jobs,
   politicians,
+  parties,
 }: {
   jobs: SidejobRecord[];
   politicians: { politician_id: number; name: string; party: string }[];
   parties: string[];
 }) {
-  const { ref: containerRef, width } = useContainerWidth();
-  const svgRef = useRef<SVGSVGElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const polMap = new Map(politicians.map((p) => [p.politician_id, p]));
+  const byPol = new Map<number, number>();
+  for (const j of jobs) {
+    const party = stripSoftHyphen(polMap.get(j.politician_id)?.party ?? "");
+    if (!parties.includes(party)) continue;
+    byPol.set(
+      j.politician_id,
+      (byPol.get(j.politician_id) ?? 0) + j.prorated_income,
+    );
+  }
 
-  useEffect(() => {
-    if (!width || !svgRef.current) return;
-    const polMap = new Map(politicians.map((p) => [p.politician_id, p]));
-    const byPol = new Map<number, number>();
-    for (const j of jobs)
-      byPol.set(
-        j.politician_id,
-        (byPol.get(j.politician_id) ?? 0) + j.prorated_income,
-      );
+  const top = Array.from(byPol.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 15)
+    .map(([id, income]) => ({ pol: polMap.get(id), income }))
+    .filter(
+      (
+        t,
+      ): t is {
+        pol: NonNullable<ReturnType<typeof polMap.get>>;
+        income: number;
+      } => t.pol != null,
+    );
 
-    const top = Array.from(byPol.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 15)
-      .map(([id, income]) => ({ pol: polMap.get(id), income }))
-      .filter((t) => t.pol != null) as {
-      pol: NonNullable<ReturnType<typeof polMap.get>>;
-      income: number;
-    }[];
-
-    drawSimpleHorizontalBarChart({
-      svgEl: svgRef.current,
-      width,
-      labels: top.map((t) => t.pol.name),
-      values: top.map((t) => t.income),
-      colors: top.map(
-        (t) => PARTY_COLORS[stripSoftHyphen(t.pol.party)] ?? FALLBACK_COLOR,
-      ),
-      tooltipHtml: (label, value) =>
-        `<b>${label}</b><br/>${Math.round(value).toLocaleString("de")} €`,
-      tooltip: d3.select(tooltipRef.current!),
-      container: containerRef.current!,
-    });
-  }, [jobs, politicians, width]);
+  const max = top[0]?.income ?? 1;
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
-      <svg ref={svgRef} style={{ display: "block", width: "100%" }} />
-      <ChartTooltip tooltipRef={tooltipRef} />
+    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      {top.map(({ pol, income }, i) => (
+        <HorizontalBarRow
+          key={pol.politician_id}
+          label={pol.name}
+          labelWidth={155}
+          value={income}
+          max={max}
+          color={PARTY_COLORS[stripSoftHyphen(pol.party)] ?? FALLBACK_COLOR}
+          displayValue={formatEur(income)}
+          valueWidth={52}
+          rank={i + 1}
+        />
+      ))}
     </div>
   );
 }
 
-// ── Chart 5: Coverage per party (stacked bar: Nebenverdienst / keine Angabe / kein Nebenjob) ──
+// ── Chart 5: Sidejob coverage per party ──────────────────────────────────────
+// Party as group header, 3 sub-bars: income / no_amount / none.
 
-// Series definitions: color comes from the party, opacity encodes the category.
-// "none" overrides to neutral gray since it represents absence of a sidejob.
-const COVERAGE_SERIES = [
-  {
-    key: "income",
-    opacity: 1,
-    fallbackColor: undefined,
-    label: "Nebenverdienst ≥ 1.000 €/Monat",
-  },
-  {
-    key: "no_amount",
-    opacity: 0.4,
-    fallbackColor: undefined,
-    label: "Nebentätigkeit, ohne Einkommensangabe",
-  },
-  { key: "none", opacity: 1, fallbackColor: "#E8E7E2", label: "Kein Nebenjob" },
-] as const;
+const COVERAGE_LABELS = {
+  income: "Nebenverdienst ≥ 1.000 €/Monat",
+  no_amount: "Nebentätigkeit ohne Einkommensangabe",
+  none: "Kein Nebenjob",
+} as const;
 
-/**
- * Categorises each politician into one of three buckets:
- *   "income"    — has at least one sidejob with income_level set (above threshold)
- *   "no_amount" — has sidejob(s) but none with income_level (no amount declared)
- *   "none"      — no sidejob entry at all
- * Rendered as a 100%-stacked bar chart (same style as GenderChart).
- */
+type CoverageKey = keyof typeof COVERAGE_LABELS;
+
 export function SidejobCoverageByPartyChart({
   jobs,
   politicians,
@@ -425,11 +362,6 @@ export function SidejobCoverageByPartyChart({
   jobs: SidejobRecord[];
   politicians: { politician_id: number; name: string; party: string }[];
 }) {
-  const { ref: containerRef, width } = useContainerWidth();
-  const svgRef = useRef<SVGSVGElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-
-  // Build lookup: which politicians have qualifying income / any sidejob
   const withIncome = new Set<number>();
   const withAnySidejob = new Set<number>();
   for (const j of jobs) {
@@ -437,16 +369,11 @@ export function SidejobCoverageByPartyChart({
     if (j.income_level !== null) withIncome.add(j.politician_id);
   }
 
-  // Aggregate counts per party
-  type Counts = {
-    income: number;
-    no_amount: number;
-    none: number;
-    total: number;
-  };
+  type Counts = Record<CoverageKey, number> & { total: number };
   const byParty = new Map<string, Counts>();
   for (const pol of politicians) {
     const party = stripSoftHyphen(pol.party);
+    if (party === "fraktionslos") continue;
     if (!byParty.has(party))
       byParty.set(party, { income: 0, no_amount: 0, none: 0, total: 0 });
     const c = byParty.get(party)!;
@@ -456,62 +383,66 @@ export function SidejobCoverageByPartyChart({
     else c.none++;
   }
 
-  const parties = sortParties(
-    Array.from(byParty.keys()).filter((p) => p !== "fraktionslos"),
-  );
-
-  useEffect(() => {
-    if (!width || !svgRef.current) return;
-    drawPartyColoredStackedBarChart({
-      svgEl: svgRef.current,
-      width,
-      labels: parties,
-      series: COVERAGE_SERIES.map((s) => ({
-        key: s.key,
-        opacity: s.opacity,
-        fallbackColor: s.fallbackColor,
-      })),
-      partyColor: (party) => PARTY_COLORS[party] ?? FALLBACK_COLOR,
-      getValue: (party, key) =>
-        byParty.get(party)?.[key as "income" | "no_amount" | "none"] ?? 0,
-      tooltipHtml: (party, key, pct, count, total) => {
-        const label = COVERAGE_SERIES.find((s) => s.key === key)?.label ?? key;
-        return `<b>${party}</b><br/>${label}<br/>${count} von ${total} (${pct}%)`;
-      },
-      tooltip: d3.select(tooltipRef.current!),
-      container: containerRef.current!,
-    });
-  }, [jobs, politicians, width]);
+  const parties = sortParties(Array.from(byParty.keys()));
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
-      <svg
-        ref={svgRef}
-        style={{ display: "block", width: "100%", overflow: "visible" }}
-      />
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1">
-        {COVERAGE_SERIES.map(({ key, label, opacity, fallbackColor }) => (
-          <span
-            key={key}
-            className="flex items-center gap-1 text-[11px]"
-            style={{ color: COLOR_SECONDARY }}
-          >
-            <span
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {parties.map((party) => {
+        const counts = byParty.get(party)!;
+        const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+        const keys: CoverageKey[] = ["income", "no_amount", "none"];
+        return (
+          <div key={party}>
+            <div
               style={{
-                display: "inline-block",
-                width: 10,
-                height: 10,
-                borderRadius: 2,
-                flexShrink: 0,
-                background: fallbackColor ?? "#888",
-                opacity,
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                marginBottom: 6,
               }}
-            />
-            {label}
-          </span>
-        ))}
-      </div>
-      <ChartTooltip tooltipRef={tooltipRef} />
+            >
+              <PartyDot color={color} />
+              <span style={{ fontSize: 12, fontWeight: 700, color: "#171613" }}>
+                {party}
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 5,
+                marginLeft: 14,
+              }}
+            >
+              {keys.map((key) => {
+                const pct =
+                  counts.total > 0
+                    ? Math.round((counts[key] / counts.total) * 100)
+                    : 0;
+                const barColor =
+                  key === "none"
+                    ? "#D0CEC8"
+                    : key === "no_amount"
+                      ? (PARTY_COLORS[party] ?? FALLBACK_COLOR) + "99"
+                      : color;
+                return (
+                  <HorizontalBarRow
+                    key={key}
+                    label={COVERAGE_LABELS[key]}
+                    labelWidth={90}
+                    value={pct}
+                    max={100}
+                    color={barColor}
+                    displayValue={`${pct}%`}
+                    barHeight={7}
+                    valueWidth={36}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
