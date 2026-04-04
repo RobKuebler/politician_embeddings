@@ -91,7 +91,22 @@ export function KeywordTimeline({
     // X axis — reduce tick density for long date ranges
     const tickEvery =
       months.length > 24 ? d3.timeMonth.every(3) : d3.timeMonth.every(1);
-    const fmtMonth = d3.timeFormat("%b %y");
+    const DE_MONTHS = [
+      "Jan",
+      "Feb",
+      "Mär",
+      "Apr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dez",
+    ];
+    const fmtMonth = (d: Date) =>
+      `${DE_MONTHS[d.getMonth()]} ${String(d.getFullYear()).slice(2)}`;
     g.append("g")
       .attr("transform", `translate(0,${innerH})`)
       .call(

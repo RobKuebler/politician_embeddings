@@ -53,14 +53,16 @@ export default function ApplauseChord({ data }: Props) {
     if (!matrix) return;
 
     const size = Math.min(width, 520);
+    const TOP_PAD = 44; // extra space so rotated top labels don't clip
+    const svgHeight = size + TOP_PAD;
     const outerR = size / 2 - 56;
     const innerR = outerR - 20;
     const cx = width / 2;
-    const cy = size / 2;
+    const cy = size / 2 + TOP_PAD;
 
     const sel = d3.select(svg);
     sel.selectAll("*").remove();
-    sel.attr("width", width).attr("height", size);
+    sel.attr("width", width).attr("height", svgHeight);
 
     const g = sel.append("g").attr("transform", `translate(${cx},${cy})`);
     const tip = d3.select(tooltip);
