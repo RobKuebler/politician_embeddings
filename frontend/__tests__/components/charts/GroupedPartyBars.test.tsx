@@ -68,9 +68,9 @@ describe("GroupedPartyBars — partei-first view", () => {
 
   it("renders rubrik labels as bars after toggle", () => {
     renderToggled();
-    // Each rubrik label appears once per party section
-    expect(screen.getAllByText("Rubrik A").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Rubrik B").length).toBeGreaterThanOrEqual(1);
+    // Each rubric label appears once per party section (2 parties = 2 times each)
+    expect(screen.getAllByText("Rubrik A")).toHaveLength(2);
+    expect(screen.getAllByText("Rubrik B")).toHaveLength(2);
   });
 
   it("excludes total sections from partei-first view", () => {

@@ -199,12 +199,14 @@ export function GroupedPartyBars({
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {barLabels.map((barLabel) => {
                 const value = partyValues[barLabel] ?? 0;
+                // In partei-first mode, look up the original section for this rubric
+                const origSection =
+                  groupBy === "party"
+                    ? sections.find((s) => s.label === barLabel)
+                    : undefined;
                 // In partei-first mode, look up color from the original section for this rubric
                 const resolvedColor = (() => {
                   if (groupBy === "party") {
-                    const origSection = sections.find(
-                      (s) => s.label === barLabel,
-                    );
                     if (origSection?.barColor)
                       return origSection.barColor(label); // label = party name
                     return PARTY_COLORS[label] ?? FALLBACK_COLOR;
@@ -216,9 +218,6 @@ export function GroupedPartyBars({
                 // In partei-first mode, look up formatValue from the original section for this rubric
                 const resolvedFormat = (() => {
                   if (groupBy === "party") {
-                    const origSection = sections.find(
-                      (s) => s.label === barLabel,
-                    );
                     return origSection?.formatValue ?? formatEur;
                   }
                   return formatValue;
