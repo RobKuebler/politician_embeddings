@@ -35,9 +35,11 @@ function useCountUp(target: number, active: boolean) {
 
   useEffect(() => {
     if (!active || target === 0) return;
+    let cancelled = false;
     const duration = 1200;
     const start = performance.now();
     const tick = (now: number) => {
+      if (cancelled) return;
       const t = Math.min((now - start) / duration, 1);
       // easeOutExpo
       const ease = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
@@ -46,6 +48,7 @@ function useCountUp(target: number, active: boolean) {
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => {
+      cancelled = true;
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [target, active]);
