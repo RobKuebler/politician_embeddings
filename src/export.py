@@ -508,6 +508,7 @@ def main(argv: list[str] | None = None) -> None:
         export_party_word_freq(period)
         export_party_speech_stats(period)
         export_keyword_timeline(period)
+        export_motions(period)
 
     export_periods(available)
     log.info("Done. Exported %d periods.", len(available))
