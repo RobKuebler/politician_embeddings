@@ -20,6 +20,7 @@ from .cli import (
 )
 from .export import (
     OUTPUT_DIR,
+    export_motions,
     export_party_speech_stats,
     export_party_word_freq,
     export_period,
@@ -75,6 +76,7 @@ def _export_period_or_check(
         if exported:
             export_party_word_freq(p)
             export_party_speech_stats(p)
+            export_motions(p)
         return exported
     # Non-current period: include if all output files already exist.
     period_out = OUTPUT_DIR / str(p)

@@ -380,6 +380,75 @@ def export_keyword_timeline(period: int) -> None:
     _write(_period_output_dir(period) / "keyword_timeline.json", data)
 
 
+def export_motions(period: int) -> None:
+    """Fetch all Drucksachen for a period and write motions_stats.json
+    and motions_titles.json.
+
+    Fetches each Drucksache type once (3 API calls total) and writes both output files
+    in one pass to avoid redundant network requests.
+    Skipped silently if DIP_API_KEY is not set.
+    """
+    import os
+
+    if not os.environ.get("DIP_API_KEY"):
+        log.warning(
+            "DIP_API_KEY not set — skipping motions export for period %d.", period
+        )
+        return
+
+    from .analysis.drucksachen import (
+        _CANONICAL_PARTY_ORDER,
+        compute_counts_by_party,
+        compute_timeline,
+        compute_top_authors,
+        compute_word_freq,
+        extract_party,
+    )
+    from .fetch.drucksachen import DRUCKSACHE_TYPEN, fetch_drucksachen
+
+    stats: dict = {}
+    all_titles: list[dict] = []
+
+    for typ in DRUCKSACHE_TYPEN:
+        docs = fetch_drucksachen(period, typ)
+        if not docs:
+            stats[typ] = {
+                "counts_by_party": [],
+                "timeline": {"months": [], "series": []},
+                "word_freq": {},
+                "top_authors": {},
+            }
+            continue
+
+        counts = compute_counts_by_party(docs)
+        active = {c["party"] for c in counts}
+        ordered_parties = [p for p in _CANONICAL_PARTY_ORDER if p in active]
+
+        stats[typ] = {
+            "counts_by_party": counts,
+            "timeline": compute_timeline(docs, ordered_parties),
+            "word_freq": compute_word_freq(docs),
+            "top_authors": compute_top_authors(docs),
+        }
+
+        for doc in docs:
+            party = extract_party(doc)
+            titel = doc.get("titel", "")
+            if party and titel:
+                all_titles.append(
+                    {
+                        "typ": typ,
+                        "party": party,
+                        "datum": doc.get("datum", ""),
+                        "titel": titel,
+                    }
+                )
+
+    out = _period_output_dir(period)
+    _write(out / "motions_stats.json", stats)
+    _write(out / "motions_titles.json", all_titles)
+
+
 def export_periods(available: list[dict]) -> None:
     """Write the periods.json index file consumed by the frontend."""
     _write(OUTPUT_DIR / "periods.json", available)
