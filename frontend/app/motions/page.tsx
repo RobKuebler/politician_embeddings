@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { usePeriod } from "@/lib/period-context";
 import {
   fetchData,
@@ -54,12 +54,19 @@ export default function MotionsPage() {
   const [titles, setTitles] = useState<MotionTitle[] | null>(null);
   const [titlesLoading, setTitlesLoading] = useState(false);
 
+  // Tracks the latest activePeriodId so in-flight fetches can detect stale results
+  const activePeriodRef = useRef(activePeriodId);
+  useEffect(() => {
+    activePeriodRef.current = activePeriodId;
+  }, [activePeriodId]);
+
   useEffect(() => {
     if (!activePeriodId) return;
     setLoading(true);
     setUnavailable(false);
     setStats(null);
     setTitles(null);
+    setTitlesLoading(false);
     setQuery("");
     fetchData<MotionsStatsFile>(dataUrl("motions_stats.json", activePeriodId))
       .then((d) => {
@@ -77,8 +84,11 @@ export default function MotionsPage() {
     setQuery(q);
     if (q && !titles && !titlesLoading && activePeriodId) {
       setTitlesLoading(true);
+      const periodAtCallTime = activePeriodId;
       fetchData<MotionTitle[]>(dataUrl("motions_titles.json", activePeriodId))
         .then((d) => {
+          // Discard result if the period changed while the fetch was in-flight
+          if (activePeriodRef.current !== periodAtCallTime) return;
           setTitles(d);
           setTitlesLoading(false);
         })
@@ -105,6 +115,13 @@ export default function MotionsPage() {
       counts: s.counts,
     }));
   }, [typData]);
+
+  // totalWords is required by KeywordTimeline but only used when normalized=true.
+  // Motions counts are absolute, never normalized.
+  const dummyTotalWords = useMemo(
+    () => (typData?.timeline.months ?? []).map(() => 1),
+    [typData],
+  );
 
   // Keyword search: count matching titles per party
   const searchResults = useMemo(() => {
@@ -182,7 +199,7 @@ export default function MotionsPage() {
               {typData.timeline.months.length > 0 ? (
                 <KeywordTimeline
                   months={typData.timeline.months}
-                  totalWords={typData.timeline.months.map(() => 1)}
+                  totalWords={dummyTotalWords}
                   series={timelineSeries}
                   normalized={false}
                 />
