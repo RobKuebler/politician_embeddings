@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 /** Single horizontal bar row: [rank?] [label] [====track====] [value] */
 export interface HorizontalBarRowProps {
   label: string;
@@ -12,6 +14,8 @@ export interface HorizontalBarRowProps {
   valueWidth?: number;
   /** Optional rank number shown to the left of the label. */
   rank?: number;
+  /** Extra styles applied to the root div — use `{ flex: 1 }` when inside a flex-row wrapper. */
+  style?: CSSProperties;
 }
 
 export function HorizontalBarRow({
@@ -24,11 +28,12 @@ export function HorizontalBarRow({
   barHeight = 8,
   valueWidth = 40,
   rank,
+  style,
 }: HorizontalBarRowProps) {
   const pct = max > 0 ? (value / max) * 100 : 0;
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 12, ...style }}>
       {rank !== undefined && (
         <span
           style={{

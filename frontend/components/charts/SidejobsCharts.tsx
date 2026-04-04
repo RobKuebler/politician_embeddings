@@ -147,6 +147,7 @@ export function IncomeByCategoryChart({
                       displayValue={formatEur(income)}
                       barHeight={7}
                       valueWidth={52}
+                      style={{ flex: 1, minWidth: 0 }}
                     />
                   </div>
                 );
@@ -190,6 +191,7 @@ export function IncomeByCategoryChart({
                   displayValue={formatEur(total)}
                   barHeight={7}
                   valueWidth={52}
+                  style={{ flex: 1, minWidth: 0 }}
                 />
               </div>
             );
@@ -273,6 +275,7 @@ export function TopTopicsChart({
                       displayValue={formatEur(income)}
                       barHeight={7}
                       valueWidth={52}
+                      style={{ flex: 1, minWidth: 0 }}
                     />
                   </div>
                 );
