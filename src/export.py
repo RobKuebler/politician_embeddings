@@ -455,14 +455,8 @@ def export_periods(available: list[dict]) -> None:
 
 
 def _period_is_exportable(period: int) -> bool:
-    """Return whether a period has the required export inputs."""
-    period_dir = DATA_DIR / str(period)
-    emb_path = OUTPUTS_DIR / f"politician_embeddings_{period}.csv"
-    return (
-        (period_dir / "politicians.csv").exists()
-        and (period_dir / "votes.csv").exists()
-        and emb_path.exists()
-    )
+    """Return whether a period has been exported (votes.json exists in output dir)."""
+    return (OUTPUT_DIR / str(period) / "votes.json").exists()
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
