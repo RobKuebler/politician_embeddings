@@ -32,7 +32,7 @@ export const PAGE_META: PageMeta[] = [
     label: "Demografie",
     title: "Wer sitzt im Bundestag?",
     description:
-      "Diese Seite vergleicht Altersstruktur, Geschlechterverteilung, Berufsfelder und Bildungshintergrund der Fraktionen und zeigt, wie sie sich vom Gesamtparlament unterscheiden.",
+      "Altersstruktur, Geschlechterverteilung, Berufsfelder und Bildungshintergrund im Vergleich: So unterscheiden sich die Fraktionen voneinander und vom Gesamtparlament.",
   },
   {
     href: "/sidejobs",
@@ -46,7 +46,7 @@ export const PAGE_META: PageMeta[] = [
     href: "/comments",
     color: "#E74C3C",
     label: "Plenardynamik",
-    title: "Wer stört wen?",
+    title: "Wer reagiert auf wen?",
     description:
       "Jede Unterbrechung im Plenum, Zwischenrufe, Lachen, Applaus, ist im Stenografischen Bericht festgehalten. Diese Analyse zeigt, welche Partei wie oft und bei wessen Reden reagiert.",
   },
@@ -56,13 +56,13 @@ export const PAGE_META: PageMeta[] = [
     label: "Wortanalyse",
     title: "Wer redet worüber?",
     description:
-      "Welche Themen prägen jede Fraktion im Plenum? TF-IDF-Wordclouds der parteispezifischen Begriffe und die redeaktivsten Abgeordneten im direkten Vergleich.",
+      "Welche Themen prägen jede Fraktion im Plenum? Wordclouds der Begriffe, die jede Partei besonders prägen, und die redeaktivsten Abgeordneten im direkten Vergleich.",
   },
   {
     href: "/trends",
     color: "#4A5C8C",
     label: "Zeitverlauf",
-    title: "Wann wurde worüber gesprochen?",
+    title: "Wann wurde welches Thema heiß?",
     description:
       "Verfolge, wie oft ein Begriff in Plenardebatten erwähnt wurde, und wann Themen politisch heiß wurden.",
     wide: true,
