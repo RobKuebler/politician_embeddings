@@ -161,3 +161,36 @@ export async function fetchData<T>(path: string): Promise<T> {
 export function dataUrl(filename: string, periodId: number): string {
   return `/data/${periodId}/${filename}`;
 }
+
+// ── Motions (Anträge & Anfragen) ─────────────────────────────────────────────
+
+export interface MotionAuthor {
+  vorname: string;
+  nachname: string;
+  anzahl: number;
+}
+
+export interface MotionsTypData {
+  counts_by_party: { party: string; count: number }[];
+  timeline: {
+    months: string[];
+    series: { party: string; counts: number[] }[];
+  };
+  /** party → [{wort, tfidf, rang}] — same format as WordFreqFile values */
+  word_freq: Record<string, WordFreqEntry[]>;
+  /** party → top authors sorted by anzahl desc */
+  top_authors: Record<string, MotionAuthor[]>;
+}
+
+/** motions_stats.json — keyed by Drucksache type: "Antrag" | "Kleine Anfrage" | "Große Anfrage" */
+export type MotionsStatsFile = Record<string, MotionsTypData>;
+
+export interface MotionTitle {
+  typ: string;
+  party: string;
+  datum: string;
+  titel: string;
+}
+
+/** motions_titles.json — lazy-loaded only when keyword search is used */
+export type MotionsTitlesFile = MotionTitle[];
