@@ -330,7 +330,7 @@ export function TopEarnersChart({
       {top.map(({ pol, income }, i) => (
         <HorizontalBarRow
           key={pol.politician_id}
-          label={pol.name}
+          label={pol.name.length > 21 ? pol.name.slice(0, 21) + "…" : pol.name}
           labelWidth={120}
           value={income}
           max={max}
