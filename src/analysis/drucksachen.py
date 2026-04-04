@@ -23,7 +23,7 @@ _PARTY_NAME_MAP: dict[str, str] = {
     "FDP": "FDP",
 }
 
-# Canonical party order for timeline series (matches frontend PARTY_ORDER).
+# Exported for use by export.py to order timeline series consistently with the frontend.
 _CANONICAL_PARTY_ORDER = ["CDU/CSU", "SPD", "AfD", "Grüne", "Die Linke", "BSW", "FDP"]
 
 # Additional stopwords for parliamentary Drucksachen titles.

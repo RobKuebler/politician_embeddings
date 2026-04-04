@@ -108,6 +108,18 @@ def test_compute_timeline_empty_docs():
     assert result == {"months": [], "series": []}
 
 
+def test_compute_timeline_zero_fills_missing_months():
+    docs = [
+        _doc("AfD", datum="2024-01-01"),
+        _doc("SPD", datum="2024-02-01"),  # SPD absent in Jan, AfD absent in Feb
+    ]
+    result = compute_timeline(docs, ["AfD", "SPD"])
+    afd_series = next(s for s in result["series"] if s["party"] == "AfD")
+    spd_series = next(s for s in result["series"] if s["party"] == "SPD")
+    assert afd_series["counts"] == [1, 0]  # Jan=1, Feb=0
+    assert spd_series["counts"] == [0, 1]  # Jan=0, Feb=1
+
+
 # ── compute_top_authors ───────────────────────────────────────────────────────
 
 
@@ -141,6 +153,21 @@ def test_compute_top_authors_empty():
     assert compute_top_authors([]) == {}
 
 
+def test_compute_top_authors_sorted_descending():
+    docs = [
+        _doc("AfD", autoren=[{"id": "1", "autor_titel": "A B"}]),
+        _doc("AfD", autoren=[{"id": "3", "autor_titel": "E F"}]),
+        _doc("AfD", autoren=[{"id": "3", "autor_titel": "E F"}]),
+        _doc("AfD", autoren=[{"id": "3", "autor_titel": "E F"}]),
+        _doc("AfD", autoren=[{"id": "2", "autor_titel": "C D"}]),
+        _doc("AfD", autoren=[{"id": "2", "autor_titel": "C D"}]),
+    ]
+    result = compute_top_authors(docs)
+    anzahlen = [a["anzahl"] for a in result["AfD"]]
+    assert anzahlen == sorted(anzahlen, reverse=True)
+    assert anzahlen[0] == 3  # E F appears 3 times
+
+
 # ── compute_word_freq ─────────────────────────────────────────────────────────
 
 
@@ -155,13 +182,13 @@ def test_compute_word_freq_returns_dict_keyed_by_party():
 
 
 def test_compute_word_freq_entries_have_required_keys():
-    docs = [_doc("AfD", titel="Klimaschutz und Migration")]
+    docs = [_doc("AfD", titel="Klimaschutz und Migration Sicherheit Energie Bildung")]
     result = compute_word_freq(docs)
-    if result.get("AfD"):
-        entry = result["AfD"][0]
-        assert "wort" in entry
-        assert "tfidf" in entry
-        assert "rang" in entry
+    assert result.get("AfD"), "Expected word freq entries for AfD"
+    entry = result["AfD"][0]
+    assert "wort" in entry
+    assert "tfidf" in entry
+    assert "rang" in entry
 
 
 def test_compute_word_freq_empty_docs():
