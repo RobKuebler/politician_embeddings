@@ -14,6 +14,8 @@ export interface HorizontalBarRowProps {
   valueWidth?: number;
   /** Optional rank number shown to the left of the label. */
   rank?: number;
+  /** Opacity of the bar fill — use to visually de-emphasise a secondary metric (e.g. Beifall vs Zwischenrufe). */
+  fillOpacity?: number;
   /** Extra styles applied to the root div — use `{ flex: 1 }` when inside a flex-row wrapper. */
   style?: CSSProperties;
 }
@@ -28,6 +30,7 @@ export function HorizontalBarRow({
   barHeight = 8,
   valueWidth = 40,
   rank,
+  fillOpacity,
   style,
 }: HorizontalBarRowProps) {
   const pct = max > 0 ? (value / max) * 100 : 0;
@@ -78,6 +81,7 @@ export function HorizontalBarRow({
             borderRadius: 9999,
             background: color,
             minWidth: pct > 0 ? 2 : 0,
+            opacity: fillOpacity,
           }}
         />
       </div>
