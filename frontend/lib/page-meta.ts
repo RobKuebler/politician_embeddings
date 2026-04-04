@@ -67,4 +67,12 @@ export const PAGE_META: PageMeta[] = [
       "Verfolge, wie oft ein Begriff in Plenardebatten erwähnt wurde, und erkenne, wann ein Thema plötzlich an Fahrt aufnahm.",
     wide: true,
   },
+  {
+    href: "/motions",
+    color: "#2563EB",
+    label: "Parlamentarische Initiative",
+    title: "Wer fordert was?",
+    description:
+      "Anträge und Anfragen der Fraktionen im Vergleich — nach Themen, Volumen und aktivsten Einreichern.",
+  },
 ];
