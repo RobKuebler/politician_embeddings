@@ -33,6 +33,34 @@ export interface GroupedBarSection {
 }
 
 /**
+ * Pivots sections×parties into party×sections.
+ * Sections with variant="total" are excluded — they'd be redundant sub-totals.
+ * Max per party-section = max of all non-total section values for that party.
+ */
+function transposeToPartyFirst(
+  sections: GroupedBarSection[],
+  parties: string[],
+): GroupedBarSection[] {
+  const nonTotal = sections.filter((s) => s.variant !== "total");
+
+  return parties.map((party) => {
+    const partyValues: Record<string, number> = {};
+    for (const section of nonTotal) {
+      partyValues[section.label] = section.partyValues[party] ?? 0;
+    }
+    const maxVal = Math.max(...Object.values(partyValues), 1);
+    return {
+      label: party,
+      partyValues,
+      max: maxVal,
+      // formatValue + barColor are looked up per-bar in the render step
+      formatValue: nonTotal[0]?.formatValue,
+      barColor: nonTotal[0]?.barColor,
+    };
+  });
+}
+
+/**
  * Renders a list of sections, each with a header label and one HorizontalBarRow per party.
  * Use this as the building block for any new grouped horizontal bar chart.
  *
@@ -69,6 +97,17 @@ export function GroupedPartyBars({
       Array.from(new Set(sections.flatMap((s) => Object.keys(s.partyValues)))),
     );
 
+  // Non-total sections (used for bar labels in partei-first mode)
+  const nonTotalSections = sections.filter((s) => s.variant !== "total");
+
+  // Derive which sections to render based on groupBy mode
+  const renderSections =
+    groupBy === "party" ? transposeToPartyFirst(sections, parties) : sections;
+
+  // In partei-first mode, rubric names need more space than party abbreviations
+  const effectiveLabelWidth =
+    groupBy === "party" ? sectionLabelWidth : labelWidth;
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
       {allowGroupToggle && (
@@ -99,7 +138,7 @@ export function GroupedPartyBars({
           })}
         </div>
       )}
-      {sections.map((section) => {
+      {renderSections.map((section) => {
         const {
           label,
           partyValues,
@@ -108,10 +147,17 @@ export function GroupedPartyBars({
           valueWidth = 52,
           variant = "default",
           fillOpacity,
+          max: sectionMax,
         } = section;
-        const sectionMax =
-          section.max ??
-          Math.max(...parties.map((p) => partyValues[p] ?? 0), 1);
+
+        // Rubrik-first: bars are parties. Partei-first: bars are rubric labels.
+        const barLabels =
+          groupBy === "party" ? nonTotalSections.map((s) => s.label) : parties;
+
+        const computedMax =
+          sectionMax ??
+          Math.max(...barLabels.map((l) => partyValues[l] ?? 0), 1);
+
         const isTotal = variant === "total";
 
         return (
@@ -151,20 +197,41 @@ export function GroupedPartyBars({
               {label}
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              {parties.map((party) => {
-                const value = partyValues[party] ?? 0;
-                const color = barColor
-                  ? barColor(party)
-                  : (PARTY_COLORS[party] ?? FALLBACK_COLOR);
+              {barLabels.map((barLabel) => {
+                const value = partyValues[barLabel] ?? 0;
+                // In partei-first mode, look up color from the original section for this rubric
+                const resolvedColor = (() => {
+                  if (groupBy === "party") {
+                    const origSection = sections.find(
+                      (s) => s.label === barLabel,
+                    );
+                    if (origSection?.barColor)
+                      return origSection.barColor(label); // label = party name
+                    return PARTY_COLORS[label] ?? FALLBACK_COLOR;
+                  }
+                  return barColor
+                    ? barColor(barLabel)
+                    : (PARTY_COLORS[barLabel] ?? FALLBACK_COLOR);
+                })();
+                // In partei-first mode, look up formatValue from the original section for this rubric
+                const resolvedFormat = (() => {
+                  if (groupBy === "party") {
+                    const origSection = sections.find(
+                      (s) => s.label === barLabel,
+                    );
+                    return origSection?.formatValue ?? formatEur;
+                  }
+                  return formatValue;
+                })();
                 return (
                   <HorizontalBarRow
-                    key={party}
-                    label={party}
-                    labelWidth={labelWidth}
+                    key={barLabel}
+                    label={barLabel}
+                    labelWidth={effectiveLabelWidth}
                     value={value}
-                    max={sectionMax}
-                    color={color}
-                    displayValue={formatValue(value)}
+                    max={computedMax}
+                    color={resolvedColor}
+                    displayValue={resolvedFormat(value)}
                     barHeight={barHeight}
                     valueWidth={valueWidth}
                     fillOpacity={fillOpacity}
