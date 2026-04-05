@@ -90,6 +90,26 @@ export const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
+    href: "/ausschuesse",
+    label: "Ausschüsse",
+    icon: (active, size = 24) => (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={active ? 2.2 : 1.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="3" y="3" width="18" height="4" rx="1" />
+        <rect x="3" y="10" width="18" height="4" rx="1" />
+        <rect x="3" y="17" width="18" height="4" rx="1" />
+      </svg>
+    ),
+  },
+  {
     href: "/comments",
     label: "Plenardynamik",
     icon: (active, size = 24) => (

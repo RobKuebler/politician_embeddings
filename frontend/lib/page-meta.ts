@@ -43,6 +43,14 @@ export const PAGE_META: PageMeta[] = [
       "Abgeordnete müssen bezahlte Nebentätigkeiten ab 1.000 € monatlich öffentlich melden. Diese Auswertung zeigt, in welchen Parteien, Branchen und Themenfeldern solche Einkünfte besonders verbreitet sind.",
   },
   {
+    href: "/ausschuesse",
+    color: "#c0392b",
+    label: "Transparenz",
+    title: "Wer verdient im eigenen Ausschuss?",
+    description:
+      "Abgeordnete, die in einem parlamentarischen Ausschuss sitzen und gleichzeitig in demselben Themenfeld Geld verdienen — eine Analyse möglicher Interessenkonflikte.",
+  },
+  {
     href: "/comments",
     color: "#E74C3C",
     label: "Plenardynamik",
