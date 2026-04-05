@@ -142,9 +142,7 @@ def test_recover_party_from_metadata_exact_name():
             }
         ]
     )
-    politicians = pp.pd.DataFrame(
-        [{"name": "Nina Warken", "party": "CDU/CSU"}]
-    )
+    politicians = pp.pd.DataFrame([{"name": "Nina Warken", "party": "CDU/CSU"}])
 
     recovered = pp.recover_parties_from_metadata(speeches, politicians)
 
@@ -167,9 +165,7 @@ def test_recover_party_from_metadata_partial_first_name_match():
             }
         ]
     )
-    politicians = pp.pd.DataFrame(
-        [{"name": "Johann Wadephul", "party": "CDU/CSU"}]
-    )
+    politicians = pp.pd.DataFrame([{"name": "Johann Wadephul", "party": "CDU/CSU"}])
 
     recovered = pp.recover_parties_from_metadata(speeches, politicians)
 

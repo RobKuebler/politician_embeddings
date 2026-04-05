@@ -115,7 +115,9 @@ def recover_parties_from_metadata(
 
     replacements: dict[tuple[str, str], str] = {}
     speakers = (
-        speeches_df.loc[missing_mask, ["vorname", "nachname"]].drop_duplicates().itertuples(index=False)
+        speeches_df.loc[missing_mask, ["vorname", "nachname"]]
+        .drop_duplicates()
+        .itertuples(index=False)
     )
     for speaker in speakers:  # type: ignore[call-overload]
         first_tokens = set(_normalize_name_tokens(speaker.vorname))

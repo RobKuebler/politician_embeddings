@@ -349,9 +349,7 @@ def test_fetch_word_stats_recovers_role_only_speaker_party(tmp_path, monkeypatch
             },
         ]
     )
-    politicians = pd.DataFrame(
-        [{"name": "Nina Warken", "party": "CDU/CSU"}]
-    )
+    politicians = pd.DataFrame([{"name": "Nina Warken", "party": "CDU/CSU"}])
     monkeypatch.setattr(cws, "parse_alle_sitzungen", lambda out_dir: speeches)
     monkeypatch.setattr(cws, "_load_politician_metadata", lambda out_dir: politicians)
 
