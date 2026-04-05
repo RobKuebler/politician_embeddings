@@ -110,7 +110,7 @@ def test_compute_keyword_timeline_by_party_counts(sample_df):
       speech 3 SPD Feb: "energie energie energie wirtschaft"
     """
     result = kt.compute_keyword_timeline(
-        sample_df, stopwords=set(), min_count=1, top_n_parties=9999
+        sample_df, stopwords=set(), min_count=1, top_n_words=9999
     )
     bp = result["by_party"]
     # energie: SPD Jan=2, SPD Feb=3; AfD always 0
@@ -122,9 +122,9 @@ def test_compute_keyword_timeline_by_party_counts(sample_df):
 
 
 def test_compute_keyword_timeline_by_party_top_n(sample_df):
-    """by_party contains only the top_n_parties most frequent terms."""
+    """by_party contains only the top_n_words most frequent terms."""
     result = kt.compute_keyword_timeline(
-        sample_df, stopwords=set(), min_count=1, top_n_parties=2
+        sample_df, stopwords=set(), min_count=1, top_n_words=2
     )
     # Only the 2 most frequent terms should appear in by_party
     assert len(result["by_party"]) == 2
@@ -140,7 +140,7 @@ def test_compute_keyword_timeline_fraktionslos_excluded(sample_df):
     df = sample_df.copy()
     df.loc[0, "fraktion"] = "fraktionslos"
     result = kt.compute_keyword_timeline(
-        df, stopwords=set(), min_count=1, top_n_parties=9999
+        df, stopwords=set(), min_count=1, top_n_words=9999
     )
     assert "fraktionslos" not in result["meta"]["parties"]
     for term_parties in result["by_party"].values():
