@@ -50,15 +50,29 @@ export function ConflictRankedList({
   const rows = [...merged.values()].sort(
     (a, b) => b.totalIncome - a.totalIncome,
   );
-  const maxIncome = Math.max(...rows.map((r) => r.totalIncome), 1);
+
+  // Compute a display cap: when the top value dwarfs the second, cap the bar
+  // axis so smaller bars stay readable. The break is marked visually — the
+  // value label always shows the real (uncapped) amount.
+  const sorted = rows.map((r) => r.totalIncome).sort((a, b) => b - a);
+  const second = sorted[1] ?? sorted[0] ?? 1;
+  const displayMax = sorted[0] > 1.5 * second ? second * 1.3 : (sorted[0] ?? 1);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        maxHeight: 480,
+        overflowY: "auto",
+      }}
+    >
       {rows.map((r, i) => {
         const name =
           polMap.get(r.politician_id) ?? `Abgeordnete/r ${r.politician_id}`;
         const color = PARTY_COLORS[r.party] ?? FALLBACK_COLOR;
-        const pct = (r.totalIncome / maxIncome) * 100;
+        const isTruncated = r.totalIncome > displayMax;
+        const pct = (Math.min(r.totalIncome, displayMax) / displayMax) * 100;
         const textColor = r.party === "FDP" ? "#000" : "#fff";
 
         return (
@@ -142,25 +156,57 @@ export function ConflictRankedList({
                 ))}
               </div>
 
-              {/* Income bar */}
+              {/* Income bar — truncated bars show a break marker (≈) */}
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div
                   style={{
                     flex: 1,
                     height: 6,
-                    borderRadius: 9999,
+                    borderRadius: isTruncated ? "9999px 0 0 9999px" : 9999,
                     background: "#F0EEE9",
+                    position: "relative",
+                    overflow: "visible",
                   }}
                 >
                   <div
                     style={{
                       width: `${pct}%`,
                       height: "100%",
-                      borderRadius: 9999,
+                      borderRadius: isTruncated ? "9999px 0 0 9999px" : 9999,
                       background: "#c0392b",
                       minWidth: pct > 0 ? 2 : 0,
+                      position: "relative",
                     }}
-                  />
+                  >
+                    {/* Break marker: two white diagonal notches at the right edge */}
+                    {isTruncated && (
+                      <div
+                        aria-label="Balken abgeschnitten"
+                        style={{
+                          position: "absolute",
+                          right: -1,
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          display: "flex",
+                          gap: 2,
+                          alignItems: "center",
+                        }}
+                      >
+                        {[0, 1].map((k) => (
+                          <div
+                            key={k}
+                            style={{
+                              width: 2,
+                              height: 10,
+                              background: "#fff",
+                              transform: "skewX(-20deg)",
+                              borderRadius: 1,
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <span
                   style={{

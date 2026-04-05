@@ -128,6 +128,8 @@ export default function AusschussePage() {
               alignItems: "center",
               justifyContent: "center",
               fontSize: 32,
+              lineHeight: 1,
+              paddingBottom: 6,
               color: "#fff",
               boxShadow: "0 2px 12px rgba(192,57,43,0.4)",
             }}
@@ -266,7 +268,7 @@ export default function AusschussePage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Top-Konflikte nach Abgeordnetem
+              Top-Konflikte nach Abgeordneten
             </h2>
             <p className="text-[12px] text-[#9A9790] mb-4">
               Abgeordnete mit Nebeneinkommen in einem Themenfeld, das ihr
