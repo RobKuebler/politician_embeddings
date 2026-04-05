@@ -1,701 +1,801 @@
 fraktion,wort,tfidf,rang
-AfD,masseneinwanderung,0.000164,1
-AfD,grün kommunist,0.000133,2
-AfD,windindustrieanlagen,0.000119,3
-AfD,eigen bürger,0.000112,4
-AfD,alternativ deutschland,0.000102,5
-AfD,links-grünen,9.6e-05,6
-AfD,deutsch bürger,9.6e-05,7
-AfD,sogenannt erneuerbar,9.5e-05,8
-AfD,altpartei,9.4e-05,9
-AfD,dumm energiepolitik,8.8e-05,10
-AfD,illegal migrant,8.6e-05,11
-AfD,saal youtuben,8.1e-05,12
-AfD,sogenannt energiewende,8.1e-05,13
-AfD,ökosozialistisch,7.8e-05,14
-AfD,energiepolitik welt,7.4e-05,15
-AfD,national,7e-05,16
-AfD,wählen krieg,6.9e-05,17
-AfD,merkel,6.1e-05,18
-AfD,klimareligion,5.9e-05,19
-AfD,illegal massenmigration,5.9e-05,20
-AfD,weltdümmst,5.7e-05,21
-AfD,kartellpartei,5.7e-05,22
-AfD,all altpartei,5.5e-05,23
-AfD,wert präsidium,5.5e-05,24
-AfD,meinung wer,5.5e-05,25
-AfD,land bürger,5.3e-05,26
-AfD,projekt,5.3e-05,27
-AfD,gruppenvergewaltigung,5.2e-05,28
-AfD,deutschland bürger,5.2e-05,29
-AfD,kernkraft,5.2e-05,30
-AfD,kernenergie,5.1e-05,31
-AfD,klimaideologie,5e-05,32
-AfD,weltdümmst energiepolitik,4.7e-05,33
-AfD,strompreis welt,4.5e-05,34
-AfD,politik bürger,4.3e-05,35
-AfD,million wähler,4.3e-05,36
-AfD,werten leugner,4.3e-05,37
-AfD,leugner klimawandel,4.3e-05,38
-AfD,wer grün,4.1e-05,39
-AfD,grün-linke,4e-05,40
-AfD,gescheitert energiewende,4e-05,41
-AfD,grün wählen,4e-05,42
-AfD,präsidium landsleute,4e-05,43
-AfD,grün werten,4e-05,44
-AfD,billion euro,3.9e-05,45
-AfD,rot grün,3.9e-05,46
-AfD,altfraktion,3.8e-05,47
-AfD,afd-geführte,3.8e-05,48
-AfD,kohle kernenergie,3.8e-05,49
-AfD,preiswert zuverlässig,3.8e-05,50
-AfD,gott gruß,3.8e-05,51
-AfD,zukünftig,3.7e-05,52
-AfD,links-grüne,3.7e-05,53
-AfD,hellbraun,3.6e-05,54
-AfD,zwangsgebühr,3.6e-05,55
-AfD,kramer,3.6e-05,56
-AfD,gelb schwarz,3.6e-05,57
-AfD,million syrer,3.6e-05,58
-AfD,artikel,3.5e-05,59
-AfD,opfer,3.5e-05,60
-AfD,grün ideologie,3.5e-05,61
-AfD,abgabenlast,3.4e-05,62
-AfD,schuldenkoalition,3.4e-05,63
-AfD,ausstieg kernenergie,3.4e-05,64
-AfD,inländerfeindlich,3.3e-05,65
-AfD,desaströs politik,3.3e-05,66
-AfD,energiewende scheitern,3.3e-05,67
-AfD,sogenannt flüchtling,3.3e-05,68
-AfD,deutsch arbeitnehmer,3.3e-05,69
-AfD,deutsch rentner,3.3e-05,70
-AfD,landsleute werten,3.3e-05,71
-AfD,stehen afd,3.3e-05,72
-AfD,grün politik,3.3e-05,73
-AfD,klimahysterie,3.2e-05,74
-AfD,grün rot,3.2e-05,75
-AfD,steuern abgabe,3.2e-05,76
-AfD,polen,3.1e-05,77
-AfD,deutsch landwirt,3.1e-05,78
-AfD,klimaextremist,3.1e-05,79
-AfD,scheinopposition,3.1e-05,80
-AfD,echt flüchtling,3.1e-05,81
-AfD,links-grüne politik,3.1e-05,82
-AfD,orient afrika,3.1e-05,83
-AfD,deshalb afd,3.1e-05,84
-AfD,grün bürger,3.1e-05,85
-AfD,all bürger,3.1e-05,86
-AfD,massenmigration,3e-05,87
-AfD,werten union,3e-05,88
-AfD,deutsch volk,3e-05,89
-AfD,dank bündnis,3e-05,90
-AfD,interesse bürger,2.9e-05,91
-AfD,beweisen,2.9e-05,92
-AfD,klimasekte,2.8e-05,93
-AfD,kern kohlekraftwerk,2.8e-05,94
-AfD,ander einheimisch,2.8e-05,95
-AfD,souverän deutsch,2.8e-05,96
-AfD,afd wirken,2.8e-05,97
-AfD,million bezahlbar,2.8e-05,98
-AfD,energiepreis welt,2.8e-05,99
-AfD,aktivierend grundsicherung,2.8e-05,100
-BSW,bündnis sahra,0.000823,1
-BSW,kriegskredit,0.000409,2
-BSW,teilen besorgnis,0.000397,3
-BSW,sterben ukraine,0.000318,4
-BSW,direkt kriegsbeteiligung,0.000318,5
-BSW,brauchen tarifbindung,0.000318,6
-BSW,bundesdeutsch geschichte,0.000256,7
-BSW,waffenstopp,0.000238,8
-BSW,änderung international,0.000238,9
-BSW,schicken bundeswehr,0.000238,10
-BSW,bsw fordern,0.000238,11
-BSW,rechtsextrem regierung,0.000238,12
-BSW,bsw klar,0.000238,13
-BSW,wagenknecht fordern,0.000238,14
-BSW,untersuchungsausschuß viel,0.000238,15
-BSW,öffentlich gesundheitssystem,0.000238,16
-BSW,wagenknecht lehnen,0.000238,17
-BSW,ausländisch erntehelfer,0.000238,18
-BSW,deutschland stationieren,0.000238,19
-BSW,grund anderer,0.000238,20
-BSW,problem zuwanderung,0.000238,21
-BSW,umweltproblem lösen,0.000238,22
-BSW,beziehung syrien,0.000238,23
-BSW,wagenknecht redezeit,0.000238,24
-BSW,vernünftig energieversorgung,0.000238,25
-BSW,pflegeversicherung zurückzahlen,0.000238,26
-BSW,aufrüstungsprogramm bundesdeutsch,0.000238,27
-BSW,reichen mächtig,0.000238,28
-BSW,rki-protokolle,0.000205,29
-BSW,dank ernst,0.000205,30
-BSW,mindestlohn tarifbindung,0.000205,31
-BSW,axt sozialstaat,0.000205,32
-BSW,sozialstaat legen,0.000205,33
-BSW,mythos nato,0.000205,34
-BSW,atommacht russland,0.000205,35
-BSW,ausländisch truppe,0.000205,36
-BSW,freiheit unterdrücken,0.000205,37
-BSW,konsumverzicht,0.000159,38
-BSW,tuchel,0.000159,39
-BSW,waffenscheck,0.000159,40
-BSW,nettomigrationsrat,0.000159,41
-BSW,ultrarecht,0.000159,42
-BSW,militäroffensive,0.000159,43
-BSW,mentalitätsreform,0.000159,44
-BSW,masterstudium,0.000159,45
-BSW,aufnahmerecht,0.000159,46
-BSW,konfrontationspolitik,0.000159,47
-BSW,us-raketen,0.000159,48
-BSW,medikalisierung,0.000159,49
-BSW,entweder-oder-politik,0.000159,50
-BSW,kriminalitätsbelastet,0.000159,51
-BSW,neuauszählung,0.000159,52
-BSW,jahr britisch,0.000159,53
-BSW,endlich besinnung,0.000159,54
-BSW,sterben beenden,0.000159,55
-BSW,insbesondere niedrig,0.000159,56
-BSW,dadurch eskalieren,0.000159,57
-BSW,brauchen friedensverhandlung,0.000159,58
-BSW,waffenstillstand brauchen,0.000159,59
-BSW,gemeinde führen,0.000159,60
-BSW,befristung abschaffen,0.000159,61
-BSW,wachstum beschleunigen,0.000159,62
-BSW,auftrag tarifgebunden,0.000159,63
-BSW,beide vertragswerk,0.000159,64
-BSW,stehen bsw,0.000159,65
-BSW,tuchel jahr,0.000159,66
-BSW,ablehnen zustimmen,0.000159,67
-BSW,waffenstillstand nah,0.000159,68
-BSW,teillegalisierung cannabis,0.000159,69
-BSW,besorgnis bundesärztekamm,0.000159,70
-BSW,szenario diskutieren,0.000159,71
-BSW,bsw vernünftig,0.000159,72
-BSW,mächtig lobby,0.000159,73
-BSW,desolat ampel,0.000159,74
-BSW,skandal bestehen,0.000159,75
-BSW,post-vac impfnebenwirkung,0.000159,76
-BSW,thema post-vac,0.000159,77
-BSW,krieg verbrennen,0.000159,78
-BSW,führend welt,0.000159,79
-BSW,ende offenbar,0.000159,80
-BSW,geisel gewalt,0.000159,81
-BSW,gazastreifen töten,0.000159,82
-BSW,ultrarecht regierung,0.000159,83
-BSW,recht palästinenser,0.000159,84
-BSW,nato-partner erdoğan,0.000159,85
-BSW,rechtsextrem netanjahu-regierung,0.000159,86
-BSW,sofortig bedingungslos,0.000159,87
-BSW,bedingungslos waffenstillstand,0.000159,88
-BSW,wirtschaftlich normallage,0.000159,89
-BSW,wählen bsw,0.000159,90
-BSW,mindestlohn brauchen,0.000159,91
-BSW,verletzung humanitär,0.000159,92
-BSW,offensichtlich ignorieren,0.000159,93
-BSW,wem sparen,0.000159,94
-BSW,gerechtigkeit statt,0.000159,95
-BSW,gerechtigkeit vernunft,0.000159,96
-BSW,relativ stabilität,0.000159,97
-BSW,wegschauen abwiegeln,0.000159,98
-BSW,beihilfe völkermord,0.000159,99
-BSW,arktisch raum,0.000159,100
-BÜNDNIS 90/­DIE GRÜNEN,klimakrise,7.4e-05,1
-BÜNDNIS 90/­DIE GRÜNEN,parlamentarisch verfahren,6.6e-05,2
-BÜNDNIS 90/­DIE GRÜNEN,rahmen,5.8e-05,3
-BÜNDNIS 90/­DIE GRÜNEN,national,5.7e-05,4
-BÜNDNIS 90/­DIE GRÜNEN,beratung,5.5e-05,5
-BÜNDNIS 90/­DIE GRÜNEN,projekt,5.5e-05,6
-BÜNDNIS 90/­DIE GRÜNEN,umsetzung,4.5e-05,7
-BÜNDNIS 90/­DIE GRÜNEN,europäisch union,4.2e-05,8
-BÜNDNIS 90/­DIE GRÜNEN,ampelkoalition,4.1e-05,9
-BÜNDNIS 90/­DIE GRÜNEN,demokratin demokrat,4.1e-05,10
-BÜNDNIS 90/­DIE GRÜNEN,häufig,4e-05,11
-BÜNDNIS 90/­DIE GRÜNEN,konstruktiv,4e-05,12
-BÜNDNIS 90/­DIE GRÜNEN,fossil abhängigkeit,4e-05,13
-BÜNDNIS 90/­DIE GRÜNEN,bayern,3.9e-05,14
-BÜNDNIS 90/­DIE GRÜNEN,jüdin,3.9e-05,15
-BÜNDNIS 90/­DIE GRÜNEN,jüdin jude,3.8e-05,16
-BÜNDNIS 90/­DIE GRÜNEN,fossil import,3.6e-05,17
-BÜNDNIS 90/­DIE GRÜNEN,sondervermögen,3.5e-05,18
-BÜNDNIS 90/­DIE GRÜNEN,mieterin,3.5e-05,19
-BÜNDNIS 90/­DIE GRÜNEN,letzt woche,3.4e-05,20
-BÜNDNIS 90/­DIE GRÜNEN,vereinbaren,3.3e-05,21
-BÜNDNIS 90/­DIE GRÜNEN,verbraucherin verbraucher,3.3e-05,22
-BÜNDNIS 90/­DIE GRÜNEN,patientin patient,3.3e-05,23
-BÜNDNIS 90/­DIE GRÜNEN,fachkraft,3.3e-05,24
-BÜNDNIS 90/­DIE GRÜNEN,auswirkung klimakrise,3.2e-05,25
-BÜNDNIS 90/­DIE GRÜNEN,dazu gehören,3.2e-05,26
-BÜNDNIS 90/­DIE GRÜNEN,ärztin arzt,3.1e-05,27
-BÜNDNIS 90/­DIE GRÜNEN,ökologisch,3.1e-05,28
-BÜNDNIS 90/­DIE GRÜNEN,engagement,3e-05,29
-BÜNDNIS 90/­DIE GRÜNEN,planetar grenze,3e-05,30
-BÜNDNIS 90/­DIE GRÜNEN,kampf klimakrise,3e-05,31
-BÜNDNIS 90/­DIE GRÜNEN,haushaltsverfahren,2.9e-05,32
-BÜNDNIS 90/­DIE GRÜNEN,zukünftig,2.9e-05,33
-BÜNDNIS 90/­DIE GRÜNEN,intensiv,2.8e-05,34
-BÜNDNIS 90/­DIE GRÜNEN,biodiversitätskrise,2.8e-05,35
-BÜNDNIS 90/­DIE GRÜNEN,dank demokratisch,2.8e-05,36
-BÜNDNIS 90/­DIE GRÜNEN,bild,2.8e-05,37
-BÜNDNIS 90/­DIE GRÜNEN,paulina,2.8e-05,38
-BÜNDNIS 90/­DIE GRÜNEN,sommer,2.7e-05,39
-BÜNDNIS 90/­DIE GRÜNEN,wichtig schritt,2.7e-05,40
-BÜNDNIS 90/­DIE GRÜNEN,abhängigkeit fossil,2.7e-05,41
-BÜNDNIS 90/­DIE GRÜNEN,wahlkreis,2.7e-05,42
-BÜNDNIS 90/­DIE GRÜNEN,opfer,2.7e-05,43
-BÜNDNIS 90/­DIE GRÜNEN,bund land,2.6e-05,44
-BÜNDNIS 90/­DIE GRÜNEN,global gerechtigkeit,2.6e-05,45
-BÜNDNIS 90/­DIE GRÜNEN,erfahrung,2.6e-05,46
-BÜNDNIS 90/­DIE GRÜNEN,effektiv,2.6e-05,47
-BÜNDNIS 90/­DIE GRÜNEN,bündnisgrün,2.6e-05,48
-BÜNDNIS 90/­DIE GRÜNEN,potenzial,2.5e-05,49
-BÜNDNIS 90/­DIE GRÜNEN,sport,2.5e-05,50
-BÜNDNIS 90/­DIE GRÜNEN,aspekt,2.5e-05,51
-BÜNDNIS 90/­DIE GRÜNEN,effizient,2.5e-05,52
-BÜNDNIS 90/­DIE GRÜNEN,muslimin,2.4e-05,53
-BÜNDNIS 90/­DIE GRÜNEN,rednerin link,2.4e-05,54
-BÜNDNIS 90/­DIE GRÜNEN,information,2.4e-05,55
-BÜNDNIS 90/­DIE GRÜNEN,energie energieeffizienz,2.4e-05,56
-BÜNDNIS 90/­DIE GRÜNEN,gas abhängig,2.4e-05,57
-BÜNDNIS 90/­DIE GRÜNEN,attraktiv,2.4e-05,58
-BÜNDNIS 90/­DIE GRÜNEN,dafür brauchen,2.4e-05,59
-BÜNDNIS 90/­DIE GRÜNEN,verlässlich,2.3e-05,60
-BÜNDNIS 90/­DIE GRÜNEN,verankern,2.3e-05,61
-BÜNDNIS 90/­DIE GRÜNEN,einrichtung,2.3e-05,62
-BÜNDNIS 90/­DIE GRÜNEN,anpassen,2.2e-05,63
-BÜNDNIS 90/­DIE GRÜNEN,ausführen,2.2e-05,64
-BÜNDNIS 90/­DIE GRÜNEN,integrationsoffensive,2.2e-05,65
-BÜNDNIS 90/­DIE GRÜNEN,piatek,2.2e-05,66
-BÜNDNIS 90/­DIE GRÜNEN,dank außendorf,2.2e-05,67
-BÜNDNIS 90/­DIE GRÜNEN,grün besonders,2.2e-05,68
-BÜNDNIS 90/­DIE GRÜNEN,humanitär hilfe,2.2e-05,69
-BÜNDNIS 90/­DIE GRÜNEN,mitarbeiterin mitarbeiter,2.2e-05,70
-BÜNDNIS 90/­DIE GRÜNEN,klimaschutzlücken,2.2e-05,71
-BÜNDNIS 90/­DIE GRÜNEN,fokus,2.2e-05,72
-BÜNDNIS 90/­DIE GRÜNEN,teilhabe,2.2e-05,73
-BÜNDNIS 90/­DIE GRÜNEN,darüber hinaus,2.2e-05,74
-BÜNDNIS 90/­DIE GRÜNEN,unterstützung ukraine,2.2e-05,75
-BÜNDNIS 90/­DIE GRÜNEN,belastung,2.2e-05,76
-BÜNDNIS 90/­DIE GRÜNEN,daran arbeiten,2.2e-05,77
-BÜNDNIS 90/­DIE GRÜNEN,mieterin mieter,2.1e-05,78
-BÜNDNIS 90/­DIE GRÜNEN,technisch,2.1e-05,79
-BÜNDNIS 90/­DIE GRÜNEN,voran,2.1e-05,80
-BÜNDNIS 90/­DIE GRÜNEN,jude,2.1e-05,81
-BÜNDNIS 90/­DIE GRÜNEN,beruflich,2.1e-05,82
-BÜNDNIS 90/­DIE GRÜNEN,expertin experte,2.1e-05,83
-BÜNDNIS 90/­DIE GRÜNEN,dank schäfer,2.1e-05,84
-BÜNDNIS 90/­DIE GRÜNEN,planetar,2.1e-05,85
-BÜNDNIS 90/­DIE GRÜNEN,folgen klimakrise,2.1e-05,86
-BÜNDNIS 90/­DIE GRÜNEN,kreml,2.1e-05,87
-BÜNDNIS 90/­DIE GRÜNEN,patient,2.1e-05,88
-BÜNDNIS 90/­DIE GRÜNEN,einkommensabstand,2.1e-05,89
-BÜNDNIS 90/­DIE GRÜNEN,handelspolitisch agenda,2.1e-05,90
-BÜNDNIS 90/­DIE GRÜNEN,ärztin,2.1e-05,91
-BÜNDNIS 90/­DIE GRÜNEN,branche,2.1e-05,92
-BÜNDNIS 90/­DIE GRÜNEN,mobilität,2.1e-05,93
-BÜNDNIS 90/­DIE GRÜNEN,einzelplan,2e-05,94
-BÜNDNIS 90/­DIE GRÜNEN,gerrit huy,2e-05,95
-BÜNDNIS 90/­DIE GRÜNEN,verbreiten,2e-05,96
-BÜNDNIS 90/­DIE GRÜNEN,entwicklungszusammenarbeit,2e-05,97
-BÜNDNIS 90/­DIE GRÜNEN,bekämpfung klimakrise,2e-05,98
-BÜNDNIS 90/­DIE GRÜNEN,klima biodiversitätskrise,2e-05,99
-BÜNDNIS 90/­DIE GRÜNEN,landwirtinnen landwirt,2e-05,100
-CDU/CSU,national,7e-05,1
-CDU/CSU,europäisch union,5.9e-05,2
-CDU/CSU,rahmen,5.2e-05,3
-CDU/CSU,umsetzung,5.1e-05,4
-CDU/CSU,ampelkoalition,5.1e-05,5
-CDU/CSU,beratung,4.8e-05,6
-CDU/CSU,projekt,4.6e-05,7
-CDU/CSU,csu-bundestagsfraktion,4.4e-05,8
-CDU/CSU,legislaturperiode,4e-05,9
-CDU/CSU,wahlkreis,3.8e-05,10
-CDU/CSU,zukünftig,3.5e-05,11
-CDU/CSU,letzt woche,3.3e-05,12
-CDU/CSU,belastung,3.1e-05,13
-CDU/CSU,konstruktiv,3.1e-05,14
-CDU/CSU,sondervermögen,3e-05,15
-CDU/CSU,bild,3e-05,16
-CDU/CSU,eigen koalition,2.8e-05,17
-CDU/CSU,engagement,2.7e-05,18
-CDU/CSU,opfer,2.7e-05,19
-CDU/CSU,regierungsentwurf,2.7e-05,20
-CDU/CSU,drei kernkraftwerk,2.6e-05,21
-CDU/CSU,staatssekretär,2.6e-05,22
-CDU/CSU,einzelplan,2.6e-05,23
-CDU/CSU,grundsatz her,2.5e-05,24
-CDU/CSU,potenzial,2.5e-05,25
-CDU/CSU,dezember,2.5e-05,26
-CDU/CSU,vergelts,2.4e-05,27
-CDU/CSU,vergelts gott,2.4e-05,28
-CDU/CSU,mitarbeiterin mitarbeiter,2.4e-05,29
-CDU/CSU,bayern,2.4e-05,30
-CDU/CSU,fachkraft,2.3e-05,31
-CDU/CSU,branche,2.3e-05,32
-CDU/CSU,dazu gehören,2.3e-05,33
-CDU/CSU,häufig,2.3e-05,34
-CDU/CSU,änderungsantrag,2.3e-05,35
-CDU/CSU,gesichert leistung,2.2e-05,36
-CDU/CSU,lieber daldrup,2.2e-05,37
-CDU/CSU,intensiv,2.2e-05,38
-CDU/CSU,parlamentarisch verfahren,2.2e-05,39
-CDU/CSU,planungssicherheit,2.2e-05,40
-CDU/CSU,sektoral impfpflicht,2.1e-05,41
-CDU/CSU,gott zuhören,2.1e-05,42
-CDU/CSU,letzt periode,2.1e-05,43
-CDU/CSU,streiten,2.1e-05,44
-CDU/CSU,kommunal,2.1e-05,45
-CDU/CSU,einrichtung,2.1e-05,46
-CDU/CSU,bundesfinanzminister,2.1e-05,47
-CDU/CSU,zwischenfrage bündnis,2e-05,48
-CDU/CSU,verfügung stellen,2e-05,49
-CDU/CSU,aufholen corona,2e-05,50
-CDU/CSU,artikel,2e-05,51
-CDU/CSU,anpassen,2e-05,52
-CDU/CSU,wahlperiode,2e-05,53
-CDU/CSU,benötigen,2e-05,54
-CDU/CSU,dank bündnis,2e-05,55
-CDU/CSU,opposition wirken,1.9e-05,56
-CDU/CSU,teilen spd,1.9e-05,57
-CDU/CSU,sommer,1.9e-05,58
-CDU/CSU,justiz,1.9e-05,59
-CDU/CSU,darüber hinaus,1.9e-05,60
-CDU/CSU,ausführen,1.9e-05,61
-CDU/CSU,nachhaltigkeit,1.9e-05,62
-CDU/CSU,standort,1.9e-05,63
-CDU/CSU,viel ander,1.9e-05,64
-CDU/CSU,letzt legislaturperiode,1.9e-05,65
-CDU/CSU,lieber lauterbach,1.9e-05,66
-CDU/CSU,völlig offen,1.9e-05,67
-CDU/CSU,name cdu,1.9e-05,68
-CDU/CSU,sport,1.8e-05,69
-CDU/CSU,beruflich,1.8e-05,70
-CDU/CSU,agrardiesel-steuerentlastung,1.8e-05,71
-CDU/CSU,mut,1.8e-05,72
-CDU/CSU,interessant,1.8e-05,73
-CDU/CSU,technisch,1.8e-05,74
-CDU/CSU,grün gerne,1.8e-05,75
-CDU/CSU,aspekt,1.8e-05,76
-CDU/CSU,verlässlich,1.8e-05,77
-CDU/CSU,bedenken,1.8e-05,78
-CDU/CSU,bisherig,1.8e-05,79
-CDU/CSU,fordern fördern,1.8e-05,80
-CDU/CSU,steuervergünstigung agrardiesel,1.8e-05,81
-CDU/CSU,gott segen,1.8e-05,82
-CDU/CSU,effektiv,1.7e-05,83
-CDU/CSU,wasserkraft,1.7e-05,84
-CDU/CSU,vortragen,1.7e-05,85
-CDU/CSU,information,1.7e-05,86
-CDU/CSU,produkt,1.7e-05,87
-CDU/CSU,abschluss,1.7e-05,88
-CDU/CSU,landwirtschaft ländlich,1.7e-05,89
-CDU/CSU,lohnen,1.7e-05,90
-CDU/CSU,erfahrung,1.7e-05,91
-CDU/CSU,abkommen,1.7e-05,92
-CDU/CSU,führung,1.7e-05,93
-CDU/CSU,verunsicherung,1.7e-05,94
-CDU/CSU,europäisch ebene,1.7e-05,95
-CDU/CSU,fortgelten,1.7e-05,96
-CDU/CSU,antrag finanzausschuß,1.7e-05,97
-CDU/CSU,kolonial kontext,1.7e-05,98
-CDU/CSU,gesetz ampel,1.6e-05,99
-CDU/CSU,tätig,1.6e-05,100
-Die Linke,link klar,0.00016,1
-Die Linke,fordern link,0.000153,2
-Die Linke,lehnen link,0.000146,3
-Die Linke,preisaufsicht,0.000111,4
-Die Linke,mieterin,9.1e-05,5
-Die Linke,link unterstützen,8.9e-05,6
-Die Linke,link lehnen,8.3e-05,7
-Die Linke,unterstützen link,8e-05,8
-Die Linke,mieterin mieter,7.9e-05,9
-Die Linke,bundesweit mietendeckel,6.7e-05,10
-Die Linke,nachhaltig mobilitätswende,6.7e-05,11
-Die Linke,sicht link,6.6e-05,12
-Die Linke,preiskontrolle,6.3e-05,13
-Die Linke,link ausdrücklich,6.2e-05,14
-Die Linke,dank lenkern,6.2e-05,15
-Die Linke,begrüßen link,5.8e-05,16
-Die Linke,umsetzung,5.3e-05,17
-Die Linke,dank sitte,4.9e-05,18
-Die Linke,euro militär,4.9e-05,19
-Die Linke,link schlagen,4.9e-05,20
-Die Linke,verbraucherin verbraucher,4.6e-05,21
-Die Linke,link stehen,4.4e-05,22
-Die Linke,dank gohlke,4.4e-05,23
-Die Linke,wohnopoly beenden,4.4e-05,24
-Die Linke,staatlich preisaufsicht,4.4e-05,25
-Die Linke,energie daseinsvorsorge,4.4e-05,26
-Die Linke,kindergrundsicherung,4.4e-05,27
-Die Linke,link begrüßen,4.3e-05,28
-Die Linke,sozial-ökologischen umbau,4.3e-05,29
-Die Linke,ampelkoalition,4e-05,30
-Die Linke,grundkontingent,4e-05,31
-Die Linke,all einzahlen,4e-05,32
-Die Linke,schlagen link,4e-05,33
-Die Linke,dumm dämlich,4e-05,34
-Die Linke,staatlich preiskontrolle,4e-05,35
-Die Linke,euro aufrüstung,4e-05,36
-Die Linke,kita schulverpflegung,4e-05,37
-Die Linke,lenkern nächst,4e-05,38
-Die Linke,sitte nächst,4e-05,39
-Die Linke,national,3.9e-05,40
-Die Linke,link fordern,3.8e-05,41
-Die Linke,regional wirtschaftskreisläuf,3.7e-05,42
-Die Linke,sozial ungleichheit,3.7e-05,43
-Die Linke,kurdin kurde,3.7e-05,44
-Die Linke,häufig,3.7e-05,45
-Die Linke,europäisch union,3.5e-05,46
-Die Linke,finanztransaktionsteuer,3.5e-05,47
-Die Linke,bodyguard,3.5e-05,48
-Die Linke,wind solarstrom,3.5e-05,49
-Die Linke,dank lötzsch,3.5e-05,50
-Die Linke,link bleiben,3.5e-05,51
-Die Linke,link vergangen,3.5e-05,52
-Die Linke,link streiten,3.5e-05,53
-Die Linke,krieg afghanistan,3.5e-05,54
-Die Linke,schluß link,3.5e-05,55
-Die Linke,ausbau bahn,3.5e-05,56
-Die Linke,wohnen ausgeben,3.5e-05,57
-Die Linke,grundkontingent strom,3.5e-05,58
-Die Linke,edward snowd,3.5e-05,59
-Die Linke,echt kindergrundsicherung,3.5e-05,60
-Die Linke,reich prozent,3.5e-05,61
-Die Linke,mietenwahnsinn,3.4e-05,62
-Die Linke,wohnopoly,3.4e-05,63
-Die Linke,stehen link,3.4e-05,64
-Die Linke,sozialwohnung jahr,3.4e-05,65
-Die Linke,kampf kinderarmut,3.4e-05,66
-Die Linke,völkerrecht all,3.4e-05,67
-Die Linke,patientin patient,3.4e-05,68
-Die Linke,sozialwohnung,3.4e-05,69
-Die Linke,preisdeckel,3.3e-05,70
-Die Linke,automobilkonzern,3.3e-05,71
-Die Linke,fahren fahrschein,3.3e-05,72
-Die Linke,opfer,3.3e-05,73
-Die Linke,sondervermögen,3.3e-05,74
-Die Linke,zukünftig,3.2e-05,75
-Die Linke,bundesweit,3.2e-05,76
-Die Linke,kurdin,3.2e-05,77
-Die Linke,projekt,3.2e-05,78
-Die Linke,mindestlohnbetrug,3.1e-05,79
-Die Linke,mondpreis,3.1e-05,80
-Die Linke,million sozialwohnung,3.1e-05,81
-Die Linke,gerecht besteuern,3.1e-05,82
-Die Linke,gehören öffentlich,3.1e-05,83
-Die Linke,warmmietenneutralität,3.1e-05,84
-Die Linke,elektromotorisierung,3.1e-05,85
-Die Linke,geld wohnung,3.1e-05,86
-Die Linke,solidarisch bürgerversicherung,3.1e-05,87
-Die Linke,journalist julian,3.1e-05,88
-Die Linke,sozialwohnung sozialwohnung,3.1e-05,89
-Die Linke,gerecht steuerreform,3.1e-05,90
-Die Linke,neu wettrüsten,3.1e-05,91
-Die Linke,euro rüstung,3.1e-05,92
-Die Linke,lehnen mandat,3.1e-05,93
-Die Linke,tausend mieterin,3.1e-05,94
-Die Linke,link weiterhin,3.1e-05,95
-Die Linke,unsinnig schuldenbremse,3.1e-05,96
-Die Linke,militär ausgeben,3.1e-05,97
-Die Linke,diplomatie interessenausgleich,3.1e-05,98
-Die Linke,nachhaltig verkehrswende,3.1e-05,99
-Die Linke,dank riexinger,3.1e-05,100
-FDP,frei demokrat,0.000114,1
-FDP,differenziert bestandsmanagement,0.000101,2
-FDP,begrenzung zuzug,7.3e-05,3
-FDP,national,6.8e-05,4
-FDP,regional differenziert,6.6e-05,5
-FDP,rahmen,6.3e-05,6
-FDP,europäisch union,5.8e-05,7
-FDP,umsetzung,5.4e-05,8
-FDP,umgang wolf,5.2e-05,9
-FDP,ampelkoalition,5.2e-05,10
-FDP,ordnung kontrolle,5.2e-05,11
-FDP,fdp-bundestagsfraktion,5.1e-05,12
-FDP,demokrat setzen,5e-05,13
-FDP,projekt,4.9e-05,14
-FDP,europarechtskonform regional,4.8e-05,15
-FDP,beratung,4.8e-05,16
-FDP,regierungskoalition spd,4.6e-05,17
-FDP,zukünftig,4.2e-05,18
-FDP,sicht frei,4e-05,19
-FDP,parlamentarisch verfahren,4e-05,20
-FDP,konstruktiv,3.8e-05,21
-FDP,häufig,3.5e-05,22
-FDP,demokrat klar,3.4e-05,23
-FDP,kontrolle migrationspolitik,3.4e-05,24
-FDP,bild,3.4e-05,25
-FDP,legislaturperiode,3.3e-05,26
-FDP,demokrat besonders,3.2e-05,27
-FDP,forderung erfüllen,3.2e-05,28
-FDP,intensiv,3.2e-05,29
-FDP,dazu gehören,3.2e-05,30
-FDP,sorgen dafür,3.1e-05,31
-FDP,information,3.1e-05,32
-FDP,einzelplan,3.1e-05,33
-FDP,bayern,3.1e-05,34
-FDP,bund land,3e-05,35
-FDP,dank thomae,3e-05,36
-FDP,realitätsgetreu abbilden,3e-05,37
-FDP,bestandsmanagement ermöglichen,3e-05,38
-FDP,weit frontlinie,3e-05,39
-FDP,engagement,3e-05,40
-FDP,günstig bauen,3e-05,41
-FDP,wechselnd mehrheit,3e-05,42
-FDP,belastung,3e-05,43
-FDP,privat kapital,2.9e-05,44
-FDP,effizient,2.9e-05,45
-FDP,effektiv,2.9e-05,46
-FDP,vereinbaren,2.8e-05,47
-FDP,wichtig russisch,2.8e-05,48
-FDP,lebend wolf,2.8e-05,49
-FDP,frei demokratin,2.8e-05,50
-FDP,reihe entlastungsmaßnahme,2.8e-05,51
-FDP,erst verlängerung,2.8e-05,52
-FDP,umsetzung vereinbarung,2.8e-05,53
-FDP,koalitionspartei koalitionsvertrag,2.8e-05,54
-FDP,übrig auffassung,2.8e-05,55
-FDP,wirtschaftlich belastung,2.8e-05,56
-FDP,koalitionspartner gespräch,2.8e-05,57
-FDP,europa entschließen,2.8e-05,58
-FDP,aspekt,2.8e-05,59
-FDP,sondervermögen,2.8e-05,60
-FDP,patientin patient,2.8e-05,61
-FDP,waffensystem tauru,2.7e-05,62
-FDP,kreml,2.7e-05,63
-FDP,redner link,2.6e-05,64
-FDP,wolf realitätsgetreu,2.6e-05,65
-FDP,land europarechtskonform,2.6e-05,66
-FDP,rechtlich aufarbeitung,2.6e-05,67
-FDP,belastung coronapandemium,2.6e-05,68
-FDP,folgend energiekrise,2.6e-05,69
-FDP,zusammenleben weidetieren,2.6e-05,70
-FDP,weidetieren mensch,2.6e-05,71
-FDP,wolf gut,2.6e-05,72
-FDP,dies nunmehr,2.6e-05,73
-FDP,union vorhaben,2.6e-05,74
-FDP,geltend völkerrecht,2.6e-05,75
-FDP,reaktion völkerrechtswidrig,2.6e-05,76
-FDP,strategisch relevant,2.6e-05,77
-FDP,teils unterschiedlich,2.6e-05,78
-FDP,grundlage artikel,2.6e-05,79
-FDP,wolf sowie,2.6e-05,80
-FDP,sodas dies,2.6e-05,81
-FDP,anforderung europäisch,2.6e-05,82
-FDP,zeitweise schließung,2.6e-05,83
-FDP,schließung gaststätte,2.6e-05,84
-FDP,februar verlängern,2.6e-05,85
-FDP,verlängern deutsch,2.6e-05,86
-FDP,deutsch befristet,2.6e-05,87
-FDP,befristet umsatzsteuersenkung,2.6e-05,88
-FDP,verlängerung stimmen,2.6e-05,89
-FDP,ampelkoalition reihe,2.6e-05,90
-FDP,entlastungsmaßnahme gestiegen,2.6e-05,91
-FDP,rohstoffpreis entgegenwirken,2.6e-05,92
-FDP,entlastungspaket verlängern,2.6e-05,93
-FDP,mehrwertsteuersatz speisen,2.6e-05,94
-FDP,höhepunkt energiekrise,2.6e-05,95
-FDP,forderung gastronomie,2.6e-05,96
-FDP,vorliegen steuerschätzung,2.6e-05,97
-FDP,steuerschätzung november,2.6e-05,98
-FDP,november zug,2.6e-05,99
-FDP,spielraum erarbeiten,2.6e-05,100
-SPD,ampelkoalition,6.5e-05,1
-SPD,rahmen,6.3e-05,2
-SPD,national,6.3e-05,3
-SPD,projekt,5.7e-05,4
-SPD,wahlkreis,5.6e-05,5
-SPD,umsetzung,5.5e-05,6
-SPD,beratung,5.1e-05,7
-SPD,europäisch union,4.7e-05,8
-SPD,parlamentarisch verfahren,4.6e-05,9
-SPD,verbraucherin verbraucher,4.3e-05,10
-SPD,zukünftig,4.2e-05,11
-SPD,spd stehen,4.1e-05,12
-SPD,häufig,3.9e-05,13
-SPD,moi bürgerin,3.7e-05,14
-SPD,konstruktiv,3.6e-05,15
-SPD,engagement,3.5e-05,16
-SPD,sozialdemokratin sozialdemokrat,3.4e-05,17
-SPD,mieterin,3.3e-05,18
-SPD,werten demokratisch,3.3e-05,19
-SPD,bild,3.2e-05,20
-SPD,dazu gehören,3.1e-05,21
-SPD,intensiv,3.1e-05,22
-SPD,letzt woche,3.1e-05,23
-SPD,fachkraft,3e-05,24
-SPD,darüber hinaus,3e-05,25
-SPD,landwirtinnen landwirt,2.9e-05,26
-SPD,opfer,2.9e-05,27
-SPD,mitarbeiterin mitarbeiter,2.9e-05,28
-SPD,sozialdemokratin,2.8e-05,29
-SPD,sondervermögen,2.8e-05,30
-SPD,bayern,2.8e-05,31
-SPD,mieterin mieter,2.8e-05,32
-SPD,demokratin demokrat,2.7e-05,33
-SPD,information,2.7e-05,34
-SPD,bund land,2.7e-05,35
-SPD,besucher schön,2.7e-05,36
-SPD,erfahrung,2.6e-05,37
-SPD,sicherheit wandel,2.6e-05,38
-SPD,aspekt,2.5e-05,39
-SPD,verfügung stellen,2.5e-05,40
-SPD,mitbürgerin mitbürger,2.5e-05,41
-SPD,gut glück,2.5e-05,42
-SPD,andreas bleck,2.5e-05,43
-SPD,potenzial,2.5e-05,44
-SPD,effektiv,2.4e-05,45
-SPD,branche,2.4e-05,46
-SPD,produkt,2.4e-05,47
-SPD,einrichtung,2.4e-05,48
-SPD,herausfordernd,2.4e-05,49
-SPD,kommunal,2.4e-05,50
-SPD,technisch,2.4e-05,51
-SPD,justiz,2.4e-05,52
-SPD,mobilität,2.3e-05,53
-SPD,dank glück,2.3e-05,54
-SPD,regierungsentwurf,2.3e-05,55
-SPD,infektionsschutzmaßnahm,2.3e-05,56
-SPD,benötigen,2.3e-05,57
-SPD,betreiben unternehmen,2.3e-05,58
-SPD,spd klar,2.3e-05,59
-SPD,werten besucherin,2.3e-05,60
-SPD,abschluss,2.3e-05,61
-SPD,legislaturperiode,2.3e-05,62
-SPD,fokus,2.3e-05,63
-SPD,einzelplan,2.2e-05,64
-SPD,vereinbaren,2.2e-05,65
-SPD,austausch,2.2e-05,66
-SPD,menge,2.2e-05,67
-SPD,sorgen dafür,2.2e-05,68
-SPD,jüdin,2.1e-05,69
-SPD,hassen,2.1e-05,70
-SPD,jüdin jude,2.1e-05,71
-SPD,viel ander,2.1e-05,72
-SPD,behinderung,2.1e-05,73
-SPD,daran arbeiten,2.1e-05,74
-SPD,mut,2.1e-05,75
-SPD,ausführen,2.1e-05,76
-SPD,belastung,2.1e-05,77
-SPD,entlastungspaket,2e-05,78
-SPD,anpassen,2e-05,79
-SPD,attraktiv,2e-05,80
-SPD,inner sozial,2e-05,81
-SPD,begleiten,2e-05,82
-SPD,sommer,2e-05,83
-SPD,verwaltung,2e-05,84
-SPD,expertin experte,2e-05,85
-SPD,voran,2e-05,86
-SPD,sport,2e-05,87
-SPD,umsteigen erneuerbar,1.9e-05,88
-SPD,abkommen,1.9e-05,89
-SPD,laden,1.9e-05,90
-SPD,verlässlich,1.9e-05,91
-SPD,hetzen,1.9e-05,92
-SPD,besonders wichtig,1.9e-05,93
-SPD,groß herausforderung,1.9e-05,94
-SPD,wichtig schritt,1.9e-05,95
-SPD,unterstützung ukraine,1.9e-05,96
-SPD,beteiligt,1.9e-05,97
-SPD,bisherig infektionsschutzmaßnahm,1.9e-05,98
-SPD,ressource,1.9e-05,99
-SPD,fachkräfteeinwanderungsgesetz,1.9e-05,100
+AfD,masseneinwanderung,0.000175,1
+AfD,alternativ deutschland,0.000142,2
+AfD,grün kommunist,0.000142,3
+AfD,windindustrieanlagen,0.000127,4
+AfD,links-grünen,0.000119,5
+AfD,eigen bürger,0.000119,6
+AfD,altpartei,0.000117,7
+AfD,deutsch bürger,0.000111,8
+AfD,sogenannt erneuerbar,0.000101,9
+AfD,kernenergie,9.5e-05,10
+AfD,illegal migrant,9.5e-05,11
+AfD,dumm energiepolitik,9.4e-05,12
+AfD,ökosozialistisch,8.6e-05,13
+AfD,saal youtuben,8.6e-05,14
+AfD,sogenannt energiewende,8.6e-05,15
+AfD,freiheit,7.9e-05,16
+AfD,energiepolitik welt,7.9e-05,17
+AfD,wählen krieg,7.4e-05,18
+AfD,kernkraft,7.2e-05,19
+AfD,klimareligion,6.3e-05,20
+AfD,illegal massenmigration,6.3e-05,21
+AfD,weltdümmst,6.1e-05,22
+AfD,kartellpartei,6.1e-05,23
+AfD,national,6.1e-05,24
+AfD,steuerzahler,6e-05,25
+AfD,land bürger,5.9e-05,26
+AfD,ideologisch,5.9e-05,27
+AfD,all altpartei,5.8e-05,28
+AfD,wert präsidium,5.8e-05,29
+AfD,meinung wer,5.8e-05,30
+AfD,polen,5.8e-05,31
+AfD,gruppenvergewaltigung,5.8e-05,32
+AfD,deutschland bürger,5.8e-05,33
+AfD,deutsch volk,5.5e-05,34
+AfD,billion euro,5.5e-05,35
+AfD,afd-fraktion,5.4e-05,36
+AfD,beweisen,5.3e-05,37
+AfD,klimaideologie,5.3e-05,38
+AfD,lügen,5.3e-05,39
+AfD,links-grüne,5.2e-05,40
+AfD,wind,5.1e-05,41
+AfD,weltdümmst energiepolitik,5.1e-05,42
+AfD,grün werten,5e-05,43
+AfD,staatlich,5e-05,44
+AfD,spät,5e-05,45
+AfD,wohlstand,5e-05,46
+AfD,kernkraftwerk,4.8e-05,47
+AfD,strompreis welt,4.8e-05,48
+AfD,deutsch interesse,4.8e-05,49
+AfD,politik bürger,4.7e-05,50
+AfD,landsleute,4.7e-05,51
+AfD,ins ausland,4.7e-05,52
+AfD,projekt,4.6e-05,53
+AfD,million wähler,4.6e-05,54
+AfD,wer grün,4.6e-05,55
+AfD,werten leugner,4.6e-05,56
+AfD,leugner klimawandel,4.6e-05,57
+AfD,rot grün,4.5e-05,58
+AfD,beratung,4.4e-05,59
+AfD,steuern abgabe,4.4e-05,60
+AfD,komplett,4.4e-05,61
+AfD,grün-linke,4.3e-05,62
+AfD,gescheitert energiewende,4.3e-05,63
+AfD,grün wählen,4.3e-05,64
+AfD,präsidium landsleute,4.3e-05,65
+AfD,stream,4.2e-05,66
+AfD,nord stream,4.2e-05,67
+AfD,massenmigration,4.2e-05,68
+AfD,aufmerksamkeit,4.2e-05,69
+AfD,wort bündnis,4.1e-05,70
+AfD,migrant,4.1e-05,71
+AfD,altfraktion,4.1e-05,72
+AfD,afd-geführte,4.1e-05,73
+AfD,kohle kernenergie,4.1e-05,74
+AfD,preiswert zuverlässig,4.1e-05,75
+AfD,gott gruß,4.1e-05,76
+AfD,energiepolitik,4e-05,77
+AfD,feministisch,4e-05,78
+AfD,bild,4e-05,79
+AfD,ersetzen,4e-05,80
+AfD,abgabenlast,3.9e-05,81
+AfD,schuldenkoalition,3.9e-05,82
+AfD,effektiv,3.9e-05,83
+AfD,draußen,3.9e-05,84
+AfD,grün ideologie,3.9e-05,85
+AfD,interessant,3.9e-05,86
+AfD,stehen afd,3.8e-05,87
+AfD,grün politik,3.8e-05,88
+AfD,hellbraun,3.8e-05,89
+AfD,zwangsgebühr,3.8e-05,90
+AfD,kramer,3.8e-05,91
+AfD,all bürger,3.8e-05,92
+AfD,gelb schwarz,3.8e-05,93
+AfD,million syrer,3.8e-05,94
+AfD,staatssekretär,3.8e-05,95
+AfD,schüler,3.8e-05,96
+AfD,zumindest,3.7e-05,97
+AfD,paar,3.7e-05,98
+AfD,verantwortlich,3.7e-05,99
+AfD,ausstieg kernenergie,3.7e-05,100
+BSW,bündnis sahra,0.000711,1
+BSW,kriegskredit,0.000512,2
+BSW,teilen besorgnis,0.000384,3
+BSW,gewinnbar krieg,0.000307,4
+BSW,atommacht russland,0.000307,5
+BSW,direkt kriegsbeteiligung,0.000307,6
+BSW,brauchen tarifbindung,0.000307,7
+BSW,bundesdeutsch geschichte,0.000256,8
+BSW,wagenknecht,0.000241,9
+BSW,waffenscheck,0.00023,10
+BSW,waffenstopp,0.00023,11
+BSW,krieg atommacht,0.00023,12
+BSW,baerbock sanktion,0.00023,13
+BSW,mythos haushalt,0.00023,14
+BSW,führen wirtschaftskrieg,0.00023,15
+BSW,wer lohnabstand,0.00023,16
+BSW,auftrag tarifgebunden,0.00023,17
+BSW,bsw lehnen,0.00023,18
+BSW,vernunft gerechtigkeit,0.00023,19
+BSW,änderung international,0.00023,20
+BSW,schicken bundeswehr,0.00023,21
+BSW,bsw fordern,0.00023,22
+BSW,rechtsextrem regierung,0.00023,23
+BSW,bsw klar,0.00023,24
+BSW,wagenknecht fordern,0.00023,25
+BSW,untersuchungsausschuß viel,0.00023,26
+BSW,öffentlich gesundheitssystem,0.00023,27
+BSW,wagenknecht lehnen,0.00023,28
+BSW,ausländisch erntehelfer,0.00023,29
+BSW,deutschland stationieren,0.00023,30
+BSW,grund anderer,0.00023,31
+BSW,problem zuwanderung,0.00023,32
+BSW,umweltproblem lösen,0.00023,33
+BSW,beziehung syrien,0.00023,34
+BSW,wagenknecht redezeit,0.00023,35
+BSW,vernünftig energieversorgung,0.00023,36
+BSW,pflegeversicherung zurückzahlen,0.00023,37
+BSW,aufrüstungsprogramm bundesdeutsch,0.00023,38
+BSW,reichen mächtig,0.00023,39
+BSW,waffengeschenk,0.000205,40
+BSW,sterben ukraine,0.000205,41
+BSW,mindestlohn tarifbindung,0.000205,42
+BSW,axt sozialstaat,0.000205,43
+BSW,sozialstaat legen,0.000205,44
+BSW,mythos nato,0.000205,45
+BSW,ausländisch truppe,0.000205,46
+BSW,freiheit unterdrücken,0.000205,47
+BSW,sahra,0.000202,48
+BSW,sahra wagenknecht,0.000202,49
+BSW,wirtschaftskrieg russland,0.000181,50
+BSW,gernegroß,0.000153,51
+BSW,pds-gruppe,0.000153,52
+BSW,konsumverzicht,0.000153,53
+BSW,tuchel,0.000153,54
+BSW,nettomigrationsrat,0.000153,55
+BSW,ultrarecht,0.000153,56
+BSW,militäroffensive,0.000153,57
+BSW,mentalitätsreform,0.000153,58
+BSW,transideologi,0.000153,59
+BSW,aufnahmerecht,0.000153,60
+BSW,konfrontationspolitik,0.000153,61
+BSW,us-raketen,0.000153,62
+BSW,us-mittelstreckenraketen,0.000153,63
+BSW,rousseau,0.000153,64
+BSW,stahlarbeiter,0.000153,65
+BSW,medikalisierung,0.000153,66
+BSW,entweder-oder-politik,0.000153,67
+BSW,aufrüstungsprogramm,0.000153,68
+BSW,kriminalitätsbelastet,0.000153,69
+BSW,neuauszählung,0.000153,70
+BSW,form wahnsinn,0.000153,71
+BSW,krise trotzdem,0.000153,72
+BSW,rentner armut,0.000153,73
+BSW,waffenscheck ukraine,0.000153,74
+BSW,mangelnd kompetenz,0.000153,75
+BSW,euro realität,0.000153,76
+BSW,deutsch wunderwaffe,0.000153,77
+BSW,russisch großstadt,0.000153,78
+BSW,zielen russland,0.000153,79
+BSW,gefährdung sicherheit,0.000153,80
+BSW,durchschnittsrente euro,0.000153,81
+BSW,wagenknecht nächst,0.000153,82
+BSW,tierwohl sorgen,0.000153,83
+BSW,zentral international,0.000153,84
+BSW,waffenstillstand gaza,0.000153,85
+BSW,russland ruinieren,0.000153,86
+BSW,diplomatisch initiative,0.000153,87
+BSW,versündigen kommend,0.000153,88
+BSW,tun versündigen,0.000153,89
+BSW,angreifen bringen,0.000153,90
+BSW,waffenstillstand ukraine,0.000153,91
+BSW,ukraine gaza,0.000153,92
+BSW,folgen wirtschaftskrieg,0.000153,93
+BSW,wichtig gaslieferant,0.000153,94
+BSW,gaslieferant führen,0.000153,95
+BSW,besteuern schuldenbremse,0.000153,96
+BSW,ander prioritätensetzung,0.000153,97
+BSW,prioritätensetzung finanzieren,0.000153,98
+BSW,banaszak banaszak,0.000153,99
+BSW,wirtschaftskrieg deutschland,0.000153,100
+BÜNDNIS 90/­DIE GRÜNEN,beratung,0.000105,1
+BÜNDNIS 90/­DIE GRÜNEN,blick,0.0001,2
+BÜNDNIS 90/­DIE GRÜNEN,ansprechen,8.2e-05,3
+BÜNDNIS 90/­DIE GRÜNEN,parlamentarisch verfahren,8.1e-05,4
+BÜNDNIS 90/­DIE GRÜNEN,intensiv,6.8e-05,5
+BÜNDNIS 90/­DIE GRÜNEN,freiheit,6.5e-05,6
+BÜNDNIS 90/­DIE GRÜNEN,klimakrise,6.4e-05,7
+BÜNDNIS 90/­DIE GRÜNEN,afd-fraktion,6.3e-05,8
+BÜNDNIS 90/­DIE GRÜNEN,region,6.2e-05,9
+BÜNDNIS 90/­DIE GRÜNEN,engagement,6.2e-05,10
+BÜNDNIS 90/­DIE GRÜNEN,dazu gehören,6e-05,11
+BÜNDNIS 90/­DIE GRÜNEN,angehen,6e-05,12
+BÜNDNIS 90/­DIE GRÜNEN,vereinbaren,5.9e-05,13
+BÜNDNIS 90/­DIE GRÜNEN,fossil,5.8e-05,14
+BÜNDNIS 90/­DIE GRÜNEN,parlamentarisch,5.8e-05,15
+BÜNDNIS 90/­DIE GRÜNEN,demokratin demokrat,5.6e-05,16
+BÜNDNIS 90/­DIE GRÜNEN,national,5.2e-05,17
+BÜNDNIS 90/­DIE GRÜNEN,rahmen,5.2e-05,18
+BÜNDNIS 90/­DIE GRÜNEN,erneuerbar energie,5.1e-05,19
+BÜNDNIS 90/­DIE GRÜNEN,verbraucherin verbraucher,5.1e-05,20
+BÜNDNIS 90/­DIE GRÜNEN,bild,5.1e-05,21
+BÜNDNIS 90/­DIE GRÜNEN,jüdin jude,4.8e-05,22
+BÜNDNIS 90/­DIE GRÜNEN,bund land,4.7e-05,23
+BÜNDNIS 90/­DIE GRÜNEN,projekt,4.7e-05,24
+BÜNDNIS 90/­DIE GRÜNEN,wichtig schritt,4.6e-05,25
+BÜNDNIS 90/­DIE GRÜNEN,verlässlich,4.5e-05,26
+BÜNDNIS 90/­DIE GRÜNEN,partner,4.5e-05,27
+BÜNDNIS 90/­DIE GRÜNEN,effektiv,4.4e-05,28
+BÜNDNIS 90/­DIE GRÜNEN,daran arbeiten,4.4e-05,29
+BÜNDNIS 90/­DIE GRÜNEN,aspekt,4.4e-05,30
+BÜNDNIS 90/­DIE GRÜNEN,dafür brauchen,4.4e-05,31
+BÜNDNIS 90/­DIE GRÜNEN,anpassen,4.3e-05,32
+BÜNDNIS 90/­DIE GRÜNEN,darüber hinaus,4.3e-05,33
+BÜNDNIS 90/­DIE GRÜNEN,effizient,4.2e-05,34
+BÜNDNIS 90/­DIE GRÜNEN,potenzial,4.2e-05,35
+BÜNDNIS 90/­DIE GRÜNEN,anschauen,4.1e-05,36
+BÜNDNIS 90/­DIE GRÜNEN,mieterin,4.1e-05,37
+BÜNDNIS 90/­DIE GRÜNEN,attraktiv,4.1e-05,38
+BÜNDNIS 90/­DIE GRÜNEN,weit nachfrage,4.1e-05,39
+BÜNDNIS 90/­DIE GRÜNEN,gespräch,4.1e-05,40
+BÜNDNIS 90/­DIE GRÜNEN,ärztin arzt,4e-05,41
+BÜNDNIS 90/­DIE GRÜNEN,vielfalt,4e-05,42
+BÜNDNIS 90/­DIE GRÜNEN,vereint nation,3.9e-05,43
+BÜNDNIS 90/­DIE GRÜNEN,umsetzung,3.8e-05,44
+BÜNDNIS 90/­DIE GRÜNEN,paar,3.7e-05,45
+BÜNDNIS 90/­DIE GRÜNEN,verfügung stellen,3.7e-05,46
+BÜNDNIS 90/­DIE GRÜNEN,forschung,3.7e-05,47
+BÜNDNIS 90/­DIE GRÜNEN,standort,3.7e-05,48
+BÜNDNIS 90/­DIE GRÜNEN,fossil energie,3.7e-05,49
+BÜNDNIS 90/­DIE GRÜNEN,dankbar,3.7e-05,50
+BÜNDNIS 90/­DIE GRÜNEN,markt,3.6e-05,51
+BÜNDNIS 90/­DIE GRÜNEN,europäisch union,3.6e-05,52
+BÜNDNIS 90/­DIE GRÜNEN,hinweisen,3.6e-05,53
+BÜNDNIS 90/­DIE GRÜNEN,fossil abhängigkeit,3.5e-05,54
+BÜNDNIS 90/­DIE GRÜNEN,all ding,3.5e-05,55
+BÜNDNIS 90/­DIE GRÜNEN,hassen,3.5e-05,56
+BÜNDNIS 90/­DIE GRÜNEN,austausch,3.5e-05,57
+BÜNDNIS 90/­DIE GRÜNEN,sorgen dafür,3.5e-05,58
+BÜNDNIS 90/­DIE GRÜNEN,angriffskrieg ukraine,3.5e-05,59
+BÜNDNIS 90/­DIE GRÜNEN,morgen,3.5e-05,60
+BÜNDNIS 90/­DIE GRÜNEN,ärztin,3.5e-05,61
+BÜNDNIS 90/­DIE GRÜNEN,langfristig,3.4e-05,62
+BÜNDNIS 90/­DIE GRÜNEN,polen,3.4e-05,63
+BÜNDNIS 90/­DIE GRÜNEN,antworten,3.4e-05,64
+BÜNDNIS 90/­DIE GRÜNEN,profitieren,3.4e-05,65
+BÜNDNIS 90/­DIE GRÜNEN,auswirkung klimakrise,3.4e-05,66
+BÜNDNIS 90/­DIE GRÜNEN,engagieren,3.4e-05,67
+BÜNDNIS 90/­DIE GRÜNEN,interessant,3.3e-05,68
+BÜNDNIS 90/­DIE GRÜNEN,häufig,3.3e-05,69
+BÜNDNIS 90/­DIE GRÜNEN,mobilität,3.3e-05,70
+BÜNDNIS 90/­DIE GRÜNEN,entlastungspaket,3.3e-05,71
+BÜNDNIS 90/­DIE GRÜNEN,unterstützung ukraine,3.3e-05,72
+BÜNDNIS 90/­DIE GRÜNEN,jugendlich,3.3e-05,73
+BÜNDNIS 90/­DIE GRÜNEN,entwicklungszusammenarbeit,3.3e-05,74
+BÜNDNIS 90/­DIE GRÜNEN,gezielt,3.3e-05,75
+BÜNDNIS 90/­DIE GRÜNEN,spät,3.3e-05,76
+BÜNDNIS 90/­DIE GRÜNEN,bayern,3.2e-05,77
+BÜNDNIS 90/­DIE GRÜNEN,neben,3.2e-05,78
+BÜNDNIS 90/­DIE GRÜNEN,viel ander,3.2e-05,79
+BÜNDNIS 90/­DIE GRÜNEN,haushaltsausschus,3.2e-05,80
+BÜNDNIS 90/­DIE GRÜNEN,konstruktiv,3.2e-05,81
+BÜNDNIS 90/­DIE GRÜNEN,soldatin soldat,3.2e-05,82
+BÜNDNIS 90/­DIE GRÜNEN,mensch ukraine,3.2e-05,83
+BÜNDNIS 90/­DIE GRÜNEN,russisch angriffskrieg,3.2e-05,84
+BÜNDNIS 90/­DIE GRÜNEN,vornehmen,3.2e-05,85
+BÜNDNIS 90/­DIE GRÜNEN,ausbau erneuerbar,3.2e-05,86
+BÜNDNIS 90/­DIE GRÜNEN,haushaltsverfahren,3.2e-05,87
+BÜNDNIS 90/­DIE GRÜNEN,abhängigkeit fossil,3.2e-05,88
+BÜNDNIS 90/­DIE GRÜNEN,menge,3.2e-05,89
+BÜNDNIS 90/­DIE GRÜNEN,prozeß,3.2e-05,90
+BÜNDNIS 90/­DIE GRÜNEN,ressource,3.1e-05,91
+BÜNDNIS 90/­DIE GRÜNEN,zugang,3.1e-05,92
+BÜNDNIS 90/­DIE GRÜNEN,folgen klimakrise,3.1e-05,93
+BÜNDNIS 90/­DIE GRÜNEN,wunsch,3.1e-05,94
+BÜNDNIS 90/­DIE GRÜNEN,nächst jahr,3.1e-05,95
+BÜNDNIS 90/­DIE GRÜNEN,manchmal,3.1e-05,96
+BÜNDNIS 90/­DIE GRÜNEN,kampf klimakrise,3.1e-05,97
+BÜNDNIS 90/­DIE GRÜNEN,laden,3.1e-05,98
+BÜNDNIS 90/­DIE GRÜNEN,lohnen,3.1e-05,99
+BÜNDNIS 90/­DIE GRÜNEN,ampelkoalition,3.1e-05,100
+CDU/CSU,ansprechen,9.1e-05,1
+CDU/CSU,beratung,9e-05,2
+CDU/CSU,blick,6.7e-05,3
+CDU/CSU,csu-bundestagsfraktion,6.2e-05,4
+CDU/CSU,national,6.1e-05,5
+CDU/CSU,bild,5.6e-05,6
+CDU/CSU,hinweisen,5.3e-05,7
+CDU/CSU,europäisch union,5.1e-05,8
+CDU/CSU,spät,5e-05,9
+CDU/CSU,engagement,5e-05,10
+CDU/CSU,staatssekretär,4.9e-05,11
+CDU/CSU,potenzial,4.7e-05,12
+CDU/CSU,rahmen,4.5e-05,13
+CDU/CSU,parlamentarisch,4.5e-05,14
+CDU/CSU,region,4.5e-05,15
+CDU/CSU,freiheit,4.5e-05,16
+CDU/CSU,umsetzung,4.5e-05,17
+CDU/CSU,ampelkoalition,4.5e-05,18
+CDU/CSU,dazu gehören,4.3e-05,19
+CDU/CSU,änderungsantrag,4.2e-05,20
+CDU/CSU,antworten,4.2e-05,21
+CDU/CSU,meinung,4.2e-05,22
+CDU/CSU,intensiv,4.2e-05,23
+CDU/CSU,zwischenfrage,4.1e-05,24
+CDU/CSU,wesentlich,4.1e-05,25
+CDU/CSU,zumindest,4.1e-05,26
+CDU/CSU,morgen,4.1e-05,27
+CDU/CSU,all ding,4e-05,28
+CDU/CSU,ansatz,4e-05,29
+CDU/CSU,projekt,4e-05,30
+CDU/CSU,nächst jahr,4e-05,31
+CDU/CSU,angehen,3.9e-05,32
+CDU/CSU,verfügung stellen,3.8e-05,33
+CDU/CSU,anpassen,3.7e-05,34
+CDU/CSU,regierungsentwurf,3.7e-05,35
+CDU/CSU,migration,3.7e-05,36
+CDU/CSU,aufmerksamkeit,3.6e-05,37
+CDU/CSU,darüber hinaus,3.6e-05,38
+CDU/CSU,anschauen,3.6e-05,39
+CDU/CSU,durchaus,3.6e-05,40
+CDU/CSU,darauf hinweisen,3.5e-05,41
+CDU/CSU,standort,3.5e-05,42
+CDU/CSU,legislaturperiode,3.5e-05,43
+CDU/CSU,viel ander,3.5e-05,44
+CDU/CSU,letzt legislaturperiode,3.5e-05,45
+CDU/CSU,interessant,3.4e-05,46
+CDU/CSU,mitarbeiterin mitarbeiter,3.3e-05,47
+CDU/CSU,anhörung,3.3e-05,48
+CDU/CSU,gespräch,3.3e-05,49
+CDU/CSU,wahlkreis,3.3e-05,50
+CDU/CSU,aspekt,3.3e-05,51
+CDU/CSU,verlässlich,3.3e-05,52
+CDU/CSU,bisherig,3.3e-05,53
+CDU/CSU,effektiv,3.3e-05,54
+CDU/CSU,zeitenwende,3.2e-05,55
+CDU/CSU,partner,3.2e-05,56
+CDU/CSU,vornehmen,3.2e-05,57
+CDU/CSU,lohnen,3.2e-05,58
+CDU/CSU,paar,3.1e-05,59
+CDU/CSU,parlamentarisch verfahren,3.1e-05,60
+CDU/CSU,komplett,3e-05,61
+CDU/CSU,drei kernkraftwerk,3e-05,62
+CDU/CSU,wettbewerbsfähigkeit,3e-05,63
+CDU/CSU,zukünftig,3e-05,64
+CDU/CSU,eigen koalition,3e-05,65
+CDU/CSU,zusammenhang,3e-05,66
+CDU/CSU,forschung,3e-05,67
+CDU/CSU,vergessen,3e-05,68
+CDU/CSU,eingehen,3e-05,69
+CDU/CSU,polen,3e-05,70
+CDU/CSU,technologie,3e-05,71
+CDU/CSU,lesung,2.9e-05,72
+CDU/CSU,attraktiv,2.9e-05,73
+CDU/CSU,bund land,2.9e-05,74
+CDU/CSU,wichtig thema,2.9e-05,75
+CDU/CSU,soldatin soldat,2.9e-05,76
+CDU/CSU,drei jahr,2.9e-05,77
+CDU/CSU,vorstellen,2.9e-05,78
+CDU/CSU,gasumlage,2.9e-05,79
+CDU/CSU,bzw,2.8e-05,80
+CDU/CSU,geraten,2.8e-05,81
+CDU/CSU,menge,2.8e-05,82
+CDU/CSU,angebot,2.8e-05,83
+CDU/CSU,bedürfen,2.8e-05,84
+CDU/CSU,mobilität,2.8e-05,85
+CDU/CSU,bundesrepublik,2.8e-05,86
+CDU/CSU,zuständigkeit,2.8e-05,87
+CDU/CSU,verfassungsrechtlich,2.8e-05,88
+CDU/CSU,begleiten,2.8e-05,89
+CDU/CSU,neben,2.7e-05,90
+CDU/CSU,ressource,2.7e-05,91
+CDU/CSU,märz,2.7e-05,92
+CDU/CSU,stück weit,2.7e-05,93
+CDU/CSU,minister habeck,2.7e-05,94
+CDU/CSU,grundsatz her,2.7e-05,95
+CDU/CSU,belastung,2.7e-05,96
+CDU/CSU,mandat,2.7e-05,97
+CDU/CSU,appell,2.7e-05,98
+CDU/CSU,spüren,2.7e-05,99
+CDU/CSU,unmittelbar,2.7e-05,100
+Die Linke,link klar,0.000171,1
+Die Linke,lehnen link,0.000156,2
+Die Linke,mieterin,0.000127,3
+Die Linke,preisaufsicht,0.000118,4
+Die Linke,mieterin mieter,0.00011,5
+Die Linke,link unterstützen,9.5e-05,6
+Die Linke,unterstützen link,8.5e-05,7
+Die Linke,fordern link,8.5e-05,8
+Die Linke,sicht link,7.3e-05,9
+Die Linke,bundesweit mietendeckel,7.1e-05,10
+Die Linke,nachhaltig mobilitätswende,7.1e-05,11
+Die Linke,preiskontrolle,6.9e-05,12
+Die Linke,link ausdrücklich,6.6e-05,13
+Die Linke,link lehnen,6.5e-05,14
+Die Linke,verbraucherin verbraucher,6.4e-05,15
+Die Linke,begrüßen link,6.2e-05,16
+Die Linke,staatlich,5.9e-05,17
+Die Linke,beratung,5.6e-05,18
+Die Linke,zumindest,5.5e-05,19
+Die Linke,dank sitte,5.2e-05,20
+Die Linke,euro militär,5.2e-05,21
+Die Linke,link schlagen,5.2e-05,22
+Die Linke,spät,5.2e-05,23
+Die Linke,ressource,5.2e-05,24
+Die Linke,link stehen,5.1e-05,25
+Die Linke,dank gohlke,4.7e-05,26
+Die Linke,link begrüßen,4.7e-05,27
+Die Linke,sozial-ökologischen umbau,4.7e-05,28
+Die Linke,wohnopoly beenden,4.7e-05,29
+Die Linke,staatlich preisaufsicht,4.7e-05,30
+Die Linke,energie daseinsvorsorge,4.7e-05,31
+Die Linke,umsetzung,4.6e-05,32
+Die Linke,internet,4.6e-05,33
+Die Linke,sozial ungleichheit,4.6e-05,34
+Die Linke,bild,4.5e-05,35
+Die Linke,spd grün,4.4e-05,36
+Die Linke,all einzahlen,4.4e-05,37
+Die Linke,dank lenkern,4.4e-05,38
+Die Linke,bund land,4.3e-05,39
+Die Linke,schlagen link,4.3e-05,40
+Die Linke,dumm dämlich,4.3e-05,41
+Die Linke,staatlich preiskontrolle,4.3e-05,42
+Die Linke,lenkern nächst,4.3e-05,43
+Die Linke,sitte nächst,4.3e-05,44
+Die Linke,mindestlohn,4.3e-05,45
+Die Linke,all ding,4.3e-05,46
+Die Linke,kurdin kurde,4.2e-05,47
+Die Linke,bisherig,4.1e-05,48
+Die Linke,preisdeckel,4.1e-05,49
+Die Linke,regional wirtschaftskreisläuf,4.1e-05,50
+Die Linke,hartz,4.1e-05,51
+Die Linke,reich prozent,4e-05,52
+Die Linke,komplett,4e-05,53
+Die Linke,kurdin,3.9e-05,54
+Die Linke,mobilität,3.9e-05,55
+Die Linke,effektiv,3.9e-05,56
+Die Linke,paar,3.8e-05,57
+Die Linke,markt,3.8e-05,58
+Die Linke,jugendlich,3.8e-05,59
+Die Linke,kindergrundsicherung,3.8e-05,60
+Die Linke,bzw,3.8e-05,61
+Die Linke,automobilkonzern,3.8e-05,62
+Die Linke,fahren fahrschein,3.8e-05,63
+Die Linke,wohnopoly,3.8e-05,64
+Die Linke,stehen link,3.8e-05,65
+Die Linke,sozialwohnung jahr,3.8e-05,66
+Die Linke,kampf kinderarmut,3.8e-05,67
+Die Linke,völkerrecht all,3.8e-05,68
+Die Linke,finanztransaktionsteuer,3.8e-05,69
+Die Linke,bodyguard,3.8e-05,70
+Die Linke,wind solarstrom,3.8e-05,71
+Die Linke,dank lötzsch,3.8e-05,72
+Die Linke,link vergangen,3.8e-05,73
+Die Linke,link streiten,3.8e-05,74
+Die Linke,krieg afghanistan,3.8e-05,75
+Die Linke,schluß link,3.8e-05,76
+Die Linke,wohnen ausgeben,3.8e-05,77
+Die Linke,grundkontingent strom,3.8e-05,78
+Die Linke,edward snowd,3.8e-05,79
+Die Linke,echt kindergrundsicherung,3.8e-05,80
+Die Linke,mietendeckel,3.7e-05,81
+Die Linke,parlamentarisch,3.7e-05,82
+Die Linke,studierend,3.7e-05,83
+Die Linke,blick,3.7e-05,84
+Die Linke,wissenschaft,3.7e-05,85
+Die Linke,dafür brauchen,3.7e-05,86
+Die Linke,migrantin,3.6e-05,87
+Die Linke,mobilitätswende,3.6e-05,88
+Die Linke,mieter,3.6e-05,89
+Die Linke,engagement,3.5e-05,90
+Die Linke,migrantin migrant,3.5e-05,91
+Die Linke,jüdin jude,3.5e-05,92
+Die Linke,mindestlohnbetrug,3.5e-05,93
+Die Linke,million sozialwohnung,3.5e-05,94
+Die Linke,gehören öffentlich,3.5e-05,95
+Die Linke,unrechen,3.5e-05,96
+Die Linke,schwangerschaftsabbruch,3.5e-05,97
+Die Linke,ampelkoalition,3.5e-05,98
+Die Linke,forschung,3.4e-05,99
+Die Linke,vernünftig,3.4e-05,100
+Die Linke.,herz panzer,0.000669,1
+Die Linke.,general milley,0.000446,2
+Die Linke.,wirksam human,0.000446,3
+Die Linke.,selbst gering,0.000446,4
+Die Linke.,gering anspruch,0.000446,5
+Die Linke.,illegal erworben,0.000446,6
+Die Linke.,ausweitung versicherungspflicht,0.000446,7
+Die Linke.,wahl europa,0.000446,8
+Die Linke.,widerwärtig system,0.000446,9
+Die Linke.,boden existieren,0.000446,10
+Die Linke.,dank vertreten,0.000446,11
+Die Linke.,deutsch oligarch,0.000446,12
+Die Linke.,dagegen inklusion,0.000446,13
+Die Linke.,dagegen inklusiv,0.000446,14
+Die Linke.,firma wintershall,0.000446,15
+Die Linke.,wachsend ungleichheit,0.000446,16
+Die Linke.,prozent vermögenszuwachs,0.000446,17
+Die Linke.,kriegen schicken,0.000446,18
+Die Linke.,verteilen link,0.000446,19
+Die Linke.,beide volk,0.000446,20
+Die Linke.,friedensverhandlung erreichen,0.000446,21
+Die Linke.,recht neonazi,0.000446,22
+Die Linke.,absolut untragbar,0.000446,23
+Die Linke.,transferleistung angewiesen,0.000446,24
+Die Linke.,haushalt regelrecht,0.000446,25
+Die Linke.,panzer kind,0.000446,26
+Die Linke.,bafög instrument,0.000446,27
+Die Linke.,eigen bericht,0.000446,28
+Die Linke.,falsch äußerung,0.000446,29
+Die Linke.,fiebersaft kind,0.000446,30
+Die Linke.,funkgerät bundeswehr,0.000446,31
+Die Linke.,hilfe arm,0.000446,32
+Die Linke.,beitragsbemessungsgrenze gesetzlich,0.000446,33
+Die Linke.,kita schulverpflegung,0.000446,34
+Die Linke.,umwelt ernährung,0.000446,35
+Die Linke.,ernährung gesundheitspolitik,0.000446,36
+Die Linke.,milley,0.000316,37
+Die Linke.,kjp,0.000316,38
+Die Linke.,wohnungsgemeinnützigkeit,0.000316,39
+Die Linke.,kürzungspolitik,0.000316,40
+Die Linke.,neueinteilung,0.000316,41
+Die Linke.,link lehnen,0.000316,42
+Die Linke.,waffengeschäft,0.000298,43
+Die Linke.,afd-politiker*innen,0.000298,44
+Die Linke.,abschiebegesetz,0.000298,45
+Die Linke.,wikimedia,0.000298,46
+Die Linke.,geldadel,0.000298,47
+Die Linke.,repaircafés,0.000298,48
+Die Linke.,reduzierung zahl,0.000298,49
+Die Linke.,nähe afd,0.000298,50
+Die Linke.,bereich milliarde,0.000298,51
+Die Linke.,vier fragen,0.000298,52
+Die Linke.,umweltschädlich subvention,0.000298,53
+Die Linke.,öffentlich eigentum,0.000298,54
+Die Linke.,debatte dirk,0.000298,55
+Die Linke.,massenhaft abschiebung,0.000298,56
+Die Linke.,aufrüstung einplanen,0.000298,57
+Die Linke.,euro aufrüstung,0.000298,58
+Die Linke.,ins gasnetz,0.000298,59
+Die Linke.,gasnetz einspeisen,0.000298,60
+Die Linke.,link bleiben,0.000298,61
+Die Linke.,anlasslos massenüberwachung,0.000298,62
+Die Linke.,schaffen waffe,0.000298,63
+Die Linke.,herausforderung sozial,0.000298,64
+Die Linke.,dafür null,0.000298,65
+Die Linke.,wichtig antwort,0.000298,66
+Die Linke.,haushaltsloch stopfen,0.000298,67
+Die Linke.,ruhen arbeiten,0.000298,68
+Die Linke.,sozial umwelt,0.000298,69
+Die Linke.,schreckenstag,0.000223,70
+Die Linke.,hamasleut,0.000223,71
+Die Linke.,un-plenums,0.000223,72
+Die Linke.,gabelentscheidung,0.000223,73
+Die Linke.,einigungsaussicht,0.000223,74
+Die Linke.,coronamissständ,0.000223,75
+Die Linke.,studienwunsch,0.000223,76
+Die Linke.,wucherkredit,0.000223,77
+Die Linke.,zinsdeckel,0.000223,78
+Die Linke.,stubentig,0.000223,79
+Die Linke.,losspringen,0.000223,80
+Die Linke.,moscheeverband,0.000223,81
+Die Linke.,ditib-veranstaltungen,0.000223,82
+Die Linke.,verhandlungsstelle,0.000223,83
+Die Linke.,rasenmähertraktor,0.000223,84
+Die Linke.,schlichtungsstelle,0.000223,85
+Die Linke.,fremdgesteuert,0.000223,86
+Die Linke.,us-gerichten,0.000223,87
+Die Linke.,afd-landesvorstandes,0.000223,88
+Die Linke.,brandner-afd,0.000223,89
+Die Linke.,parteisponsoring,0.000223,90
+Die Linke.,regierungsfluch,0.000223,91
+Die Linke.,zukunftsbeendigungsgesetz,0.000223,92
+Die Linke.,haltungsnorm,0.000223,93
+Die Linke.,élysé,0.000223,94
+Die Linke.,grosz-gemäldes,0.000223,95
+Die Linke.,grosz-gemälde,0.000223,96
+Die Linke.,entsteigen,0.000223,97
+Die Linke.,wiedergänger,0.000223,98
+Die Linke.,prüfungsvoraussetzung,0.000223,99
+Die Linke.,kontrollpraxis,0.000223,100
+FDP,frei demokrat,0.00019,1
+FDP,freiheit,0.000107,2
+FDP,differenziert bestandsmanagement,9.6e-05,3
+FDP,beratung,9.3e-05,4
+FDP,ansprechen,8e-05,5
+FDP,blick,7.6e-05,6
+FDP,begrenzung zuzug,6.9e-05,7
+FDP,regional differenziert,6.5e-05,8
+FDP,intensiv,6.4e-05,9
+FDP,bild,6.1e-05,10
+FDP,national,6.1e-05,11
+FDP,bund land,5.9e-05,12
+FDP,dazu gehören,5.7e-05,13
+FDP,fdp-bundestagsfraktion,5.6e-05,14
+FDP,effektiv,5.6e-05,15
+FDP,rahmen,5.6e-05,16
+FDP,sorgen dafür,5.5e-05,17
+FDP,engagement,5.3e-05,18
+FDP,aspekt,5.3e-05,19
+FDP,anpassen,5.2e-05,20
+FDP,vereinbaren,5.2e-05,21
+FDP,parlamentarisch verfahren,5.2e-05,22
+FDP,ordnung kontrolle,5.1e-05,23
+FDP,effizient,5.1e-05,24
+FDP,darüber hinaus,5.1e-05,25
+FDP,migration,5e-05,26
+FDP,umgang wolf,5e-05,27
+FDP,angehen,5e-05,28
+FDP,wettbewerbsfähigkeit,4.9e-05,29
+FDP,partner,4.9e-05,30
+FDP,parlamentarisch,4.9e-05,31
+FDP,forschung,4.9e-05,32
+FDP,umsetzung,4.8e-05,33
+FDP,demokrat setzen,4.8e-05,34
+FDP,europäisch union,4.8e-05,35
+FDP,potenzial,4.7e-05,36
+FDP,meinung,4.6e-05,37
+FDP,europarechtskonform regional,4.6e-05,38
+FDP,verfügung stellen,4.6e-05,39
+FDP,hinweisen,4.6e-05,40
+FDP,danken ihnen,4.6e-05,41
+FDP,darüber sprechen,4.5e-05,42
+FDP,attraktiv,4.5e-05,43
+FDP,wesentlich,4.4e-05,44
+FDP,regierungskoalition spd,4.4e-05,45
+FDP,projekt,4.4e-05,46
+FDP,lohnen,4.4e-05,47
+FDP,wladimir,4.3e-05,48
+FDP,innovation,4.3e-05,49
+FDP,liberal,4.2e-05,50
+FDP,wichtig thema,4.2e-05,51
+FDP,ampelkoalition,4.2e-05,52
+FDP,menge,4.2e-05,53
+FDP,erst schritt,4.1e-05,54
+FDP,liberal demokratie,4e-05,55
+FDP,dankbar,4e-05,56
+FDP,modern,4e-05,57
+FDP,vornehmen,3.9e-05,58
+FDP,staatlich,3.9e-05,59
+FDP,gespräch,3.9e-05,60
+FDP,erarbeiten,3.9e-05,61
+FDP,wladimir putin,3.9e-05,62
+FDP,sicht frei,3.8e-05,63
+FDP,bundesministerium,3.8e-05,64
+FDP,region,3.8e-05,65
+FDP,geraten,3.7e-05,66
+FDP,privat kapital,3.7e-05,67
+FDP,neben,3.6e-05,68
+FDP,austausch,3.6e-05,69
+FDP,nächst jahr,3.6e-05,70
+FDP,interessant,3.6e-05,71
+FDP,rahmenbedingung,3.6e-05,72
+FDP,wohlstand,3.5e-05,73
+FDP,kommend,3.5e-05,74
+FDP,spät,3.5e-05,75
+FDP,dazu beitragen,3.5e-05,76
+FDP,zukünftig,3.5e-05,77
+FDP,morgen,3.5e-05,78
+FDP,paar,3.5e-05,79
+FDP,begleiten,3.5e-05,80
+FDP,soldatin soldat,3.5e-05,81
+FDP,bundesrepublik,3.4e-05,82
+FDP,technologie,3.4e-05,83
+FDP,prozeß,3.4e-05,84
+FDP,wichtig schritt,3.4e-05,85
+FDP,kreml,3.3e-05,86
+FDP,aufmerksamkeit,3.3e-05,87
+FDP,manchmal,3.3e-05,88
+FDP,voraussetzung,3.3e-05,89
+FDP,günstig bauen,3.3e-05,90
+FDP,kommend jahr,3.3e-05,91
+FDP,entscheidung treffen,3.3e-05,92
+FDP,rechtssicherheit,3.3e-05,93
+FDP,erleichtern,3.3e-05,94
+FDP,afd-fraktion,3.3e-05,95
+FDP,markt,3.3e-05,96
+FDP,ander stellen,3.3e-05,97
+FDP,demokrat klar,3.3e-05,98
+FDP,kontrolle migrationspolitik,3.3e-05,99
+FDP,gedanke,3.3e-05,100
+SPD,beratung,9.5e-05,1
+SPD,afd-fraktion,7.8e-05,2
+SPD,blick,7.7e-05,3
+SPD,engagement,6.6e-05,4
+SPD,intensiv,6.3e-05,5
+SPD,dazu gehören,6.1e-05,6
+SPD,parlamentarisch verfahren,6e-05,7
+SPD,darüber hinaus,6e-05,8
+SPD,erneuerbar energie,5.7e-05,9
+SPD,ansprechen,5.7e-05,10
+SPD,bild,5.7e-05,11
+SPD,verbraucherin verbraucher,5.5e-05,12
+SPD,rahmen,5.4e-05,13
+SPD,national,5.2e-05,14
+SPD,region,5.2e-05,15
+SPD,bund land,5.1e-05,16
+SPD,parlamentarisch,5e-05,17
+SPD,ampelkoalition,5e-05,18
+SPD,freiheit,4.9e-05,19
+SPD,projekt,4.8e-05,20
+SPD,verfügung stellen,4.8e-05,21
+SPD,umsetzung,4.5e-05,22
+SPD,aufmerksamkeit,4.5e-05,23
+SPD,aspekt,4.5e-05,24
+SPD,potenzial,4.5e-05,25
+SPD,forschung,4.5e-05,26
+SPD,europäisch union,4.5e-05,27
+SPD,viel ander,4.4e-05,28
+SPD,vereinbaren,4.4e-05,29
+SPD,effektiv,4.3e-05,30
+SPD,wahlkreis,4.3e-05,31
+SPD,sorgen dafür,4.2e-05,32
+SPD,mieterin,4.2e-05,33
+SPD,mitarbeiterin mitarbeiter,4.1e-05,34
+SPD,gespräch,4.1e-05,35
+SPD,partner,4.1e-05,36
+SPD,mobilität,4.1e-05,37
+SPD,angehen,4e-05,38
+SPD,paar,4e-05,39
+SPD,austausch,3.9e-05,40
+SPD,vornehmen,3.9e-05,41
+SPD,hinweisen,3.8e-05,42
+SPD,neben,3.8e-05,43
+SPD,spd stehen,3.8e-05,44
+SPD,menge,3.8e-05,45
+SPD,dankbar,3.8e-05,46
+SPD,anpassen,3.8e-05,47
+SPD,entlastungspaket,3.8e-05,48
+SPD,attraktiv,3.7e-05,49
+SPD,demokratin demokrat,3.7e-05,50
+SPD,sozialdemokratin sozialdemokrat,3.7e-05,51
+SPD,lohnen,3.7e-05,52
+SPD,nächst fragen,3.7e-05,53
+SPD,daran arbeiten,3.7e-05,54
+SPD,langfristig,3.7e-05,55
+SPD,all ding,3.7e-05,56
+SPD,groß herausforderung,3.7e-05,57
+SPD,eingehen,3.6e-05,58
+SPD,hassen,3.6e-05,59
+SPD,begleiten,3.6e-05,60
+SPD,morgen,3.6e-05,61
+SPD,schön dank,3.6e-05,62
+SPD,dazu beitragen,3.6e-05,63
+SPD,verlässlich,3.5e-05,64
+SPD,ausbildung,3.5e-05,65
+SPD,soldatin soldat,3.5e-05,66
+SPD,mieterin mieter,3.5e-05,67
+SPD,ressource,3.5e-05,68
+SPD,moi bürgerin,3.4e-05,69
+SPD,wichtig schritt,3.4e-05,70
+SPD,zukünftig,3.4e-05,71
+SPD,werten demokratisch,3.4e-05,72
+SPD,besonders wichtig,3.4e-05,73
+SPD,unmittelbar,3.4e-05,74
+SPD,dank fragen,3.4e-05,75
+SPD,laden,3.3e-05,76
+SPD,engagieren,3.3e-05,77
+SPD,etwas was,3.3e-05,78
+SPD,entscheidung treffen,3.3e-05,79
+SPD,verlassen,3.3e-05,80
+SPD,standort,3.3e-05,81
+SPD,profitieren,3.3e-05,82
+SPD,wissenschaft,3.3e-05,83
+SPD,spät,3.3e-05,84
+SPD,dafür brauchen,3.2e-05,85
+SPD,effizient,3.2e-05,86
+SPD,sicherstellen,3.2e-05,87
+SPD,mindestlohn,3.2e-05,88
+SPD,zusammenhang,3.2e-05,89
+SPD,klimawandel,3.2e-05,90
+SPD,wesentlich,3.2e-05,91
+SPD,häufig,3.2e-05,92
+SPD,lesung,3.1e-05,93
+SPD,nachfrage stellen,3.1e-05,94
+SPD,vergessen,3.1e-05,95
+SPD,unterstützung ukraine,3.1e-05,96
+SPD,kommend,3.1e-05,97
+SPD,entwicklungszusammenarbeit,3.1e-05,98
+SPD,russisch angriffskrieg,3.1e-05,99
+SPD,herausfordernd,3.1e-05,100
