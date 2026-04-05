@@ -78,10 +78,6 @@ export default function ThemenTrendsPage() {
     null,
   );
   const [partyDataLoading, setPartyDataLoading] = useState(false);
-  // null = "Alle" (use totals); Set = selected subset
-  const [selectedParties, setSelectedParties] = useState<Set<string> | null>(
-    null,
-  );
 
   // ── Chart B: party comparison state ──────────────────────────────────────
   const [compQuery, setCompQuery] = useState("");
@@ -97,7 +93,6 @@ export default function ThemenTrendsPage() {
     setLoading(true);
     setUnavailable(false);
     setActiveKeywords([]);
-    setSelectedParties(null);
     setPartyData(null);
     setCompKeyword(null);
     setCompQuery("");
@@ -214,65 +209,15 @@ export default function ThemenTrendsPage() {
     ensurePartyData();
   }
 
-  function toggleParty(party: string) {
-    ensurePartyData();
-    setSelectedParties((prev) => {
-      if (prev === null) {
-        // Switch from "Alle" to a single party
-        return new Set([party]);
-      }
-      const next = new Set(prev);
-      if (next.has(party)) {
-        next.delete(party);
-        // If nothing selected, fall back to "Alle"
-        return next.size === 0 ? null : next;
-      } else {
-        next.add(party);
-        return next;
-      }
-    });
-  }
-
-  // Chart A: series — filtered by selected parties when a subset is active
+  // Chart A: series
   const series: KeywordSeries[] = useMemo(() => {
     if (!data) return [];
-    return activeKeywords.map((k) => {
-      let counts: number[];
-      if (
-        !selectedParties ||
-        !partyData ||
-        selectedParties.size === partyData.parties.length
-      ) {
-        // All parties → use pre-computed totals
-        counts = data.terms[k.keyword] ?? [];
-      } else {
-        // Sum only selected parties
-        const n = data.meta.months.length;
-        const selected = [...selectedParties];
-        counts = Array.from({ length: n }, (_, i) =>
-          selected.reduce(
-            (sum, p) => sum + (partyData.by_party[k.keyword]?.[p]?.[i] ?? 0),
-            0,
-          ),
-        );
-      }
-      return { keyword: k.keyword, color: k.color, counts };
-    });
-  }, [data, partyData, activeKeywords, selectedParties]);
-
-  // Chart A: total words adjusted for party filter (for normalization)
-  const totalWordsFiltered = useMemo(() => {
-    if (!data) return [];
-    if (!selectedParties || !partyData) return data.meta.total_words_per_month;
-    const n = data.meta.months.length;
-    const selected = [...selectedParties];
-    return Array.from({ length: n }, (_, i) =>
-      selected.reduce(
-        (sum, p) => sum + (partyData.party_words[p]?.[i] ?? 0),
-        0,
-      ),
-    );
-  }, [data, partyData, selectedParties]);
+    return activeKeywords.map((k) => ({
+      keyword: k.keyword,
+      color: k.color,
+      counts: data.terms[k.keyword] ?? [],
+    }));
+  }, [data, activeKeywords]);
 
   // Chart B: one series per party for the selected comparison keyword
   const compSeries: KeywordSeries[] = useMemo(() => {
@@ -289,6 +234,12 @@ export default function ThemenTrendsPage() {
     if (!partyData || !compKeyword) return undefined;
     return partyData.parties.map((party) => partyData.party_words[party] ?? []);
   }, [partyData, compKeyword]);
+
+  // True when the selected comparison keyword has party breakdown data
+  const compHasPartyData = useMemo(
+    () => !compKeyword || !partyData || compKeyword in partyData.by_party,
+    [partyData, compKeyword],
+  );
 
   const parties = partyData?.parties ?? [];
 
@@ -413,7 +364,7 @@ export default function ThemenTrendsPage() {
             ) : (
               <KeywordTimeline
                 months={data!.meta.months}
-                totalWords={totalWordsFiltered}
+                totalWords={data!.meta.total_words_per_month}
                 series={series}
                 normalized={normalized}
               />
@@ -512,6 +463,13 @@ export default function ThemenTrendsPage() {
                 style={{ color: "#9A9790" }}
               >
                 Wähle einen Begriff um den Partei-Vergleich zu sehen.
+              </p>
+            ) : !compHasPartyData ? (
+              <p
+                className="text-[14px] text-center py-12"
+                style={{ color: "#9A9790" }}
+              >
+                Zu selten verwendet — kein Parteivergleich verfügbar.
               </p>
             ) : compSeries.length === 0 ? (
               <p

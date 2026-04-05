@@ -109,7 +109,9 @@ def test_compute_keyword_timeline_by_party_counts(sample_df):
       speech 2 AfD Jan: "migration sicherheit sicherheit"
       speech 3 SPD Feb: "energie energie energie wirtschaft"
     """
-    result = kt.compute_keyword_timeline(sample_df, stopwords=set(), min_count=1)
+    result = kt.compute_keyword_timeline(
+        sample_df, stopwords=set(), min_count=1, min_count_parties=1
+    )
     bp = result["by_party"]
     # energie: SPD Jan=2, SPD Feb=3; AfD always 0
     assert bp["energie"]["SPD"] == [2, 3]
@@ -120,16 +122,26 @@ def test_compute_keyword_timeline_by_party_counts(sample_df):
 
 
 def test_compute_keyword_timeline_by_party_only_filtered_terms(sample_df):
-    """by_party only contains terms that passed the min_count filter."""
-    result = kt.compute_keyword_timeline(sample_df, stopwords=set(), min_count=2)
-    assert set(result["by_party"].keys()) == set(result["terms"].keys())
+    """by_party uses min_count_parties independently from terms min_count."""
+    # With min_count_parties=2, only terms with >=2 total mentions appear in by_party
+    result = kt.compute_keyword_timeline(
+        sample_df, stopwords=set(), min_count=1, min_count_parties=2
+    )
+    # terms with <2 total counts must be absent from by_party
+    for term, counts in result["terms"].items():
+        if sum(counts) < 2:
+            assert term not in result["by_party"]
+        else:
+            assert term in result["by_party"]
 
 
 def test_compute_keyword_timeline_fraktionslos_excluded(sample_df):
     """fraktionslos is never included in parties or by_party."""
     df = sample_df.copy()
     df.loc[0, "fraktion"] = "fraktionslos"
-    result = kt.compute_keyword_timeline(df, stopwords=set(), min_count=1)
+    result = kt.compute_keyword_timeline(
+        df, stopwords=set(), min_count=1, min_count_parties=1
+    )
     assert "fraktionslos" not in result["meta"]["parties"]
     for term_parties in result["by_party"].values():
         assert "fraktionslos" not in term_parties
