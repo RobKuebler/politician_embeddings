@@ -63,6 +63,12 @@ export interface PartyHeatmapProps {
   seqColorLow?: string;
   /** Sequential mode — high-end colour. Default: dark warm brown. */
   seqColorHigh?: string;
+  /**
+   * Sequential mode — percentile used to cap the colour domain so a single
+   * outlier cell doesn't wash out all others. Values above the cap get the
+   * max colour. Default: 0.95.
+   */
+  seqQuantile?: number;
 
   /**
    * Optional text rendered inside each non-empty cell.
@@ -88,6 +94,7 @@ export function PartyHeatmap({
   divergingMax,
   seqColorLow = SEQ_DEFAULT_LOW,
   seqColorHigh = SEQ_DEFAULT_HIGH,
+  seqQuantile = 0.95,
   cellLabel,
   tooltipHtml,
   height = 400,
@@ -147,10 +154,17 @@ export function PartyHeatmap({
         .clamp(true);
       colorFn = scale;
     } else {
-      const maxVal = Math.max(...allValues, 1);
+      const sorted = [...allValues].sort((a, b) => a - b);
+      const q = seqQuantile ?? 0.95;
+      const capIdx = Math.min(Math.floor(sorted.length * q), sorted.length - 1);
+      const domainMax = Math.max(
+        sorted[capIdx] ?? sorted[sorted.length - 1] ?? 1,
+        1,
+      );
       const scale = d3
         .scaleSequential(d3.interpolateRgb(seqColorLow, seqColorHigh))
-        .domain([0, maxVal]);
+        .domain([0, domainMax])
+        .clamp(true);
       colorFn = scale;
     }
 
@@ -311,6 +325,7 @@ export function PartyHeatmap({
     divergingMax,
     seqColorLow,
     seqColorHigh,
+    seqQuantile,
     cellLabel,
     tooltipHtml,
     height,
