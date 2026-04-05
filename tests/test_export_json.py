@@ -67,6 +67,22 @@ _DF_SIDEJOBS = pd.DataFrame(
     }
 )
 
+_DF_COMMITTEES = pd.DataFrame(
+    {
+        "committee_id": [10],
+        "label": ["Wirtschaftsausschuss"],
+        "topics": ["Wirtschaft"],
+    }
+)
+
+_DF_MEMBERSHIPS = pd.DataFrame(
+    {
+        "politician_id": [1],  # Pol 1 has sidejob topic "Wirtschaft|Recht"
+        "committee_id": [10],
+        "role": ["Mitglied"],
+    }
+)
+
 _VOTES_CSV = textwrap.dedent("""\
     politician_id,poll_id,answer
     1,101,yes
@@ -115,6 +131,8 @@ def run_export(tmp_path, monkeypatch):
         df_politicians=_DF_POLITICIANS,
         df_polls=_DF_POLLS,
         df_sidejobs=_DF_SIDEJOBS,
+        df_committees=_DF_COMMITTEES,
+        df_memberships=_DF_MEMBERSHIPS,
     )
     return out_dir
 
@@ -369,6 +387,26 @@ def test_speech_stats_missing_csv_does_not_raise(tmp_path, monkeypatch):
     monkeypatch.setattr(ej, "OUTPUT_DIR", out_dir)
     ej.export_party_speech_stats(WAHLPERIODE)
     assert not (out_dir / str(WAHLPERIODE) / "party_speech_stats.json").exists()
+
+
+def test_conflicts_shape(run_export):
+    data = _load(run_export, "conflicts.json")
+    assert "stats" in data
+    assert "conflicts" in data
+    assert isinstance(data["conflicts"], list)
+    s = data["stats"]
+    assert "total_income" in s
+    assert "affected_politicians" in s
+    assert "affected_committees" in s
+    # Pol 1 (Wirtschaft|Recht sidejob) is in Wirtschaftsausschuss → conflict
+    assert s["affected_politicians"] >= 1
+    if data["conflicts"]:
+        entry = data["conflicts"][0]
+        assert "politician_id" in entry
+        assert "party" in entry
+        assert "committee_label" in entry
+        assert "matching_topics" in entry
+        assert "conflicted_income" in entry
 
 
 def test_main_can_limit_export_to_one_period(tmp_path, monkeypatch):

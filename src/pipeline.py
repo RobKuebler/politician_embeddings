@@ -27,6 +27,7 @@ from .export import (
     export_periods,
 )
 from .fetch.abgeordnetenwatch import (
+    fetch_committees,
     fetch_periods_df,
     fetch_votes,
     find_polls_missing_votes,
@@ -54,12 +55,14 @@ def _export_period_or_check(
     df_politicians: pd.DataFrame,
     df_polls: pd.DataFrame,
     df_sidejobs: pd.DataFrame,
+    df_committees: pd.DataFrame,
+    df_memberships: pd.DataFrame,
 ) -> bool:
     """Export current period or check if non-current period output exists.
 
     For the current period: call export_period() with in-memory DataFrames
     and export speech stats.
-    For non-current periods: verify all 9 output JSON files exist in the
+    For non-current periods: verify all 10 output JSON files exist in the
     per-period subdirectory.
 
     Returns True if the period was successfully exported or output files exist.
@@ -72,6 +75,8 @@ def _export_period_or_check(
             df_politicians=df_politicians,
             df_polls=df_polls,
             df_sidejobs=df_sidejobs,
+            df_committees=df_committees,
+            df_memberships=df_memberships,
         )
         if exported:
             export_party_word_freq(p)
@@ -90,6 +95,7 @@ def _export_period_or_check(
         "party_profile.json",
         "party_word_freq.json",
         "party_speech_stats.json",
+        "conflicts.json",
     ]
     missing = [f for f in output_files if not (period_out / f).exists()]
     if missing:
@@ -150,6 +156,7 @@ def main(argv: list[str] | None = None) -> None:
     df_polls = refresh_polls(period)
     df_politicians, mandate_to_politician = refresh_politicians(period)
     df_sidejobs = refresh_sidejobs(period, mandate_to_politician)
+    df_committees, df_memberships = fetch_committees(period, mandate_to_politician)
 
     votes_path = period_dir / "votes.csv"
     votes_before = _read_bytes_or_none(votes_path)
@@ -200,6 +207,8 @@ def main(argv: list[str] | None = None) -> None:
             df_politicians,
             df_polls,
             df_sidejobs,
+            df_committees,
+            df_memberships,
         )
 
         if exported:

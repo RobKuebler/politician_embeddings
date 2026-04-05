@@ -314,6 +314,8 @@ def export_period(
     df_politicians: pd.DataFrame,
     df_polls: pd.DataFrame,
     df_sidejobs: pd.DataFrame | None = None,
+    df_committees: pd.DataFrame | None = None,
+    df_memberships: pd.DataFrame | None = None,
 ) -> bool:
     """Export all JSON files for one parliament period.
 
@@ -394,6 +396,22 @@ def export_period(
     # ── sidejobs ──────────────────────────────────────────────────────────────
     if df_sidejobs is not None:
         _export_sidejobs(period, pols_df, period_start, period_end, df_sidejobs)
+
+    # ── conflicts ─────────────────────────────────────────────────────────────
+    if (
+        df_sidejobs is not None
+        and df_committees is not None
+        and df_memberships is not None
+    ):
+        _export_conflicts(
+            period,
+            pols_df,
+            period_start,
+            period_end,
+            df_sidejobs,
+            df_committees,
+            df_memberships,
+        )
 
     # ── party profile ─────────────────────────────────────────────────────────
     _export_party_profile(period, pols_df, period_start)
