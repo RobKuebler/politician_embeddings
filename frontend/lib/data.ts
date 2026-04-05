@@ -61,6 +61,23 @@ export interface SidejobsFile {
   coverage: { total: number; with_amount: number };
 }
 
+export interface ConflictEntry {
+  politician_id: number;
+  party: string;
+  committee_label: string;
+  matching_topics: string[];
+  conflicted_income: number;
+}
+
+export interface ConflictsFile {
+  stats: {
+    total_income: number;
+    affected_politicians: number;
+    affected_committees: number;
+  };
+  conflicts: ConflictEntry[];
+}
+
 export interface DeviationPivot {
   categories: string[];
   parties: string[];
