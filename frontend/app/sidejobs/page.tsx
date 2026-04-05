@@ -9,7 +9,6 @@ import {
   stripSoftHyphen,
 } from "@/lib/data";
 import {
-  IncomeByPartyChart,
   IncomeByCategoryChart,
   TopTopicsChart,
   TopEarnersChart,
@@ -291,30 +290,6 @@ export default function SidejobsPage() {
             </p>
             <SidejobCoverageByPartyChart
               jobs={sjData.jobs}
-              politicians={politicians}
-            />
-          </section>
-
-          <section
-            className={`${CARD_CLASS} ${CARD_PADDING}`}
-            style={{ boxShadow: CARD_SHADOW }}
-          >
-            <h2
-              className="font-extrabold text-[15px] mb-1"
-              style={{ color: "#1E1B5E" }}
-            >
-              Einkommen nach Partei
-            </h2>
-            <p className="text-[12px] text-[#9A9790] mb-4">
-              Hochgerechnetes Gesamteinkommen aller Nebentätigkeiten je
-              Fraktion. Monatliche Zahlungen werden auf die gesamte
-              Legislaturperiode hochgerechnet, jährliche entsprechend anteilig.
-              Der Durchschnittswert pro Abgeordnetem mit Nebenverdienst ist
-              separat ausgewiesen.
-            </p>
-            <IncomeByPartyChart
-              jobs={sjData.jobs}
-              parties={parties}
               politicians={politicians}
             />
           </section>
