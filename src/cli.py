@@ -10,8 +10,7 @@ from pathlib import Path
 _LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 _LOG_DATE_FORMAT = "%H:%M:%S"
 _PERIOD_HELP = (
-    "Bundestag period number, e.g. 20 or 21. "
-    "If omitted, the current period is used."
+    "Bundestag period number, e.g. 20 or 21. If omitted, the current period is used."
 )
 
 

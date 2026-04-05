@@ -19,7 +19,7 @@ from xml.etree import ElementTree as ET
 import pandas as pd
 
 from ..cli import configure_logging
-from ..paths import DATA_DIR
+from ..paths import DATA_DIR, FRONTEND_DATA_DIR
 
 log = logging.getLogger(__name__)
 
@@ -341,17 +341,14 @@ def main(argv: list[str] | None = None) -> None:
     log.info("Lade Daten …")
     df = load_all_events(periods)
     if args.export:
-        _frontend_data = Path(__file__).parents[2] / "frontend" / "public" / "data"
         export_periods = periods or sorted(
-            int(p.name)
-            for p in Path(__file__).parents[2].joinpath("data").iterdir()
-            if p.is_dir() and p.name.isdigit()
+            int(p.name) for p in DATA_DIR.iterdir() if p.is_dir() and p.name.isdigit()
         )
         for wp in export_periods:
             period_df = (
                 df[df["wahlperiode"] == wp] if "wahlperiode" in df.columns else df
             )
-            export_kommentare_json(period_df, _frontend_data / str(wp))
+            export_kommentare_json(period_df, FRONTEND_DATA_DIR / str(wp))
         log.info("JSON für %s exportiert.", export_periods)
         return
     log.info("%d Events aus %d Wahlperiode(n).", len(df), df["wahlperiode"].nunique())

@@ -4,95 +4,69 @@ Writes to frontend/public/data/. Run via src.pipeline or standalone.
 """
 
 import argparse
-import json
 import logging
-import math
 from datetime import date
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
-from .analysis.transforms import (
-    compute_age_df,
-    compute_cohesion,
-    compute_education_degree_pivot,
-    compute_education_field_pivot,
-    compute_effective_income,
-    compute_occupation_pivot,
-    compute_sex_counts,
-    compute_title_counts,
-)
+from .analysis.transforms import compute_cohesion
 from .cli import add_period_argument, build_parser, configure_logging
-from .constants import PARTY_ORDER, SIDEJOB_CATEGORIES
+from .export_profile import export_party_profile as _export_party_profile_impl
+from .export_sidejobs import (
+    export_conflicts as _export_conflicts_impl,
+)
+from .export_sidejobs import (
+    export_sidejobs as _export_sidejobs_impl,
+)
+from .export_sidejobs import (
+    prepare_income_sidejobs as _prepare_income_sidejobs_impl,
+)
+from .export_utils import (
+    period_output_dir,
+    split_topics,
+    write_json,
+)
 from .fetch.abgeordnetenwatch import fetch_periods_df
-from .paths import DATA_DIR, OUTPUTS_DIR
+from .paths import DATA_DIR, FRONTEND_DATA_DIR, OUTPUTS_DIR
 
 log = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path(__file__).parents[1] / "frontend" / "public" / "data"
+OUTPUT_DIR = FRONTEND_DATA_DIR
 
 
 def _period_output_dir(period: int) -> Path:
     """Return the output subdirectory for a period, creating it if needed."""
-    d = OUTPUT_DIR / str(period)
-    d.mkdir(exist_ok=True)
-    return d
-
-
-def _sanitize(obj: object) -> object:
-    """Recursively replace float NaN/inf with None so json.dumps produces valid JSON."""
-    if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
-        return None
-    if isinstance(obj, dict):
-        return {k: _sanitize(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [_sanitize(v) for v in obj]
-    return obj
+    return period_output_dir(OUTPUT_DIR, period)
 
 
 def _write(path: Path, data: object) -> None:
     """Write data as JSON; create parent dirs if needed."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(_sanitize(data), ensure_ascii=False, default=str), encoding="utf-8"
-    )
-    log.info("Wrote %s (%.1f KB)", path, path.stat().st_size / 1024)
-
-
-def _clean_matrix(arr: np.ndarray, precision: int) -> list:
-    """Convert a 2D numpy array to a nested list, replacing NaN with None."""
-    return [
-        [None if np.isnan(v) else round(float(v), precision) for v in row]
-        for row in arr.tolist()
-    ]
+    write_json(path, data, log=log)
 
 
 def _split_topics(t: object) -> list[str]:
     """Split pipe-separated topic string into a list."""
-    if not isinstance(t, str):
-        return []
-    return [x.strip() for x in t.split("|") if x.strip()]
+    return split_topics(t)
 
 
-def _pivot_to_json(
-    pivot_pct: pd.DataFrame, dev_z: np.ndarray, pivot_count: pd.DataFrame
-) -> dict:
-    """Serialize a deviation pivot for the frontend DeviationHeatmap component."""
-    pct_clean = _clean_matrix(pivot_pct.to_numpy().astype(float), 1)
-    dev_clean = _clean_matrix(dev_z, 2)
-    count_clean = [
-        [int(v) for v in row] for row in pivot_count.to_numpy().astype(int).tolist()
-    ]
-    party_totals = [int(v) for v in pivot_count.sum(axis=0).tolist()]
-    return {
-        "categories": list(pivot_pct.index),
-        "parties": list(pivot_pct.columns),
-        "pct": pct_clean,
-        "dev": dev_clean,
-        "count": count_clean,
-        "party_totals": party_totals,
-    }
+def _prepare_income_sidejobs(
+    period: int,
+    period_start: date,
+    period_end: date,
+    df_sidejobs: pd.DataFrame,
+    *,
+    positive_only: bool = False,
+) -> pd.DataFrame:
+    """Return sidejobs with numeric income and computed prorated income."""
+    return _prepare_income_sidejobs_impl(
+        period,
+        period_start,
+        period_end,
+        df_sidejobs,
+        log=log,
+        positive_only=positive_only,
+    )
 
 
 def _export_sidejobs(
@@ -103,58 +77,14 @@ def _export_sidejobs(
     df_sidejobs: pd.DataFrame,
 ) -> None:
     """Build and write sidejobs JSON for one period."""
-    sj_df = df_sidejobs.merge(
-        pols_df.filter(["politician_id", "party_label"]),
-        on="politician_id",
-        how="left",
-    ).assign(
-        category_label=lambda df: (
-            pd.to_numeric(df["category"], errors="coerce")
-            .map(SIDEJOB_CATEGORIES)
-            .fillna("Sonstiges")
-        )
-    )
-    n_total = len(sj_df)
-    n_with = int(sj_df["income"].notna().sum())
-
-    sj_income = sj_df[sj_df["income"].notna()].assign(
-        income=lambda df: pd.to_numeric(df["income"], errors="coerce")
-    )
-    n_nan = int(sj_income["income"].isna().sum())
-    if n_nan:
-        log.warning(
-            "Period %d: %d sidejob income value(s) could not be parsed as numeric"
-            " and will be skipped.",
-            period,
-            n_nan,
-        )
-    sj_income = sj_income[sj_income["income"].notna()]
-
-    sj_income = sj_income.assign(
-        prorated_income=lambda df: df.apply(
-            lambda row: compute_effective_income(row, period_start, period_end), axis=1
-        )
-    )
-    has_topics = "topics" in sj_income.columns
-
-    jobs = [
-        {
-            "politician_id": int(row["politician_id"]),
-            "party": str(row.get("party_label") or ""),
-            "category_label": str(row.get("category_label") or "Sonstiges"),
-            "income_level": int(row["income_level"])
-            if pd.notna(row.get("income_level"))
-            else None,
-            "prorated_income": round(float(row["prorated_income"]), 2),
-            "topics": _split_topics(row.get("topics")) if has_topics else [],
-            "has_amount": True,
-        }
-        for row in sj_income.to_dict("records")
-    ]
-
-    _write(
-        _period_output_dir(period) / "sidejobs.json",
-        {"jobs": jobs, "coverage": {"total": n_total, "with_amount": n_with}},
+    _export_sidejobs_impl(
+        OUTPUT_DIR,
+        period,
+        pols_df,
+        period_start,
+        period_end,
+        df_sidejobs,
+        log=log,
     )
 
 
@@ -173,96 +103,16 @@ def _export_conflicts(
     in a topic area that their Ausschuss is also responsible for.
     Output: conflicts.json with pre-aggregated rows + summary stats.
     """
-    # Prepare income-bearing sidejobs with prorated income
-    sj = df_sidejobs[df_sidejobs["income"].notna()].copy()
-    sj["income"] = pd.to_numeric(sj["income"], errors="coerce")
-    n_nan = int(sj["income"].isna().sum())
-    if n_nan:
-        log.warning(
-            "Period %d: %d sidejob income value(s) could not be parsed as numeric"
-            " and will be skipped.",
-            period,
-            n_nan,
-        )
-    sj = sj[sj["income"].notna()].copy()
-    sj["prorated_income"] = sj.apply(
-        lambda row: compute_effective_income(row, period_start, period_end), axis=1
-    )
-    sj = sj[sj["prorated_income"] > 0]
-    sj["sidejob_topics"] = sj["topics"].apply(lambda t: set(_split_topics(t)))
-    sj = sj[sj["sidejob_topics"].map(len) > 0]
-
-    # Build committee topic sets; drop committees with no topics
-    committees = df_committees.copy()
-    committees["committee_topics"] = committees["topics"].apply(
-        lambda t: set(_split_topics(t))
-    )
-    committees = committees[committees["committee_topics"].map(len) > 0]
-
-    # Join memberships → committees to get (politician_id, committee_label, topics)
-    mem = df_memberships.merge(
-        committees.filter(["committee_id", "label", "committee_topics"]),
-        on="committee_id",
-        how="inner",
-    )
-
-    # Cross-join each politician's memberships with their income-bearing sidejobs
-    merged = mem.merge(
-        sj.filter(["politician_id", "sidejob_topics", "prorated_income"]),
-        on="politician_id",
-        how="inner",
-    )
-
-    empty_result = {
-        "stats": {
-            "total_income": 0.0,
-            "affected_politicians": 0,
-            "affected_committees": 0,
-        },
-        "conflicts": [],
-    }
-
-    # Keep only rows where sidejob topics intersect with committee topics
-    if merged.empty:
-        _write(_period_output_dir(period) / "conflicts.json", empty_result)
-        return
-    merged["intersection"] = merged.apply(
-        lambda r: r["committee_topics"] & r["sidejob_topics"], axis=1
-    )
-    conflicted = merged[merged["intersection"].map(len) > 0]
-
-    if conflicted.empty:
-        _write(_period_output_dir(period) / "conflicts.json", empty_result)
-        return
-
-    # Aggregate per (politician_id, committee): sum income, union matching topics
-    rows: list[dict] = []
-    party_map = pols_df.set_index("politician_id")["party_label"].to_dict()
-    for (politician_id, committee_label), group in conflicted.groupby(
-        ["politician_id", "label"]
-    ):
-        matching_topics = sorted(set().union(*group["intersection"]))
-        rows.append(
-            {
-                "politician_id": int(politician_id),
-                "party": str(party_map.get(int(politician_id), "")),
-                "committee_label": str(committee_label),
-                "matching_topics": matching_topics,
-                "conflicted_income": round(float(group["prorated_income"].sum()), 2),
-            }
-        )
-
-    rows.sort(key=lambda r: r["conflicted_income"], reverse=True)
-
-    stats = {
-        "total_income": round(sum(r["conflicted_income"] for r in rows), 2),
-        "affected_politicians": len({r["politician_id"] for r in rows}),
-        "affected_committees": len({r["committee_label"] for r in rows}),
-    }
-
-    _write(
-        _period_output_dir(period) / "conflicts.json",
-        {"stats": stats, "conflicts": rows},
+    _export_conflicts_impl(
+        OUTPUT_DIR,
+        period,
+        pols_df,
+        period_start,
+        period_end,
+        df_sidejobs,
+        df_committees,
+        df_memberships,
+        log=log,
     )
 
 
@@ -273,41 +123,12 @@ def _export_party_profile(
 
     Age is calculated as of the start of the period, not the current year.
     """
-    present = set(pols_df["party_label"].dropna().unique())
-    party_labels_ordered = [
-        p.replace("\xad", "") for p in PARTY_ORDER if p.replace("\xad", "") in present
-    ] + sorted(present - {p.replace("\xad", "") for p in PARTY_ORDER})
-
-    age_df = compute_age_df(pols_df, period_start.year)
-    sex_df = compute_sex_counts(pols_df)
-    title_df = compute_title_counts(pols_df)
-    occ_pct, _, occ_dev_z, occ_count = compute_occupation_pivot(
-        pols_df, party_labels_ordered
-    )
-    edu_field_pct, _, edu_field_dev_z, edu_field_count = compute_education_field_pivot(
-        pols_df, party_labels_ordered
-    )
-    edu_deg_pct, _, edu_deg_dev_z, edu_deg_count = compute_education_degree_pivot(
-        pols_df, party_labels_ordered
-    )
-
-    _write(
-        _period_output_dir(period) / "party_profile.json",
-        {
-            "parties": party_labels_ordered,
-            "age": age_df.filter(["name", "party_label", "alter"])
-            .rename(columns={"party_label": "party", "alter": "age"})
-            .to_dict("records"),
-            "sex": sex_df.to_dict("records"),
-            "titles": title_df.to_dict("records"),
-            "occupation": _pivot_to_json(occ_pct, occ_dev_z, occ_count),
-            "education_field": _pivot_to_json(
-                edu_field_pct, edu_field_dev_z, edu_field_count
-            ),
-            "education_degree": _pivot_to_json(
-                edu_deg_pct, edu_deg_dev_z, edu_deg_count
-            ),
-        },
+    _export_party_profile_impl(
+        OUTPUT_DIR,
+        period,
+        pols_df,
+        period_start,
+        log=log,
     )
 
 
