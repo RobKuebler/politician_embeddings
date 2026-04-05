@@ -90,8 +90,8 @@ export const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
-    href: "/ausschuesse",
-    label: "Ausschüsse",
+    href: "/potential-conflicts",
+    label: "Interessenkonflikte",
     icon: (active, size = 24) => (
       <svg
         width={size}

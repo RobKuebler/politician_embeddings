@@ -188,6 +188,7 @@ def _export_conflicts(
     sj["prorated_income"] = sj.apply(
         lambda row: compute_effective_income(row, period_start, period_end), axis=1
     )
+    sj = sj[sj["prorated_income"] > 0]
     sj["sidejob_topics"] = sj["topics"].apply(lambda t: set(_split_topics(t)))
     sj = sj[sj["sidejob_topics"].map(len) > 0]
 

@@ -11,38 +11,65 @@ interface RankedListProps {
   politicians: Politician[];
 }
 
-/** Ranked list of politicians sorted by conflicted income, with inline bar. */
+/** Ranked list of politicians sorted by total conflicted income.
+ * Multiple committee conflicts per politician are merged into one row. */
 export function ConflictRankedList({
   conflicts,
   politicians,
 }: RankedListProps) {
   const polMap = new Map(politicians.map((p) => [p.politician_id, p.name]));
-  const maxIncome = Math.max(...conflicts.map((c) => c.conflicted_income), 1);
+
+  // Merge all committee rows per politician: sum income, collect committees
+  const merged = new Map<
+    number,
+    {
+      politician_id: number;
+      party: string;
+      totalIncome: number;
+      committees: { label: string; topics: string[] }[];
+    }
+  >();
+  for (const c of conflicts) {
+    const existing = merged.get(c.politician_id);
+    if (existing) {
+      existing.totalIncome += c.conflicted_income;
+      existing.committees.push({
+        label: c.committee_label,
+        topics: c.matching_topics,
+      });
+    } else {
+      merged.set(c.politician_id, {
+        politician_id: c.politician_id,
+        party: c.party,
+        totalIncome: c.conflicted_income,
+        committees: [{ label: c.committee_label, topics: c.matching_topics }],
+      });
+    }
+  }
+
+  const rows = [...merged.values()].sort(
+    (a, b) => b.totalIncome - a.totalIncome,
+  );
+  const maxIncome = Math.max(...rows.map((r) => r.totalIncome), 1);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      {conflicts.map((c, i) => {
+      {rows.map((r, i) => {
         const name =
-          polMap.get(c.politician_id) ?? `Abgeordnete/r ${c.politician_id}`;
-        const color = PARTY_COLORS[c.party] ?? FALLBACK_COLOR;
-        const pct = (c.conflicted_income / maxIncome) * 100;
-        const textColor = c.party === "FDP" ? "#000" : "#fff";
-        const topicLabel =
-          c.matching_topics.slice(0, 2).join(", ") +
-          (c.matching_topics.length > 2
-            ? ` +${c.matching_topics.length - 2}`
-            : "");
+          polMap.get(r.politician_id) ?? `Abgeordnete/r ${r.politician_id}`;
+        const color = PARTY_COLORS[r.party] ?? FALLBACK_COLOR;
+        const pct = (r.totalIncome / maxIncome) * 100;
+        const textColor = r.party === "FDP" ? "#000" : "#fff";
 
         return (
           <div
-            key={`${c.politician_id}-${c.committee_label}`}
+            key={r.politician_id}
             style={{
               display: "flex",
               alignItems: "flex-start",
               gap: 10,
               padding: "10px 0",
-              borderBottom:
-                i < conflicts.length - 1 ? "1px solid #F0EEE9" : "none",
+              borderBottom: i < rows.length - 1 ? "1px solid #F0EEE9" : "none",
             }}
           >
             {/* Rank */}
@@ -60,14 +87,14 @@ export function ConflictRankedList({
               {i + 1}
             </span>
 
-            {/* Name + party + committee + bar */}
+            {/* Name + party + committees + bar */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: 6,
-                  marginBottom: 2,
+                  marginBottom: 4,
                   flexWrap: "wrap",
                 }}
               >
@@ -87,13 +114,35 @@ export function ConflictRankedList({
                     flexShrink: 0,
                   }}
                 >
-                  {c.party}
+                  {r.party}
                 </span>
               </div>
-              <div style={{ fontSize: 11, color: "#9A9790", marginBottom: 6 }}>
-                {c.committee_label}
-                {topicLabel ? ` · ${topicLabel}` : ""}
+
+              {/* One line per conflicting committee */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  marginBottom: 6,
+                }}
+              >
+                {r.committees.map((c) => (
+                  <div
+                    key={c.label}
+                    style={{ fontSize: 11, color: "#9A9790", lineHeight: 1.4 }}
+                  >
+                    <span style={{ fontWeight: 600, color: "#6B6760" }}>
+                      {c.label}
+                    </span>
+                    {c.topics.length > 0 && (
+                      <span> · {c.topics.join(", ")}</span>
+                    )}
+                  </div>
+                ))}
               </div>
+
+              {/* Income bar */}
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div
                   style={{
@@ -124,7 +173,7 @@ export function ConflictRankedList({
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
-                  {formatEur(c.conflicted_income)}
+                  {formatEur(r.totalIncome)}
                 </span>
               </div>
             </div>
@@ -255,7 +304,7 @@ export function ConflictHeatmap({ conflicts, parties }: HeatmapProps) {
                         {formatEur(income)}
                       </div>
                     ) : (
-                      <span style={{ color: "#ddd", fontSize: 11 }}>—</span>
+                      <span style={{ color: "#ddd", fontSize: 11 }}>-</span>
                     )}
                   </td>
                 );

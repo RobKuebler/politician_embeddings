@@ -23,7 +23,7 @@ import {
 } from "@/lib/constants";
 import { PAGE_META } from "@/lib/page-meta";
 
-const META = PAGE_META.find((p) => p.href === "/ausschuesse")!;
+const META = PAGE_META.find((p) => p.href === "/potential-conflicts")!;
 
 /** Animates a number from 0 to `target` over ~1.2 s using easeOutExpo. */
 function useCountUp(target: number, active: boolean) {
@@ -269,8 +269,11 @@ export default function AusschussePage() {
               Top-Konflikte nach Abgeordnetem
             </h2>
             <p className="text-[12px] text-[#9A9790] mb-4">
-              Abgeordnete mit dem höchsten Nebeneinkommen in einem Themenfeld,
-              das ihr Ausschuss verantwortet. Sortiert nach Betrag.
+              Abgeordnete mit Nebeneinkommen in einem Themenfeld, das ihr
+              Ausschuss verantwortet. Sitzt ein Abgeordneter in mehreren
+              betroffenen Ausschüssen, wird das Einkommen mehrfach gezählt, weil
+              jedes Mandat einen eigenständigen Interessenkonflikt darstellt.
+              Sortiert nach Gesamtbetrag.
             </p>
             <ConflictRankedList
               conflicts={data.conflicts}
