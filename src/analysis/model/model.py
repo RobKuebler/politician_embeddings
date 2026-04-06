@@ -74,7 +74,7 @@ class RelativeEarlyStopping(L.Callback):
         self.min_rel = min_rel
         self._prev = float("inf")
 
-    def on_train_epoch_end(
+    def on_train_epoch_end(  # type: ignore[override]
         self,
         trainer: L.Trainer,
         _pl_module: L.LightningModule,

@@ -32,6 +32,9 @@ _SOFT_HYPHEN = "\xad"
 _FRAKTION_MAP: dict[str, str] = {
     "BÜNDNIS 90/DIE GRÜNEN": f"BÜNDNIS 90/{_SOFT_HYPHEN}DIE GRÜNEN",
     "DIE LINKE": "Die Linke",
+    # "Die Linke." (with trailing period) appears in abgeordnetenwatch API data
+    # after the 2024 party split; normalise to the same canonical name.
+    "Die Linke.": "Die Linke",
     "Fraktionslos": "fraktionslos",
     # Concatenated party names — known XML data errors in source files
     # SPDSPD = Svenja Schulze (SPD), name+party duplicated in XML
@@ -107,11 +110,13 @@ def recover_parties_from_metadata(
 
     candidates: list[tuple[set[str], set[str], str]] = []
     unique_politicians = politicians_df[["name", "party"]].dropna().drop_duplicates()
-    for row in unique_politicians.itertuples(index=False):  # type: ignore[call-overload]
+    for row in unique_politicians.itertuples(index=False):
         first_tokens, surname_tokens = _split_politician_name(row.name)
         if not surname_tokens:
             continue
-        candidates.append((first_tokens, surname_tokens, str(row.party)))
+        candidates.append(
+            (first_tokens, surname_tokens, _normalize_fraktion(str(row.party)))
+        )
 
     replacements: dict[tuple[str, str], str] = {}
     speakers = (
@@ -119,7 +124,7 @@ def recover_parties_from_metadata(
         .drop_duplicates()
         .itertuples(index=False)
     )
-    for speaker in speakers:  # type: ignore[call-overload]
+    for speaker in speakers:
         first_tokens = set(_normalize_name_tokens(speaker.vorname))
         surname_tokens = set(_normalize_name_tokens(speaker.nachname))
         if not first_tokens or not surname_tokens:

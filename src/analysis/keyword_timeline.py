@@ -79,7 +79,7 @@ def compute_keyword_timeline(
         party: defaultdict(lambda: [0] * n) for party in parties
     }
 
-    for row in df.itertuples(index=False):  # type: ignore[call-overload]
+    for row in df.itertuples(index=False):
         idx = month_to_idx.get(row.month)  # type: ignore[attr-defined]
         if idx is None:
             continue

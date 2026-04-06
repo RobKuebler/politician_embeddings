@@ -328,14 +328,26 @@ def export_keyword_timeline(period: int) -> None:
     )
 
 
+def _drucksachen_cache_path(period: int, typ: str) -> Path:
+    """Return the local cache file path for raw Drucksachen of one type.
+
+    Stored in data/{period}/drucksachen_{slug}.json. The file is NOT committed
+    to git — it is preserved between GitHub Actions runs via actions/cache.
+    """
+    slug = typ.lower().replace(" ", "_").replace("ß", "ss").replace("ö", "oe")
+    return DATA_DIR / str(period) / f"drucksachen_{slug}.json"
+
+
 def export_motions(period: int) -> None:
     """Fetch all Drucksachen for a period and write motions_stats.json
     and motions_titles.json.
 
-    Fetches each Drucksache type once (3 API calls total) and writes both output files
-    in one pass to avoid redundant network requests.
+    Raw records are cached in data/{period}/drucksachen_{typ}.json (preserved
+    via GitHub Actions cache, not committed to git). If the cache file exists
+    the API fetch is skipped entirely for that type.
     Skipped silently if DIP_API_KEY is not set.
     """
+    import json
     import os
 
     if not os.environ.get("DIP_API_KEY"):
@@ -358,7 +370,30 @@ def export_motions(period: int) -> None:
     all_titles: list[dict] = []
 
     for typ in DRUCKSACHE_TYPEN:
-        docs = fetch_drucksachen(period, typ)
+        cache_path = _drucksachen_cache_path(period, typ)
+
+        cached: list[dict] = []
+        since: str | None = None
+        if cache_path.exists():
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            dates = [d["datum"] for d in cached if d.get("datum")]
+            if dates:
+                since = max(dates)
+
+        new_docs = fetch_drucksachen(period, typ, since=since)
+
+        # Merge: append only records not already in the cache (deduplicate by id).
+        cached_ids = {d["id"] for d in cached if "id" in d}
+        new_only = [d for d in new_docs if d.get("id") not in cached_ids]
+        if new_only:
+            log.info("%d new Drucksachen for %s/%s", len(new_only), period, typ)
+        docs = cached + new_only
+
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(
+            json.dumps(docs, ensure_ascii=False, indent=None), encoding="utf-8"
+        )
+
         if not docs:
             stats[typ] = {
                 "counts_by_party": [],

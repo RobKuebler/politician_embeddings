@@ -40,6 +40,13 @@ jobs:
           key: plenary-protocols-${{ github.run_id }}
           restore-keys: plenary-protocols-
 
+      - name: Cache Drucksachen JSON
+        uses: actions/cache@v4
+        with:
+          path: data/*/drucksachen_*.json
+          key: drucksachen-${{ github.run_id }}
+          restore-keys: drucksachen-
+
       - name: Download new plenary protocol XMLs
         id: fetch_xml
         run: |
