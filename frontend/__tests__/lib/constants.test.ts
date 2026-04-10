@@ -61,12 +61,14 @@ describe("sortPresentParties", () => {
 
 describe("party helpers", () => {
   it("normalizes raw party names", () => {
-    expect(normalizePartyName("BÜNDNIS 90/\u00adDIE GRÜNEN")).toBe("Grüne");
+    expect(normalizePartyName("BÜNDNIS 90/\u00adDIE GRÜNEN")).toBe(
+      "BÜNDNIS 90/DIE GRÜNEN",
+    );
   });
 
   it("resolves colors for raw party names", () => {
     expect(getPartyColor("BÜNDNIS 90/\u00adDIE GRÜNEN")).toBe(
-      PARTY_COLORS.Grüne,
+      PARTY_COLORS["BÜNDNIS 90/DIE GRÜNEN"],
     );
   });
 

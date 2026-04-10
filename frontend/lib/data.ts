@@ -146,11 +146,22 @@ export interface KeywordTimelinePartiesFile {
 
 // ── Data loading utilities ──────────────────────────────────────────────────
 
-/** Normalize a raw party name from the API: strip soft-hyphens and apply short display names. */
+// Maps raw fraktion variants to canonical names used as keys in PARTY_COLORS,
+// PARTY_ORDER, and PARTY_SHORT_LABELS. Display renaming (e.g. "Grüne") is
+// handled separately by getPartyShortLabel in constants.ts.
+const PARTY_ALIAS_MAP: Record<string, string> = {
+  "Die Linke.": "Die Linke",
+  "DIE LINKE": "Die Linke",
+};
+
+/** Normalize a raw party name from JSON to its canonical form.
+ * Removes soft-hyphens and maps known variants (e.g. "Die Linke.") to their
+ * canonical name. Returns the canonical name — NOT a display label.
+ * Use getPartyShortLabel() for display output.
+ */
 export function stripSoftHyphen(s: string): string {
   const stripped = s.replace(/\u00ad/g, "");
-  if (stripped === "BÜNDNIS 90/DIE GRÜNEN") return "Grüne";
-  return stripped;
+  return PARTY_ALIAS_MAP[stripped] ?? stripped;
 }
 
 /** kommentare.json — applause, interjections, laughter cross-party data */

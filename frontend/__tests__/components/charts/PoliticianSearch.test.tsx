@@ -262,7 +262,7 @@ describe("PoliticianSearch", () => {
         />,
       );
       const chip = screen.getByTestId("chip-3");
-      // stripSoftHyphen normalizes "BÜNDNIS 90/DIE GRÜNEN" → "Grüne"
+      // getPartyShortLabel maps canonical "BÜNDNIS 90/DIE GRÜNEN" → "Grüne" for display
       expect(chip).not.toHaveTextContent("\u00ad");
       expect(chip).toHaveTextContent("Grüne");
     });

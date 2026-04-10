@@ -9,6 +9,7 @@ import {
   FILTER_ACCENT_LIGHT as ACCENT_LIGHT,
   FILTER_BORDER as BORDER,
   truncateText as truncate,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { useDropdown } from "@/hooks/useDropdown";
 import { SearchInput } from "@/components/ui/SearchInput";
@@ -135,7 +136,9 @@ export function PoliticianSearch({
                 removeLabel={`Entferne ${pol.name}`}
                 dotColor={PARTY_COLORS[party] ?? FALLBACK_COLOR}
                 suffix={
-                  <span style={{ color: "#666", fontSize: 11 }}>{party}</span>
+                  <span style={{ color: "#666", fontSize: 11 }}>
+                    {getPartyShortLabel(party)}
+                  </span>
                 }
               />
             );

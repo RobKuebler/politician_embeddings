@@ -6,6 +6,7 @@ import {
   VoteRecord,
   stripSoftHyphen,
 } from "@/lib/data";
+import { getPartyShortLabel } from "@/lib/constants";
 
 /** Computes per-party cohesion (mean distance to centroid). */
 export function computeCohesionRecords(
@@ -34,7 +35,7 @@ export function computeCohesionRecords(
           sum + Math.sqrt((point.x - cx) ** 2 + (point.y - cy) ** 2),
         0,
       ) / pts.length;
-    cohesion.push({ party: label, label, streuung });
+    cohesion.push({ party: label, label: getPartyShortLabel(label), streuung });
   }
   return cohesion;
 }

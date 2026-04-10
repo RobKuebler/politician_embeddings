@@ -7,6 +7,7 @@ import {
   FALLBACK_COLOR,
   DARK_FILL_PARTY,
   MARKER_OUTLINE,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { positionTooltip } from "@/lib/chart-utils";
 import { useLatestRef } from "@/hooks/useLatestRef";
@@ -191,7 +192,7 @@ export function VoteMapScatter({
             containerRef.current!,
             px,
             py,
-            `<b>${pol.name}</b><br/><span style="color:#bbb">${stripSoftHyphen(pol.party)}</span>`,
+            `<b>${pol.name}</b><br/><span style="color:#bbb">${getPartyShortLabel(pol.party)}</span>`,
           );
         })
         .on("mouseleave", () =>
