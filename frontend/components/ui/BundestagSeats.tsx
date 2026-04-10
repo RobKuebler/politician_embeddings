@@ -20,7 +20,13 @@ interface Dot {
 }
 
 /** Compute all dot positions sorted into wedge-shaped party blocs. */
-function buildDots(parties: PartySeats[], total: number): Dot[] {
+function buildDots(parties: PartySeats[]): Dot[] {
+  // Build color array first so total is derived from parties, not a separate argument.
+  const colors: string[] = [];
+  for (const p of parties)
+    for (let i = 0; i < p.seats; i++) colors.push(dotColor(p.party));
+  const total = colors.length;
+
   // Hemicycle geometry
   const cx = 250,
     cy = 262;
@@ -52,11 +58,7 @@ function buildDots(parties: PartySeats[], total: number): Dot[] {
   // Step 2: sort left→right (descending θ: π = left, 0 = right)
   raw.sort((a, b) => b.theta - a.theta);
 
-  // Step 3: assign party colors sequentially → each party occupies a contiguous angular wedge
-  const colors: string[] = [];
-  for (const p of parties)
-    for (let i = 0; i < p.seats; i++) colors.push(dotColor(p.party));
-
+  // Step 3: assign colors sequentially → each party occupies a contiguous angular wedge
   return raw.map((pos, i) => ({ x: pos.x, y: pos.y, color: colors[i] }));
 }
 
@@ -67,8 +69,8 @@ export function BundestagSeats() {
   const parties = BUNDESTAG_SEATS[activePeriodId];
   if (!parties) return null;
 
-  const total = getTotalSeats(activePeriodId);
-  const dots = buildDots(parties, total);
+  const total = getTotalSeats(activePeriodId); // used for the eyebrow label only
+  const dots = buildDots(parties);
 
   return (
     <div className="px-[2px]">
