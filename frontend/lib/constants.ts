@@ -57,7 +57,7 @@ const PARTY_SHORT_LABELS: Record<string, string> = {
   fraktionslos: "fraktionslos",
 };
 
-/** Normalize any raw party label into the shared frontend label space. */
+/** Normalize any raw party label to its canonical name (not a display label — use getPartyShortLabel() for display). */
 export function normalizePartyName(party: string): string {
   return stripSoftHyphen(party);
 }

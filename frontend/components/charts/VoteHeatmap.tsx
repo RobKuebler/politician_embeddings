@@ -9,6 +9,7 @@ import {
   PARTY_COLORS,
   FALLBACK_COLOR,
   PARTY_ORDER,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import {
   ChartTooltip,
@@ -184,7 +185,7 @@ export function VoteHeatmap({
         .attr("font-size", "10px")
         .attr("font-weight", "600")
         .attr("font-family", "sans-serif")
-        .text(group.party);
+        .text(getPartyShortLabel(group.party));
     }
 
     // Bottom row: "A. Lastname" label centered on each column
@@ -266,7 +267,7 @@ export function VoteHeatmap({
         const meta = VOTE_META[d.answer as keyof typeof VOTE_META];
         const pol = polMap.get(d.polId);
         const name = pol ? pol.name : String(d.polId);
-        const party = pol ? stripSoftHyphen(pol.party) : "";
+        const party = pol ? getPartyShortLabel(pol.party) : "";
         const topic = yTopicFull.get(String(d.pollId)) ?? "";
         const [px, py] = d3.pointer(event, containerRef.current!);
         tooltip

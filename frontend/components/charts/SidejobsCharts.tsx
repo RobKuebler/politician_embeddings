@@ -1,5 +1,10 @@
 "use client";
-import { PARTY_COLORS, FALLBACK_COLOR, sortParties } from "@/lib/constants";
+import {
+  PARTY_COLORS,
+  FALLBACK_COLOR,
+  sortParties,
+  getPartyShortLabel,
+} from "@/lib/constants";
 import { SidejobRecord, stripSoftHyphen } from "@/lib/data";
 import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
 import { formatEur } from "@/components/charts/GroupedPartyBars";
@@ -353,7 +358,7 @@ export function SidejobCoverageByPartyChart({
                   color: "#555",
                 }}
               >
-                {party}
+                {getPartyShortLabel(party)}
               </span>
               <div
                 style={{
