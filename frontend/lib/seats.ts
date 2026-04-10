@@ -6,6 +6,17 @@ export interface PartySeats {
 }
 
 export const BUNDESTAG_SEATS: Record<number, PartySeats[]> = {
+  // Political L→R order within each period
+  20: [
+    { party: "Die Linke", seats: 28 },
+    { party: "Grüne", seats: 117 },
+    { party: "SPD", seats: 207 },
+    { party: "CDU/CSU", seats: 196 },
+    { party: "FDP", seats: 90 },
+    { party: "AfD", seats: 76 },
+    { party: "BSW", seats: 10 }, // as of 2026-04-06 (formed mid-period from Die Linke split)
+    { party: "fraktionslos", seats: 9 }, // as of 2026-04-06 (changes throughout the period)
+  ],
   21: [
     { party: "Die Linke", seats: 64 },
     { party: "Grüne", seats: 85 },

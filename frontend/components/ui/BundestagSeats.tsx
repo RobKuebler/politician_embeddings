@@ -3,10 +3,11 @@ import { usePeriod } from "@/lib/period-context";
 import { BUNDESTAG_SEATS, getTotalSeats, PartySeats } from "@/lib/seats";
 import { PARTY_COLORS } from "@/lib/constants";
 
-// CDU/CSU's brand color (#2a2a2a) is near-black and invisible on the dark
-// navy sidebar. Use a lightened substitute for the hemicycle dots only.
+// Some brand colors are invisible on the dark navy sidebar (#1E1B5E).
+// Use substitutes for the hemicycle dots only — does not affect PARTY_COLORS.
 const DOT_COLOR_OVERRIDES: Record<string, string> = {
-  "CDU/CSU": "#c0c0c0",
+  "CDU/CSU": "#c0c0c0", // #2a2a2a near-black → lightened gray
+  FDP: "#c9a800", // #FFED00 bright yellow → dark gold (~4.5:1 contrast on navy)
 };
 
 function dotColor(party: string): string {
