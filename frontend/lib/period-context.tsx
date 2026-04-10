@@ -14,7 +14,7 @@ interface PeriodContextValue {
   setActivePeriodId: (id: number) => void;
 }
 
-const PeriodContext = createContext<PeriodContextValue>({
+export const PeriodContext = createContext<PeriodContextValue>({
   periods: [],
   activePeriodId: null,
   setActivePeriodId: () => {},
