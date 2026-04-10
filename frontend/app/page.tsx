@@ -42,7 +42,9 @@ export default function Home() {
         setStats({
           politicians: politicians.length,
           parties: new Set(
-            politicians.map((politician) => stripSoftHyphen(politician.party)),
+            politicians
+              .map((politician) => stripSoftHyphen(politician.party))
+              .filter((party) => party !== "fraktionslos"),
           ).size,
           polls: polls.length,
           sidejobs: sidejobs.coverage.total,
