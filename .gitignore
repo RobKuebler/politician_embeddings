@@ -49,7 +49,8 @@ docs/
 # Git worktrees
 .worktrees/
 
-# Plenarprotokoll XMLs — zu groß für Git, per CI-Cache verwaltet
+# Plenarprotokoll XMLs und Drucksachen-Cache — per CI-Cache verwaltet, nicht in Git
 data/*/plenary_protocols/
+data/*/drucksachen_*.json
 
 .skylos/
