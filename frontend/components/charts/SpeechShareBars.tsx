@@ -1,10 +1,10 @@
 import { SpeechStatsFile } from "@/lib/data";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CARD_CLASS,
   CARD_SHADOW,
   CARD_PADDING,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { stripSoftHyphen } from "@/lib/data";
 import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
@@ -49,11 +49,11 @@ export function SpeechShareBars({ speechStats }: Props) {
         {sorted.map((party) => (
           <HorizontalBarRow
             key={party}
-            label={party}
+            label={getPartyShortLabel(party)}
             labelWidth={80}
             value={totals[party]}
             max={max}
-            color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+            color={getPartyColor(party)}
             displayValue={formatWords(totals[party])}
           />
         ))}

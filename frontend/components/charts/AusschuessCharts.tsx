@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { ConflictEntry, Politician } from "@/lib/data";
-import { PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
+import { getPartyColor } from "@/lib/constants";
 import { formatEur } from "@/components/charts/GroupedPartyBars";
 import { PartyHeatmap } from "./PartyHeatmap";
 
@@ -72,7 +72,7 @@ export function ConflictRankedList({
       {rows.map((r, i) => {
         const name =
           polMap.get(r.politician_id) ?? `Abgeordnete/r ${r.politician_id}`;
-        const color = PARTY_COLORS[r.party] ?? FALLBACK_COLOR;
+        const color = getPartyColor(r.party);
         const isTruncated = r.totalIncome > displayMax;
         const pct = (Math.min(r.totalIncome, displayMax) / displayMax) * 100;
         const textColor = r.party === "FDP" ? "#000" : "#fff";

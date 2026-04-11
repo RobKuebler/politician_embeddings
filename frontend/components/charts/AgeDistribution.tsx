@@ -2,7 +2,7 @@
 import { useRef, useEffect } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
-import { PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
+import { getPartyColor, getPartyShortLabel } from "@/lib/constants";
 import {
   ChartTooltip,
   styleAxisText,
@@ -78,7 +78,12 @@ export function AgeDistribution({ data, parties }: Props) {
 
     // Fixed y-axis (outside clip)
     g.append("g")
-      .call(d3.axisLeft(yScale).tickSize(0))
+      .call(
+        d3
+          .axisLeft(yScale)
+          .tickSize(0)
+          .tickFormat((p) => getPartyShortLabel(p as string)),
+      )
       .call((ax) => ax.select(".domain").remove())
       .call((ax) => {
         styleAxisText(ax);
@@ -108,7 +113,7 @@ export function AgeDistribution({ data, parties }: Props) {
       const baseline = bandY + violinH;
       const dotCenterY = baseline + dotH / 2;
       const jitterAmt = dotH * 0.38;
-      const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const color = getPartyColor(party);
       const densityToPixel = d3
         .scaleLinear()
         .domain([0, maxDensity])
@@ -307,7 +312,7 @@ export function AgeDistribution({ data, parties }: Props) {
           containerRef.current!,
           px,
           py,
-          `<b>${nearest.name}</b><br/>${nearest.party} · ${nearest.age} Jahre`,
+          `<b>${nearest.name}</b><br/>${getPartyShortLabel(nearest.party)} · ${nearest.age} Jahre`,
         );
       })
       .on("mouseleave", () => tooltip.style("opacity", "0"));

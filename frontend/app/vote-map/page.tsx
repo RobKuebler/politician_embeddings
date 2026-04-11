@@ -19,13 +19,13 @@ import { Footer } from "@/components/ui/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";
 import {
   GOVERNING_PARTIES,
-  PARTY_COLORS,
   PARTY_PILL_ACCENT_COLORS,
-  FALLBACK_COLOR,
   VOTE_META,
   CARD_CLASS,
   CARD_SHADOW,
   CARD_PADDING,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { PAGE_META } from "@/lib/page-meta";
 import {
@@ -234,21 +234,19 @@ export default function VoteMapPage() {
                 <span
                   className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold border"
                   style={{
-                    background: `${PARTY_COLORS[party] ?? FALLBACK_COLOR}18`,
-                    borderColor: `${PARTY_PILL_ACCENT_COLORS[party] ?? PARTY_COLORS[party] ?? FALLBACK_COLOR}55`,
+                    background: `${getPartyColor(party)}18`,
+                    borderColor: `${PARTY_PILL_ACCENT_COLORS[party] ?? getPartyColor(party)}55`,
                     color:
-                      PARTY_PILL_ACCENT_COLORS[party] ??
-                      PARTY_COLORS[party] ??
-                      FALLBACK_COLOR,
+                      PARTY_PILL_ACCENT_COLORS[party] ?? getPartyColor(party),
                   }}
                 >
                   <span
                     className="w-2 h-2 rounded-full flex-shrink-0"
                     style={{
-                      background: PARTY_COLORS[party] ?? FALLBACK_COLOR,
+                      background: getPartyColor(party),
                     }}
                   />
-                  {party}
+                  {getPartyShortLabel(party)}
                 </span>
               </span>
             ))}

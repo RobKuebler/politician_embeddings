@@ -15,9 +15,9 @@ import { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CHART_FONT_FAMILY,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import {
   ChartTooltip,
@@ -131,11 +131,12 @@ export function PartyHeatmap({
     const BLOCK_H = isMobile ? 22 : 26; // height of coloured column-header block
     const HEADER_H = BLOCK_H + 10; // 10 px gap between block bottom and first row
 
-    // Column width: at least MIN_COL_W, or wide enough for the longest party name.
-    const longestColName = cols.reduce(
-      (a, b) => (a.length > b.length ? a : b),
-      "",
-    );
+    // Column width: at least MIN_COL_W, or wide enough for the longest short party label.
+    const longestColName = cols.reduce((a, b) => {
+      const la = getPartyShortLabel(a);
+      const lb = getPartyShortLabel(b);
+      return la.length > lb.length ? a : b;
+    }, "");
     const minColW = isMobile
       ? 36
       : Math.max(MIN_COL_W, Math.ceil(longestColName.length * CHAR_W) + 10);
@@ -222,7 +223,7 @@ export function PartyHeatmap({
     cols.forEach((party) => {
       const bw = xScale.bandwidth();
       const x = xScale(party) ?? 0;
-      const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const color = getPartyColor(party);
       const blockY = HEADER_H - BLOCK_H - 2;
       const blockG = headerG.append("g");
 
@@ -235,10 +236,13 @@ export function PartyHeatmap({
         .attr("rx", 4)
         .attr("fill", color);
 
+      const shortLabel = getPartyShortLabel(party);
       if (!isMobile) {
         const maxChars = Math.floor((bw - 8) / CHAR_W);
         const display =
-          party.length > maxChars ? party.slice(0, maxChars - 1) + "…" : party;
+          shortLabel.length > maxChars
+            ? shortLabel.slice(0, maxChars - 1) + "…"
+            : shortLabel;
         blockG
           .append("text")
           .attr("x", x + bw / 2)
@@ -252,13 +256,19 @@ export function PartyHeatmap({
           .style("filter", "drop-shadow(0 1px 1.5px rgba(0,0,0,0.4))")
           .style("pointer-events", "none")
           .text(display);
-        if (display !== party) {
+        if (display !== shortLabel) {
           blockG
             .select("rect")
             .style("cursor", "default")
             .on("mousemove", (event) => {
               const [px, py] = d3.pointer(event, containerRef.current!);
-              positionTooltip(tooltip, containerRef.current!, px, py, party);
+              positionTooltip(
+                tooltip,
+                containerRef.current!,
+                px,
+                py,
+                shortLabel,
+              );
             })
             .on("mouseleave", () => tooltip.style("opacity", "0"));
         }
@@ -269,7 +279,7 @@ export function PartyHeatmap({
           .style("cursor", "pointer")
           .on("mousemove", (event) => {
             const [px, py] = d3.pointer(event, containerRef.current!);
-            positionTooltip(tooltip, containerRef.current!, px, py, party);
+            positionTooltip(tooltip, containerRef.current!, px, py, shortLabel);
           })
           .on("mouseleave", () => tooltip.style("opacity", "0"));
       }
@@ -319,7 +329,7 @@ export function PartyHeatmap({
               containerRef.current!,
               px,
               py,
-              tooltipHtml(row, col, val),
+              tooltipHtml(row, getPartyShortLabel(col), val),
             );
           })
           .on("mouseleave", () => tooltip.style("opacity", "0"));
@@ -355,8 +365,8 @@ export function PartyHeatmap({
     setLegend(
       isMobile
         ? cols.map((p) => ({
-            name: p,
-            color: PARTY_COLORS[p] ?? FALLBACK_COLOR,
+            name: getPartyShortLabel(p),
+            color: getPartyColor(p),
           }))
         : [],
     );

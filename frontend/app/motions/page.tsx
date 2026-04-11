@@ -24,11 +24,11 @@ import { Footer } from "@/components/ui/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";
 import {
   sortParties,
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CARD_CLASS,
   CARD_PADDING,
   CARD_SHADOW,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { PAGE_META } from "@/lib/page-meta";
 
@@ -112,7 +112,7 @@ export default function MotionsPage() {
     if (!typData?.timeline?.series) return [];
     return typData.timeline.series.map((s) => ({
       keyword: stripSoftHyphen(s.party),
-      color: PARTY_COLORS[stripSoftHyphen(s.party)] ?? FALLBACK_COLOR,
+      color: getPartyColor(s.party),
       counts: s.counts,
     }));
   }, [typData]);
@@ -207,7 +207,7 @@ export default function MotionsPage() {
           {/* Row 2: party cards (word cloud + top authors) */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
             {parties.map((party) => {
-              const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+              const color = getPartyColor(party);
               const words: WordFreqEntry[] = (
                 typData.word_freq[party] ?? []
               ).slice(0, 30);
@@ -243,7 +243,7 @@ export default function MotionsPage() {
                         className="font-extrabold text-[15px]"
                         style={{ color: "#1E1B5E" }}
                       >
-                        {party}
+                        {getPartyShortLabel(party)}
                       </span>
                     </div>
                     <span
@@ -319,7 +319,7 @@ export default function MotionsPage() {
                 {/* Title list grouped by party */}
                 <div className="mt-5 flex flex-col gap-4">
                   {searchResults.map(({ party, count, matched }) => {
-                    const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+                    const color = getPartyColor(party);
                     return (
                       <div key={party}>
                         <div className="flex items-center gap-2 mb-1.5">

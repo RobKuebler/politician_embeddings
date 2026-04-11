@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
-import { PARTY_COLORS, FALLBACK_COLOR, sortParties } from "@/lib/constants";
+import {
+  sortParties,
+  getPartyColor,
+  getPartyShortLabel,
+} from "@/lib/constants";
 import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
 import { ToggleGroup } from "@/components/ui/ToggleGroup";
 
@@ -194,11 +198,11 @@ export function GroupedPartyBars({
                   if (groupBy === "party") {
                     if (origSection?.barColor)
                       return origSection.barColor(label); // label = party name
-                    return PARTY_COLORS[label] ?? FALLBACK_COLOR;
+                    return getPartyColor(label);
                   }
                   return barColor
                     ? barColor(barLabel)
-                    : (PARTY_COLORS[barLabel] ?? FALLBACK_COLOR);
+                    : getPartyColor(barLabel);
                 })();
                 // In partei-first mode, look up formatValue from the original section for this rubric
                 const resolvedFormat = (() => {
@@ -207,10 +211,16 @@ export function GroupedPartyBars({
                   }
                   return formatValue;
                 })();
+                // In section mode, barLabel is a party name — show short label.
+                // In party mode, barLabel is a rubric category — show as-is.
+                const displayLabel =
+                  groupBy === "section"
+                    ? getPartyShortLabel(barLabel)
+                    : barLabel;
                 return (
                   <HorizontalBarRow
                     key={barLabel}
-                    label={barLabel}
+                    label={displayLabel}
                     labelWidth={effectiveLabelWidth}
                     value={value}
                     max={computedMax}

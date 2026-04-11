@@ -1,17 +1,32 @@
 "use client";
 import { usePeriod } from "@/lib/period-context";
 import { BUNDESTAG_SEATS, getTotalSeats, PartySeats } from "@/lib/seats";
-import { PARTY_COLORS } from "@/lib/constants";
 
-// Some brand colors are invisible on the dark navy sidebar (#1E1B5E).
-// Use substitutes for the hemicycle dots only — does not affect PARTY_COLORS.
-const DOT_COLOR_OVERRIDES: Record<string, string> = {
-  "CDU/CSU": "#c0c0c0", // #2a2a2a near-black → lightened gray
-  FDP: "#c9a800", // #FFED00 bright yellow → dark gold (~4.5:1 contrast on navy)
+// Hemicycle-specific colors tuned for the dark navy sidebar (#1E1B5E).
+// Keyed by the short party names used in seats.ts — not the canonical PARTY_COLORS keys.
+// Brand colors that are near-black or blinding yellow are replaced with sidebar-safe equivalents.
+const HEMICYCLE_COLORS: Record<string, string> = {
+  "CDU/CSU": "#D0D0D0", // brand #2a2a2a near-black → bright silver
+  SPD: "#E3000F",
+  AfD: "#009EE0",
+  Grüne: "#54C929", // brand #46962B → brightened for dark bg
+  "Die Linke": "#FF69B4",
+  BSW: "#A860DC", // brand #722EA5 → lightened purple
+  FDP: "#C8A800", // brand #FFED00 → dark gold (~4.5:1 on navy)
+  fraktionslos: "#666666",
+};
+
+// Shorter display labels for narrow legend chips
+const SHORT_LABEL: Record<string, string> = {
+  "Die Linke": "Linke",
 };
 
 function dotColor(party: string): string {
-  return DOT_COLOR_OVERRIDES[party] ?? PARTY_COLORS[party] ?? "#888888";
+  return HEMICYCLE_COLORS[party] ?? "#888888";
+}
+
+function partyLabel(party: string): string {
+  return SHORT_LABEL[party] ?? party;
 }
 
 interface Dot {
@@ -106,17 +121,20 @@ export function BundestagSeats() {
         />
       </svg>
 
-      {/* Mini legend — one dot + seat count per party (excluding fraktionslos) */}
-      <div className="flex flex-wrap gap-x-[6px] gap-y-[3px] justify-center mt-[5px]">
+      {/* Legend — dot + party short name + seat count (excluding fraktionslos) */}
+      <div className="flex flex-wrap gap-x-[8px] gap-y-[4px] justify-center mt-[6px]">
         {parties
           .filter((p) => p.party !== "fraktionslos")
           .map((p) => (
-            <div key={p.party} className="flex items-center gap-[3px]">
+            <div key={p.party} className="flex items-center gap-[4px]">
               <div
                 className="w-[6px] h-[6px] rounded-full shrink-0"
                 style={{ background: dotColor(p.party) }}
               />
-              <span className="text-[8px] font-semibold text-white/50">
+              <span className="text-[8px] font-medium text-white/65 leading-none">
+                {partyLabel(p.party)}
+              </span>
+              <span className="text-[8px] font-bold text-white/35 leading-none">
                 {p.seats}
               </span>
             </div>

@@ -3,10 +3,9 @@ import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import { EmbeddingPoint, Politician, stripSoftHyphen } from "@/lib/data";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   DARK_FILL_PARTY,
   MARKER_OUTLINE,
+  getPartyColor,
   getPartyShortLabel,
 } from "@/lib/constants";
 import { positionTooltip } from "@/lib/chart-utils";
@@ -153,7 +152,7 @@ export function VoteMapScatter({
 
     // Draw one circle per embedding point, grouped by party
     for (const [party, points] of seriesByParty) {
-      const partyColor = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const partyColor = getPartyColor(party);
       const borderColor =
         party === DARK_FILL_PARTY ? "rgba(255,255,255,0.5)" : MARKER_OUTLINE;
 
@@ -214,7 +213,7 @@ export function VoteMapScatter({
       if (points.length < 2) continue;
       const cx = points.reduce((s, p) => s + p.x, 0) / points.length;
       const cy = points.reduce((s, p) => s + p.y, 0) / points.length;
-      const partyColor = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const partyColor = getPartyColor(party);
       const sx = xScale(cx);
       const sy = yScale(cy);
       // Diamond is the standard symbol for centroids/means in statistical scatter plots
@@ -258,7 +257,7 @@ export function VoteMapScatter({
         .style("stroke-width", "3px")
         .style("stroke-linejoin", "round")
         .style("pointer-events", "none")
-        .text(party);
+        .text(getPartyShortLabel(party));
 
       cg.style("cursor", "pointer")
         .on("click", (event) => {
@@ -285,7 +284,7 @@ export function VoteMapScatter({
             containerRef.current!,
             px,
             py,
-            `<b>${party}</b> – Klicken zum Auswählen`,
+            `<b>${getPartyShortLabel(party)}</b> – Klicken zum Auswählen`,
           );
         })
         .on("mouseleave", () =>
@@ -473,7 +472,7 @@ export function VoteMapScatter({
         const el = d3.select(this);
         const polId = Number(el.attr("data-polid"));
         const party = el.attr("data-party");
-        const partyColor = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+        const partyColor = getPartyColor(party);
         const borderColor =
           party === DARK_FILL_PARTY ? "rgba(255,255,255,0.5)" : MARKER_OUTLINE;
         const sel = !hasSelection || selectedSet.has(polId);

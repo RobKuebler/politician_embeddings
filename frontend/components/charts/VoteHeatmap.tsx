@@ -6,9 +6,8 @@ import { VoteRecord, Poll, Politician, stripSoftHyphen } from "@/lib/data";
 import {
   VOTE_META,
   VOTE_NUMERIC,
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   PARTY_ORDER,
+  getPartyColor,
   getPartyShortLabel,
 } from "@/lib/constants";
 import {
@@ -114,7 +113,7 @@ export function VoteHeatmap({
       [];
     for (const polId of sortedPolIds) {
       const party = stripSoftHyphen(polMap.get(polId)?.party ?? "");
-      const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+      const color = getPartyColor(party);
       const last = partyGroups[partyGroups.length - 1];
       if (last && last.party === party) {
         last.polIds.push(polId);
@@ -275,7 +274,7 @@ export function VoteHeatmap({
           .style("left", `${px + TOOLTIP_DX}px`)
           .style("top", `${py + TOOLTIP_DY}px`)
           .html(
-            `<b>${meta.label}</b><br/>${name} · ${party}<br/><span style="font-size:0.85em">${topic}</span>`,
+            `<b>${meta.label}</b><br/>${name} · ${getPartyShortLabel(party)}<br/><span style="font-size:0.85em">${topic}</span>`,
           );
       })
       .on("mouseleave", () => tooltip.style("opacity", "0"));

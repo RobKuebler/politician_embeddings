@@ -1,5 +1,5 @@
 import { CohesionRecord } from "@/lib/data";
-import { PARTY_COLORS, FALLBACK_COLOR } from "@/lib/constants";
+import { getPartyColor } from "@/lib/constants";
 import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
 
 interface Props {
@@ -19,7 +19,7 @@ export function CohesionChart({ cohesion }: Props) {
           labelWidth={80}
           value={c.streuung}
           max={max}
-          color={PARTY_COLORS[c.label] ?? FALLBACK_COLOR}
+          color={getPartyColor(c.label)}
           displayValue={c.streuung.toFixed(3)}
           valueWidth={40}
         />

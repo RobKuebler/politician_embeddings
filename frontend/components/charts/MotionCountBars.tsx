@@ -2,8 +2,8 @@ import {
   CARD_CLASS,
   CARD_PADDING,
   CARD_SHADOW,
-  FALLBACK_COLOR,
-  PARTY_COLORS,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
 
@@ -36,11 +36,11 @@ export function MotionCountBars({ items, label, sublabel }: Props) {
         {sorted.map(({ party, count }) => (
           <HorizontalBarRow
             key={party}
-            label={party}
+            label={getPartyShortLabel(party)}
             labelWidth={80}
             value={count}
             max={max}
-            color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+            color={getPartyColor(party)}
             displayValue={count.toLocaleString("de")}
           />
         ))}

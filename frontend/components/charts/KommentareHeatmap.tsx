@@ -11,9 +11,9 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import * as d3 from "d3";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CHART_FONT_FAMILY,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { ChartTooltip, positionTooltip } from "@/lib/chart-utils";
 import { ToggleGroup } from "@/components/ui/ToggleGroup";
@@ -46,7 +46,7 @@ const COLOR_LOW = "#f7f0eb";
 const COLOR_HIGH = "#7f3a1a";
 
 function partyColor(party: string): string {
-  return PARTY_COLORS[party] ?? FALLBACK_COLOR;
+  return getPartyColor(party);
 }
 
 function fmt(n: number): string {
@@ -128,9 +128,12 @@ function HeatmapCanvas({
         .attr("rx", 4)
         .attr("fill", color);
 
+      const shortLabelCol = getPartyShortLabel(party);
       const maxChars = Math.floor((bw - 6) / CHAR_W);
       const display =
-        party.length > maxChars ? party.slice(0, maxChars - 1) + "…" : party;
+        shortLabelCol.length > maxChars
+          ? shortLabelCol.slice(0, maxChars - 1) + "…"
+          : shortLabelCol;
       blockG
         .append("text")
         .attr("x", x + 1 + bw / 2)
@@ -145,13 +148,13 @@ function HeatmapCanvas({
         .style("pointer-events", "none")
         .text(display);
 
-      if (display !== party) {
+      if (display !== shortLabelCol) {
         blockG
           .select("rect")
           .style("cursor", "default")
           .on("mousemove", (event) => {
             const [px, py] = d3.pointer(event, container);
-            positionTooltip(tip, container, px, py, party);
+            positionTooltip(tip, container, px, py, shortLabelCol);
           })
           .on("mouseleave", () => tip.style("opacity", "0"));
       }
@@ -173,9 +176,12 @@ function HeatmapCanvas({
         .attr("rx", 4)
         .attr("fill", color);
 
+      const shortLabelRow = getPartyShortLabel(party);
       const maxChars = Math.floor((BLOCK_W - 8) / CHAR_W);
       const display =
-        party.length > maxChars ? party.slice(0, maxChars - 1) + "…" : party;
+        shortLabelRow.length > maxChars
+          ? shortLabelRow.slice(0, maxChars - 1) + "…"
+          : shortLabelRow;
       blockG
         .append("text")
         .attr("x", BLOCK_W / 2)
@@ -190,13 +196,13 @@ function HeatmapCanvas({
         .style("pointer-events", "none")
         .text(display);
 
-      if (display !== party) {
+      if (display !== shortLabelRow) {
         blockG
           .select("rect")
           .style("cursor", "default")
           .on("mousemove", (event) => {
             const [px, py] = d3.pointer(event, container);
-            positionTooltip(tip, container, px, py, party);
+            positionTooltip(tip, container, px, py, shortLabelRow);
           })
           .on("mouseleave", () => tip.style("opacity", "0"));
       }
@@ -226,7 +232,7 @@ function HeatmapCanvas({
               container,
               px,
               py,
-              `<strong>${parties[i]}</strong> → <strong>${parties[j]}</strong><br>${fmt(val)} (${pct}% aller ${parties[i]}-${EVENT_LABEL[eventType]})`,
+              `<strong>${getPartyShortLabel(parties[i])}</strong> → <strong>${getPartyShortLabel(parties[j])}</strong><br>${fmt(val)} (${pct}% aller ${getPartyShortLabel(parties[i])}-${EVENT_LABEL[eventType]})`,
             );
           })
           .on("mouseleave", () => tip.style("opacity", "0"));

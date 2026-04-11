@@ -16,9 +16,9 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { SpeechShareBars } from "@/components/charts/SpeechShareBars";
 import {
   sortParties,
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CARD_CLASS,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { PAGE_META } from "@/lib/page-meta";
 
@@ -133,7 +133,7 @@ export default function SpeechesPage() {
             {parties.map((party, i) => {
               const words = wordSlices[party] ?? [];
               const speakers = speakersByParty[party] ?? [];
-              const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+              const color = getPartyColor(party);
               const total = totalWords[party] ?? 0;
 
               return (
@@ -152,7 +152,7 @@ export default function SpeechesPage() {
                         className="font-extrabold text-[15px]"
                         style={{ color: "#1E1B5E" }}
                       >
-                        {party}
+                        {getPartyShortLabel(party)}
                       </span>
                     </div>
                     <span
@@ -195,7 +195,7 @@ export default function SpeechesPage() {
       {expandedParty &&
         (() => {
           const allWords = normalizedWordFreq[expandedParty] ?? [];
-          const color = PARTY_COLORS[expandedParty] ?? FALLBACK_COLOR;
+          const color = getPartyColor(expandedParty);
           return (
             <div
               className="fixed inset-0 z-50 flex items-center justify-center"
@@ -224,7 +224,7 @@ export default function SpeechesPage() {
                       className="font-extrabold text-[17px]"
                       style={{ color: "#1E1B5E" }}
                     >
-                      {expandedParty}
+                      {getPartyShortLabel(expandedParty)}
                     </span>
                     <span
                       className="text-[12px] ml-1"

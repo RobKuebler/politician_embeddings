@@ -1,8 +1,8 @@
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CHART_FONT_FAMILY,
   PARTY_ORDER,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { KommentareData } from "@/lib/data";
 import { GroupedPartyBars } from "@/components/charts/GroupedPartyBars";
@@ -75,7 +75,7 @@ export function SummarySmall({ data }: { data: KommentareData }) {
 
       {/* Rows per party */}
       {sorted.map((row) => {
-        const color = PARTY_COLORS[row.party] ?? FALLBACK_COLOR;
+        const color = getPartyColor(row.party);
         return (
           <div
             key={row.party}
@@ -96,7 +96,7 @@ export function SummarySmall({ data }: { data: KommentareData }) {
                 fontFamily: CHART_FONT_FAMILY,
               }}
             >
-              {row.party}
+              {getPartyShortLabel(row.party)}
             </span>
 
             {/* Mini bar + value per type */}

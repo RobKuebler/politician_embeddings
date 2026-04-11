@@ -11,9 +11,9 @@
 import { useRef, useEffect, useCallback } from "react";
 import * as d3 from "d3";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   CHART_FONT_FAMILY,
+  getPartyColor,
+  getPartyShortLabel,
 } from "@/lib/constants";
 import { ChartTooltip, positionTooltip } from "@/lib/chart-utils";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
@@ -28,7 +28,7 @@ const LABEL_OFFSET = 10;
 const TICK_STEP = 20_000;
 
 function partyColor(party: string): string {
-  return PARTY_COLORS[party] ?? FALLBACK_COLOR;
+  return getPartyColor(party);
 }
 
 /** Format large numbers as "12k" or "1,2k" */
@@ -128,7 +128,7 @@ export default function ApplauseChord({ data }: Props) {
           container,
           px,
           py,
-          `<strong>${party}</strong><br>klatscht bei anderen: ${fmt(given - matrix[d.index][d.index])}<br>bekommt Beifall: ${fmt(received - matrix[d.index][d.index])}<br><span style="color:#aaa">davon Eigenbeifall: ${fmt(matrix[d.index][d.index])}</span>`,
+          `<strong>${getPartyShortLabel(party)}</strong><br>klatscht bei anderen: ${fmt(given - matrix[d.index][d.index])}<br>bekommt Beifall: ${fmt(received - matrix[d.index][d.index])}<br><span style="color:#aaa">davon Eigenbeifall: ${fmt(matrix[d.index][d.index])}</span>`,
         );
       })
       .on("mouseleave", () => {

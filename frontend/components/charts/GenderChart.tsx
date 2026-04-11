@@ -1,5 +1,5 @@
 "use client";
-import { COLOR_SECONDARY } from "@/lib/constants";
+import { COLOR_SECONDARY, getPartyShortLabel } from "@/lib/constants";
 
 interface SexRecord {
   party_label: string;
@@ -37,7 +37,7 @@ export function GenderChart({
               className="text-[12px] font-medium shrink-0"
               style={{ width: 72, color: COLOR_SECONDARY }}
             >
-              {party}
+              {getPartyShortLabel(party)}
             </span>
 
             {/* Split bar */}

@@ -1,8 +1,7 @@
 "use client";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   sortParties,
+  getPartyColor,
   getPartyShortLabel,
 } from "@/lib/constants";
 import { SidejobRecord, stripSoftHyphen } from "@/lib/data";
@@ -27,11 +26,11 @@ export function SidejobsByPartyChart({ jobs }: { jobs: SidejobRecord[] }) {
       {parties.map((party) => (
         <HorizontalBarRow
           key={party}
-          label={party}
+          label={getPartyShortLabel(party)}
           labelWidth={80}
           value={counts[party]}
           max={max}
-          color={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+          color={getPartyColor(party)}
           displayValue={String(counts[party])}
           barHeight={8}
         />
@@ -225,7 +224,7 @@ export function TopEarnersChart({
           labelWidth={155}
           value={income}
           max={max}
-          color={PARTY_COLORS[stripSoftHyphen(pol.party)] ?? FALLBACK_COLOR}
+          color={getPartyColor(pol.party)}
           displayValue={formatEur(income)}
           valueWidth={52}
           rank={i + 1}
@@ -341,7 +340,7 @@ export function SidejobCoverageByPartyChart({
           const incomePct = (c.income / total) * 100;
           const noAmountPct = (c.no_amount / total) * 100;
           const nonePct = (c.none / total) * 100;
-          const partyColor = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+          const partyColor = getPartyColor(party);
 
           return (
             <div

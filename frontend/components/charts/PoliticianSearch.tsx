@@ -2,9 +2,8 @@
 import { useMemo } from "react";
 import { Politician, stripSoftHyphen } from "@/lib/data";
 import {
-  PARTY_COLORS,
-  FALLBACK_COLOR,
   COLOR_SECONDARY,
+  getPartyColor,
   FILTER_ACCENT as ACCENT,
   FILTER_ACCENT_LIGHT as ACCENT_LIGHT,
   FILTER_BORDER as BORDER,
@@ -114,10 +113,10 @@ export function PoliticianSearch({
           {selectedParties.map((party) => (
             <RemovableChip
               key={party}
-              label={party}
+              label={getPartyShortLabel(party)}
               onRemove={() => onPartyRemove?.(party)}
               removeLabel={`Entferne ${party}`}
-              dotColor={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+              dotColor={getPartyColor(party)}
             />
           ))}
           {/* Individual politician chips */}
@@ -134,7 +133,7 @@ export function PoliticianSearch({
                   onSelectionChange(selected.filter((x) => x !== id))
                 }
                 removeLabel={`Entferne ${pol.name}`}
-                dotColor={PARTY_COLORS[party] ?? FALLBACK_COLOR}
+                dotColor={getPartyColor(party)}
                 suffix={
                   <span style={{ color: "#666", fontSize: 11 }}>
                     {getPartyShortLabel(party)}
@@ -197,7 +196,7 @@ export function PoliticianSearch({
           ) : (
             results.map((pol, i) => {
               const party = stripSoftHyphen(pol.party);
-              const color = PARTY_COLORS[party] ?? FALLBACK_COLOR;
+              const color = getPartyColor(party);
               return (
                 <li
                   key={pol.politician_id}
@@ -237,7 +236,7 @@ export function PoliticianSearch({
                       marginLeft: "auto",
                     }}
                   >
-                    {party}
+                    {getPartyShortLabel(party)}
                   </span>
                 </li>
               );
