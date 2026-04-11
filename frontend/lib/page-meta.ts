@@ -24,7 +24,6 @@ export const PAGE_META: PageMeta[] = [
     title: "Wer stimmt mit wem?",
     description:
       "Jeder Punkt ist ein Abgeordneter. Wer oft gleich abstimmt, landet nah beieinander, egal welcher Fraktion er angehört. So entstehen Muster, die Fraktionsgrenzen überschreiten.",
-    wide: true,
   },
   {
     href: "/party-profile",
@@ -73,7 +72,6 @@ export const PAGE_META: PageMeta[] = [
     title: "Wann wurde welches Thema heiß?",
     description:
       "Verfolge, wie oft ein Begriff in Plenardebatten erwähnt wurde, und erkenne, wann ein Thema plötzlich an Fahrt aufnahm.",
-    wide: true,
   },
   {
     href: "/motions",
