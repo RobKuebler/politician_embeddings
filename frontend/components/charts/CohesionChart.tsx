@@ -19,7 +19,7 @@ export function CohesionChart({ cohesion }: Props) {
           labelWidth={80}
           value={c.streuung}
           max={max}
-          color={getPartyColor(c.label)}
+          color={getPartyColor(c.party)}
           displayValue={c.streuung.toFixed(3)}
           valueWidth={40}
         />
