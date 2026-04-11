@@ -1,0 +1,73 @@
+name: Update protocol data
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      period:
+        description: "Bundestag period to run, e.g. 20 or 21. Leave empty for current period."
+        required: false
+        type: string
+
+concurrency:
+  group: protocols-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      DIP_API_KEY: ${{ secrets.DIP_API_KEY }}
+      INPUT_PERIOD: ${{ github.event.inputs.period || '' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Cache plenary protocol XMLs
+        uses: actions/cache@v5
+        with:
+          path: data/*/plenary_protocols/
+          key: plenary-protocols-${{ github.run_id }}
+          restore-keys: plenary-protocols-
+
+      - name: Download new plenary protocol XMLs
+        id: fetch_xml
+        run: |
+          args=()
+          if [ -n "${INPUT_PERIOD}" ]; then
+            args+=(--period "${INPUT_PERIOD}")
+          fi
+          uv run python -m src.fetch.protocol_xml "${args[@]}"
+
+      - name: Compute TF-IDF word stats
+        if: steps.fetch_xml.outputs.changed == 'true'
+        run: |
+          args=()
+          if [ -n "${INPUT_PERIOD}" ]; then
+            args+=(--period "${INPUT_PERIOD}")
+          fi
+          uv run python -m src.analysis.word_stats "${args[@]}"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add frontend/public/data/
+          if ! git diff --staged --quiet; then
+            suffix=""
+            if [ -n "${INPUT_PERIOD}" ]; then
+              suffix=" (period ${INPUT_PERIOD})"
+            fi
+            git commit -m "data: aktualisiere Plenarprotokolle $(date -u +%Y-%m-%d)${suffix}"
+          fi
+          git pull --rebase && git push

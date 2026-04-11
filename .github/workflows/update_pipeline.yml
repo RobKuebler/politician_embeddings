@@ -1,9 +1,9 @@
-name: Update data
+name: Update pipeline data
 
 on:
   schedule:
-    - cron: "0 4 * * *" # daily at 4am UTC
-  workflow_dispatch: # allow manual trigger
+    - cron: "0 4 * * *"
+  workflow_dispatch:
     inputs:
       period:
         description: "Bundestag period to run, e.g. 20 or 21. Leave empty for current period."
@@ -11,7 +11,7 @@ on:
         type: string
 
 concurrency:
-  group: data-pipeline-${{ github.ref_name }}
+  group: pipeline-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -33,37 +33,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen --group train
 
-      - name: Cache plenary protocol XMLs
-        uses: actions/cache@v5
-        with:
-          path: data/*/plenary_protocols/
-          key: plenary-protocols-${{ github.run_id }}
-          restore-keys: plenary-protocols-
-
       - name: Cache Drucksachen JSON
         uses: actions/cache@v5
         with:
           path: data/*/drucksachen_*.json
           key: drucksachen-${{ github.run_id }}
           restore-keys: drucksachen-
-
-      - name: Download new plenary protocol XMLs
-        id: fetch_xml
-        run: |
-          args=()
-          if [ -n "${INPUT_PERIOD}" ]; then
-            args+=(--period "${INPUT_PERIOD}")
-          fi
-          uv run python -m src.fetch.protocol_xml "${args[@]}"
-
-      - name: Compute TF-IDF word stats
-        if: steps.fetch_xml.outputs.changed == 'true'
-        run: |
-          args=()
-          if [ -n "${INPUT_PERIOD}" ]; then
-            args+=(--period "${INPUT_PERIOD}")
-          fi
-          uv run python -m src.analysis.word_stats "${args[@]}"
 
       - name: Fetch, train, and export
         id: pipeline
