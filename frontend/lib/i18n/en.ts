@@ -240,5 +240,7 @@ export const en: Translations = {
     nav_label: "Navigation",
     footer_by: "by",
     footer_data: "Data:",
+    seat_distribution: "Seat Distribution · {total}",
+    seat_distribution_aria: "Bundestag Seat Distribution",
   },
 };

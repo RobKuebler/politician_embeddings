@@ -244,5 +244,7 @@ export const de: Translations = {
     nav_label: "Navigation",
     footer_by: "von",
     footer_data: "Daten:",
+    seat_distribution: "Sitzverteilung · {total}",
+    seat_distribution_aria: "Bundestag Sitzverteilung",
   },
 };

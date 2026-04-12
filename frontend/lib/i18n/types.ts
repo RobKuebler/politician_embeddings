@@ -162,5 +162,8 @@ export type Translations = {
     nav_label: string;
     footer_by: string;
     footer_data: string;
+    /** Template: {total} */
+    seat_distribution: string;
+    seat_distribution_aria: string;
   };
 };

@@ -1,6 +1,7 @@
 "use client";
 import { usePeriod } from "@/lib/period-context";
 import { BUNDESTAG_SEATS, getTotalSeats, PartySeats } from "@/lib/seats";
+import { useTranslation } from "@/lib/language-context";
 
 // Hemicycle-specific colors tuned for the dark navy sidebar (#1E1B5E).
 // Keyed by the short party names used in seats.ts — not the canonical PARTY_COLORS keys.
@@ -79,6 +80,7 @@ function buildDots(parties: PartySeats[]): Dot[] {
 }
 
 export function BundestagSeats() {
+  const t = useTranslation();
   const { activePeriodId } = usePeriod();
   if (activePeriodId === null) return null;
 
@@ -92,14 +94,14 @@ export function BundestagSeats() {
     <div className="px-[2px]">
       {/* Eyebrow */}
       <p className="text-[8px] font-bold tracking-[0.12em] uppercase text-white/30 text-center mb-[5px]">
-        Sitzverteilung · {total}
+        {t.ui.seat_distribution.replace("{total}", String(total))}
       </p>
 
       {/* Hemicycle SVG */}
       <svg
         viewBox="0 0 500 268"
         width="100%"
-        aria-label="Bundestag Sitzverteilung"
+        aria-label={t.ui.seat_distribution_aria}
       >
         {dots.map((d, i) => (
           <circle
