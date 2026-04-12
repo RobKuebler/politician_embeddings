@@ -131,12 +131,12 @@ export default function MotionsPage() {
     const q = query.trim().toLowerCase();
     if (!q || !titles) return null;
     const byParty: Record<string, string[]> = {};
-    for (const t of titles) {
-      if (t.typ !== activeTab) continue;
-      if (!t.titel.toLowerCase().includes(q)) continue;
-      const party = stripSoftHyphen(t.party);
+    for (const entry of titles) {
+      if (entry.typ !== activeTab) continue;
+      if (!entry.titel.toLowerCase().includes(q)) continue;
+      const party = stripSoftHyphen(entry.party);
       if (!byParty[party]) byParty[party] = [];
-      byParty[party].push(t.titel);
+      byParty[party].push(entry.titel);
     }
     return Object.entries(byParty)
       .map(([party, matched]) => ({ party, count: matched.length, matched }))
@@ -150,7 +150,7 @@ export default function MotionsPage() {
       {/* Tab toggle */}
       <div className="mb-6">
         <ToggleGroup
-          options={TABS.map((t) => ({ value: t, label: TAB_LABELS[t] }))}
+          options={TABS.map((tab) => ({ value: tab, label: TAB_LABELS[tab] }))}
           value={activeTab}
           onChange={setActiveTab}
         />
