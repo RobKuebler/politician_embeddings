@@ -5,6 +5,7 @@ import {
   getPartyShortLabel,
 } from "@/lib/constants";
 import { KommentareData } from "@/lib/data";
+import { useTranslation } from "@/lib/language-context";
 import { GroupedPartyBars } from "@/components/charts/GroupedPartyBars";
 
 const SMALL_TYPES = ["Lachen", "Heiterkeit", "Widerspruch"] as const;
@@ -21,12 +22,13 @@ const LABEL_COLOR = "#171613";
  * with Beifall/Zwischenruf.
  */
 export function SummarySmall({ data }: { data: KommentareData }) {
+  const t = useTranslation();
   const sorted = [...data.summary].sort(
     (a, b) => PARTY_ORDER.indexOf(a.party) - PARTY_ORDER.indexOf(b.party),
   );
 
   const maxByType = Object.fromEntries(
-    SMALL_TYPES.map((t) => [t, Math.max(...sorted.map((r) => r[t]))]),
+    SMALL_TYPES.map((type) => [type, Math.max(...sorted.map((r) => r[type]))]),
   ) as Record<SmallType, number>;
 
   return (
@@ -56,9 +58,9 @@ export function SummarySmall({ data }: { data: KommentareData }) {
         }}
       >
         <div />
-        {SMALL_TYPES.map((t) => (
+        {SMALL_TYPES.map((type) => (
           <span
-            key={t}
+            key={type}
             style={{
               fontSize: 10,
               color: VALUE_COLOR,
@@ -68,7 +70,7 @@ export function SummarySmall({ data }: { data: KommentareData }) {
               letterSpacing: "0.07em",
             }}
           >
-            {t}
+            {t.comments.type_labels[type] ?? type}
           </span>
         ))}
       </div>
@@ -100,12 +102,12 @@ export function SummarySmall({ data }: { data: KommentareData }) {
             </span>
 
             {/* Mini bar + value per type */}
-            {SMALL_TYPES.map((t) => {
-              const val = row[t];
-              const pct = (val / maxByType[t]) * 100;
+            {SMALL_TYPES.map((type) => {
+              const val = row[type];
+              const pct = (val / maxByType[type]) * 100;
               return (
                 <div
-                  key={t}
+                  key={type}
                   style={{ display: "flex", alignItems: "center", gap: 5 }}
                 >
                   <div
@@ -154,6 +156,7 @@ export function SummarySmall({ data }: { data: KommentareData }) {
  * Reaction type is the section header; one bar per party below.
  */
 export function SummaryBars({ data }: { data: KommentareData }) {
+  const t = useTranslation();
   const sorted = [...data.summary].sort(
     (a, b) => PARTY_ORDER.indexOf(a.party) - PARTY_ORDER.indexOf(b.party),
   );
@@ -161,7 +164,7 @@ export function SummaryBars({ data }: { data: KommentareData }) {
 
   const sections = [
     {
-      label: "Zwischenrufe",
+      label: t.comments.interjection_label,
       partyValues: Object.fromEntries(
         sorted.map((r) => [r.party, r.Zwischenruf]),
       ),
@@ -169,7 +172,7 @@ export function SummaryBars({ data }: { data: KommentareData }) {
       valueWidth: 36,
     },
     {
-      label: "Beifall",
+      label: t.comments.applause_label,
       partyValues: Object.fromEntries(sorted.map((r) => [r.party, r.Beifall])),
       formatValue: (v: number) => `${(v / 1000).toFixed(0)}k`,
       valueWidth: 36,

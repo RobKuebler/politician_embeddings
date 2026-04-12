@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import { usePeriod } from "@/lib/period-context";
+import { useTranslation, useLanguage } from "@/lib/language-context";
 import {
   fetchPeriodFiles,
   stripSoftHyphen,
@@ -25,6 +26,8 @@ import { PAGE_META } from "@/lib/page-meta";
 const META = PAGE_META.find((p) => p.href === "/speeches")!;
 
 export default function SpeechesPage() {
+  const t = useTranslation();
+  const { language } = useLanguage();
   const { activePeriodId } = usePeriod();
   const [wordFreq, setWordFreq] = useState<WordFreqFile | null>(null);
   const [speechStats, setSpeechStats] = useState<SpeechStatsFile | null>(null);
@@ -113,14 +116,14 @@ export default function SpeechesPage() {
   return (
     <>
       {/* Page header */}
-      <PageHeader {...META} />
+      <PageHeader color={META.color} {...t.pages.speeches} />
 
       {!loading && speechStats && <SpeechShareBars speechStats={speechStats} />}
 
       <div className="mt-8">
         {unavailable ? (
           <p className="text-[14px]" style={{ color: "#7872a8" }}>
-            Für diese Wahlperiode sind noch keine Rededaten verfügbar.
+            {t.speeches.no_data}
           </p>
         ) : loading || !wordFreq || !speechStats ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -159,7 +162,7 @@ export default function SpeechesPage() {
                       className="text-[12px] tabular-nums shrink-0"
                       style={{ color: "#7872a8" }}
                     >
-                      {total.toLocaleString("de")} Wörter
+                      {total.toLocaleString(language)} {t.speeches.words_suffix}
                     </span>
                   </div>
 
@@ -178,7 +181,7 @@ export default function SpeechesPage() {
                       className="text-[11px] font-bold tracking-[0.08em] uppercase mb-1"
                       style={{ color: "#7872a8" }}
                     >
-                      Redner nach Wortanzahl
+                      {t.speeches.speakers_header}
                     </p>
                     <SpeakerBars speakers={speakers} partyColor={color} />
                   </div>
@@ -230,14 +233,14 @@ export default function SpeechesPage() {
                       className="text-[12px] ml-1"
                       style={{ color: "#7872a8" }}
                     >
-                      Top {allWords.length} Begriffe
+                      {t.speeches.top_words.replace("{count}", String(allWords.length))}
                     </span>
                   </div>
                   <button
                     onClick={() => setExpandedParty(null)}
                     className="text-[20px] leading-none"
                     style={{ color: "#7872a8", lineHeight: 1 }}
-                    aria-label="Schließen"
+                    aria-label={t.speeches.close}
                   >
                     ×
                   </button>

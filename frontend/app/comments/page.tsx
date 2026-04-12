@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePeriod } from "@/lib/period-context";
+import { useTranslation } from "@/lib/language-context";
 import { fetchPeriodData, KommentareData } from "@/lib/data";
 import { CARD_SHADOW } from "@/lib/constants";
 import { PAGE_META } from "@/lib/page-meta";
@@ -62,6 +63,7 @@ function Section({
 }
 
 export default function CommentsPage() {
+  const t = useTranslation();
   const { activePeriodId } = usePeriod();
   const [data, setData] = useState<KommentareData | null>(null);
   const [error, setError] = useState(false);
@@ -77,18 +79,18 @@ export default function CommentsPage() {
 
   return (
     <>
-      <PageHeader {...META} />
+      <PageHeader color={META.color} {...t.pages.comments} />
 
       {error && (
         <p style={{ color: "#EA580C", fontSize: 13, marginBottom: 16 }}>
-          Fehler beim Laden der Daten.
+          {t.comments.error}
         </p>
       )}
 
       {/* Summary */}
       <Section
-        title="Gesamtübersicht"
-        subtitle="Reaktionen nach Partei, jede Skala unabhängig"
+        title={t.comments.summary_title}
+        subtitle={t.comments.summary_subtitle}
       >
         {data ? (
           <>
@@ -101,15 +103,15 @@ export default function CommentsPage() {
       </Section>
 
       <Section
-        title="Beifall-Netzwerk"
-        subtitle="Bögen = Applaus-Volumen. Bänder = Austausch zwischen Parteien."
+        title={t.comments.applause_title}
+        subtitle={t.comments.applause_subtitle}
       >
         {data ? <ApplauseChord data={data} /> : <ChartSkeleton height={380} />}
       </Section>
 
       <Section
-        title="Reaktionen im Detail"
-        subtitle="Zeile = handelnde Partei · Spalte = Redner-Partei"
+        title={t.comments.reactions_title}
+        subtitle={t.comments.reactions_subtitle}
       >
         {data ? (
           <KommentareHeatmap data={data} />
