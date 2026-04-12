@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { ConflictEntry, Politician } from "@/lib/data";
-import { getPartyColor } from "@/lib/constants";
+import { getPartyColor, getPartyShortLabel } from "@/lib/constants";
 import { formatEur } from "@/components/charts/GroupedPartyBars";
 import { PartyHeatmap } from "./PartyHeatmap";
 
@@ -130,29 +130,68 @@ export function ConflictRankedList({
                     flexShrink: 0,
                   }}
                 >
-                  {r.party}
+                  {getPartyShortLabel(r.party)}
                 </span>
               </div>
 
-              {/* One line per conflicting committee */}
+              {/* One block per conflicting committee */}
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: 2,
+                  gap: 5,
                   marginBottom: 6,
                 }}
               >
                 {r.committees.map((c) => (
-                  <div
-                    key={c.label}
-                    style={{ fontSize: 11, color: "#7872a8", lineHeight: 1.4 }}
-                  >
-                    <span style={{ fontWeight: 600, color: "#5a556b" }}>
+                  <div key={c.label} style={{ fontSize: 11, lineHeight: 1.4 }}>
+                    {/* Committee name */}
+                    <div
+                      style={{
+                        color: "#5a556b",
+                        fontWeight: 600,
+                        marginBottom: 3,
+                      }}
+                    >
                       {c.label}
-                    </span>
+                    </div>
+                    {/* Sidejob area tags — what the conflict is actually about */}
                     {c.topics.length > 0 && (
-                      <span> · {c.topics.join(", ")}</span>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 5,
+                          flexWrap: "wrap",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: 10,
+                            color: "#9c97b8",
+                            letterSpacing: "0.04em",
+                            fontWeight: 500,
+                            flexShrink: 0,
+                          }}
+                        >
+                          Nebentätigkeit in:
+                        </span>
+                        {c.topics.map((t) => (
+                          <span
+                            key={t}
+                            style={{
+                              background: "#f0effe",
+                              color: "#5a51a8",
+                              borderRadius: 4,
+                              padding: "1px 6px",
+                              fontSize: 10,
+                              fontWeight: 600,
+                            }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
                 ))}
