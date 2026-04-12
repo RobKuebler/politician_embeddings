@@ -23,10 +23,12 @@ import {
 import { PAGE_META } from "@/lib/page-meta";
 import { formatEuroStat } from "@/lib/format";
 import { useCountUp } from "@/hooks/useCountUp";
+import { useTranslation } from "@/lib/language-context";
 
 const META = PAGE_META.find((p) => p.href === "/potential-conflicts")!;
 
 function MethodologyNote() {
+  const t = useTranslation();
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -39,7 +41,7 @@ function MethodologyNote() {
         aria-expanded={open}
       >
         <span className="font-bold text-[13px]" style={{ color: "#1E1B5E" }}>
-          Wie werden Interessenkonflikte erkannt?
+          {t.potential_conflicts.methodology_title}
         </span>
         <span
           className="text-[18px] leading-none select-none"
@@ -61,16 +63,7 @@ function MethodologyNote() {
           style={{ borderTop: "1px solid #F0EFEB" }}
         >
           <p className="text-[12px] text-[#5a556b] pt-3 leading-relaxed">
-            Ein Interessenkonflikt wird erkannt, wenn ein Abgeordneter{" "}
-            <strong>Nebeneinkommen in einem Themenfeld</strong> erzielt{" "}
-            <em>und gleichzeitig</em> Mitglied eines{" "}
-            <strong>Ausschusses mit demselben Themenfeld</strong> ist. Die
-            Themenfelder stammen direkt aus der API von abgeordnetenwatch (Feld{" "}
-            <code className="text-[11px] bg-[#F5F4F0] px-1 rounded">
-              field_topics
-            </code>
-            ), das sowohl Nebentätigkeiten als auch Ausschüsse mit Schlagwörtern
-            versieht.
+            {t.potential_conflicts.methodology_p1}
           </p>
 
           <div
@@ -78,46 +71,18 @@ function MethodologyNote() {
             style={{ background: "#FDF8F0", color: "#5a556b" }}
           >
             <p className="font-semibold mb-1" style={{ color: "#B8600A" }}>
-              Einschränkungen
+              {t.potential_conflicts.methodology_limitations_title}
             </p>
             <ul className="list-disc list-inside flex flex-col gap-1.5">
-              <li>
-                <strong>
-                  Breite Themenfelder können zu Fehlzuordnungen führen.
-                </strong>{" "}
-                Schlagwörter wie &bdquo;Wirtschaft&ldquo; oder &bdquo;Staat und
-                Verwaltung&ldquo; sind sehr weit gefasst und können Treffer
-                erzeugen, die keinen echten Interessenkonflikt darstellen – z.
-                {"\u00a0"}B. ein Rechtsanwalt im Innenausschuss, der nichts mit
-                Innenrecht zu tun hat.
-              </li>
-              <li>
-                <strong>Keine Zeitraumüberschneidung prüfbar.</strong>{" "}
-                Ausschussmitgliedschaften enthalten in den Quelldaten keinen
-                Zeitraum. Ein Nebeneinkommen aus der ersten Jahreshälfte kann
-                daher rechnerisch mit einem Ausschussmandat aus der zweiten
-                Jahreshälfte zusammentreffen, ohne dass ein tatsächlicher
-                Überschneidungszeitraum existiert.
-              </li>
-              <li>
-                <strong>Einkommen wird pro Ausschuss ausgewiesen.</strong> Sitzt
-                ein Abgeordneter in mehreren betroffenen Ausschüssen, wird
-                dasselbe Einkommen mehrfach gezeigt – jede Zeile steht für ein
-                eigenständiges Mandat.
-              </li>
-              <li>
-                <strong>Nur Nebentätigkeiten mit Themenfeld-Angabe.</strong>{" "}
-                Tätigkeiten ohne abgeordnetenwatch-Themenfeld-Tag werden nicht
-                erfasst, auch wenn inhaltlich eine Überschneidung bestehen
-                könnte.
-              </li>
+              <li>{t.potential_conflicts.methodology_l1}</li>
+              <li>{t.potential_conflicts.methodology_l2}</li>
+              <li>{t.potential_conflicts.methodology_l3}</li>
+              <li>{t.potential_conflicts.methodology_l4}</li>
             </ul>
           </div>
 
           <p className="text-[11px]" style={{ color: "#7872a8" }}>
-            Diese Seite zeigt <em>potenzielle</em> Interessenkonflikte auf Basis
-            öffentlich gemeldeter Daten. Sie ersetzt keine rechtliche oder
-            parlamentarische Bewertung.
+            {t.potential_conflicts.methodology_footer}
           </p>
         </div>
       )}
@@ -126,6 +91,7 @@ function MethodologyNote() {
 }
 
 export default function AusschussePage() {
+  const t = useTranslation();
   const { activePeriodId } = usePeriod();
   const [data, setData] = useState<ConflictsFile | null>(null);
   const [politicians, setPoliticians] = useState<Politician[]>([]);
@@ -171,7 +137,7 @@ export default function AusschussePage() {
 
   return (
     <>
-      <PageHeader {...META} />
+      <PageHeader color={META.color} {...t.pages.potential_conflicts} />
 
       {/* Hero card */}
       <div
@@ -218,7 +184,7 @@ export default function AusschussePage() {
                   marginBottom: 2,
                 }}
               >
-                Konfliktiertes Nebeneinkommen gesamt
+                {t.potential_conflicts.hero_income_label}
               </p>
               <p
                 style={{
@@ -286,7 +252,7 @@ export default function AusschussePage() {
                     {data.stats.affected_politicians}
                   </p>
                   <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-                    Abgeordnete betroffen
+                    {t.potential_conflicts.hero_politicians_label}
                   </p>
                 </div>
                 <div>
@@ -301,7 +267,7 @@ export default function AusschussePage() {
                     {data.stats.affected_committees}
                   </p>
                   <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-                    Ausschüsse betroffen
+                    {t.potential_conflicts.hero_committees_label}
                   </p>
                 </div>
               </div>
@@ -335,14 +301,10 @@ export default function AusschussePage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Top-Konflikte nach Abgeordneten
+              {t.potential_conflicts.ranked_title}
             </h2>
             <p className="text-[12px] text-[#7872a8] mb-4">
-              Abgeordnete mit Nebeneinkommen in einem Themenfeld, das ihr
-              Ausschuss verantwortet. Sitzt ein Abgeordneter in mehreren
-              betroffenen Ausschüssen, wird das Einkommen mehrfach gezählt, weil
-              jedes Mandat einen eigenständigen Interessenkonflikt darstellt.
-              Sortiert nach Gesamtbetrag.
+              {t.potential_conflicts.ranked_subtitle}
             </p>
             <ConflictRankedList
               conflicts={data.conflicts}
@@ -359,19 +321,17 @@ export default function AusschussePage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Konflikte nach Thema & Fraktion
+              {t.potential_conflicts.heatmap_title}
             </h2>
             <p className="text-[12px] text-[#7872a8] mb-4">
-              Summiertes Nebeneinkommen je Themenfeld und Fraktion, bei dem eine
-              Ausschuss-Überschneidung besteht. Intensivere Färbung bedeutet
-              höheres konfliktiertes Einkommen.
+              {t.potential_conflicts.heatmap_subtitle}
             </p>
             <ConflictHeatmap conflicts={data.conflicts} parties={parties} />
           </section>
         </div>
       ) : !loading ? (
         <p className="text-[13px] text-[#7872a8] text-center py-10">
-          Keine Interessenkonflikte für diese Wahlperiode gefunden.
+          {t.potential_conflicts.no_conflicts}
         </p>
       ) : null}
 
