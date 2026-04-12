@@ -32,7 +32,7 @@
 }
 
 body {
-  background-color: #f0eff9;
+  background-color: #f5f4fc;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -48,7 +48,7 @@ body {
 }
 
 .skeleton-shimmer {
-  background: linear-gradient(90deg, #e6e4f5 0%, #f0eff9 50%, #e6e4f5 100%);
+  background: linear-gradient(90deg, #dddaf0 0%, #f5f4fc 50%, #dddaf0 100%);
   background-size: 1600px 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }
@@ -112,6 +112,6 @@ body {
   }
   .skeleton-shimmer {
     animation: none;
-    background: #e6e4f5;
+    background: #dddaf0;
   }
 }
