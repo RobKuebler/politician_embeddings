@@ -116,6 +116,7 @@ export type Translations = {
     not_found: string;
     show_hint: string;
     hide_hint: string;
+    remove_keyword_label: string;
   };
   sidejobs: {
     hero_total_label: string;

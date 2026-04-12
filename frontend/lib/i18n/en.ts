@@ -181,6 +181,7 @@ export const en: Translations = {
       '"{term}" does not appear frequently enough or is not in the index.',
     show_hint: "Show {label}",
     hide_hint: "Hide {label}",
+    remove_keyword_label: "Remove {keyword}",
   },
   sidejobs: {
     hero_total_label: "Total side income",

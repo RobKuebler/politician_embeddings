@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useTranslation, useLanguage } from "@/lib/language-context";
+import { useTranslation } from "@/lib/language-context";
 import { usePeriod } from "@/lib/period-context";
 import {
   fetchPeriodData,
@@ -44,7 +44,6 @@ interface ActiveKeyword {
 
 export default function ThemenTrendsPage() {
   const t = useTranslation();
-  const { language } = useLanguage();
   const { activePeriodId } = usePeriod();
   const [data, setData] = useState<KeywordTimelineFile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -125,7 +124,7 @@ export default function ThemenTrendsPage() {
     const q = query.trim().toLowerCase();
     const activeSet = new Set(activeKeywords.map((k) => k.keyword));
     setSuggestions(
-      termList.filter((t) => t.startsWith(q) && !activeSet.has(t)).slice(0, 8),
+      termList.filter((term) => term.startsWith(q) && !activeSet.has(term)).slice(0, 8),
     );
   }, [query, termList, data, activeKeywords]);
 
@@ -136,7 +135,7 @@ export default function ThemenTrendsPage() {
       return;
     }
     const q = compQuery.trim().toLowerCase();
-    setCompSuggestions(termList.filter((t) => t.startsWith(q)).slice(0, 8));
+    setCompSuggestions(termList.filter((term) => term.startsWith(q)).slice(0, 8));
   }, [compQuery, termList, data]);
 
   const usedColors = new Set(activeKeywords.map((k) => k.color));
@@ -312,7 +311,7 @@ export default function ThemenTrendsPage() {
                       <button
                         onClick={() => removeKeyword(k.keyword)}
                         className="leading-none hover:opacity-70"
-                        aria-label={`${k.keyword} entfernen`}
+                        aria-label={t.trends.remove_keyword_label.replace("{keyword}", k.keyword)}
                       >
                         ×
                       </button>

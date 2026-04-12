@@ -183,6 +183,7 @@ export const de: Translations = {
     not_found: '"{term}" kommt nicht häufig genug vor oder ist nicht im Index.',
     show_hint: "{label} einblenden",
     hide_hint: "{label} ausblenden",
+    remove_keyword_label: "{keyword} entfernen",
   },
   sidejobs: {
     hero_total_label: "Gesamtes Nebeneinkommen",
