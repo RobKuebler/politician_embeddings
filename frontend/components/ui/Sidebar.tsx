@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/lib/language-context";
 import { PeriodSelector } from "./PeriodSelector";
 import { Logo } from "./Logo";
 import { BundestagSeats } from "./BundestagSeats";
@@ -11,6 +12,7 @@ export function Sidebar() {
   // Next.js may return trailing slashes (e.g. "/party-profile/") — strip them for comparison
   const pathname =
     rawPathname !== "/" ? rawPathname.replace(/\/$/, "") : rawPathname;
+  const { t, language, setLanguage } = useLanguage();
   return (
     <aside className="hidden md:flex flex-col w-[180px] shrink-0 h-screen sticky top-0 bg-[#1E1B5E]">
       {/* Logo + wordmark — links to start page */}
@@ -27,8 +29,27 @@ export function Sidebar() {
       </Link>
 
       {/* Period selector */}
-      <div className="px-[10px] mb-[14px]">
+      <div className="px-[10px] mb-[10px]">
         <PeriodSelector variant="sidebar" />
+      </div>
+
+      {/* Language toggle */}
+      <div className="px-[10px] mb-[14px]">
+        <div className="flex gap-1">
+          {(["de", "en"] as const).map((lang) => (
+            <button
+              key={lang}
+              onClick={() => setLanguage(lang)}
+              className={`flex-1 py-1 rounded-md text-[11px] font-bold uppercase transition-colors duration-150 ${
+                language === lang
+                  ? "bg-white text-[#1E1B5E]"
+                  : "text-white/40 hover:text-white/70"
+              }`}
+            >
+              {lang}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Divider */}
@@ -36,7 +57,7 @@ export function Sidebar() {
 
       {/* Nav */}
       <nav className="flex flex-col gap-0.5 px-2 flex-1">
-        {NAV_ITEMS.map(({ href, label, icon }) => {
+        {NAV_ITEMS.map(({ href, key, icon }) => {
           const active = pathname === href;
           return (
             <Link
@@ -56,7 +77,7 @@ export function Sidebar() {
               <span
                 className={`text-[13px] font-bold truncate ${active ? "text-white" : "text-[#A8A5E0]"}`}
               >
-                {label}
+                {t.nav[key]}
               </span>
             </Link>
           );
