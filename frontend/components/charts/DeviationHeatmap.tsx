@@ -17,7 +17,7 @@ interface Props {
 }
 
 export function DeviationHeatmap({ pivot }: Props) {
-  const { rows, cols, data, divergingMax } = useMemo(() => {
+  const { rows, cols, data } = useMemo(() => {
     // Re-order parties by seat count (PARTY_ORDER), drop fraktionslos.
     const sortedCols = sortParties(
       pivot.parties.filter((p) => p !== NO_FACTION_LABEL),
@@ -31,23 +31,8 @@ export function DeviationHeatmap({ pivot }: Props) {
     const data = categoryIndices.map(({ idx }) =>
       colMap.map((ci) => pivot.dev[idx][ci] ?? null),
     );
-    const partyTotals = colMap.map((ci) => pivot.party_totals[ci] ?? 0);
 
-    // Compute colour domain from 95th percentile of absolute deviations,
-    // excluding parties with fewer than 10 seats so statistically noisy
-    // cells don't distort the palette.
-    const allDevs = data
-      .flatMap((row) => row.filter((_, pi) => partyTotals[pi] >= 10))
-      .filter((v): v is number => v !== null);
-
-    const absDevs = allDevs.map(Math.abs).sort((a, b) => a - b);
-    const p95idx = Math.floor(absDevs.length * 0.95);
-    const divergingMax = Math.max(
-      absDevs[p95idx] ?? absDevs[absDevs.length - 1] ?? 1,
-      1,
-    );
-
-    return { rows, cols: sortedCols, data, divergingMax };
+    return { rows, cols: sortedCols, data };
   }, [pivot]);
 
   // Build per-cell tooltip using the full pivot for count/pct/total context.
@@ -80,7 +65,6 @@ export function DeviationHeatmap({ pivot }: Props) {
       cols={cols}
       data={data}
       mode="deviation"
-      divergingMax={divergingMax}
       cellLabel={(v) => `${v > 0 ? "+" : ""}${v.toFixed(0)}`}
       tooltipHtml={tooltipHtml}
     />

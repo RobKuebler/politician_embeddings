@@ -103,7 +103,6 @@ export function IncomeByCategoryChart({
       cols={sortedParties}
       data={data}
       mode="sequential"
-      seqScale="log"
       cellLabel={cellLabel}
       tooltipHtml={(row, col, val) =>
         `<b>${col}</b><br/>${row}<br/>${formatEur(val)}`
@@ -167,7 +166,6 @@ export function TopTopicsChart({
       cols={sortedParties}
       data={data}
       mode="sequential"
-      seqScale="log"
       cellLabel={cellLabel}
       tooltipHtml={(row, col, val) =>
         `<b>${col}</b><br/>${row}<br/>${formatEur(val)}`

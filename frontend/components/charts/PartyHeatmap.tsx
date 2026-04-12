@@ -4,12 +4,13 @@
  *
  * Two modes:
  *  - "deviation": diverging red–white–blue scale, symmetric around 0.
- *    Pass `divergingMax` to cap the scale; auto-computed from |data| if omitted.
- *  - "sequential": single-hue gradient (low → high).
- *    Override colours via `SEQ_DEFAULT_LOW` / `SEQ_DEFAULT_HIGH`.
+ *    Scale cap is auto-computed from the 95th percentile of |data|.
+ *  - "sequential": single-hue Blues gradient, log-mapped so right-skewed
+ *    distributions (income, counts) stay readable.
  *
  * Row labels are plain text (D3 y-axis with truncation + tooltip).
  * Column labels must be party names — rendered as coloured blocks with white text.
+ * Row height and colour scales are fixed — not overridable by callers.
  */
 import { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
@@ -54,29 +55,6 @@ export interface PartyHeatmapProps {
   mode: "deviation" | "sequential";
 
   /**
-   * Deviation mode only — caps the colour scale at ± this value.
-   * Auto-computed as max(|data|) if omitted.
-   */
-  divergingMax?: number;
-
-  /**
-   * Sequential mode — percentile used to cap the colour domain so a single
-   * outlier cell doesn't wash out all others. Values above the cap get the
-   * max colour. Default: 0.95. Only used when seqScale is "linear".
-   */
-  seqQuantile?: number;
-
-  /**
-   * Sequential mode — how values are mapped to colours.
-   * "linear":   linear scale capped at seqQuantile percentile (default).
-   * "quantile": rank-based; colour reflects percentile position.
-   *             Makes ~half of all cells dark by definition.
-   * "log":      logarithmic mapping. Most cells stay light; only true outliers
-   *             go dark. Best for right-skewed distributions like income.
-   */
-  seqScale?: "linear" | "quantile" | "log";
-
-  /**
    * Optional text rendered inside each non-empty cell.
    * Only shown when the column is wide enough (≥ 10 px).
    */
@@ -96,9 +74,6 @@ export function PartyHeatmap({
   cols,
   data,
   mode,
-  divergingMax,
-  seqQuantile = 0.95,
-  seqScale = "linear",
   cellLabel,
   tooltipHtml,
 }: PartyHeatmapProps) {
@@ -145,26 +120,23 @@ export function PartyHeatmap({
     let maxAbs = 1; // used for text-contrast logic in deviation mode
 
     if (mode === "deviation") {
-      maxAbs = divergingMax ?? Math.max(...allValues.map(Math.abs), 1);
+      // Cap at 95th percentile of absolute deviations so a few outliers don't
+      // wash out the rest of the diverging scale.
+      const absVals = allValues.map(Math.abs).sort((a, b) => a - b);
+      const p95 = Math.min(
+        Math.floor(absVals.length * 0.95),
+        absVals.length - 1,
+      );
+      maxAbs = Math.max(absVals[p95] ?? absVals[absVals.length - 1] ?? 1, 1);
       const scale = d3
         .scaleLinear<string>()
         .domain([-maxAbs, 0, maxAbs])
         .range([DIVERGING_LOW, DIVERGING_MID, DIVERGING_HIGH])
         .clamp(true);
       colorFn = scale;
-    } else if (seqScale === "quantile") {
-      // Rank-based mapping: colour reflects percentile position, not raw value.
-      // Prevents a handful of large outliers from washing out the rest of the scale.
-      const sorted = [...allValues].sort((a, b) => a - b);
-      const interpolator = d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
-      colorFn = (v: number) => {
-        if (sorted.length <= 1) return interpolator(0);
-        const rank = d3.bisectLeft(sorted, v) / (sorted.length - 1);
-        return interpolator(Math.min(rank, 1));
-      };
-    } else if (seqScale === "log") {
-      // Log mapping: compresses the high end so only true outliers go dark.
-      // Most cells stay light; differences at the low end are visible.
+    } else {
+      // Log mapping: compresses the high end so right-skewed distributions
+      // (income, counts) stay readable — only true outliers go very dark.
       const minVal = Math.max(1, Math.min(...allValues));
       const maxVal = Math.max(...allValues, 2);
       const logMin = Math.log(minVal);
@@ -174,19 +146,6 @@ export function PartyHeatmap({
         const t = (Math.log(Math.max(v, minVal)) - logMin) / (logMax - logMin);
         return interpolator(Math.min(Math.max(t, 0), 1));
       };
-    } else {
-      const sorted = [...allValues].sort((a, b) => a - b);
-      const q = seqQuantile ?? 0.95;
-      const capIdx = Math.min(Math.floor(sorted.length * q), sorted.length - 1);
-      const domainMax = Math.max(
-        sorted[capIdx] ?? sorted[sorted.length - 1] ?? 1,
-        1,
-      );
-      const scale = d3
-        .scaleSequential(d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH))
-        .domain([0, domainMax])
-        .clamp(true);
-      colorFn = scale;
     }
 
     // ── SVG setup ───────────────────────────────────────────────────────────
@@ -347,19 +306,7 @@ export function PartyHeatmap({
           }))
         : [],
     );
-  }, [
-    rows,
-    cols,
-    data,
-    mode,
-    divergingMax,
-    seqQuantile,
-    seqScale,
-    cellLabel,
-    tooltipHtml,
-    width,
-    containerRef,
-  ]);
+  }, [rows, cols, data, mode, cellLabel, tooltipHtml, width, containerRef]);
 
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
