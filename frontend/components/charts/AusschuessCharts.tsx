@@ -281,13 +281,11 @@ export function ConflictHeatmap({ conflicts, parties }: HeatmapProps) {
       cols={cols}
       data={data}
       mode="sequential"
-      seqColorLow="#fff8f6"
-      seqColorHigh="#c0392b"
+      rowHeight={28}
       cellLabel={formatEur}
       tooltipHtml={(row, col, val) =>
         `<b>${col}</b><br/>${row}<br/>${formatEur(val)}`
       }
-      height={Math.max(200, rows.length * 36 + 60)}
     />
   );
 }

@@ -6,7 +6,7 @@
  *  - "deviation": diverging red–white–blue scale, symmetric around 0.
  *    Pass `divergingMax` to cap the scale; auto-computed from |data| if omitted.
  *  - "sequential": single-hue gradient (low → high).
- *    Override colours via `seqColorLow` / `seqColorHigh`.
+ *    Override colours via `SEQ_DEFAULT_LOW` / `SEQ_DEFAULT_HIGH`.
  *
  * Row labels are plain text (D3 y-axis with truncation + tooltip).
  * Column labels must be party names — rendered as coloured blocks with white text.
@@ -49,7 +49,7 @@ export interface PartyHeatmapProps {
 
   /**
    * "deviation": diverging red–white–blue palette, centred on 0.
-   * "sequential": single-hue gradient from seqColorLow to seqColorHigh.
+   * "sequential": single-hue Blues gradient (SEQ_DEFAULT_LOW → SEQ_DEFAULT_HIGH).
    */
   mode: "deviation" | "sequential";
 
@@ -59,10 +59,6 @@ export interface PartyHeatmapProps {
    */
   divergingMax?: number;
 
-  /** Sequential mode — low-end colour. Default: near-white warm cream. */
-  seqColorLow?: string;
-  /** Sequential mode — high-end colour. Default: dark warm brown. */
-  seqColorHigh?: string;
   /**
    * Sequential mode — percentile used to cap the colour domain so a single
    * outlier cell doesn't wash out all others. Values above the cap get the
@@ -108,8 +104,6 @@ export function PartyHeatmap({
   data,
   mode,
   divergingMax,
-  seqColorLow = SEQ_DEFAULT_LOW,
-  seqColorHigh = SEQ_DEFAULT_HIGH,
   seqQuantile = 0.95,
   seqScale = "linear",
   cellLabel,
@@ -179,7 +173,7 @@ export function PartyHeatmap({
       // Rank-based mapping: colour reflects percentile position, not raw value.
       // Prevents a handful of large outliers from washing out the rest of the scale.
       const sorted = [...allValues].sort((a, b) => a - b);
-      const interpolator = d3.interpolateRgb(seqColorLow, seqColorHigh);
+      const interpolator = d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
       colorFn = (v: number) => {
         if (sorted.length <= 1) return interpolator(0);
         const rank = d3.bisectLeft(sorted, v) / (sorted.length - 1);
@@ -192,7 +186,7 @@ export function PartyHeatmap({
       const maxVal = Math.max(...allValues, 2);
       const logMin = Math.log(minVal);
       const logMax = Math.log(maxVal);
-      const interpolator = d3.interpolateRgb(seqColorLow, seqColorHigh);
+      const interpolator = d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
       colorFn = (v: number) => {
         const t = (Math.log(Math.max(v, minVal)) - logMin) / (logMax - logMin);
         return interpolator(Math.min(Math.max(t, 0), 1));
@@ -206,7 +200,7 @@ export function PartyHeatmap({
         1,
       );
       const scale = d3
-        .scaleSequential(d3.interpolateRgb(seqColorLow, seqColorHigh))
+        .scaleSequential(d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH))
         .domain([0, domainMax])
         .clamp(true);
       colorFn = scale;
@@ -376,8 +370,6 @@ export function PartyHeatmap({
     data,
     mode,
     divergingMax,
-    seqColorLow,
-    seqColorHigh,
     seqQuantile,
     seqScale,
     cellLabel,
