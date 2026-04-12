@@ -55,6 +55,14 @@ export interface PartyHeatmapProps {
   mode: "deviation" | "sequential";
 
   /**
+   * Sequential mode — how values map to colour intensity.
+   * "log":      logarithmic mapping; right-skewed data stays readable (default).
+   * "linear":   linear scale capped at the 95th-percentile value.
+   * "quantile": rank-based; colour reflects percentile position, not raw value.
+   */
+  seqScale?: "linear" | "quantile" | "log";
+
+  /**
    * Optional text rendered inside each non-empty cell.
    * Only shown when the column is wide enough (≥ 10 px).
    */
@@ -74,6 +82,7 @@ export function PartyHeatmap({
   cols,
   data,
   mode,
+  seqScale = "log",
   cellLabel,
   tooltipHtml,
 }: PartyHeatmapProps) {
@@ -134,9 +143,34 @@ export function PartyHeatmap({
         .range([DIVERGING_LOW, DIVERGING_MID, DIVERGING_HIGH])
         .clamp(true);
       colorFn = scale;
+    } else if (seqScale === "quantile") {
+      // Rank-based: colour reflects percentile position, not raw value.
+      const sorted = [...allValues].sort((a, b) => a - b);
+      const interpolator = d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
+      colorFn = (v: number) => {
+        if (sorted.length <= 1) return interpolator(0);
+        const rank = d3.bisectLeft(sorted, v) / (sorted.length - 1);
+        return interpolator(Math.min(rank, 1));
+      };
+    } else if (seqScale === "linear") {
+      // Linear scale capped at the 95th-percentile value.
+      const sorted = [...allValues].sort((a, b) => a - b);
+      const capIdx = Math.min(
+        Math.floor(sorted.length * 0.95),
+        sorted.length - 1,
+      );
+      const domainMax = Math.max(
+        sorted[capIdx] ?? sorted[sorted.length - 1] ?? 1,
+        1,
+      );
+      const scale = d3
+        .scaleSequential(d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH))
+        .domain([0, domainMax])
+        .clamp(true);
+      colorFn = scale;
     } else {
-      // Log mapping: compresses the high end so right-skewed distributions
-      // (income, counts) stay readable — only true outliers go very dark.
+      // Log mapping (default): compresses the high end so right-skewed
+      // distributions (income, counts) stay readable.
       const minVal = Math.max(1, Math.min(...allValues));
       const maxVal = Math.max(...allValues, 2);
       const logMin = Math.log(minVal);
@@ -306,7 +340,17 @@ export function PartyHeatmap({
           }))
         : [],
     );
-  }, [rows, cols, data, mode, cellLabel, tooltipHtml, width, containerRef]);
+  }, [
+    rows,
+    cols,
+    data,
+    mode,
+    seqScale,
+    cellLabel,
+    tooltipHtml,
+    width,
+    containerRef,
+  ]);
 
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
