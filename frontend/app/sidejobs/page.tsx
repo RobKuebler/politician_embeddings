@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePeriod } from "@/lib/period-context";
+import { useTranslation, useLanguage } from "@/lib/language-context";
 import {
   fetchPeriodFiles,
   SidejobsFile,
@@ -29,6 +30,8 @@ import { useCountUp } from "@/hooks/useCountUp";
 const META = PAGE_META.find((p) => p.href === "/sidejobs")!;
 
 export default function SidejobsPage() {
+  const t = useTranslation();
+  const { language } = useLanguage();
   const { activePeriodId, periods } = usePeriod();
   const [sjData, setSjData] = useState<SidejobsFile | null>(null);
   const [politicians, setPoliticians] = useState<Politician[]>([]);
@@ -40,9 +43,7 @@ export default function SidejobsPage() {
     ? parseInt(activePeriod.label.match(/\d{4}$/)?.[0] ?? "0", 10)
     : 0;
   const isPeriodOngoing = labelEndYear > new Date().getFullYear();
-  const incomeSubtitle = isPeriodOngoing
-    ? "Zahlungen in der laufenden Legislaturperiode bis jetzt"
-    : "Zahlungen in der gesamten Legislaturperiode";
+  const incomeSubtitle = isPeriodOngoing ? t.sidejobs.hero_income_ongoing : t.sidejobs.hero_income_closed;
 
   const totalIncome = sjData
     ? sjData.jobs.reduce((s, j) => s + j.prorated_income, 0)
@@ -85,7 +86,7 @@ export default function SidejobsPage() {
 
   return (
     <>
-      <PageHeader {...META} />
+      <PageHeader color={META.color} {...t.pages.sidejobs} />
 
       {/* Hero card — total income */}
       <div
@@ -133,7 +134,7 @@ export default function SidejobsPage() {
                   marginBottom: 2,
                 }}
               >
-                Gesamtes Nebeneinkommen
+                {t.sidejobs.hero_total_label}
               </p>
               <p
                 style={{
@@ -205,19 +206,10 @@ export default function SidejobsPage() {
                   lineHeight: 1.4,
                 }}
               >
-                Nur bei{" "}
-                <span
-                  style={{ fontWeight: 700, color: "rgba(255,255,255,0.75)" }}
-                >
-                  {Math.round(
-                    (sjData.coverage.with_amount / sjData.coverage.total) * 100,
-                  )}{" "}
-                  %
-                </span>{" "}
-                der Nebentätigkeiten (
-                {sjData.coverage.with_amount.toLocaleString("de")} von{" "}
-                {sjData.coverage.total.toLocaleString("de")}) wurde ein Betrag
-                angegeben.
+                {t.sidejobs.hero_coverage
+                  .replace("{pct}", String(Math.round((sjData.coverage.with_amount / sjData.coverage.total) * 100)))
+                  .replace("{with_amount}", sjData.coverage.with_amount.toLocaleString(language))
+                  .replace("{total}", sjData.coverage.total.toLocaleString(language))}
               </p>
             ) : null}
           </div>
@@ -251,14 +243,10 @@ export default function SidejobsPage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Abgeordnete mit Nebenverdienst
+              {t.sidejobs.coverage_title}
             </h2>
             <p className="text-[12px] text-[#7872a8] mb-4">
-              Anteil der Abgeordneten je Fraktion, die mindestens eine
-              meldepflichtige Nebentätigkeit ausüben. Als Nebenverdienst gilt
-              ein gemeldetes Einkommen ab 1.000 € monatlich (§ 44a AbgG, Stufe
-              1). Abgeordnete mit gemeldeter Tätigkeit ohne Einkommensangabe
-              werden gesondert ausgewiesen.
+              {t.sidejobs.coverage_subtitle}
             </p>
             <SidejobCoverageByPartyChart
               jobs={sjData.jobs}
@@ -274,13 +262,10 @@ export default function SidejobsPage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Einkommen nach Kategorie
+              {t.sidejobs.income_category_title}
             </h2>
             <p className="text-[12px] text-[#7872a8] mb-4">
-              Aufteilung der Nebeneinkünfte nach den offiziellen Kategorien der
-              Bundestagsverwaltung. Dunklere Felder stehen für höhere Einnahmen
-              — die Farbskala ist logarithmisch, damit auch mittlere Beträge
-              sichtbar bleiben.
+              {t.sidejobs.income_category_subtitle}
             </p>
             <IncomeByCategoryChart jobs={sjData.jobs} parties={parties} />
           </section>
@@ -293,15 +278,10 @@ export default function SidejobsPage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Themenfelder der Nebentätigkeiten
+              {t.sidejobs.topics_title}
             </h2>
             <p className="text-[12px] text-[#7872a8] mb-4">
-              Die 15 Themenfelder mit dem höchsten ausgewiesenen
-              Gesamteinkommen. Dunklere Felder stehen für höhere Einnahmen — die
-              Farbskala ist logarithmisch, damit auch mittlere Beträge sichtbar
-              bleiben. Die Kategorisierung basiert auf KI-gestützter Analyse der
-              Tätigkeitsbeschreibungen. Da ein Job mehreren Themenfeldern
-              zugeordnet sein kann, überschneiden sich die Summen.
+              {t.sidejobs.topics_subtitle}
             </p>
             <TopTopicsChart jobs={sjData.jobs} parties={parties} />
           </section>
@@ -314,11 +294,10 @@ export default function SidejobsPage() {
               className="font-extrabold text-[15px] mb-1"
               style={{ color: "#1E1B5E" }}
             >
-              Top-Verdiener
+              {t.sidejobs.top_earners_title}
             </h2>
             <p className="text-[12px] text-[#7872a8] mb-4">
-              Die Abgeordneten mit dem höchsten hochgerechneten Nebeneinkommen
-              in der gewählten Legislaturperiode.
+              {t.sidejobs.top_earners_subtitle}
             </p>
             <TopEarnersChart
               jobs={sjData.jobs}

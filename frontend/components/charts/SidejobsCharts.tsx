@@ -4,6 +4,7 @@ import {
   getPartyColor,
   getPartyShortLabel,
 } from "@/lib/constants";
+import { useTranslation } from "@/lib/language-context";
 import { SidejobRecord, stripSoftHyphen } from "@/lib/data";
 import { HorizontalBarRow } from "@/components/charts/HorizontalBarRow";
 import { formatEur } from "@/components/charts/GroupedPartyBars";
@@ -237,12 +238,6 @@ export function TopEarnersChart({
 //   light grey         = Kein Nebenjob
 // Parties sorted by "income" share descending.
 
-const LEGEND_ITEMS = [
-  { label: "Nebenverdienst ≥ 1.000 €/Monat", style: "full" },
-  { label: "Ohne Einkommensangabe", style: "faded" },
-  { label: "Kein Nebenjob", style: "none" },
-] as const;
-
 // Swatch colours used only in the legend (party-neutral).
 const LEGEND_DEMO_COLOR = "#6B7280";
 
@@ -260,6 +255,14 @@ export function SidejobCoverageByPartyChart({
   jobs: SidejobRecord[];
   politicians: { politician_id: number; name: string; party: string }[];
 }) {
+  const t = useTranslation();
+
+  const LEGEND = [
+    { label: t.sidejobs.coverage_legend_income,    style: "full"  as const },
+    { label: t.sidejobs.coverage_legend_no_amount, style: "faded" as const },
+    { label: t.sidejobs.coverage_legend_none,      style: "none"  as const },
+  ];
+
   const withIncome = new Set<number>();
   const withAnySidejob = new Set<number>();
   for (const j of jobs) {
@@ -300,7 +303,7 @@ export function SidejobCoverageByPartyChart({
           flexWrap: "wrap",
         }}
       >
-        {LEGEND_ITEMS.map(({ label, style }) => {
+        {LEGEND.map(({ label, style }) => {
           const bg =
             style === "full"
               ? LEGEND_DEMO_COLOR
@@ -368,20 +371,29 @@ export function SidejobCoverageByPartyChart({
                   pct={incomePct}
                   bg={partyColor}
                   textColor="#fff"
-                  title={`Nebenverdienst: ${c.income} von ${c.total} (${Math.round(incomePct)}%)`}
+                  title={t.sidejobs.coverage_tooltip_income
+                    .replace("{income}", c.income.toString())
+                    .replace("{total}", c.total.toString())
+                    .replace("{pct}", String(Math.round(incomePct)))}
                 />
                 <CoverageSegment
                   pct={noAmountPct}
                   bg={partyColor + "99"}
                   textColor="#fff"
-                  title={`Ohne Einkommensangabe: ${c.no_amount} von ${c.total} (${Math.round(noAmountPct)}%)`}
+                  title={t.sidejobs.coverage_tooltip_no_amount
+                    .replace("{no_amount}", c.no_amount.toString())
+                    .replace("{total}", c.total.toString())
+                    .replace("{pct}", String(Math.round(noAmountPct)))}
                 />
                 {/* "none" takes remaining space to avoid sub-pixel rounding gaps */}
                 <CoverageSegment
                   pct={nonePct}
                   bg="#D0CEC8"
                   textColor="#888"
-                  title={`Kein Nebenjob: ${c.none} von ${c.total} (${Math.round(nonePct)}%)`}
+                  title={t.sidejobs.coverage_tooltip_none
+                    .replace("{none}", c.none.toString())
+                    .replace("{total}", c.total.toString())
+                    .replace("{pct}", String(Math.round(nonePct)))}
                   flex1
                 />
               </div>
