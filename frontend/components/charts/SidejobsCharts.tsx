@@ -66,6 +66,7 @@ export function IncomeByCategoryChart({
   jobs: SidejobRecord[];
   parties: string[];
 }) {
+  const t = useTranslation();
   // Aggregate income per category per party
   const catMap = new Map<string, Map<string, number>>();
   for (const j of jobs) {
@@ -106,8 +107,9 @@ export function IncomeByCategoryChart({
       mode="sequential"
       cellLabel={cellLabel}
       tooltipHtml={(row, col, val) =>
-        `<b>${col}</b><br/>${row}<br/>${formatEur(val)}`
+        `<b>${col}</b><br/>${t.sidejobs.category_labels[row] ?? row}<br/>${formatEur(val)}`
       }
+      rowLabel={(cat) => t.sidejobs.category_labels[cat] ?? cat}
     />
   );
 }
@@ -124,6 +126,7 @@ export function TopTopicsChart({
   jobs: SidejobRecord[];
   parties: string[];
 }) {
+  const t = useTranslation();
   // Aggregate income per topic per party
   const topicMap = new Map<string, Map<string, number>>();
   for (const j of jobs) {
@@ -169,8 +172,9 @@ export function TopTopicsChart({
       mode="sequential"
       cellLabel={cellLabel}
       tooltipHtml={(row, col, val) =>
-        `<b>${col}</b><br/>${row}<br/>${formatEur(val)}`
+        `<b>${col}</b><br/>${t.common.topic_labels[row] ?? row}<br/>${formatEur(val)}`
       }
+      rowLabel={(topic) => t.common.topic_labels[topic] ?? topic}
     />
   );
 }

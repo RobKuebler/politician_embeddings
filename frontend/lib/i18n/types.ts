@@ -29,6 +29,7 @@ export type Translations = {
     no_data: string;
     period_label: string;
     period_aria: string;
+    topic_labels: Record<string, string>;
   };
   vote_map: {
     coalition_label: string;
@@ -177,6 +178,7 @@ export type Translations = {
     coverage_tooltip_income: string;
     coverage_tooltip_no_amount: string;
     coverage_tooltip_none: string;
+    category_labels: Record<string, string>;
   };
   potential_conflicts: {
     hero_income_label: string;
@@ -196,7 +198,6 @@ export type Translations = {
     methodology_l4: string;
     methodology_footer: string;
     sidejob_area_label: string;
-    topic_labels: Record<string, string>;
   };
   ui: {
     menu_open: string;

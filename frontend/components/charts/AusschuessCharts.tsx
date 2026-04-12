@@ -325,9 +325,9 @@ export function ConflictHeatmap({ conflicts, parties }: HeatmapProps) {
       mode="sequential"
       cellLabel={formatEur}
       tooltipHtml={(row, col, val) =>
-        `<b>${col}</b><br/>${t.potential_conflicts.topic_labels[row] ?? row}<br/>${formatEur(val)}`
+        `<b>${col}</b><br/>${t.common.topic_labels[row] ?? row}<br/>${formatEur(val)}`
       }
-      rowLabel={(topic) => t.potential_conflicts.topic_labels[topic] ?? topic}
+      rowLabel={(topic) => t.common.topic_labels[topic] ?? topic}
     />
   );
 }
