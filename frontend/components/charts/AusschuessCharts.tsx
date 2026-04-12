@@ -175,7 +175,7 @@ export function ConflictRankedList({
                       width: `${pct}%`,
                       height: "100%",
                       borderRadius: isTruncated ? "9999px 0 0 9999px" : 9999,
-                      background: "#c0392b",
+                      background: "#0f2d5c",
                       minWidth: pct > 0 ? 2 : 0,
                       position: "relative",
                     }}
@@ -214,7 +214,7 @@ export function ConflictRankedList({
                   style={{
                     fontSize: 11,
                     fontWeight: 700,
-                    color: "#c0392b",
+                    color: "#0f2d5c",
                     flexShrink: 0,
                     minWidth: 70,
                     textAlign: "right",
