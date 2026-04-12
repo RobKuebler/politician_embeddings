@@ -13,8 +13,11 @@ import {
 import { CARD_CLASS, CARD_SHADOW } from "@/lib/constants";
 import { PAGE_META } from "@/lib/page-meta";
 import { NAV_ITEMS } from "@/lib/nav-items";
+import { useTranslation, useLanguage } from "@/lib/language-context";
 
 export default function Home() {
+  const t = useTranslation();
+  const { language } = useLanguage();
   const { activePeriodId, periods } = usePeriod();
   const activePeriod = periods.find((p) => p.wahlperiode === activePeriodId);
 
@@ -64,7 +67,7 @@ export default function Home() {
           className="text-[11px] font-bold tracking-[0.18em] uppercase mb-3"
           style={{ color: "#7B77CC" }}
         >
-          Bundestag · KI-Analyse
+          {t.home.eyebrow}
         </p>
         <h1
           className="text-4xl md:text-5xl font-black tracking-tight leading-[1.05] mb-3"
@@ -76,9 +79,7 @@ export default function Home() {
           className="text-[14px] leading-relaxed"
           style={{ color: "rgba(255,255,255,0.6)" }}
         >
-          Parlascanned macht die Arbeit des Deutschen Bundestags transparent.
-          Wie ähnlich stimmen Abgeordnete ab? Wie unterscheiden sich die
-          Fraktionen demografisch? Und wer verdient neben dem Mandat?
+          {t.home.subtitle}
         </p>
       </div>
 
@@ -88,17 +89,17 @@ export default function Home() {
           className="text-[11px] font-bold tracking-[0.14em] uppercase mb-2"
           style={{ color: "#7872a8" }}
         >
-          {activePeriod.wahlperiode}. Legislaturperiode
+          {activePeriod.wahlperiode}. {t.home.period_label}
         </p>
       )}
 
       {/* Stat strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#dddaf0] rounded-xl overflow-hidden mb-6">
         {[
-          { value: stats?.politicians, label: "Abgeordnete" },
-          { value: stats?.parties, label: "Fraktionen" },
-          { value: stats?.polls, label: "Abstimmungen" },
-          { value: stats?.sidejobs, label: "Nebentätigkeiten" },
+          { value: stats?.politicians, label: t.home.stats.politicians },
+          { value: stats?.parties,     label: t.home.stats.parties },
+          { value: stats?.polls,       label: t.home.stats.polls },
+          { value: stats?.sidejobs,    label: t.home.stats.sidejobs },
         ].map(({ value, label }) => (
           <div
             key={label}
@@ -109,7 +110,7 @@ export default function Home() {
               style={{ color: "#1E1B5E" }}
             >
               {value !== undefined && value !== null ? (
-                value.toLocaleString("de")
+                value.toLocaleString(language)
               ) : (
                 <span
                   style={{
@@ -134,7 +135,8 @@ export default function Home() {
 
       {/* Feature grid: auto-generated from PAGE_META */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
-        {PAGE_META.map(({ href, color, label, title, description, wide }) => {
+        {PAGE_META.map(({ href, color, key, wide }) => {
+          const pageTrans = t.pages[key];
           const navItem = NAV_ITEMS.find((n) => n.href === href);
           return (
             <Link
@@ -157,7 +159,7 @@ export default function Home() {
                   className="text-[11px] font-bold tracking-[0.1em] uppercase"
                   style={{ color }}
                 >
-                  {label}
+                  {pageTrans.label}
                 </span>
               </div>
 
@@ -165,14 +167,14 @@ export default function Home() {
                 className="font-extrabold text-[15px] leading-snug mb-1.5"
                 style={{ color: "#1E1B5E" }}
               >
-                {title}
+                {pageTrans.title}
               </h2>
 
               <p
                 className="text-[13px] leading-relaxed flex-1"
                 style={{ color: "#5a556b" }}
               >
-                {description}
+                {pageTrans.description}
               </p>
 
               {/* CTA */}
@@ -180,7 +182,7 @@ export default function Home() {
                 className="mt-4 flex items-center gap-1 text-[12px] font-bold"
                 style={{ color }}
               >
-                Öffnen
+                {t.home.cta}
                 <svg
                   width="11"
                   height="11"
