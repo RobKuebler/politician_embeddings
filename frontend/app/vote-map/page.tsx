@@ -230,7 +230,7 @@ export default function VoteMapPage() {
           <div className="flex items-center gap-1.5">
             {GOVERNING_PARTIES[activePeriodId].map((party, i) => (
               <span key={party} className="flex items-center gap-1.5">
-                {i > 0 && <span className="text-[#C8C5BF] text-[13px]">+</span>}
+                {i > 0 && <span className="text-[#7872a8] text-[13px]">+</span>}
                 <span
                   className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold border"
                   style={{

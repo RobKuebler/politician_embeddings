@@ -155,7 +155,7 @@ export function GroupedPartyBars({
             style={
               isTotal
                 ? {
-                    borderTop: "1px solid #F0EEE9",
+                    borderTop: "1px solid #eeedf8",
                     paddingTop: 14,
                     marginTop: 2,
                     marginBottom: 16,

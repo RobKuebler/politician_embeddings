@@ -60,7 +60,7 @@ function MethodologyNote() {
           className="px-4 pb-4 flex flex-col gap-3"
           style={{ borderTop: "1px solid #F0EFEB" }}
         >
-          <p className="text-[12px] text-[#5A5856] pt-3 leading-relaxed">
+          <p className="text-[12px] text-[#5a556b] pt-3 leading-relaxed">
             Ein Interessenkonflikt wird erkannt, wenn ein Abgeordneter{" "}
             <strong>Nebeneinkommen in einem Themenfeld</strong> erzielt{" "}
             <em>und gleichzeitig</em> Mitglied eines{" "}
@@ -75,7 +75,7 @@ function MethodologyNote() {
 
           <div
             className="rounded-xl p-3 text-[12px] leading-relaxed"
-            style={{ background: "#FDF8F0", color: "#5A5856" }}
+            style={{ background: "#FDF8F0", color: "#5a556b" }}
           >
             <p className="font-semibold mb-1" style={{ color: "#B8600A" }}>
               Einschränkungen

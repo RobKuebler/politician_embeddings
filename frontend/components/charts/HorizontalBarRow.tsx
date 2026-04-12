@@ -146,7 +146,7 @@ export function HorizontalBarRow({
         style={{
           flex: 1,
           borderRadius: 9999,
-          background: "#F0EEE9",
+          background: "#eeedf8",
           height: barHeight,
         }}
       >

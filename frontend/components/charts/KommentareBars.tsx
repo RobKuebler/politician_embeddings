@@ -11,7 +11,7 @@ const SMALL_TYPES = ["Lachen", "Heiterkeit", "Widerspruch"] as const;
 type SmallType = (typeof SMALL_TYPES)[number];
 
 // Design tokens used in SummarySmall
-const TRACK_COLOR = "#F0EEE9";
+const TRACK_COLOR = "#eeedf8";
 const VALUE_COLOR = "#7872a8";
 const LABEL_COLOR = "#171613";
 

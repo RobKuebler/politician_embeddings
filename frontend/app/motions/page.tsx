@@ -349,7 +349,7 @@ export default function MotionsPage() {
                                 color: "#171613",
                                 borderBottom:
                                   i < matched.length - 1
-                                    ? "1px solid #F0EEE9"
+                                    ? "1px solid #eeedf8"
                                     : "none",
                               }}
                             >

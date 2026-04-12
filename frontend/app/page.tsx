@@ -117,7 +117,7 @@ export default function Home() {
                     width: 48,
                     height: 22,
                     borderRadius: 4,
-                    background: "#E8E7E2",
+                    background: "#dddaf0",
                   }}
                 />
               )}

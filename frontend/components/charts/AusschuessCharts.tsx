@@ -85,7 +85,7 @@ export function ConflictRankedList({
               alignItems: "flex-start",
               gap: 10,
               padding: "10px 0",
-              borderBottom: i < rows.length - 1 ? "1px solid #F0EEE9" : "none",
+              borderBottom: i < rows.length - 1 ? "1px solid #eeedf8" : "none",
             }}
           >
             {/* Rank */}
@@ -165,7 +165,7 @@ export function ConflictRankedList({
                     flex: 1,
                     height: 6,
                     borderRadius: isTruncated ? "9999px 0 0 9999px" : 9999,
-                    background: "#F0EEE9",
+                    background: "#eeedf8",
                     position: "relative",
                     overflow: "visible",
                   }}

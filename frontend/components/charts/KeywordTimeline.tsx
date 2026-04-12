@@ -125,7 +125,7 @@ export function KeywordTimeline({
       .call((ax) =>
         ax
           .selectAll(".tick line")
-          .attr("stroke", "#F0EEE9")
+          .attr("stroke", "#eeedf8")
           .attr("stroke-dasharray", "3,3"),
       );
 

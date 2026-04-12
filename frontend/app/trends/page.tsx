@@ -279,7 +279,7 @@ export default function ThemenTrendsPage() {
                     {suggestions.map((s) => (
                       <li
                         key={s}
-                        className="px-4 py-2 text-[13px] cursor-pointer hover:bg-[#F7F5F0]"
+                        className="px-4 py-2 text-[13px] cursor-pointer hover:bg-[#f0eef9]"
                         style={{ color: "#171613" }}
                         onMouseDown={() => addKeyword(s)}
                       >
@@ -385,7 +385,7 @@ export default function ThemenTrendsPage() {
                     {compSuggestions.map((s) => (
                       <li
                         key={s}
-                        className="px-4 py-2 text-[13px] cursor-pointer hover:bg-[#F7F5F0]"
+                        className="px-4 py-2 text-[13px] cursor-pointer hover:bg-[#f0eef9]"
                         style={{ color: "#171613" }}
                         onMouseDown={() => addCompKeyword(s)}
                       >
