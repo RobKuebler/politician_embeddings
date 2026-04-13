@@ -155,7 +155,8 @@ export function ConflictRankedList({
                         marginBottom: 3,
                       }}
                     >
-                      {c.label}
+                      {t.potential_conflicts.committee_labels[c.label] ??
+                        c.label}
                     </div>
                     {/* Sidejob area tags — what the conflict is actually about */}
                     {c.topics.length > 0 && (
@@ -190,7 +191,7 @@ export function ConflictRankedList({
                               fontWeight: 600,
                             }}
                           >
-                            {topic}
+                            {t.common.topic_labels[topic] ?? topic}
                           </span>
                         ))}
                       </div>

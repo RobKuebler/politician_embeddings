@@ -10,7 +10,7 @@ import {
 import {
   ConflictRankedList,
   ConflictHeatmap,
-} from "@/components/charts/AusschuessCharts";
+} from "@/components/charts/AusschussCharts";
 import { ChartSkeleton } from "@/components/ui/ChartSkeleton";
 import { Footer } from "@/components/ui/Footer";
 import { PageHeader } from "@/components/ui/PageHeader";

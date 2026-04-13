@@ -108,7 +108,10 @@ export type Translations = {
     error: string;
     interjection_label: string;
     applause_label: string;
-    type_labels: Record<"Beifall" | "Zwischenruf" | "Lachen" | "Heiterkeit" | "Widerspruch", string>;
+    type_labels: Record<
+      "Beifall" | "Zwischenruf" | "Lachen" | "Heiterkeit" | "Widerspruch",
+      string
+    >;
     rare_reactions_label: string;
     heatmap_row_hint: string;
     heatmap_col_hint: string;
@@ -198,6 +201,7 @@ export type Translations = {
     methodology_l4: string;
     methodology_footer: string;
     sidejob_area_label: string;
+    committee_labels: Record<string, string>;
   };
   ui: {
     menu_open: string;
