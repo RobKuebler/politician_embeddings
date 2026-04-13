@@ -146,6 +146,7 @@ def compute_top_authors(docs: list[dict], top_n: int = 10) -> dict[str, list[dic
     """Find the top-N authors by submission count per party.
 
     Uses autoren_anzeige[].id to deduplicate authors across documents.
+    Falls back to autor_titel as the dedup key when id is absent (older API records).
     Returns {party: [{vorname, nachname, anzahl}, ...]} sorted by anzahl desc.
     """
     # Nested dict: party -> author_id -> {vorname, nachname, anzahl}
@@ -156,7 +157,8 @@ def compute_top_authors(docs: list[dict], top_n: int = 10) -> dict[str, list[dic
         if not party:
             continue
         for author in doc.get("autoren_anzeige", []):
-            author_id = str(author.get("id", ""))
+            # Prefer numeric id; fall back to full name for older records without id.
+            author_id = str(author.get("id", "")) or author.get("autor_titel", "")
             if not author_id:
                 continue
             if author_id not in author_data[party]:

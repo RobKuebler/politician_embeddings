@@ -153,6 +153,19 @@ def test_compute_top_authors_empty():
     assert compute_top_authors([]) == {}
 
 
+def test_compute_top_authors_falls_back_to_name_when_no_id():
+    # Older DIP records lack an id field — autor_titel should be used as dedup key.
+    docs = [
+        _doc("B90/GR", autoren=[{"autor_titel": "Lisa Muster"}]),
+        _doc("B90/GR", autoren=[{"autor_titel": "Lisa Muster"}]),
+        _doc("B90/GR", autoren=[{"autor_titel": "Otto Klein"}]),
+    ]
+    result = compute_top_authors(docs)
+    assert result["Grüne"][0]["nachname"] == "Muster"
+    assert result["Grüne"][0]["anzahl"] == 2
+    assert result["Grüne"][1]["anzahl"] == 1
+
+
 def test_compute_top_authors_sorted_descending():
     docs = [
         _doc("AfD", autoren=[{"id": "1", "autor_titel": "A B"}]),

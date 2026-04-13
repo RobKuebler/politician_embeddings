@@ -8,6 +8,7 @@ import {
   MotionsStatsFile,
   MotionsTypData,
   MotionTitle,
+  MotionAuthor,
   WordFreqEntry,
   SpeakerRecord,
 } from "@/lib/data";
@@ -111,11 +112,23 @@ export default function MotionsPage() {
 
   // Pre-sliced word arrays — stable references so WordCloud memo works and
   // layouts don't restart on every parent render (same pattern as speeches page).
+  // Keys are normalized via stripSoftHyphen so they match the canonical party names
+  // produced by sortParties (which also normalizes aliases like "Grüne" → canonical).
   const wordSlices = useMemo<Record<string, WordFreqEntry[]>>(() => {
     if (!typData) return {};
     const result: Record<string, WordFreqEntry[]> = {};
-    for (const party of Object.keys(typData.word_freq)) {
-      result[party] = typData.word_freq[party].slice(0, 30);
+    for (const [party, words] of Object.entries(typData.word_freq)) {
+      result[stripSoftHyphen(party)] = words.slice(0, 30);
+    }
+    return result;
+  }, [typData]);
+
+  // Top authors keyed by normalized party name — parallel normalization to wordSlices.
+  const topAuthors = useMemo<Record<string, MotionAuthor[]>>(() => {
+    if (!typData) return {};
+    const result: Record<string, MotionAuthor[]> = {};
+    for (const [party, authors] of Object.entries(typData.top_authors)) {
+      result[stripSoftHyphen(party)] = authors;
     }
     return result;
   }, [typData]);
@@ -229,16 +242,16 @@ export default function MotionsPage() {
               const color = getPartyColor(party);
               const words: WordFreqEntry[] = wordSlices[party] ?? [];
               // Reshape to SpeakerRecord[] — wortanzahl_gesamt carries anzahl for bar widths
-              const speakers: SpeakerRecord[] = (
-                typData.top_authors[party] ?? []
-              ).map((a, i) => ({
-                fraktion: party,
-                redner_id: i,
-                vorname: a.vorname,
-                nachname: a.nachname,
-                anzahl_reden: a.anzahl,
-                wortanzahl_gesamt: a.anzahl,
-              }));
+              const speakers: SpeakerRecord[] = (topAuthors[party] ?? []).map(
+                (a, i) => ({
+                  fraktion: party,
+                  redner_id: i,
+                  vorname: a.vorname,
+                  nachname: a.nachname,
+                  anzahl_reden: a.anzahl,
+                  wortanzahl_gesamt: a.anzahl,
+                }),
+              );
               const count =
                 typData.counts_by_party.find(
                   (c) => stripSoftHyphen(c.party) === party,
