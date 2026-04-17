@@ -56,7 +56,7 @@ export function Sidebar() {
       <div className="mx-auto w-10 h-px bg-white/10 mb-[10px]" />
 
       {/* Nav */}
-      <nav className="flex flex-col gap-0.5 px-2 flex-1">
+      <nav className="flex flex-col gap-0.5 px-2 flex-1 overflow-y-auto">
         {NAV_ITEMS.map(({ href, key, icon }) => {
           const active = pathname === href;
           return (
