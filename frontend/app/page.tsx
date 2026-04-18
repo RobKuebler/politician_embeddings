@@ -1,5 +1,5 @@
 "use client";
-import { Piazzolla } from "next/font/google";
+import { piazzolla } from "@/lib/fonts";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Footer } from "@/components/ui/Footer";
@@ -14,13 +14,6 @@ import {
 import { PAGE_META, type PageMeta } from "@/lib/page-meta";
 import { useTranslation, useLanguage } from "@/lib/language-context";
 import type { PageKey } from "@/lib/i18n/types";
-
-const piazzolla = Piazzolla({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["italic", "normal"],
-  display: "swap",
-});
 
 type SectionGroup = { label: string; keys: PageKey[] };
 
@@ -112,20 +105,23 @@ export default function Home() {
       {/* ── Masthead ─────────────────────────────────────────────────── */}
       <div className="mb-8">
         {/* Structural top rule */}
-        <div className="mb-5" style={{ height: 3, background: "#1E1B5E" }} />
+        <div
+          className="mb-5"
+          style={{ height: 3, background: "var(--color-navy)" }}
+        />
 
         {/* Eyebrow row */}
         <div className="flex items-center justify-between mb-2">
           <p
             className="text-[10px] font-extrabold tracking-[0.22em] uppercase"
-            style={{ color: "#7872a8" }}
+            style={{ color: "var(--color-muted)" }}
           >
             {t.home.eyebrow}
           </p>
           {activePeriod && (
             <p
               className="text-[10px] font-extrabold tracking-[0.14em] uppercase"
-              style={{ color: "#7872a8" }}
+              style={{ color: "var(--color-muted)" }}
             >
               {activePeriod.wahlperiode}. {t.home.period_label}
             </p>
@@ -135,7 +131,10 @@ export default function Home() {
         {/* Wordmark — editorial serif */}
         <h1
           className={`${piazzolla.className} font-bold italic leading-none tracking-tight mb-4`}
-          style={{ color: "#1E1B5E", fontSize: "clamp(44px, 6vw, 68px)" }}
+          style={{
+            color: "var(--color-navy)",
+            fontSize: "clamp(44px, 6vw, 68px)",
+          }}
         >
           Parlascanned
         </h1>
@@ -143,25 +142,31 @@ export default function Home() {
         {/* Subtitle */}
         <p
           className="text-[14px] leading-relaxed"
-          style={{ color: "#5a556b", maxWidth: "60ch" }}
+          style={{ color: "var(--color-description)", maxWidth: "60ch" }}
         >
           {t.home.subtitle}
         </p>
 
         {/* Divider */}
-        <div className="mt-6" style={{ height: 1, background: "#dddaf0" }} />
+        <div
+          className="mt-6"
+          style={{ height: 1, background: "var(--color-lavender)" }}
+        />
       </div>
 
       {/* ── Stats strip ──────────────────────────────────────────────── */}
       <div
         className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 pb-8"
-        style={{ borderBottom: "1px solid #dddaf0" }}
+        style={{ borderBottom: "1px solid var(--color-lavender)" }}
       >
         {statItems.map(({ value, label }) => (
           <div key={label} className="pt-1">
             <div
               className="font-black tabular-nums leading-none mb-1.5"
-              style={{ color: "#1E1B5E", fontSize: "clamp(24px, 3vw, 34px)" }}
+              style={{
+                color: "var(--color-navy)",
+                fontSize: "clamp(24px, 3vw, 34px)",
+              }}
             >
               {value != null ? (
                 value.toLocaleString(language)
@@ -179,7 +184,7 @@ export default function Home() {
             </div>
             <div
               className="text-[10px] font-extrabold tracking-[0.14em] uppercase"
-              style={{ color: "#7872a8" }}
+              style={{ color: "var(--color-muted)" }}
             >
               {label}
             </div>
@@ -195,101 +200,113 @@ export default function Home() {
             <div className="flex items-center gap-3 mb-5">
               <span
                 className="text-[9px] font-extrabold tracking-[0.25em] uppercase shrink-0"
-                style={{ color: "#7872a8" }}
+                style={{ color: "var(--color-muted)" }}
               >
                 {label}
               </span>
-              <div style={{ flex: 1, height: 1, background: "#dddaf0" }} />
+              <div
+                style={{
+                  flex: 1,
+                  height: 1,
+                  background: "var(--color-lavender)",
+                }}
+              />
             </div>
 
-            {/* Card grid */}
+            {/* Card grid — first card per section is a lead (full-width, larger title). */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {items.map(({ href, color, key, itemIndex }) => {
-                const pageTrans = t.pages[key];
-                const displayNum = String(itemIndex + 1).padStart(2, "0");
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className="group relative bg-white rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-                    style={{
-                      border: "1px solid #dddaf0",
-                      boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    {/* Decorative issue number — large, light opacity */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute pointer-events-none select-none font-black"
+              {items.map(
+                ({ href, color, key, itemIndex }, sectionItemIndex) => {
+                  const isLead = sectionItemIndex === 0;
+                  const pageTrans = t.pages[key];
+                  const displayNum = String(itemIndex + 1).padStart(2, "0");
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`group relative bg-white rounded-xl overflow-hidden cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${isLead ? "md:col-span-2" : ""}`}
                       style={{
-                        top: -10,
-                        right: 8,
-                        fontSize: 108,
-                        lineHeight: 1,
-                        color,
-                        opacity: 0.06,
+                        border: "1px solid var(--color-lavender)",
+                        boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
                       }}
                     >
-                      {displayNum}
-                    </span>
+                      {/* Decorative issue number — large, light opacity */}
+                      <span
+                        aria-hidden="true"
+                        className="absolute pointer-events-none select-none font-black"
+                        style={{
+                          top: -10,
+                          right: 8,
+                          fontSize: isLead ? 128 : 108,
+                          lineHeight: 1,
+                          color,
+                          opacity: 0.06,
+                        }}
+                      >
+                        {displayNum}
+                      </span>
 
-                    <div className="relative z-10 flex flex-col h-full p-5 md:p-6">
-                      {/* Category tag */}
-                      <div className="flex items-center gap-2 mb-3">
-                        <span
-                          className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ background: color }}
-                        />
-                        <span
-                          className="text-[10px] font-extrabold tracking-[0.18em] uppercase"
+                      <div className="relative z-10 flex flex-col h-full p-5 md:p-6">
+                        {/* Category tag */}
+                        <div className="flex items-center gap-2 mb-3">
+                          <span
+                            className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
+                            style={{ background: color }}
+                          />
+                          <span
+                            className="text-[10px] font-extrabold tracking-[0.18em] uppercase"
+                            style={{ color }}
+                          >
+                            {pageTrans.label}
+                          </span>
+                        </div>
+
+                        {/* Title in editorial serif */}
+                        <h2
+                          className={`${piazzolla.className} font-bold italic leading-tight mb-3 flex-1`}
+                          style={{
+                            fontSize: isLead ? 26 : 20,
+                            color: "var(--color-navy)",
+                          }}
+                        >
+                          {pageTrans.title}
+                        </h2>
+
+                        {/* Description */}
+                        <p
+                          className="text-[13px] leading-relaxed"
+                          style={{ color: "var(--color-description)" }}
+                        >
+                          {pageTrans.description}
+                        </p>
+
+                        {/* CTA */}
+                        <div
+                          className="mt-4 flex items-center gap-1.5"
                           style={{ color }}
                         >
-                          {pageTrans.label}
-                        </span>
+                          <span className="text-[10px] font-extrabold tracking-[0.15em] uppercase">
+                            {t.home.cta}
+                          </span>
+                          <svg
+                            width="10"
+                            height="10"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="group-hover:translate-x-0.5 transition-transform duration-150"
+                          >
+                            <path d="m9 18 6-6-6-6" />
+                          </svg>
+                        </div>
                       </div>
-
-                      {/* Title in editorial serif */}
-                      <h2
-                        className={`${piazzolla.className} font-bold italic leading-tight mb-3 flex-1`}
-                        style={{ fontSize: 20, color: "#1E1B5E" }}
-                      >
-                        {pageTrans.title}
-                      </h2>
-
-                      {/* Description */}
-                      <p
-                        className="text-[13px] leading-relaxed"
-                        style={{ color: "#5a556b" }}
-                      >
-                        {pageTrans.description}
-                      </p>
-
-                      {/* CTA */}
-                      <div
-                        className="mt-4 flex items-center gap-1.5"
-                        style={{ color }}
-                      >
-                        <span className="text-[10px] font-extrabold tracking-[0.15em] uppercase">
-                          {t.home.cta}
-                        </span>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="group-hover:translate-x-0.5 transition-transform duration-150"
-                        >
-                          <path d="m9 18 6-6-6-6" />
-                        </svg>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                },
+              )}
             </div>
           </section>
         ))}

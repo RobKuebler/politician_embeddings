@@ -94,7 +94,7 @@ export function ConflictRankedList({
             <span
               style={{
                 fontSize: 11,
-                color: "#7872a8",
+                color: "#524d8a",
                 width: 18,
                 flexShrink: 0,
                 paddingTop: 2,
@@ -171,7 +171,7 @@ export function ConflictRankedList({
                         <span
                           style={{
                             fontSize: 10,
-                            color: "#9c97b8",
+                            color: "#6b6584",
                             letterSpacing: "0.04em",
                             fontWeight: 500,
                             flexShrink: 0,

@@ -169,7 +169,7 @@ export function GroupedPartyBars({
                   ? {
                       fontSize: 10,
                       fontWeight: 700,
-                      color: "#7872a8",
+                      color: "#524d8a",
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
                       marginBottom: 10,

@@ -43,7 +43,9 @@ export default function SidejobsPage() {
     ? parseInt(activePeriod.label.match(/\d{4}$/)?.[0] ?? "0", 10)
     : 0;
   const isPeriodOngoing = labelEndYear > new Date().getFullYear();
-  const incomeSubtitle = isPeriodOngoing ? t.sidejobs.hero_income_ongoing : t.sidejobs.hero_income_closed;
+  const incomeSubtitle = isPeriodOngoing
+    ? t.sidejobs.hero_income_ongoing
+    : t.sidejobs.hero_income_closed;
 
   const totalIncome = sjData
     ? sjData.jobs.reduce((s, j) => s + j.prorated_income, 0)
@@ -88,40 +90,13 @@ export default function SidejobsPage() {
     <>
       <PageHeader color={META.color} {...t.pages.sidejobs} />
 
-      {/* Hero card — total income */}
+      {/* Hero strip — key stats, editorial layout */}
       <div
-        className="rounded-xl mb-6 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #1E1B5E 0%, #2E2A7A 60%, #3D3499 100%)",
-          boxShadow: "0 4px 24px rgba(30,27,94,0.18)",
-        }}
+        className="rounded-xl mb-6"
+        style={{ background: "var(--color-navy)" }}
       >
-        <div className="flex items-center gap-5 p-5 md:p-6">
-          {/* Money-bag illustration */}
-          <div
-            style={{
-              flexShrink: 0,
-              width: 64,
-              height: 64,
-              borderRadius: "50%",
-              background: "#E67E22",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 40,
-              fontWeight: 900,
-              color: "#fff",
-              fontFamily: "serif",
-              boxShadow: "0 2px 12px rgba(230,126,34,0.4)",
-            }}
-            aria-hidden
-          >
-            €
-          </div>
-
-          {/* Stats */}
-          <div className="min-w-0 flex flex-col gap-4 flex-1">
+        <div className="p-5 md:p-6">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-1">
             {/* Stat 1: total income */}
             <div>
               <p
@@ -131,7 +106,7 @@ export default function SidejobsPage() {
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.5)",
-                  marginBottom: 2,
+                  marginBottom: 4,
                 }}
               >
                 {t.sidejobs.hero_total_label}
@@ -142,7 +117,7 @@ export default function SidejobsPage() {
                   fontWeight: 900,
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
-                  color: "#FFFFFF",
+                  color: "#fff",
                   fontVariantNumeric: "tabular-nums",
                   transition: "font-size 0.2s",
                 }}
@@ -151,9 +126,9 @@ export default function SidejobsPage() {
                   <span
                     style={{
                       display: "inline-block",
-                      width: 160,
+                      width: 140,
                       height: 32,
-                      borderRadius: 6,
+                      borderRadius: 4,
                       background: "rgba(255,255,255,0.12)",
                       verticalAlign: "middle",
                     }}
@@ -176,53 +151,85 @@ export default function SidejobsPage() {
               <p
                 style={{
                   fontSize: 12,
-                  color: "rgba(255,255,255,0.45)",
-                  marginTop: 2,
+                  color: "rgba(255,255,255,0.75)",
+                  marginTop: 4,
                 }}
               >
                 {incomeSubtitle}
               </p>
             </div>
 
-            {/* Divider */}
-            <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
-
-            {/* Stat 2: coverage */}
-            {loading ? (
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 140,
-                  height: 14,
-                  borderRadius: 4,
-                  background: "rgba(255,255,255,0.12)",
-                }}
-              />
-            ) : sjData ? (
+            {/* Stat 2: politicians tracked */}
+            <div>
               <p
                 style={{
-                  fontSize: 13,
-                  color: "rgba(255,255,255,0.45)",
-                  lineHeight: 1.4,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.5)",
+                  marginBottom: 4,
                 }}
               >
-                {t.sidejobs.hero_coverage
-                  .replace("{pct}", String(Math.round((sjData.coverage.with_amount / sjData.coverage.total) * 100)))
-                  .replace("{with_amount}", sjData.coverage.with_amount.toLocaleString(language))
-                  .replace("{total}", sjData.coverage.total.toLocaleString(language))}
+                {t.sidejobs.coverage_title}
               </p>
-            ) : null}
+              {loading ? (
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 80,
+                    height: 32,
+                    borderRadius: 4,
+                    background: "rgba(255,255,255,0.12)",
+                    verticalAlign: "middle",
+                  }}
+                />
+              ) : sjData ? (
+                <>
+                  <p
+                    style={{
+                      fontSize: 34,
+                      fontWeight: 900,
+                      letterSpacing: "-0.02em",
+                      lineHeight: 1.1,
+                      color: "#fff",
+                      fontVariantNumeric: "tabular-nums",
+                    }}
+                  >
+                    {sjData.coverage.total.toLocaleString(language)}
+                  </p>
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "rgba(255,255,255,0.75)",
+                      marginTop: 4,
+                    }}
+                  >
+                    {t.sidejobs.hero_coverage
+                      .replace(
+                        "{pct}",
+                        String(
+                          Math.round(
+                            (sjData.coverage.with_amount /
+                              sjData.coverage.total) *
+                              100,
+                          ),
+                        ),
+                      )
+                      .replace(
+                        "{with_amount}",
+                        sjData.coverage.with_amount.toLocaleString(language),
+                      )
+                      .replace(
+                        "{total}",
+                        sjData.coverage.total.toLocaleString(language),
+                      )}
+                  </p>
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
-
-        {/* Decorative stripe at bottom */}
-        <div
-          style={{
-            height: 3,
-            background:
-              "linear-gradient(90deg, #E67E22 0%, #F39C12 50%, #E67E22 100%)",
-          }}
-        />
       </div>
 
       {loading ? (
@@ -241,11 +248,11 @@ export default function SidejobsPage() {
           >
             <h2
               className="font-extrabold text-[15px] mb-1"
-              style={{ color: "#1E1B5E" }}
+              style={{ color: "var(--color-navy)" }}
             >
               {t.sidejobs.coverage_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[var(--color-muted)] mb-4">
               {t.sidejobs.coverage_subtitle}
             </p>
             <SidejobCoverageByPartyChart
@@ -260,11 +267,11 @@ export default function SidejobsPage() {
           >
             <h2
               className="font-extrabold text-[15px] mb-1"
-              style={{ color: "#1E1B5E" }}
+              style={{ color: "var(--color-navy)" }}
             >
               {t.sidejobs.income_category_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[var(--color-muted)] mb-4">
               {t.sidejobs.income_category_subtitle}
             </p>
             <IncomeByCategoryChart jobs={sjData.jobs} parties={parties} />
@@ -276,11 +283,11 @@ export default function SidejobsPage() {
           >
             <h2
               className="font-extrabold text-[15px] mb-1"
-              style={{ color: "#1E1B5E" }}
+              style={{ color: "var(--color-navy)" }}
             >
               {t.sidejobs.topics_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[var(--color-muted)] mb-4">
               {t.sidejobs.topics_subtitle}
             </p>
             <TopTopicsChart jobs={sjData.jobs} parties={parties} />
@@ -292,11 +299,11 @@ export default function SidejobsPage() {
           >
             <h2
               className="font-extrabold text-[15px] mb-1"
-              style={{ color: "#1E1B5E" }}
+              style={{ color: "var(--color-navy)" }}
             >
               {t.sidejobs.top_earners_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[var(--color-muted)] mb-4">
               {t.sidejobs.top_earners_subtitle}
             </p>
             <TopEarnersChart

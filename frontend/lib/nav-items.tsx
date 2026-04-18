@@ -23,7 +23,7 @@ export interface NavGroup {
 export const NAV_GROUPS: NavGroup[] = [
   {
     label: { de: "Gesetzgebung", en: "Legislative" },
-    color: "#4C46D9",
+    color: "#a8a5f0",
     items: [
       {
         href: "/vote-map",
@@ -88,7 +88,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: { de: "Parteien", en: "Parties" },
-    color: "#0f766e",
+    color: "#5bbdb5",
     items: [
       {
         href: "/comments",
@@ -153,7 +153,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: { de: "Transparenz", en: "Transparency" },
-    color: "#b45309",
+    color: "#f0a83c",
     items: [
       {
         href: "/sidejobs",

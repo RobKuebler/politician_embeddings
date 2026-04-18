@@ -85,7 +85,7 @@ export default function PartyProfilePage() {
             >
               {t.party_profile.age_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.party_profile.age_subtitle}
             </p>
             <AgeDistribution data={data.age} parties={parties} />
@@ -101,7 +101,7 @@ export default function PartyProfilePage() {
             >
               {t.party_profile.gender_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.party_profile.gender_subtitle}
             </p>
             <GenderChart data={data.sex} parties={parties} />
@@ -117,7 +117,7 @@ export default function PartyProfilePage() {
             >
               {t.party_profile.occupation_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.party_profile.occupation_subtitle}
             </p>
             <DeviationHeatmap
@@ -136,12 +136,14 @@ export default function PartyProfilePage() {
             >
               {t.party_profile.education_field_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.party_profile.education_field_subtitle}
             </p>
             <DeviationHeatmap
               pivot={data.education_field}
-              rowLabel={(cat) => t.party_profile.education_field_labels[cat] ?? cat}
+              rowLabel={(cat) =>
+                t.party_profile.education_field_labels[cat] ?? cat
+              }
             />
           </section>
 
@@ -155,12 +157,14 @@ export default function PartyProfilePage() {
             >
               {t.party_profile.education_degree_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.party_profile.education_degree_subtitle}
             </p>
             <DeviationHeatmap
               pivot={data.education_degree}
-              rowLabel={(cat) => t.party_profile.education_degree_labels[cat] ?? cat}
+              rowLabel={(cat) =>
+                t.party_profile.education_degree_labels[cat] ?? cat
+              }
             />
           </section>
         </div>

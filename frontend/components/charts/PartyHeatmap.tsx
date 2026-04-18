@@ -13,7 +13,17 @@
  * Row height and colour scales are fixed — not overridable by callers.
  */
 import { useRef, useEffect, useState } from "react";
-import * as d3 from "d3";
+import {
+  scaleBand,
+  scaleLinear,
+  scaleSequential,
+  interpolateRgb,
+  bisectLeft,
+  axisLeft,
+  select,
+  lab,
+  pointer,
+} from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import {
   CHART_FONT_FAMILY,
@@ -122,9 +132,8 @@ export function PartyHeatmap({
     const bodyHeight = ROW_H * rows.length;
     const totalH = HEADER_H + bodyHeight;
 
-    const xScale = d3.scaleBand().domain(cols).range([0, iW]).padding(0.05);
-    const yScale = d3
-      .scaleBand()
+    const xScale = scaleBand().domain(cols).range([0, iW]).padding(0.05);
+    const yScale = scaleBand()
       .domain(rows)
       .range([0, bodyHeight])
       .padding(0.05);
@@ -144,8 +153,7 @@ export function PartyHeatmap({
         absVals.length - 1,
       );
       maxAbs = Math.max(absVals[p95] ?? absVals[absVals.length - 1] ?? 1, 1);
-      const scale = d3
-        .scaleLinear<string>()
+      const scale = scaleLinear<string>()
         .domain([-maxAbs, 0, maxAbs])
         .range([DIVERGING_LOW, DIVERGING_MID, DIVERGING_HIGH])
         .clamp(true);
@@ -153,10 +161,10 @@ export function PartyHeatmap({
     } else if (seqScale === "quantile") {
       // Rank-based: colour reflects percentile position, not raw value.
       const sorted = [...allValues].sort((a, b) => a - b);
-      const interpolator = d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
+      const interpolator = interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
       colorFn = (v: number) => {
         if (sorted.length <= 1) return interpolator(0);
-        const rank = d3.bisectLeft(sorted, v) / (sorted.length - 1);
+        const rank = bisectLeft(sorted, v) / (sorted.length - 1);
         return interpolator(Math.min(rank, 1));
       };
     } else if (seqScale === "linear") {
@@ -170,8 +178,9 @@ export function PartyHeatmap({
         sorted[capIdx] ?? sorted[sorted.length - 1] ?? 1,
         1,
       );
-      const scale = d3
-        .scaleSequential(d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH))
+      const scale = scaleSequential(
+        interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH),
+      )
         .domain([0, domainMax])
         .clamp(true);
       colorFn = scale;
@@ -182,7 +191,7 @@ export function PartyHeatmap({
       const maxVal = Math.max(...allValues, 2);
       const logMin = Math.log(minVal);
       const logMax = Math.log(maxVal);
-      const interpolator = d3.interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
+      const interpolator = interpolateRgb(SEQ_DEFAULT_LOW, SEQ_DEFAULT_HIGH);
       colorFn = (v: number) => {
         const t = (Math.log(Math.max(v, minVal)) - logMin) / (logMax - logMin);
         return interpolator(Math.min(Math.max(t, 0), 1));
@@ -190,8 +199,8 @@ export function PartyHeatmap({
     }
 
     // ── SVG setup ───────────────────────────────────────────────────────────
-    const tooltip = d3.select(tooltipRef.current!);
-    const svg = d3.select(svgRef.current);
+    const tooltip = select(tooltipRef.current!);
+    const svg = select(svgRef.current);
     svg.selectAll("*").remove();
     svg.attr("width", ML + iW + MR).attr("height", totalH);
 
@@ -238,7 +247,7 @@ export function PartyHeatmap({
             .select("rect")
             .style("cursor", "default")
             .on("mousemove", (event) => {
-              const [px, py] = d3.pointer(event, containerRef.current!);
+              const [px, py] = pointer(event, containerRef.current!);
               positionTooltip(
                 tooltip,
                 containerRef.current!,
@@ -255,7 +264,7 @@ export function PartyHeatmap({
           .select("rect")
           .style("cursor", "pointer")
           .on("mousemove", (event) => {
-            const [px, py] = d3.pointer(event, containerRef.current!);
+            const [px, py] = pointer(event, containerRef.current!);
             positionTooltip(tooltip, containerRef.current!, px, py, shortLabel);
           })
           .on("mouseleave", () => tooltip.style("opacity", "0"));
@@ -266,7 +275,11 @@ export function PartyHeatmap({
     svg
       .append("g")
       .attr("transform", `translate(${ML}, ${HEADER_H})`)
-      .call(d3.axisLeft(yScale).tickSize(0).tickFormat((d) => rowLabel ? rowLabel(String(d)) : String(d)))
+      .call(
+        axisLeft(yScale)
+          .tickSize(0)
+          .tickFormat((d) => (rowLabel ? rowLabel(String(d)) : String(d))),
+      )
       .call((ax) => ax.select(".domain").remove())
       .call(styleAxisText)
       .call((ax) =>
@@ -300,7 +313,7 @@ export function PartyHeatmap({
           .attr("stroke-width", 1)
           .on("mousemove", (event) => {
             if (!tooltipHtml) return;
-            const [px, py] = d3.pointer(event, containerRef.current!);
+            const [px, py] = pointer(event, containerRef.current!);
             positionTooltip(
               tooltip,
               containerRef.current!,
@@ -320,7 +333,7 @@ export function PartyHeatmap({
               ? Math.abs(val) > maxAbs * 0.5
                 ? "#fff"
                 : "#333"
-              : d3.lab(fill).l < 50
+              : lab(fill).l < 50
                 ? "#fff"
                 : "#333";
 
@@ -361,7 +374,12 @@ export function PartyHeatmap({
   ]);
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
+    <div
+      ref={containerRef}
+      role="img"
+      aria-label="Heatmap: Parteienvergleich nach Kennzahl"
+      style={{ position: "relative" }}
+    >
       <div style={{ overflowX: "auto" }}>
         <svg ref={svgRef} style={{ display: "block", overflow: "visible" }} />
       </div>
@@ -389,7 +407,7 @@ export function PartyHeatmap({
                   flexShrink: 0,
                 }}
               />
-              <span style={{ fontSize: 11, color: "#7872a8" }}>{name}</span>
+              <span style={{ fontSize: 11, color: "#524d8a" }}>{name}</span>
             </span>
           ))}
         </div>

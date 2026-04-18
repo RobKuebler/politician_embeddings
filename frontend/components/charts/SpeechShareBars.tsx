@@ -44,7 +44,7 @@ export function SpeechShareBars({ speechStats }: Props) {
       >
         {t.speeches.speech_share_title}
       </h2>
-      <p className="text-[12px] text-[#7872a8] mb-4">
+      <p className="text-[12px] text-[#524d8a] mb-4">
         {t.speeches.speech_share_subtitle}
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>

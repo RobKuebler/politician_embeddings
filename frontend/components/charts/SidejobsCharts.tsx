@@ -262,9 +262,9 @@ export function SidejobCoverageByPartyChart({
   const t = useTranslation();
 
   const LEGEND = [
-    { label: t.sidejobs.coverage_legend_income,    style: "full"  as const },
+    { label: t.sidejobs.coverage_legend_income, style: "full" as const },
     { label: t.sidejobs.coverage_legend_no_amount, style: "faded" as const },
-    { label: t.sidejobs.coverage_legend_none,      style: "none"  as const },
+    { label: t.sidejobs.coverage_legend_none, style: "none" as const },
   ];
 
   const withIncome = new Set<number>();
@@ -329,7 +329,7 @@ export function SidejobCoverageByPartyChart({
                   display: "inline-block",
                 }}
               />
-              <span style={{ fontSize: 11, color: "#7872a8" }}>{label}</span>
+              <span style={{ fontSize: 11, color: "#524d8a" }}>{label}</span>
             </span>
           );
         })}

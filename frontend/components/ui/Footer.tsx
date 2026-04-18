@@ -2,7 +2,7 @@
 import { useTranslation } from "@/lib/language-context";
 
 const Dot = () => (
-  <span className="select-none" style={{ color: "#dddaf0" }}>
+  <span className="select-none" style={{ color: "var(--color-lavender)" }}>
     ·
   </span>
 );
@@ -10,20 +10,21 @@ const Dot = () => (
 export function Footer() {
   const t = useTranslation();
   return (
-    <footer className="mt-16" style={{ borderTop: "1px solid #dddaf0" }}>
+    <footer
+      className="mt-16"
+      style={{ borderTop: "1px solid var(--color-lavender)" }}
+    >
       <div
         className="py-7 flex flex-col items-center gap-2"
-        style={{ fontSize: 11, color: "#a09ab8" }}
+        style={{ fontSize: 11, color: "var(--color-muted)" }}
       >
         <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1">
           <span>
             {t.ui.footer_by}{" "}
             <a
               href="https://robkuebler.github.io"
-              className="transition-colors duration-150"
-              style={{ color: "#7872a8" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#1E1B5E")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#7872a8")}
+              className="transition-colors duration-150 hover:text-[var(--color-navy)]"
+              style={{ color: "var(--color-muted)" }}
             >
               Robert Kübler
             </a>
@@ -31,10 +32,8 @@ export function Footer() {
           <Dot />
           <a
             href="https://github.com/RobKuebler/parlascanned"
-            className="flex items-center gap-1 transition-colors duration-150"
-            style={{ color: "#a09ab8" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#1E1B5E")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#a09ab8")}
+            className="flex items-center gap-1 transition-colors duration-150 hover:text-[var(--color-navy)]"
+            style={{ color: "var(--color-muted)" }}
           >
             <svg
               viewBox="0 0 24 24"
@@ -51,22 +50,21 @@ export function Footer() {
           <span>{t.ui.footer_data}</span>
           <a
             href="https://www.abgeordnetenwatch.de"
-            className="transition-colors duration-150"
-            style={{ color: "#a09ab8" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#1E1B5E")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#a09ab8")}
+            className="transition-colors duration-150 hover:text-[var(--color-navy)]"
+            style={{ color: "var(--color-muted)" }}
           >
             abgeordnetenwatch.de
           </a>
-          <span className="select-none" style={{ color: "#dddaf0" }}>
+          <span
+            className="select-none"
+            style={{ color: "var(--color-lavender)" }}
+          >
             &amp;
           </span>
           <a
             href="https://dip.bundestag.de"
-            className="transition-colors duration-150"
-            style={{ color: "#a09ab8" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#1E1B5E")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#a09ab8")}
+            className="transition-colors duration-150 hover:text-[var(--color-navy)]"
+            style={{ color: "var(--color-muted)" }}
           >
             DIP Bundestag
           </a>

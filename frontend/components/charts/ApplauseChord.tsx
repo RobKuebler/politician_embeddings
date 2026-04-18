@@ -9,7 +9,17 @@
  * Hover a party arc to highlight only its chords.
  */
 import { useRef, useEffect, useCallback } from "react";
-import * as d3 from "d3";
+import {
+  select,
+  chord,
+  descending,
+  arc,
+  ribbon,
+  pointer,
+  type ChordGroup,
+  type Chord,
+  type ChordSubgroup,
+} from "d3";
 import {
   CHART_FONT_FAMILY,
   getPartyColor,
@@ -62,43 +72,32 @@ export default function ApplauseChord({ data }: Props) {
     const cx = width / 2;
     const cy = size / 2 + TOP_PAD;
 
-    const sel = d3.select(svg);
+    const sel = select(svg);
     sel.selectAll("*").remove();
     sel.attr("width", width).attr("height", svgHeight);
 
     const g = sel.append("g").attr("transform", `translate(${cx},${cy})`);
-    const tip = d3.select(tooltip);
+    const tip = select(tooltip);
 
     // ── Chord layout ───────────────────────────────────────────────────────
-    const chordLayout = d3
-      .chord()
-      .padAngle(PAD_ANGLE)
-      .sortSubgroups(d3.descending);
+    const chordLayout = chord().padAngle(PAD_ANGLE).sortSubgroups(descending);
     const chords = chordLayout(matrix);
 
-    const arcGen = d3
-      .arc<d3.ChordGroup>()
-      .innerRadius(innerR)
-      .outerRadius(outerR);
+    const arcGen = arc<ChordGroup>().innerRadius(innerR).outerRadius(outerR);
 
-    const ribbonGen = d3
-      .ribbon<d3.Chord, d3.ChordSubgroup>()
-      .radius(innerR - 1);
+    const ribbonGen = ribbon<Chord, ChordSubgroup>().radius(innerR - 1);
 
     // ── Helper: set opacity on all chords given a highlighted party index ──
     function highlightParty(idx: number | null) {
-      g.selectAll<SVGPathElement, d3.Chord>("path.chord").attr(
-        "opacity",
-        (d) => {
-          if (idx === null) return 0.65;
-          return d.source.index === idx || d.target.index === idx ? 0.85 : 0.08;
-        },
-      );
-      g.selectAll<SVGPathElement, d3.ChordGroup>("path.arc").attr(
+      g.selectAll<SVGPathElement, Chord>("path.chord").attr("opacity", (d) => {
+        if (idx === null) return 0.65;
+        return d.source.index === idx || d.target.index === idx ? 0.85 : 0.08;
+      });
+      g.selectAll<SVGPathElement, ChordGroup>("path.arc").attr(
         "opacity",
         (d) => (idx === null ? 1 : d.index === idx ? 1 : 0.35),
       );
-      g.selectAll<SVGTextElement, d3.ChordGroup>("text.arc-label").attr(
+      g.selectAll<SVGTextElement, ChordGroup>("text.arc-label").attr(
         "opacity",
         (d) => (idx === null ? 1 : d.index === idx ? 1 : 0.35),
       );
@@ -107,7 +106,7 @@ export default function ApplauseChord({ data }: Props) {
     // ── Arcs ───────────────────────────────────────────────────────────────
     const arcGroup = g
       .append("g")
-      .selectAll<SVGGElement, d3.ChordGroup>("g")
+      .selectAll<SVGGElement, ChordGroup>("g")
       .data(chords.groups)
       .join("g");
 
@@ -124,13 +123,13 @@ export default function ApplauseChord({ data }: Props) {
         const party = parties[d.index];
         const given = matrix[d.index].reduce((s, v) => s + v, 0);
         const received = matrix.reduce((s, row) => s + row[d.index], 0);
-        const [px, py] = d3.pointer(event, container);
+        const [px, py] = pointer(event, container);
         positionTooltip(
           tip,
           container,
           px,
           py,
-          `<strong>${getPartyShortLabel(party)}</strong><br>${t.comments.chord_claps_for}${fmt(given - matrix[d.index][d.index])}<br>${t.comments.chord_receives}${fmt(received - matrix[d.index][d.index])}<br><span style="color:#aaa">${t.comments.chord_self_applause}${fmt(matrix[d.index][d.index])}</span>`,
+          `<strong>${getPartyShortLabel(party)}</strong><br>${t.comments.chord_claps_for}${fmt(given - matrix[d.index][d.index])}<br>${t.comments.chord_receives}${fmt(received - matrix[d.index][d.index])}<br><span style="color:#666">${t.comments.chord_self_applause}${fmt(matrix[d.index][d.index])}</span>`,
         );
       })
       .on("mouseleave", () => {
@@ -140,7 +139,7 @@ export default function ApplauseChord({ data }: Props) {
 
     // Tick marks on each arc
     arcGroup.each(function (d) {
-      const group = d3.select(this);
+      const group = select(this);
       const angleSpan = d.endAngle - d.startAngle;
       const nTicks = Math.max(1, Math.floor(d.value / TICK_STEP));
       const step = angleSpan / nTicks;
@@ -186,7 +185,7 @@ export default function ApplauseChord({ data }: Props) {
 
     // ── Chords (ribbons) ───────────────────────────────────────────────────
     g.append("g")
-      .selectAll<SVGPathElement, d3.Chord>("path.chord")
+      .selectAll<SVGPathElement, Chord>("path.chord")
       .data(chords)
       .join("path")
       .attr("class", "chord")
@@ -201,7 +200,7 @@ export default function ApplauseChord({ data }: Props) {
         const tgt = parties[d.target.index];
         const fwd = matrix[d.source.index][d.target.index];
         const rev = matrix[d.target.index][d.source.index];
-        const [px, py] = d3.pointer(event, container);
+        const [px, py] = pointer(event, container);
         positionTooltip(
           tip,
           container,
@@ -220,7 +219,12 @@ export default function ApplauseChord({ data }: Props) {
   }, [draw]);
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
+    <div
+      ref={containerRef}
+      role="img"
+      aria-label="Chord-Diagramm: Beifall zwischen Parteien im Plenum"
+      style={{ position: "relative" }}
+    >
       <svg ref={svgRef} style={{ display: "block" }} />
       <ChartTooltip tooltipRef={tooltipRef} maxWidth={220} zIndex={50} />
     </div>

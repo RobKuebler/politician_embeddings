@@ -50,7 +50,7 @@ function Section({
         <p
           style={{
             fontSize: "var(--t-small)",
-            color: "#7872a8",
+            color: "#524d8a",
             marginBottom: 16,
           }}
         >

@@ -1,6 +1,20 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
-import * as d3 from "d3";
+import {
+  select,
+  extent,
+  scaleLinear,
+  zoom as d3Zoom,
+  brush as d3Brush,
+  polygonContains,
+  pointer,
+  zoomIdentity,
+  type ZoomTransform,
+  type ScaleLinear,
+  type ZoomBehavior,
+  type BrushBehavior,
+  type Selection,
+} from "d3";
 import { EmbeddingPoint, Politician, stripSoftHyphen } from "@/lib/data";
 import {
   DARK_FILL_PARTY,
@@ -52,11 +66,11 @@ export function VoteMapScatter({
   const onClearAllRef = useLatestRef(onClearAll);
 
   // D3 state shared across effects
-  const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
-  const xScaleRef = useRef<d3.ScaleLinear<number, number> | null>(null);
-  const yScaleRef = useRef<d3.ScaleLinear<number, number> | null>(null);
-  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
-  const brushRef = useRef<d3.BrushBehavior<unknown> | null>(null);
+  const transformRef = useRef<ZoomTransform>(zoomIdentity);
+  const xScaleRef = useRef<ScaleLinear<number, number> | null>(null);
+  const yScaleRef = useRef<ScaleLinear<number, number> | null>(null);
+  const zoomRef = useRef<ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const brushRef = useRef<BrushBehavior<unknown> | null>(null);
   const brushGRef = useRef<SVGGElement | null>(null);
   const allPointsRef = useRef<EmbeddingPoint[]>([]);
 
@@ -77,7 +91,7 @@ export function VoteMapScatter({
   useEffect(() => {
     if (!width || !svgRef.current) return;
 
-    const svg = d3.select(svgRef.current);
+    const svg = select(svgRef.current);
     svg.selectAll("*").remove();
 
     const iW = width - M.left - M.right;
@@ -85,16 +99,14 @@ export function VoteMapScatter({
     svg.attr("width", width).attr("height", height);
 
     // Compute scales from embedding extents
-    const xExt = d3.extent(embeddings, (d) => d.x) as [number, number];
-    const yExt = d3.extent(embeddings, (d) => d.y) as [number, number];
+    const xExt = extent(embeddings, (d) => d.x) as [number, number];
+    const yExt = extent(embeddings, (d) => d.y) as [number, number];
     const xPad = (xExt[1] - xExt[0]) * 0.05;
     const yPad = (yExt[1] - yExt[0]) * 0.05;
-    const xScale = d3
-      .scaleLinear()
+    const xScale = scaleLinear()
       .domain([xExt[0] - xPad, xExt[1] + xPad])
       .range([0, iW]);
-    const yScale = d3
-      .scaleLinear()
+    const yScale = scaleLinear()
       .domain([yExt[0] - yPad, yExt[1] + yPad])
       .range([iH, 0]);
     xScaleRef.current = xScale;
@@ -187,17 +199,17 @@ export function VoteMapScatter({
         .on("mousemove", (event, d) => {
           const pol = polMap.get(d.politician_id);
           if (!pol) return;
-          const [px, py] = d3.pointer(event, containerRef.current!);
+          const [px, py] = pointer(event, containerRef.current!);
           positionTooltip(
-            d3.select(tooltipRef.current!),
+            select(tooltipRef.current!),
             containerRef.current!,
             px,
             py,
-            `<b>${pol.name}</b><br/><span style="color:#bbb">${getPartyShortLabel(pol.party)}</span>`,
+            `<b>${pol.name}</b><br/><span style="color:#555">${getPartyShortLabel(pol.party)}</span>`,
           );
         })
         .on("mouseleave", () =>
-          d3.select(tooltipRef.current!).style("opacity", "0"),
+          select(tooltipRef.current!).style("opacity", "0"),
         )
         .on("click", (event, d) => {
           if (modeRef.current !== "pan") return;
@@ -280,9 +292,9 @@ export function VoteMapScatter({
           }
         })
         .on("mousemove", (event) => {
-          const [px, py] = d3.pointer(event, containerRef.current!);
+          const [px, py] = pointer(event, containerRef.current!);
           positionTooltip(
-            d3.select(tooltipRef.current!),
+            select(tooltipRef.current!),
             containerRef.current!,
             px,
             py,
@@ -290,7 +302,7 @@ export function VoteMapScatter({
           );
         })
         .on("mouseleave", () =>
-          d3.select(tooltipRef.current!).style("opacity", "0"),
+          select(tooltipRef.current!).style("opacity", "0"),
         );
     }
 
@@ -303,8 +315,7 @@ export function VoteMapScatter({
     });
 
     // Zoom behavior for pan mode
-    const zoom = d3
-      .zoom<SVGSVGElement, unknown>()
+    const zoom = d3Zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.8, 20])
       .on("zoom", (event) => {
         transformRef.current = event.transform;
@@ -325,7 +336,7 @@ export function VoteMapScatter({
         svg
           .selectAll<SVGTextElement, unknown>(".centroid-label")
           .each(function () {
-            const el = d3.select(this);
+            const el = select(this);
             const nsx = newX(+el.attr("data-cx"));
             const nsy = newY(+el.attr("data-cy"));
             const halfW = (el.text().length * 6.5) / 2;
@@ -347,8 +358,7 @@ export function VoteMapScatter({
     brushGRef.current = brushG.node()!;
 
     // Rect-selection brush behavior
-    const brush = d3
-      .brush()
+    const brush = d3Brush()
       .extent([
         [0, 0],
         [iW, iH],
@@ -374,7 +384,7 @@ export function VoteMapScatter({
           .map((pt) => pt.politician_id);
         onChangeRef.current([...new Set(ids)]);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        d3.select(brushGRef.current!).call(brush.clear as any);
+        select(brushGRef.current!).call(brush.clear as any);
       });
     brushRef.current = brush;
 
@@ -393,12 +403,12 @@ export function VoteMapScatter({
     svg.on("mousedown.lasso", (event) => {
       if (modeRef.current !== "lasso") return;
       event.preventDefault();
-      const [mx, my] = d3.pointer(event);
+      const [mx, my] = pointer(event);
       lassoPoints = [[mx - M.left, my - M.top]];
     });
     svg.on("mousemove.lasso", (event) => {
       if (modeRef.current !== "lasso" || lassoPoints.length === 0) return;
-      const [mx, my] = d3.pointer(event);
+      const [mx, my] = pointer(event);
       lassoPoints.push([mx - M.left, my - M.top]);
       lassoPath.attr(
         "d",
@@ -415,7 +425,7 @@ export function VoteMapScatter({
       const t = transformRef.current;
       const ids = allPointsRef.current
         .filter((pt) =>
-          d3.polygonContains(lassoPoints, [
+          polygonContains(lassoPoints, [
             t.applyX(xScaleRef.current!(pt.x)),
             t.applyY(yScaleRef.current!(pt.y)),
           ]),
@@ -430,7 +440,7 @@ export function VoteMapScatter({
     applyInteraction(svg, modeRef.current, zoom, brush, brushG);
 
     // Restore zoom position if we had one
-    if (transformRef.current !== d3.zoomIdentity) {
+    if (transformRef.current !== zoomIdentity) {
       svg.call(zoom.transform, transformRef.current);
     }
   }, [
@@ -455,11 +465,11 @@ export function VoteMapScatter({
     )
       return;
     applyInteraction(
-      d3.select(svgRef.current),
+      select(svgRef.current),
       mode,
       zoomRef.current,
       brushRef.current,
-      d3.select(brushGRef.current),
+      select(brushGRef.current),
     );
   }, [mode]);
 
@@ -468,10 +478,10 @@ export function VoteMapScatter({
     if (!svgRef.current) return;
     const selectedSet = new Set(selectedIds);
     const hasSelection = selectedSet.size > 0;
-    d3.select(svgRef.current)
+    select(svgRef.current)
       .selectAll<SVGCircleElement, unknown>(".dot")
       .each(function () {
-        const el = d3.select(this);
+        const el = select(this);
         const polId = Number(el.attr("data-polid"));
         const party = el.attr("data-party");
         const partyColor = getPartyColor(party);
@@ -560,7 +570,10 @@ export function VoteMapScatter({
   ];
 
   return (
-    <div>
+    <div
+      role="img"
+      aria-label="Streudiagramm: Politisches Stimmungsbild der Abgeordneten"
+    >
       <div className="flex items-center gap-2 mb-3">
         <div className="flex items-center bg-[#F4F3F0] rounded-lg p-0.5 border border-[#dddaf0]">
           {BUTTONS.map(({ m, label, icon, hint }) => (
@@ -612,11 +625,11 @@ export function VoteMapScatter({
 
 /** Applies the correct D3 interaction behavior for the given mode. */
 function applyInteraction(
-  svg: d3.Selection<SVGSVGElement, unknown, null, undefined>,
+  svg: Selection<SVGSVGElement, unknown, null, undefined>,
   mode: Mode,
-  zoom: d3.ZoomBehavior<SVGSVGElement, unknown>,
-  brush: d3.BrushBehavior<unknown>,
-  brushG: d3.Selection<SVGGElement, unknown, null, undefined>,
+  zoom: ZoomBehavior<SVGSVGElement, unknown>,
+  brush: BrushBehavior<unknown>,
+  brushG: Selection<SVGGElement, unknown, null, undefined>,
 ) {
   // Tear down both behaviors first
   svg.on(".zoom", null);

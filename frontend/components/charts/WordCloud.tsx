@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect, memo } from "react";
-import * as d3 from "d3";
+import { max, scaleLinear, color as d3Color, select, type RGBColor } from "d3";
 import cloud from "d3-cloud";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { WordFreqEntry } from "@/lib/data";
@@ -54,15 +54,14 @@ export const WordCloud = memo(function WordCloud({
     if (!width || !svgRef.current || words.length === 0) return;
 
     // Map tfidf values to font sizes and rank to opacity so prominent words stand out.
-    const maxTfidf = d3.max(words, (w) => w.tfidf) ?? 1;
-    const fontScale = d3.scaleLinear().domain([0, maxTfidf]).range([11, 34]);
-    const opacityScale = d3
-      .scaleLinear()
+    const maxTfidf = max(words, (w) => w.tfidf) ?? 1;
+    const fontScale = scaleLinear().domain([0, maxTfidf]).range([11, 34]);
+    const opacityScale = scaleLinear()
       .domain([1, words.length])
       .range([1.0, 0.4]);
 
     // Parse the base color once; fall back to a neutral grey if the color string is invalid.
-    const baseColor = (d3.color(color) ?? d3.color("#888888"))! as d3.RGBColor;
+    const baseColor = (d3Color(color) ?? d3Color("#888888"))! as RGBColor;
 
     const layout = cloud<CloudWord>()
       .size([width, height])
@@ -80,7 +79,7 @@ export const WordCloud = memo(function WordCloud({
 
     function draw(placed: CloudWord[]) {
       if (!svgRef.current) return;
-      const svg = d3.select(svgRef.current);
+      const svg = select(svgRef.current);
       svg.selectAll("*").remove();
       // Words enter staggered: each fades in after the previous one starts,
       // so the cloud builds up word by word instead of popping in all at once.
@@ -123,6 +122,8 @@ export const WordCloud = memo(function WordCloud({
   return (
     <div
       ref={containerRef}
+      role="img"
+      aria-label="Wortwolke der häufigsten Themen und Begriffe"
       className="w-full"
       style={{ height, cursor: onClick ? "zoom-in" : undefined }}
       onClick={onClick}

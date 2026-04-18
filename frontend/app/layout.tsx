@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/ui/Sidebar";
 import { MobileHeader } from "@/components/ui/MobileHeader";
 import { PeriodProvider } from "@/lib/period-context";
 import { LanguageProvider } from "@/lib/language-context";
+import { LangSync } from "@/components/ui/LangSync";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
     <html lang="de">
       <body className={`${libreFranklin.className} text-[#171613]`}>
         <LanguageProvider>
+          <LangSync />
           <PeriodProvider>
             <div className="flex min-h-screen">
               <Sidebar />

@@ -34,23 +34,23 @@ export function HorizontalBarRow({
   style,
 }: HorizontalBarRowProps) {
   const pct = max > 0 ? (value / max) * 100 : 0;
+  // Stable ID for aria-describedby ↔ tooltip id linkage (slugify label, truncate to avoid overly long ids)
+  const tooltipId = `tooltip-${label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .slice(0, 40)}`;
   const labelRef = useRef<HTMLSpanElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isTruncated, setIsTruncated] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  // Measure truncation after render and on resize
+  // Measure truncation after render — re-runs when label text or labelWidth prop changes.
   useEffect(() => {
-    function measure() {
-      if (labelRef.current) {
-        setIsTruncated(
-          labelRef.current.scrollWidth > labelRef.current.offsetWidth,
-        );
-      }
+    if (labelRef.current) {
+      setIsTruncated(
+        labelRef.current.scrollWidth > labelRef.current.offsetWidth,
+      );
     }
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
   }, [label, labelWidth]);
 
   // Clear any pending auto-hide timeout on unmount
@@ -94,7 +94,7 @@ export function HorizontalBarRow({
             width: 16,
             textAlign: "right",
             flexShrink: 0,
-            color: "#7872a8",
+            color: "var(--color-muted)",
             fontVariantNumeric: "tabular-nums",
           }}
         >
@@ -104,6 +104,7 @@ export function HorizontalBarRow({
       <span
         ref={labelRef}
         data-testid="bar-label"
+        aria-describedby={isTruncated ? tooltipId : undefined}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
@@ -111,7 +112,7 @@ export function HorizontalBarRow({
           width: labelWidth,
           flexShrink: 0,
           fontSize: 13,
-          color: "#171613",
+          color: "inherit",
           lineHeight: 1.3,
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -123,6 +124,7 @@ export function HorizontalBarRow({
       </span>
       {showTooltip && (
         <div
+          id={tooltipId}
           role="tooltip"
           style={{
             position: "absolute",
@@ -146,7 +148,7 @@ export function HorizontalBarRow({
         style={{
           flex: 1,
           borderRadius: 9999,
-          background: "#eeedf8",
+          background: "var(--color-bar-track)",
           height: barHeight,
         }}
       >
@@ -168,7 +170,7 @@ export function HorizontalBarRow({
           width: valueWidth,
           textAlign: "right",
           flexShrink: 0,
-          color: "#7872a8",
+          color: "var(--color-muted)",
           fontVariantNumeric: "tabular-nums",
         }}
       >

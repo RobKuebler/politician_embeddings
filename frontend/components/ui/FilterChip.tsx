@@ -19,20 +19,25 @@ export function FilterChip({
   title,
 }: FilterChipProps) {
   return (
-    <span
+    <button
+      type="button"
       onClick={!disabled && !active ? onClick : undefined}
+      disabled={disabled || active}
       title={title}
+      aria-label={title}
+      aria-pressed={active}
       style={{
+        appearance: "none",
         display: "inline-flex",
         alignItems: "center",
         gap: 4,
-        padding: "3px 11px",
+        padding: "11px 14px",
         borderRadius: 6,
         background: active ? FILTER_ACCENT : "transparent",
-        border: `1.5px solid ${active ? FILTER_ACCENT : "#C8CAD4"}`,
+        border: `1.5px solid ${active ? FILTER_ACCENT : "var(--color-chip-border)"}`,
         fontSize: 12,
         fontWeight: 500,
-        color: active ? "#fff" : "#555",
+        color: active ? "#fff" : "var(--color-chip-text)",
         cursor: !disabled && !active ? "pointer" : "default",
         opacity: disabled ? 0.4 : 1,
       }}
@@ -40,13 +45,13 @@ export function FilterChip({
       {label}
       <span
         style={{
-          color: active ? "#ffffffbb" : "#999",
+          color: active ? "#ffffff" : "var(--color-chip-count)",
           fontSize: 11,
           fontWeight: 400,
         }}
       >
         ({count})
       </span>
-    </span>
+    </button>
   );
 }

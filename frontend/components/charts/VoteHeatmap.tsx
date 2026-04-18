@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
-import * as d3 from "d3";
+import { scaleBand, axisLeft, select, pointer } from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { VoteRecord, Poll, Politician, stripSoftHyphen } from "@/lib/data";
 import {
@@ -27,9 +27,9 @@ interface Props {
 }
 
 const VOTE_COLOR: Record<string, string> = {
-  yes: "#2563EB",
-  no: "#EA580C",
-  abstain: "#9CA3AF",
+  yes: "var(--color-vote-yes)",
+  no: "var(--color-vote-no)",
+  abstain: "var(--color-vote-abstain)",
   no_show: "none",
 };
 
@@ -141,17 +141,16 @@ export function VoteHeatmap({
     if (bodyWrapRef.current)
       bodyWrapRef.current.style.width = `${totalWidth}px`;
 
-    const xScale = d3.scaleBand().domain(xDomain).range([0, iW]).padding(0.05);
-    const yScale = d3
-      .scaleBand()
+    const xScale = scaleBand().domain(xDomain).range([0, iW]).padding(0.05);
+    const yScale = scaleBand()
       .domain(yIds)
       .range([0, bodyHeight])
       .padding(0.05);
 
-    const tooltip = d3.select(tooltipRef.current!);
+    const tooltip = select(tooltipRef.current!);
 
     // ── Header SVG: two-level x-axis (party band + member labels) ───────────
-    const headerSvg = d3.select(headerSvgRef.current);
+    const headerSvg = select(headerSvgRef.current);
     headerSvg.selectAll("*").remove();
     headerSvg.attr("width", totalWidth).attr("height", HEADER_H);
 
@@ -207,7 +206,7 @@ export function VoteHeatmap({
     }
 
     // ── Body SVG: y-axis + cells ─────────────────────────────────────────────
-    const bodySvg = d3.select(bodySvgRef.current);
+    const bodySvg = select(bodySvgRef.current);
     bodySvg.selectAll("*").remove();
     bodySvg.attr("width", totalWidth).attr("height", bodyHeight);
 
@@ -216,8 +215,7 @@ export function VoteHeatmap({
       .append("g")
       .attr("transform", `translate(${ML}, 0)`)
       .call(
-        d3
-          .axisLeft(yScale)
+        axisLeft(yScale)
           .tickSize(0)
           .tickFormat((id) => yTopicShort.get(id) ?? id),
       )
@@ -229,7 +227,7 @@ export function VoteHeatmap({
           .on("mousemove", function (event, id) {
             const full = yTopicFull.get(id);
             if (!full) return;
-            const [px, py] = d3.pointer(event, containerRef.current!);
+            const [px, py] = pointer(event, containerRef.current!);
             tooltip
               .style("opacity", "1")
               .style("left", `${px + TOOLTIP_DX}px`)
@@ -269,7 +267,7 @@ export function VoteHeatmap({
         const name = pol ? pol.name : String(d.polId);
         const party = pol ? getPartyShortLabel(pol.party) : "";
         const topic = yTopicFull.get(String(d.pollId)) ?? "";
-        const [px, py] = d3.pointer(event, containerRef.current!);
+        const [px, py] = pointer(event, containerRef.current!);
         tooltip
           .style("opacity", "1")
           .style("left", `${px + TOOLTIP_DX}px`)
@@ -292,7 +290,12 @@ export function VoteHeatmap({
   void VOTE_NUMERIC; // imported for potential future use
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
+    <div
+      ref={containerRef}
+      role="img"
+      aria-label="Abstimmungsmatrix: Wie Abgeordnete bei ausgewählten Abstimmungen votiert haben"
+      style={{ position: "relative" }}
+    >
       {/* Single horizontal scroll wrapper — header and body scroll left/right together */}
       <div style={{ overflowX: "auto" }}>
         {/* Header: outside the vertical scroll area, so it never moves up */}

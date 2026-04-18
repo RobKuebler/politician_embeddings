@@ -46,7 +46,7 @@ function MethodologyNote() {
         <span
           className="text-[18px] leading-none select-none"
           style={{
-            color: "#7872a8",
+            color: "#524d8a",
             transform: open ? "rotate(270deg)" : "rotate(90deg)",
             transition: "transform 0.2s",
             display: "inline-block",
@@ -81,7 +81,7 @@ function MethodologyNote() {
             </ul>
           </div>
 
-          <p className="text-[11px]" style={{ color: "#7872a8" }}>
+          <p className="text-[11px]" style={{ color: "#524d8a" }}>
             {t.potential_conflicts.methodology_footer}
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function AusschussePage() {
                   fontWeight: 700,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.5)",
+                  color: "rgba(255,255,255,0.8)",
                   marginBottom: 2,
                 }}
               >
@@ -215,7 +215,7 @@ export default function AusschussePage() {
                       style={{
                         fontWeight: 500,
                         fontSize: "0.6em",
-                        color: "rgba(255,255,255,0.6)",
+                        color: "rgba(255,255,255,0.85)",
                       }}
                     >
                       €
@@ -251,7 +251,7 @@ export default function AusschussePage() {
                   >
                     {data.stats.affected_politicians}
                   </p>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
                     {t.potential_conflicts.hero_politicians_label}
                   </p>
                 </div>
@@ -266,7 +266,7 @@ export default function AusschussePage() {
                   >
                     {data.stats.affected_committees}
                   </p>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
                     {t.potential_conflicts.hero_committees_label}
                   </p>
                 </div>
@@ -303,7 +303,7 @@ export default function AusschussePage() {
             >
               {t.potential_conflicts.ranked_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.potential_conflicts.ranked_subtitle}
             </p>
             <ConflictRankedList
@@ -323,14 +323,14 @@ export default function AusschussePage() {
             >
               {t.potential_conflicts.heatmap_title}
             </h2>
-            <p className="text-[12px] text-[#7872a8] mb-4">
+            <p className="text-[12px] text-[#524d8a] mb-4">
               {t.potential_conflicts.heatmap_subtitle}
             </p>
             <ConflictHeatmap conflicts={data.conflicts} parties={parties} />
           </section>
         </div>
       ) : !loading ? (
-        <p className="text-[13px] text-[#7872a8] text-center py-10">
+        <p className="text-[13px] text-[#524d8a] text-center py-10">
           {t.potential_conflicts.no_conflicts}
         </p>
       ) : null}

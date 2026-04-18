@@ -3,24 +3,30 @@ export function ToggleGroup<T extends string>({
   options,
   value,
   onChange,
+  label = "Filter options",
 }: {
   options: readonly { value: T; label: string }[];
   value: T;
   onChange: (v: T) => void;
+  /** Accessible label describing what the toggle group controls. */
+  label?: string;
 }) {
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div role="group" aria-label={label} className="flex flex-wrap gap-1.5">
       {options.map((opt) => {
         const active = opt.value === value;
         return (
           <button
             key={opt.value}
             onClick={() => onChange(opt.value)}
-            className="px-4 py-1.5 rounded-full text-[12px] transition-colors cursor-pointer"
+            aria-pressed={active}
+            className="px-4 min-h-[44px] flex items-center justify-center rounded-full text-[12px] transition-colors cursor-pointer"
             style={{
-              background: active ? "#1E1B5E" : "#fff",
-              border: active ? "1px solid #1E1B5E" : "1px solid #dddaf0",
-              color: active ? "#fff" : "#7872a8",
+              background: active ? "var(--color-navy)" : "#fff",
+              border: active
+                ? "1px solid var(--color-navy)"
+                : "1px solid var(--color-lavender)",
+              color: active ? "#fff" : "var(--color-muted)",
               fontWeight: active ? 600 : 400,
             }}
           >

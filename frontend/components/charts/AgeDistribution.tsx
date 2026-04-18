@@ -1,6 +1,21 @@
 "use client";
 import { useRef, useEffect } from "react";
-import * as d3 from "d3";
+import {
+  select,
+  scaleLinear,
+  type ScaleLinear,
+  scaleBand,
+  axisLeft,
+  axisBottom,
+  area as d3Area,
+  curveBasis,
+  group,
+  range,
+  max,
+  mean,
+  zoom as d3Zoom,
+  pointer,
+} from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { getPartyColor, getPartyShortLabel } from "@/lib/constants";
 import {
@@ -35,14 +50,14 @@ function kernelDensity(
   thresholds: number[],
   values: number[],
 ): [number, number][] {
-  return thresholds.map((x) => [x, d3.mean(values, (v) => kernel(x - v)) ?? 0]);
+  return thresholds.map((x) => [x, mean(values, (v) => kernel(x - v)) ?? 0]);
 }
 
 export function AgeDistribution({ data, parties }: Props) {
   const { ref: containerRef, width } = useContainerWidth();
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
@@ -51,7 +66,7 @@ export function AgeDistribution({ data, parties }: Props) {
     const iW = width - M.left - M.right;
     const iH = H - M.top - M.bottom;
 
-    const svg = d3.select(svgRef.current);
+    const svg = select(svgRef.current);
     svg.selectAll("*").remove();
     svg.attr("width", width).attr("height", H);
 
@@ -72,8 +87,8 @@ export function AgeDistribution({ data, parties }: Props) {
       .append("g")
       .attr("transform", `translate(${M.left},${M.top})`);
 
-    const xScaleBase = d3.scaleLinear().domain([18, 88]).range([0, iW]);
-    const yScale = d3.scaleBand().domain(parties).range([0, iH]).padding(0.2);
+    const xScaleBase = scaleLinear().domain([18, 88]).range([0, iW]);
+    const yScale = scaleBand().domain(parties).range([0, iH]).padding(0.2);
     const bw = yScale.bandwidth();
     const violinH = bw * 0.62;
     const dotH = bw * 0.38;
@@ -81,8 +96,7 @@ export function AgeDistribution({ data, parties }: Props) {
     // Fixed y-axis (outside clip)
     g.append("g")
       .call(
-        d3
-          .axisLeft(yScale)
+        axisLeft(yScale)
           .tickSize(0)
           .tickFormat((p) => getPartyShortLabel(p as string)),
       )
@@ -99,8 +113,8 @@ export function AgeDistribution({ data, parties }: Props) {
     const xAxisG = g.append("g").attr("transform", `translate(0,${iH})`);
 
     // Pre-compute per-party density and dot positions
-    const byParty = d3.group(data, (d) => d.party);
-    const thresholds = d3.range(18, 89, 0.5);
+    const byParty = group(data, (d) => d.party);
+    const thresholds = range(18, 89, 0.5);
     const kernel = epanechnikovKernel(5);
 
     const partyData = parties.map((party) => {
@@ -110,19 +124,18 @@ export function AgeDistribution({ data, parties }: Props) {
       );
       const ages = records.map((d) => d.age);
       const density = kernelDensity(kernel, thresholds, ages);
-      const maxDensity = d3.max(density, (d) => d[1]) ?? 1;
+      const maxDensity = max(density, (d) => d[1]) ?? 1;
       const bandY = yScale(party) ?? 0;
       const baseline = bandY + violinH;
       const dotCenterY = baseline + dotH / 2;
       const jitterAmt = dotH * 0.38;
       const color = getPartyColor(party);
-      const densityToPixel = d3
-        .scaleLinear()
+      const densityToPixel = scaleLinear()
         .domain([0, maxDensity])
         .range([0, violinH * 0.88]);
 
       // Pre-compute fixed cy per record (grouped by age, evenly spaced)
-      const ageGroups = d3.group(records, (d) => d.age);
+      const ageGroups = group(records, (d) => d.age);
       const yIndex = new Map<AgeRecord, number>();
       const yTotal = new Map<AgeRecord, number>();
       ageGroups.forEach((group) => {
@@ -152,7 +165,7 @@ export function AgeDistribution({ data, parties }: Props) {
       };
     });
 
-    const tooltip = d3.select(tooltipRef.current!);
+    const tooltip = select(tooltipRef.current!);
 
     // Draw static y-position elements once (separator lines)
     partyData.forEach(({ baseline }) => {
@@ -194,13 +207,12 @@ export function AgeDistribution({ data, parties }: Props) {
     });
 
     // Redraws all x-dependent elements for a given (possibly zoomed) xScale
-    function update(xS: d3.ScaleLinear<number, number>) {
+    function update(xS: ScaleLinear<number, number>) {
       gridG.selectAll("*").remove();
-      gridG.call((g2: d3.Selection<SVGGElement, unknown, null, undefined>) =>
+      gridG.call((g2: ReturnType<typeof select<SVGGElement, unknown>>) =>
         g2
           .call(
-            d3
-              .axisBottom(xS)
+            axisBottom(xS)
               .ticks(tickCount)
               .tickSize(iH)
               .tickFormat(() => ""),
@@ -215,7 +227,7 @@ export function AgeDistribution({ data, parties }: Props) {
       );
 
       xAxisG
-        .call(d3.axisBottom(xS).ticks(tickCount).tickSize(0))
+        .call(axisBottom(xS).ticks(tickCount).tickSize(0))
         .call((ax) => ax.select(".domain").remove())
         .call(styleAxisText);
 
@@ -223,12 +235,11 @@ export function AgeDistribution({ data, parties }: Props) {
         const path = dataG.select<SVGPathElement>(
           `.violin-${party.replace(/\W/g, "_")}`,
         );
-        const area = d3
-          .area<[number, number]>()
+        const area = d3Area<[number, number]>()
           .x((d) => xS(d[0]))
           .y0(baseline)
           .y1((d) => baseline - densityToPixel(d[1]))
-          .curve(d3.curveBasis);
+          .curve(curveBasis);
         path.attr("d", area(density));
       });
 
@@ -249,16 +260,16 @@ export function AgeDistribution({ data, parties }: Props) {
 
     // X-axis label — added once outside update() so it isn't redrawn on every zoom event
     g.append("text")
+      .attr("class", "axis-label")
       .attr("x", iW / 2)
       .attr("y", iH + M.bottom - 6)
       .attr("text-anchor", "middle")
-      .attr("fill", "#7872a8")
+      .attr("fill", "var(--color-muted)")
       .style("font-size", "11px")
       .text(t.party_profile.age_axis_label);
 
     // Zoom (x-only)
-    const zoom = d3
-      .zoom<SVGRectElement, unknown>()
+    const zoom = d3Zoom<SVGRectElement, unknown>()
       .scaleExtent([1, 10])
       .translateExtent([
         [0, 0],
@@ -268,7 +279,7 @@ export function AgeDistribution({ data, parties }: Props) {
         [0, 0],
         [iW, iH],
       ])
-      .on("zoom", (event: d3.D3ZoomEvent<SVGRectElement, unknown>) => {
+      .on("zoom", (event) => {
         currentXS = event.transform.rescaleX(xScaleBase);
         update(currentXS);
       });
@@ -282,7 +293,7 @@ export function AgeDistribution({ data, parties }: Props) {
       .style("cursor", "crosshair")
       .call(zoom)
       .on("mousemove", (event: MouseEvent) => {
-        const [mx, my] = d3.pointer(event);
+        const [mx, my] = pointer(event);
 
         const hoveredParty = parties.find((p) => {
           const bandY = yScale(p) ?? 0;
@@ -317,7 +328,7 @@ export function AgeDistribution({ data, parties }: Props) {
           return;
         }
 
-        const [px, py] = d3.pointer(event, containerRef.current!);
+        const [px, py] = pointer(event, containerRef.current!);
         positionTooltip(
           tooltip,
           containerRef.current!,
@@ -327,10 +338,23 @@ export function AgeDistribution({ data, parties }: Props) {
         );
       })
       .on("mouseleave", () => tooltip.style("opacity", "0"));
-  }, [containerRef, data, language, parties, t, width]);
+  }, [containerRef, data, parties, t, width]);
+
+  // Update only the axis label text when language changes — avoids full chart rebuild.
+  useEffect(() => {
+    if (!svgRef.current) return;
+    select(svgRef.current)
+      .select<SVGTextElement>(".axis-label")
+      .text(t.party_profile.age_axis_label);
+  }, [t]);
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
+    <div
+      ref={containerRef}
+      role="img"
+      aria-label="Altersverteilung der Abgeordneten nach Partei"
+      style={{ position: "relative" }}
+    >
       <svg ref={svgRef} style={{ display: "block", width: "100%" }} />
       <ChartTooltip tooltipRef={tooltipRef} />
     </div>

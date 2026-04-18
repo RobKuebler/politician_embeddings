@@ -9,7 +9,7 @@
  * Tab-switched between event types: Zwischenruf, Lachen, Heiterkeit, Widerspruch.
  */
 import { useRef, useEffect, useCallback, useState } from "react";
-import * as d3 from "d3";
+import { select, max, scaleSequential, interpolateRgb, lab, pointer } from "d3";
 import {
   CHART_FONT_FAMILY,
   getPartyColor,
@@ -91,21 +91,21 @@ function HeatmapCanvas({
     const gridH = cellH * n;
     const H = LABEL_H + gridH + MB;
 
-    const sel = d3.select(svg);
+    const sel = select(svg);
     sel.selectAll("*").remove();
     sel.attr("width", width).attr("height", H);
 
     const g = sel
       .append("g")
       .attr("transform", `translate(${LABEL_W},${LABEL_H})`);
-    const tip = d3.select(tooltip);
+    const tip = select(tooltip);
     const container = containerRef.current!;
 
     // Color scale
-    const maxVal = d3.max(matrix.flat()) ?? 1;
-    const colorScale = d3
-      .scaleSequential(d3.interpolateRgb(COLOR_LOW, COLOR_HIGH))
-      .domain([0, maxVal]);
+    const maxVal = max(matrix.flat()) ?? 1;
+    const colorScale = scaleSequential(
+      interpolateRgb(COLOR_LOW, COLOR_HIGH),
+    ).domain([0, maxVal]);
 
     // ── Column headers (speaker party) — colored blocks with white text ────
     parties.forEach((party, j) => {
@@ -148,7 +148,7 @@ function HeatmapCanvas({
           .select("rect")
           .style("cursor", "default")
           .on("mousemove", (event) => {
-            const [px, py] = d3.pointer(event, container);
+            const [px, py] = pointer(event, container);
             positionTooltip(tip, container, px, py, shortLabelCol);
           })
           .on("mouseleave", () => tip.style("opacity", "0"));
@@ -196,7 +196,7 @@ function HeatmapCanvas({
           .select("rect")
           .style("cursor", "default")
           .on("mousemove", (event) => {
-            const [px, py] = d3.pointer(event, container);
+            const [px, py] = pointer(event, container);
             positionTooltip(tip, container, px, py, shortLabelRow);
           })
           .on("mouseleave", () => tip.style("opacity", "0"));
@@ -219,7 +219,7 @@ function HeatmapCanvas({
           .attr("stroke-width", isDiag ? 1 : 0)
           .attr("stroke-dasharray", isDiag ? "3,2" : "none")
           .on("mousemove", (event) => {
-            const [px, py] = d3.pointer(event, container);
+            const [px, py] = pointer(event, container);
             const rowTotal = matrix[i].reduce((s, v) => s + v, 0);
             const pct = rowTotal > 0 ? Math.round((val / rowTotal) * 100) : 0;
             positionTooltip(
@@ -238,7 +238,7 @@ function HeatmapCanvas({
           const textColor =
             colorScale(val) === COLOR_LOW
               ? "#888"
-              : d3.lab(colorScale(val)).l < 50
+              : lab(colorScale(val)).l < 50
                 ? "#fff"
                 : "#333";
           g.append("text")
@@ -291,11 +291,17 @@ export default function KommentareHeatmap({ data }: Props) {
   const t = useTranslation();
 
   return (
-    <div>
+    <div
+      role="img"
+      aria-label="Heatmap: Interaktionen zwischen Parteien im Plenum"
+    >
       {/* Tabs */}
       <div style={{ marginBottom: 16 }}>
         <ToggleGroup
-          options={EVENT_TABS.map((tab) => ({ value: tab, label: t.comments.type_labels[tab] }))}
+          options={EVENT_TABS.map((tab) => ({
+            value: tab,
+            label: t.comments.type_labels[tab],
+          }))}
           value={activeTab}
           onChange={setActiveTab}
         />
@@ -308,7 +314,7 @@ export default function KommentareHeatmap({ data }: Props) {
           gap: 16,
           marginBottom: 8,
           fontSize: 11,
-          color: "#7872a8",
+          color: "#524d8a",
           fontFamily: CHART_FONT_FAMILY,
         }}
       >

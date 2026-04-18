@@ -124,7 +124,9 @@ export default function ThemenTrendsPage() {
     const q = query.trim().toLowerCase();
     const activeSet = new Set(activeKeywords.map((k) => k.keyword));
     setSuggestions(
-      termList.filter((term) => term.startsWith(q) && !activeSet.has(term)).slice(0, 8),
+      termList
+        .filter((term) => term.startsWith(q) && !activeSet.has(term))
+        .slice(0, 8),
     );
   }, [query, termList, data, activeKeywords]);
 
@@ -135,7 +137,9 @@ export default function ThemenTrendsPage() {
       return;
     }
     const q = compQuery.trim().toLowerCase();
-    setCompSuggestions(termList.filter((term) => term.startsWith(q)).slice(0, 8));
+    setCompSuggestions(
+      termList.filter((term) => term.startsWith(q)).slice(0, 8),
+    );
   }, [compQuery, termList, data]);
 
   const usedColors = new Set(activeKeywords.map((k) => k.color));
@@ -228,7 +232,7 @@ export default function ThemenTrendsPage() {
       <PageHeader color={META.color} {...t.pages.trends} />
 
       {unavailable ? (
-        <p className="text-[14px]" style={{ color: "#7872a8" }}>
+        <p className="text-[14px]" style={{ color: "#524d8a" }}>
           {t.trends.no_data}
         </p>
       ) : loading ? (
@@ -264,7 +268,11 @@ export default function ThemenTrendsPage() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") addKeyword(query);
                   }}
-                  placeholder={activeKeywords.length >= MAX_KEYWORDS ? "" : t.trends.search_placeholder_a}
+                  placeholder={
+                    activeKeywords.length >= MAX_KEYWORDS
+                      ? ""
+                      : t.trends.search_placeholder_a
+                  }
                   className="w-full border border-[#dddaf0] rounded-lg px-4 py-2 text-[14px] outline-none focus:border-[#2980B9]"
                   style={{ color: "#171613" }}
                   disabled={activeKeywords.length >= MAX_KEYWORDS}
@@ -289,7 +297,7 @@ export default function ThemenTrendsPage() {
               </div>
 
               {notFoundMsg && (
-                <p className="text-[12px]" style={{ color: "#7872a8" }}>
+                <p className="text-[12px]" style={{ color: "#524d8a" }}>
                   {notFoundMsg}
                 </p>
               )}
@@ -311,7 +319,10 @@ export default function ThemenTrendsPage() {
                       <button
                         onClick={() => removeKeyword(k.keyword)}
                         className="leading-none hover:opacity-70"
-                        aria-label={t.trends.remove_keyword_label.replace("{keyword}", k.keyword)}
+                        aria-label={t.trends.remove_keyword_label.replace(
+                          "{keyword}",
+                          k.keyword,
+                        )}
                       >
                         ×
                       </button>
@@ -325,7 +336,7 @@ export default function ThemenTrendsPage() {
             {series.length === 0 ? (
               <p
                 className="text-[14px] text-center py-16"
-                style={{ color: "#7872a8" }}
+                style={{ color: "#524d8a" }}
               >
                 {t.trends.empty_a}
               </p>
@@ -351,7 +362,7 @@ export default function ThemenTrendsPage() {
               >
                 {t.trends.party_comparison_title}
               </h2>
-              <p className="text-[13px]" style={{ color: "#7872a8" }}>
+              <p className="text-[13px]" style={{ color: "#524d8a" }}>
                 {t.trends.party_comparison_subtitle}
               </p>
             </div>
@@ -394,7 +405,7 @@ export default function ThemenTrendsPage() {
                 )}
               </div>
               {compNotFound && (
-                <p className="text-[12px]" style={{ color: "#7872a8" }}>
+                <p className="text-[12px]" style={{ color: "#524d8a" }}>
                   {compNotFound}
                 </p>
               )}
@@ -406,21 +417,21 @@ export default function ThemenTrendsPage() {
             ) : !compKeyword ? (
               <p
                 className="text-[14px] text-center py-16"
-                style={{ color: "#7872a8" }}
+                style={{ color: "#524d8a" }}
               >
                 {t.trends.empty_b}
               </p>
             ) : !compHasPartyData ? (
               <p
                 className="text-[14px] text-center py-12"
-                style={{ color: "#7872a8" }}
+                style={{ color: "#524d8a" }}
               >
                 {t.trends.too_rare}
               </p>
             ) : compSeries.length === 0 ? (
               <p
                 className="text-[14px] text-center py-12"
-                style={{ color: "#7872a8" }}
+                style={{ color: "#524d8a" }}
               >
                 {t.trends.no_party_data}
               </p>
@@ -444,9 +455,10 @@ export default function ThemenTrendsPage() {
                         className="flex items-center gap-1.5 text-[12px] transition-opacity"
                         style={{ opacity: hidden ? 0.35 : 1 }}
                         aria-pressed={!hidden}
-                        title={hidden
-                          ? t.trends.show_hint.replace("{label}", s.keyword)
-                          : t.trends.hide_hint.replace("{label}", s.keyword)
+                        title={
+                          hidden
+                            ? t.trends.show_hint.replace("{label}", s.keyword)
+                            : t.trends.hide_hint.replace("{label}", s.keyword)
                         }
                       >
                         <span
@@ -455,10 +467,10 @@ export default function ThemenTrendsPage() {
                             width: 14,
                             height: 3,
                             borderRadius: 2,
-                            background: hidden ? "#7872a8" : s.color,
+                            background: hidden ? "#524d8a" : s.color,
                           }}
                         />
-                        <span style={{ color: hidden ? "#7872a8" : "#171613" }}>
+                        <span style={{ color: hidden ? "#524d8a" : "#171613" }}>
                           {s.keyword}
                         </span>
                       </button>

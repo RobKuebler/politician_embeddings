@@ -226,13 +226,13 @@ export default function VoteMapPage() {
       {/* Coalition banner */}
       {activePeriodId && GOVERNING_PARTIES[activePeriodId] && (
         <div className="flex flex-col gap-2 mb-5 sm:flex-row sm:items-center">
-          <span className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#7872a8]">
+          <span className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#524d8a]">
             {t.vote_map.coalition_label}
           </span>
           <div className="flex items-center gap-1.5">
             {GOVERNING_PARTIES[activePeriodId].map((party, i) => (
               <span key={party} className="flex items-center gap-1.5">
-                {i > 0 && <span className="text-[#7872a8] text-[13px]">+</span>}
+                {i > 0 && <span className="text-[#524d8a] text-[13px]">+</span>}
                 <span
                   className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold border"
                   style={{
@@ -267,7 +267,7 @@ export default function VoteMapPage() {
         >
           {t.vote_map.map_title}
         </h2>
-        <p className="text-[12px] text-[#7872a8] mb-4">
+        <p className="text-[12px] text-[#524d8a] mb-4">
           {t.vote_map.map_subtitle}
         </p>
         {loading ? (
@@ -296,7 +296,7 @@ export default function VoteMapPage() {
         >
           {t.vote_map.heatmap_title}
         </h2>
-        <p className="text-[12px] text-[#7872a8] mb-4">
+        <p className="text-[12px] text-[#524d8a] mb-4">
           {t.vote_map.heatmap_subtitle}
         </p>
 
@@ -316,7 +316,7 @@ export default function VoteMapPage() {
         )}
 
         {!effectivePolIds.length ? (
-          <p className="text-[13px] text-center py-10 text-[#7872a8]">
+          <p className="text-[13px] text-center py-10 text-[#524d8a]">
             {t.vote_map.heatmap_empty}
           </p>
         ) : loadingVotes ? (
@@ -345,7 +345,13 @@ export default function VoteMapPage() {
                       background: VOTE_META[k].color,
                     }}
                   />
-                  {{ yes: t.vote_map.vote_yes, no: t.vote_map.vote_no, abstain: t.vote_map.vote_abstain }[k]}
+                  {
+                    {
+                      yes: t.vote_map.vote_yes,
+                      no: t.vote_map.vote_no,
+                      abstain: t.vote_map.vote_abstain,
+                    }[k]
+                  }
                 </span>
               ))}
             </div>
@@ -371,7 +377,7 @@ export default function VoteMapPage() {
         >
           {t.vote_map.cohesion_title}
         </h2>
-        <p className="text-[12px] text-[#7872a8] mb-4">
+        <p className="text-[12px] text-[#524d8a] mb-4">
           {t.vote_map.cohesion_subtitle}
         </p>
         {loading ? (

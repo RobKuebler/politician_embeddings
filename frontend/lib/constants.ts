@@ -117,7 +117,7 @@ export function sortPresentParties(parties: Iterable<string>): string[] {
 
 // ── Filter/dropdown styling tokens ──────────────────────────────────────────
 // Used by PollFilter and PoliticianSearch for consistent styling.
-export const FILTER_ACCENT = "#4B6BFB";
+export const FILTER_ACCENT = "#2B4BDB";
 export const FILTER_ACCENT_LIGHT = "#F0F4FF";
 export const FILTER_BORDER = "#E2E5EE";
 export const FILTER_BG_INPUT = "#FAFBFF";

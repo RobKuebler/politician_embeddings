@@ -55,7 +55,7 @@ export function PeriodSelector({
       {showLabel && (
         <p
           className={`text-[10px] font-bold tracking-[0.12em] uppercase mb-1 ${
-            isSidebar ? "text-white/40" : "text-[#1E1B5E]/50"
+            isSidebar ? "text-white/40" : "text-[var(--color-navy)]/50"
           }`}
         >
           {t.common.period_label}
@@ -68,15 +68,15 @@ export function PeriodSelector({
         onClick={() => setOpen((v) => !v)}
         aria-label={t.common.period_aria}
         aria-expanded={open}
-        className={`w-full flex items-center justify-between gap-2 rounded-lg px-3 py-2 outline-none transition-colors duration-150 ${
+        className={`w-full flex items-center justify-between gap-2 rounded-lg px-3 py-2 focus-visible:ring-2 focus-visible:ring-[var(--color-purple)] focus-visible:ring-offset-1 transition-colors duration-150 ${
           isSidebar
             ? "bg-white/10 border border-white/[0.18] hover:bg-white/15"
-            : "bg-white border border-[#1E1B5E] hover:bg-[#F0EFF9]"
+            : "bg-white border border-[var(--color-navy)] hover:bg-[#F0EFF9]"
         }`}
       >
         <span
           className={`text-[14px] font-bold tabular-nums truncate ${
-            isSidebar ? "text-white" : "text-[#1E1B5E]"
+            isSidebar ? "text-white" : "text-[var(--color-navy)]"
           }`}
         >
           {activeYears}
@@ -87,7 +87,7 @@ export function PeriodSelector({
           height="11"
           viewBox="0 0 24 24"
           fill="none"
-          stroke={isSidebar ? "rgba(255,255,255,0.6)" : "#1E1B5E"}
+          stroke={isSidebar ? "rgba(255,255,255,0.6)" : "var(--color-navy)"}
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -112,7 +112,7 @@ export function PeriodSelector({
           className={`absolute z-50 mt-1 rounded-xl overflow-hidden ${
             isSidebar
               ? "left-0 min-w-[140px] bg-[#16134A] border border-white/[0.15] shadow-xl shadow-black/40"
-              : "left-0 right-0 bg-white border border-[#dddaf0] shadow-lg"
+              : "left-0 right-0 bg-white border border-[var(--color-lavender)] shadow-lg"
           }`}
         >
           {periods.map((p) => {
@@ -125,14 +125,14 @@ export function PeriodSelector({
                   setActivePeriodId(p.wahlperiode);
                   setOpen(false);
                 }}
-                className={`w-full text-left px-3 py-2.5 text-[13px] font-bold tabular-nums outline-none transition-colors duration-100 ${
+                className={`w-full text-left px-3 py-2.5 text-[13px] font-bold tabular-nums focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-purple)] transition-colors duration-100 ${
                   isSidebar
                     ? isActive
-                      ? "bg-[#4C46D9] text-white"
+                      ? "bg-[var(--color-purple)] text-white"
                       : "text-white/75 hover:bg-white/10 hover:text-white"
                     : isActive
-                      ? "bg-[#F0EFF9] text-[#1E1B5E]"
-                      : "text-[#1E1B5E] hover:bg-[#F0EFF9]"
+                      ? "bg-[#F0EFF9] text-[var(--color-navy)]"
+                      : "text-[var(--color-navy)] hover:bg-[#F0EFF9]"
                 }`}
               >
                 {yearsOnly(p.label)}

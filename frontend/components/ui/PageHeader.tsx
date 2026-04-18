@@ -1,11 +1,4 @@
-import { Piazzolla } from "next/font/google";
-
-const piazzolla = Piazzolla({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["italic", "normal"],
-  display: "swap",
-});
+import { piazzolla } from "@/lib/fonts";
 
 /** Shared page header — editorial masthead style matching the homepage. */
 export function PageHeader({
@@ -22,7 +15,10 @@ export function PageHeader({
   return (
     <div className="mb-8">
       {/* Structural top rule */}
-      <div className="mb-5" style={{ height: 3, background: "#1E1B5E" }} />
+      <div
+        className="mb-5"
+        style={{ height: 3, background: "var(--color-navy)" }}
+      />
 
       {/* Eyebrow — category label in page accent color */}
       <p
@@ -35,7 +31,10 @@ export function PageHeader({
       {/* Page title in editorial serif */}
       <h1
         className={`${piazzolla.className} font-bold italic leading-none tracking-tight mb-4`}
-        style={{ color: "#1E1B5E", fontSize: "clamp(30px, 4vw, 46px)" }}
+        style={{
+          color: "var(--color-navy)",
+          fontSize: "clamp(30px, 4vw, 46px)",
+        }}
       >
         {title}
       </h1>
@@ -49,7 +48,10 @@ export function PageHeader({
       </p>
 
       {/* Divider */}
-      <div className="mt-6" style={{ height: 1, background: "#dddaf0" }} />
+      <div
+        className="mt-6"
+        style={{ height: 1, background: "var(--color-lavender)" }}
+      />
     </div>
   );
 }

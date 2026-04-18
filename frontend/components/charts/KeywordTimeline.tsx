@@ -1,6 +1,23 @@
 "use client";
 import { useRef, useEffect, useId } from "react";
-import * as d3 from "d3";
+import {
+  scaleTime,
+  scaleLinear,
+  max,
+  axisBottom,
+  axisLeft,
+  select,
+  line,
+  bisector,
+  zoom as d3Zoom,
+  zoomIdentity,
+  timeMonth,
+  pointer,
+  curveCatmullRom,
+  type ScaleTime,
+  type TimeInterval,
+  type Selection,
+} from "d3";
 import { useContainerWidth } from "@/hooks/useContainerWidth";
 import { positionTooltip, ChartTooltip } from "@/lib/chart-utils";
 import { useLanguage } from "@/lib/language-context";
@@ -27,19 +44,18 @@ const HEIGHT = 320;
 // Renders the x-axis ticks + year sub-labels onto an existing axis group.
 // Called once on initial draw and again on every zoom event.
 function renderXAxis(
-  axisG: d3.Selection<SVGGElement, unknown, null, undefined>,
-  scale: d3.ScaleTime<number, number>,
-  tickEvery: d3.TimeInterval | null,
+  axisG: Selection<SVGGElement, unknown, null, undefined>,
+  scale: ScaleTime<number, number>,
+  tickEvery: TimeInterval | null,
   fmtMonth: (d: Date) => string,
 ) {
   axisG.call(
-    d3
-      .axisBottom(scale)
+    axisBottom(scale)
       .ticks(tickEvery)
       .tickFormat((d) => fmtMonth(d as Date)),
   );
   axisG.select(".domain").remove();
-  axisG.selectAll("text").style("font-size", "11px").attr("fill", "#7872a8");
+  axisG.selectAll("text").style("font-size", "11px").attr("fill", "#524d8a");
 
   // Remove stale year labels before re-adding so they don't stack on zoom.
   axisG.selectAll(".year-label").remove();
@@ -51,7 +67,7 @@ function renderXAxis(
     .attr("y", 30)
     .attr("text-anchor", "middle")
     .style("font-size", "10px")
-    .attr("fill", "#7872a8")
+    .attr("fill", "#524d8a")
     .text((d) => `'${String(d.getFullYear()).slice(2)}`);
 }
 
@@ -77,7 +93,7 @@ export function KeywordTimeline({
       series.length === 0 ||
       months.length === 0
     ) {
-      d3.select(svgRef.current).selectAll("*").remove();
+      select(svgRef.current).selectAll("*").remove();
       return;
     }
 
@@ -93,21 +109,19 @@ export function KeywordTimeline({
       return base > 0 ? (s.counts[i] / base) * 1000 : 0;
     };
 
-    const xScale = d3
-      .scaleTime()
+    const xScale = scaleTime()
       .domain([dates[0], dates[dates.length - 1]])
       .range([0, innerW]);
 
     const allVals = series.flatMap((s, si) =>
       months.map((_, i) => val(s, i, si)),
     );
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, (d3.max(allVals) ?? 1) * 1.1])
+    const yScale = scaleLinear()
+      .domain([0, (max(allVals) ?? 1) * 1.1])
       .nice()
       .range([innerH, 0]);
 
-    const svg = d3.select(svgRef.current);
+    const svg = select(svgRef.current);
     svg.selectAll("*").remove();
     svg.attr("width", width).attr("height", HEIGHT);
 
@@ -118,8 +132,7 @@ export function KeywordTimeline({
     // Horizontal grid lines
     g.append("g")
       .call(
-        d3
-          .axisLeft(yScale)
+        axisLeft(yScale)
           .tickSize(-innerW)
           .tickFormat(() => ""),
       )
@@ -135,11 +148,13 @@ export function KeywordTimeline({
     const isMobile = width < 480;
     const tickEvery =
       months.length > 24 || (isMobile && months.length > 12)
-        ? d3.timeMonth.every(3)
-        : d3.timeMonth.every(1);
+        ? timeMonth.every(3)
+        : timeMonth.every(1);
     // Locale-aware month abbreviations — re-computed when language changes.
     const MONTHS = Array.from({ length: 12 }, (_, i) =>
-      new Intl.DateTimeFormat(language === "de" ? "de-DE" : "en-US", { month: "short" }).format(new Date(2024, i, 1))
+      new Intl.DateTimeFormat(language === "de" ? "de-DE" : "en-US", {
+        month: "short",
+      }).format(new Date(2024, i, 1)),
     );
     // Month label: first letter on mobile, 3-letter abbreviation on desktop.
     // Year appears as a second line only at year boundaries (January + first tick).
@@ -152,15 +167,14 @@ export function KeywordTimeline({
     // Y axis
     g.append("g")
       .call(
-        d3
-          .axisLeft(yScale)
+        axisLeft(yScale)
           .ticks(4)
           .tickFormat((v) => String(+v % 1 === 0 ? +v : (+v).toFixed(2))),
       )
       .call((ax) => ax.select(".domain").remove())
       .selectAll("text")
       .style("font-size", "11px")
-      .attr("fill", "#7872a8");
+      .attr("fill", "#524d8a");
 
     // Y-axis unit label — shown only in normalized mode, placed horizontally
     // above the axis top to avoid rotated text (per design convention)
@@ -169,7 +183,7 @@ export function KeywordTimeline({
         .attr("x", 0)
         .attr("y", -4)
         .attr("text-anchor", "start")
-        .attr("fill", "#7872a8")
+        .attr("fill", "#524d8a")
         .style("font-size", "10px")
         .text(t.trends.y_axis_per_1000);
     }
@@ -185,12 +199,11 @@ export function KeywordTimeline({
 
     // Lines — one per active keyword series.
     // Each path gets a class so zoom can redraw them without a full re-render.
-    const makeLine = (xs: d3.ScaleTime<number, number>) =>
-      d3
-        .line<number>()
+    const makeLine = (xs: ScaleTime<number, number>) =>
+      line<number>()
         .x((_, i) => xs(dates[i]))
         .y((v) => yScale(v))
-        .curve(d3.curveCatmullRom.alpha(0.5));
+        .curve(curveCatmullRom.alpha(0.5));
 
     for (const [si, s] of series.entries()) {
       const values = months.map((_, i) => val(s, i, si));
@@ -205,7 +218,7 @@ export function KeywordTimeline({
     }
 
     // Crosshair + tooltip on hover
-    const bisect = d3.bisector((d: Date) => d).left;
+    const bisect = bisector((d: Date) => d).left;
     const overlay = g
       .append("rect")
       .attr("width", innerW)
@@ -218,12 +231,12 @@ export function KeywordTimeline({
       .append("line")
       .attr("y1", 0)
       .attr("y2", innerH)
-      .attr("stroke", "#7872a8")
+      .attr("stroke", "#524d8a")
       .attr("stroke-width", 1)
       .attr("stroke-dasharray", "4,2")
       .attr("opacity", 0);
 
-    const tooltip = d3.select(tooltipRef.current!);
+    const tooltip = select(tooltipRef.current!);
 
     // currentXScale is updated by the zoom handler so tooltip always uses
     // the visible (zoomed) scale rather than the original.
@@ -231,7 +244,7 @@ export function KeywordTimeline({
 
     overlay
       .on("mousemove", (event: MouseEvent) => {
-        const [mx] = d3.pointer(event);
+        const [mx] = pointer(event);
         const hoveredDate = currentXScale.invert(mx);
         const idx = Math.min(bisect(dates, hoveredDate, 1), dates.length - 1);
         // Guard against idx === 0 to avoid reading dates[-1]
@@ -259,9 +272,9 @@ export function KeywordTimeline({
               }</b>`,
           )
           .join("<br/>");
-        const html = `<span style="font-size:11px;color:#7872a8">${months[i]}</span><br/>${rows}`;
+        const html = `<span style="font-size:11px;color:#524d8a">${months[i]}</span><br/>${rows}`;
 
-        const [cx, cy] = d3.pointer(event, containerRef.current!);
+        const [cx, cy] = pointer(event, containerRef.current!);
         positionTooltip(tooltip, containerRef.current!, cx, cy, html);
       })
       .on("mouseleave", () => {
@@ -271,8 +284,7 @@ export function KeywordTimeline({
 
     // X-axis zoom (scroll to zoom, drag to pan, double-click to reset).
     // Only the x-axis is affected — y scale and y axis stay fixed.
-    const zoom = d3
-      .zoom<SVGSVGElement, unknown>()
+    const zoom = d3Zoom<SVGSVGElement, unknown>()
       .scaleExtent([1, 20])
       .translateExtent([
         [0, 0],
@@ -282,7 +294,7 @@ export function KeywordTimeline({
         [0, 0],
         [innerW, innerH],
       ])
-      .on("zoom", (event: d3.D3ZoomEvent<SVGSVGElement, unknown>) => {
+      .on("zoom", (event) => {
         // Apply zoom only to x — rescaleY is intentionally omitted.
         const xZoomed = event.transform.rescaleX(xScale);
         currentXScale = xZoomed;
@@ -301,7 +313,7 @@ export function KeywordTimeline({
 
     // Double-click resets to the original view.
     svg.on("dblclick.zoom", () => {
-      svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
+      svg.transition().duration(300).call(zoom.transform, zoomIdentity);
     });
   }, [
     containerRef,
@@ -317,7 +329,12 @@ export function KeywordTimeline({
   ]);
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }}>
+    <div
+      ref={containerRef}
+      role="img"
+      aria-label="Zeitverlauf der Themennennung im Bundestag"
+      style={{ position: "relative" }}
+    >
       <svg ref={svgRef} style={{ display: "block", width: "100%" }} />
       <ChartTooltip tooltipRef={tooltipRef} />
     </div>

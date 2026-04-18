@@ -122,7 +122,7 @@ export default function SpeechesPage() {
 
       <div className="mt-8">
         {unavailable ? (
-          <p className="text-[14px]" style={{ color: "#7872a8" }}>
+          <p className="text-[14px]" style={{ color: "#524d8a" }}>
             {t.speeches.no_data}
           </p>
         ) : loading || !wordFreq || !speechStats ? (
@@ -160,7 +160,7 @@ export default function SpeechesPage() {
                     </div>
                     <span
                       className="text-[12px] tabular-nums shrink-0"
-                      style={{ color: "#7872a8" }}
+                      style={{ color: "#524d8a" }}
                     >
                       {total.toLocaleString(language)} {t.speeches.words_suffix}
                     </span>
@@ -179,7 +179,7 @@ export default function SpeechesPage() {
                   <div>
                     <p
                       className="text-[11px] font-bold tracking-[0.08em] uppercase mb-1"
-                      style={{ color: "#7872a8" }}
+                      style={{ color: "#524d8a" }}
                     >
                       {t.speeches.speakers_header}
                     </p>
@@ -231,15 +231,18 @@ export default function SpeechesPage() {
                     </span>
                     <span
                       className="text-[12px] ml-1"
-                      style={{ color: "#7872a8" }}
+                      style={{ color: "#524d8a" }}
                     >
-                      {t.speeches.top_words.replace("{count}", String(allWords.length))}
+                      {t.speeches.top_words.replace(
+                        "{count}",
+                        String(allWords.length),
+                      )}
                     </span>
                   </div>
                   <button
                     onClick={() => setExpandedParty(null)}
                     className="text-[20px] leading-none"
-                    style={{ color: "#7872a8", lineHeight: 1 }}
+                    style={{ color: "#524d8a", lineHeight: 1 }}
                     aria-label={t.speeches.close}
                   >
                     ×

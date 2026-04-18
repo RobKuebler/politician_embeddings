@@ -16,13 +16,13 @@ export function MobileHeader() {
 
   return (
     <>
-      <header className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-[68px] bg-[#1E1B5E]">
+      <header className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-[68px] bg-[var(--color-navy)]">
         {/* Logo + wordmark — links to start page */}
         <Link
           href="/"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-150"
         >
-          <div className="w-8 h-8 bg-[#4C46D9] rounded-[9px] flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 bg-[var(--color-purple)] rounded-[9px] flex items-center justify-center shrink-0">
             <Logo size={20} />
           </div>
           <span className="text-[12px] font-black tracking-tight text-white">
@@ -50,6 +50,7 @@ export function MobileHeader() {
 
       {/* Backdrop */}
       <div
+        aria-hidden="true"
         className={`md:hidden fixed inset-0 z-[60] bg-black/50 transition-opacity duration-300 ${
           open
             ? "opacity-100 pointer-events-auto"
@@ -60,7 +61,10 @@ export function MobileHeader() {
 
       {/* Drawer — slides in from the right */}
       <nav
-        className={`md:hidden fixed top-0 right-0 bottom-0 z-[70] w-[280px] bg-[#1E1B5E] flex flex-col transition-transform duration-300 ease-out ${
+        aria-modal={open}
+        aria-hidden={!open}
+        aria-label="Navigation"
+        className={`md:hidden fixed top-0 right-0 bottom-0 z-[70] w-[280px] bg-[var(--color-navy)] flex flex-col transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
@@ -98,9 +102,9 @@ export function MobileHeader() {
               <button
                 key={lang}
                 onClick={() => setLanguage(lang)}
-                className={`flex-1 py-1.5 rounded-md text-[12px] font-bold uppercase transition-colors duration-150 ${
+                className={`flex-1 min-h-[44px] rounded-md text-[12px] font-bold uppercase transition-colors duration-150 ${
                   language === lang
-                    ? "bg-white text-[#1E1B5E]"
+                    ? "bg-white text-[var(--color-navy)]"
                     : "text-white/40 hover:text-white/70"
                 }`}
               >
@@ -144,7 +148,7 @@ export function MobileHeader() {
                         onClick={() => setOpen(false)}
                         className={`flex items-center gap-3 rounded-lg px-3 py-3 transition-all duration-150 ${
                           active
-                            ? "bg-[#4C46D9]"
+                            ? "bg-[var(--color-purple)]"
                             : "opacity-55 hover:opacity-90 hover:bg-white/5"
                         }`}
                       >

@@ -31,8 +31,9 @@ export function RemovableChip({
       style={{
         display: "inline-flex",
         alignItems: "center",
+        minHeight: 36,
         gap: 4,
-        padding: "2px 8px",
+        padding: "6px 8px",
         borderRadius: 12,
         background: "#f0f0f0",
         fontSize: 12,
@@ -59,10 +60,12 @@ export function RemovableChip({
           background: "none",
           border: "none",
           cursor: "pointer",
-          padding: 0,
+          padding: "4px 8px",
           fontSize: 13,
           color: FALLBACK_COLOR,
-          lineHeight: 1,
+          lineHeight: "1",
+          display: "flex",
+          alignItems: "center",
         }}
       >
         ×

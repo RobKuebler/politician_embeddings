@@ -181,7 +181,7 @@ export default function MotionsPage() {
       </div>
 
       {unavailable ? (
-        <p className="text-[14px]" style={{ color: "#7872a8" }}>
+        <p className="text-[14px]" style={{ color: "#524d8a" }}>
           {t.motions.no_data}
         </p>
       ) : loading || !stats || !typData ? (
@@ -215,7 +215,7 @@ export default function MotionsPage() {
               >
                 {t.motions.timeline_title}
               </h2>
-              <p className="text-[12px] mb-4" style={{ color: "#7872a8" }}>
+              <p className="text-[12px] mb-4" style={{ color: "#524d8a" }}>
                 {t.motions.timeline_subtitle.replace(
                   "{tab}",
                   TAB_LABELS[activeTab],
@@ -229,7 +229,7 @@ export default function MotionsPage() {
                   normalized={false}
                 />
               ) : (
-                <p className="text-[13px]" style={{ color: "#7872a8" }}>
+                <p className="text-[13px]" style={{ color: "#524d8a" }}>
                   {t.motions.no_time_data}
                 </p>
               )}
@@ -278,7 +278,7 @@ export default function MotionsPage() {
                     </div>
                     <span
                       className="text-[12px] tabular-nums shrink-0"
-                      style={{ color: "#7872a8" }}
+                      style={{ color: "#524d8a" }}
                     >
                       {count.toLocaleString(language)}
                     </span>
@@ -299,7 +299,7 @@ export default function MotionsPage() {
                     <div>
                       <p
                         className="text-[11px] font-bold tracking-[0.08em] uppercase mb-1"
-                        style={{ color: "#7872a8" }}
+                        style={{ color: "#524d8a" }}
                       >
                         {t.motions.top_authors}
                       </p>
@@ -322,7 +322,7 @@ export default function MotionsPage() {
             >
               {t.motions.search_title}
             </h2>
-            <p className="text-[12px] mb-4" style={{ color: "#7872a8" }}>
+            <p className="text-[12px] mb-4" style={{ color: "#524d8a" }}>
               {t.motions.search_subtitle.replace(
                 "{tab}",
                 TAB_LABELS[activeTab],
@@ -337,7 +337,7 @@ export default function MotionsPage() {
               style={{ color: "#171613" }}
             />
             {titlesLoading && (
-              <p className="text-[13px]" style={{ color: "#7872a8" }}>
+              <p className="text-[13px]" style={{ color: "#524d8a" }}>
                 {t.motions.search_loading}
               </p>
             )}
@@ -375,7 +375,7 @@ export default function MotionsPage() {
                           </span>
                           <span
                             className="text-[12px] tabular-nums"
-                            style={{ color: "#7872a8" }}
+                            style={{ color: "#524d8a" }}
                           >
                             {count.toLocaleString(language)}
                           </span>
@@ -407,7 +407,7 @@ export default function MotionsPage() {
               searchResults.length === 0 &&
               query.trim() &&
               !titlesLoading && (
-                <p className="text-[13px]" style={{ color: "#7872a8" }}>
+                <p className="text-[13px]" style={{ color: "#524d8a" }}>
                   {t.motions.no_results
                     .replace("{tab}", TAB_LABELS[activeTab])
                     .replace("{query}", query)}

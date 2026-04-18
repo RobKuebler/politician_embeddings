@@ -13,7 +13,7 @@ type SmallType = (typeof SMALL_TYPES)[number];
 
 // Design tokens used in SummarySmall
 const TRACK_COLOR = "#eeedf8";
-const VALUE_COLOR = "#7872a8";
+const VALUE_COLOR = "#524d8a";
 const LABEL_COLOR = "#171613";
 
 /**

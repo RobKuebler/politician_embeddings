@@ -14,13 +14,13 @@ export function Sidebar() {
     rawPathname !== "/" ? rawPathname.replace(/\/$/, "") : rawPathname;
   const { t, language, setLanguage } = useLanguage();
   return (
-    <aside className="hidden md:flex flex-col w-[180px] shrink-0 h-screen sticky top-0 bg-[#1E1B5E]">
+    <aside className="hidden md:flex flex-col w-[180px] shrink-0 h-screen sticky top-0 bg-[var(--color-navy)]">
       {/* Logo + wordmark — links to start page */}
       <Link
         href="/"
         className="flex items-center gap-2.5 px-3 pt-[14px] pb-[10px] hover:opacity-80 transition-opacity duration-150"
       >
-        <div className="w-8 h-8 bg-[#4C46D9] rounded-[9px] flex items-center justify-center shrink-0">
+        <div className="w-8 h-8 bg-[var(--color-purple)] rounded-[9px] flex items-center justify-center shrink-0">
           <Logo size={20} />
         </div>
         <span className="text-[13px] font-black tracking-tight text-white truncate">
@@ -62,7 +62,7 @@ export function Sidebar() {
                 style={{
                   fontSize: 9,
                   color: group.color,
-                  opacity: 0.7,
+                  opacity: 1,
                   marginTop: gi === 0 ? 0 : 2,
                 }}
               >
@@ -75,19 +75,19 @@ export function Sidebar() {
                     <Link
                       key={href}
                       href={href}
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2.5 outline-none focus:outline-none transition-all duration-150 ${
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2.5 focus-visible:ring-2 focus-visible:ring-[#C5C3E8] focus-visible:ring-offset-1 focus-visible:ring-offset-[#1E1B5E] transition-all duration-150 ${
                         active
-                          ? "bg-[#4C46D9]"
-                          : "opacity-55 hover:opacity-90 hover:bg-white/5"
+                          ? "bg-[var(--color-purple)]"
+                          : "opacity-75 hover:opacity-100 hover:bg-white/5"
                       }`}
                     >
                       <span
-                        className={`shrink-0 ${active ? "text-white" : "text-[#A8A5E0]"}`}
+                        className={`shrink-0 ${active ? "text-white" : "text-[var(--color-nav-inactive)]"}`}
                       >
                         {icon(active, 20)}
                       </span>
                       <span
-                        className={`text-[13px] font-bold truncate ${active ? "text-white" : "text-[#A8A5E0]"}`}
+                        className={`text-[13px] font-bold truncate ${active ? "text-white" : "text-[var(--color-nav-inactive)]"}`}
                       >
                         {t.nav[key]}
                       </span>
@@ -110,10 +110,10 @@ export function Sidebar() {
             <button
               key={lang}
               onClick={() => setLanguage(lang)}
-              className={`flex-1 py-1 rounded-md text-[11px] font-bold uppercase transition-colors duration-150 ${
+              className={`flex-1 min-h-[44px] rounded-md text-[11px] font-bold uppercase transition-colors duration-150 ${
                 language === lang
                   ? "bg-white/15 text-white"
-                  : "text-white/25 hover:text-white/50"
+                  : "text-white/55 hover:text-white/80"
               }`}
             >
               {lang}

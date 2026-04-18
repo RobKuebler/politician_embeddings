@@ -22,6 +22,26 @@
   /* Card primitives                                                            */
   --card-radius: 0.75rem; /* rounded-xl */
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+  /* Color palette                                                               */
+  --color-navy: #1e1b5e;
+  --color-purple: #4c46d9;
+  --color-muted: #524d8a;
+  --color-nav-inactive: #c5c3e8;
+  --color-lavender: #dddaf0;
+  --color-bg: #f5f4fc;
+  --color-chip-border: #c8cad4;
+  --color-chip-text: #555555;
+  --color-chip-count: #6e6e6e;
+
+  --color-description: #5a556b; /* subdued description/subtitle text */
+  --color-chip-bg: #f0f0f0; /* removable chip background */
+  --color-bar-track: #eeedf8; /* horizontal bar chart track */
+  --color-vote-yes: #2563eb; /* vote: yes */
+  --color-vote-no: #ea580c; /* vote: no */
+  --color-vote-abstain: #9ca3af; /* vote: abstain */
+  --color-heatmap-low: #f0f5ff; /* heatmap sequential scale low */
+  --color-heatmap-high: #0f2d5c; /* heatmap sequential scale high */
 }
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
@@ -32,7 +52,7 @@
 }
 
 body {
-  background-color: #f5f4fc;
+  background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -48,7 +68,12 @@ body {
 }
 
 .skeleton-shimmer {
-  background: linear-gradient(90deg, #dddaf0 0%, #f5f4fc 50%, #dddaf0 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-lavender) 0%,
+    var(--color-bg) 50%,
+    var(--color-lavender) 100%
+  );
   background-size: 1600px 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }
@@ -131,6 +156,6 @@ body {
   }
   .skeleton-shimmer {
     animation: none;
-    background: #dddaf0;
+    background: var(--color-lavender);
   }
 }
