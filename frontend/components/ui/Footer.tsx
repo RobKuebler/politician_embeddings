@@ -47,6 +47,15 @@ export function Footer() {
             GitHub
           </a>
         </div>
+        <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1">
+          <a
+            href="/impressum"
+            className="transition-colors duration-150 hover:text-[var(--color-navy)]"
+            style={{ color: "var(--color-muted)" }}
+          >
+            Impressum
+          </a>
+        </div>
         <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1">
           <span>{t.ui.footer_data}</span>
           <a
