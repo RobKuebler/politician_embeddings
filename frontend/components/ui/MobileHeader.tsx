@@ -69,11 +69,20 @@ export function MobileHeader() {
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        {/* Drawer header */}
+        {/* Logo + close button */}
         <div className="flex items-center justify-between px-4 h-[68px] shrink-0">
-          <span className="text-[11px] font-bold tracking-[0.14em] uppercase text-white/40">
-            {t.ui.nav_label}
-          </span>
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-150"
+          >
+            <div className="w-8 h-8 bg-[var(--color-purple)] rounded-[9px] flex items-center justify-center shrink-0">
+              <Logo size={20} />
+            </div>
+            <span className="text-[12px] font-black tracking-tight text-white">
+              Parlascanned
+            </span>
+          </Link>
           <button
             onClick={() => setOpen(false)}
             className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
@@ -93,29 +102,18 @@ export function MobileHeader() {
           </button>
         </div>
 
-        <div className="h-px bg-white/10 mx-4 mb-2" />
-
-        {/* Language toggle */}
-        <div className="px-4 mb-3">
-          <div className="flex gap-1">
-            {(["de", "en"] as const).map((lang) => (
-              <button
-                key={lang}
-                onClick={() => setLanguage(lang)}
-                className={`flex-1 min-h-[44px] rounded-md text-[12px] font-bold uppercase transition-colors duration-150 ${
-                  language === lang
-                    ? "bg-white text-[var(--color-navy)]"
-                    : "text-white/40 hover:text-white/70"
-                }`}
-              >
-                {lang}
-              </button>
-            ))}
-          </div>
+        {/* Seat distribution widget */}
+        <div
+          className="mx-4 mb-3 pt-3"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          <BundestagSeats />
         </div>
 
+        <div className="mx-4 mb-2 h-px bg-white/10" />
+
         {/* Nav items */}
-        <div className="flex flex-col px-3 overflow-y-auto">
+        <div className="flex flex-col px-3 flex-1 overflow-y-auto">
           {NAV_GROUPS.map((group, gi) => {
             const groupLabel =
               language === "en" ? group.label.en : group.label.de;
@@ -167,10 +165,26 @@ export function MobileHeader() {
           })}
         </div>
 
-        {/* Seat distribution widget */}
-        <div className="mx-4 mt-3 mb-2 h-px bg-white/10" />
-        <div className="px-4 pb-4">
-          <BundestagSeats />
+        {/* Language toggle */}
+        <div
+          className="px-4 pt-3 pb-4"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          <div className="flex gap-1">
+            {(["de", "en"] as const).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`flex-1 min-h-[44px] rounded-md text-[12px] font-bold uppercase transition-colors duration-150 ${
+                  language === lang
+                    ? "bg-white/15 text-white"
+                    : "text-white/55 hover:text-white/80"
+                }`}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
         </div>
       </nav>
     </>
