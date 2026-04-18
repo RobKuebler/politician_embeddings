@@ -45,7 +45,7 @@ const SEQ_DEFAULT_LOW = "#f0f5ff";
 const SEQ_DEFAULT_HIGH = "#0f2d5c";
 
 const MIN_COL_W = 44;
-const CHAR_W = 5.8; // estimated px per character at 9.5px font
+const CHAR_W = 6.4; // estimated px per character at 10.5px font
 
 export interface PartyHeatmapProps {
   /** Row labels shown on the y-axis. */
@@ -114,8 +114,8 @@ export function PartyHeatmap({
     const isMobile = width < 520;
     const ML = isMobile ? 88 : 130; // left margin (row labels)
     const MR = isMobile ? 24 : 40; // right margin
-    const BLOCK_H = isMobile ? 22 : 26; // height of coloured column-header block
-    const HEADER_H = BLOCK_H + 10; // 10 px gap between block bottom and first row
+    const BLOCK_H = isMobile ? 24 : 28; // height of coloured column-header block
+    const HEADER_H = BLOCK_H + 12; // gap between block bottom and first row
 
     // Column width: at least MIN_COL_W, or wide enough for the longest short party label.
     const longestColName = cols.reduce((a, b) => {
@@ -219,7 +219,7 @@ export function PartyHeatmap({
         .attr("y", blockY)
         .attr("width", bw)
         .attr("height", BLOCK_H)
-        .attr("rx", 4)
+        .attr("rx", 6)
         .attr("fill", color);
 
       const shortLabel = getPartyShortLabel(party);
@@ -235,11 +235,11 @@ export function PartyHeatmap({
           .attr("y", blockY + BLOCK_H / 2)
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "central")
-          .style("font-size", "9.5px")
+          .style("font-size", "10.5px")
           .style("font-family", CHART_FONT_FAMILY)
           .style("font-weight", "600")
+          .style("letter-spacing", "0.04em")
           .style("fill", "#fff")
-          .style("filter", "drop-shadow(0 1px 1.5px rgba(0,0,0,0.4))")
           .style("pointer-events", "none")
           .text(display);
         if (display !== shortLabel) {

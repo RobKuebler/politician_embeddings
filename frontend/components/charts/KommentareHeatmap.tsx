@@ -12,6 +12,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import { select, max, scaleSequential, interpolateRgb, lab, pointer } from "d3";
 import {
   CHART_FONT_FAMILY,
+  COLOR_SECONDARY,
   getPartyColor,
   getPartyShortLabel,
 } from "@/lib/constants";
@@ -83,7 +84,7 @@ function HeatmapCanvas({
     const LABEL_W = BLOCK_W + BLOCK_GAP;
     const MR = 8;
     const MB = 8;
-    const CHAR_W = 5.8; // estimated px per character at 9.5px font
+    const CHAR_W = 6.4; // estimated px per character at 10.5px font
 
     const availW = width - LABEL_W - MR;
     const cellW = Math.max(24, Math.floor(availW / n));
@@ -120,7 +121,7 @@ function HeatmapCanvas({
         .attr("y", 0)
         .attr("width", bw)
         .attr("height", BLOCK_H)
-        .attr("rx", 4)
+        .attr("rx", 6)
         .attr("fill", color);
 
       const shortLabelCol = getPartyShortLabel(party);
@@ -135,11 +136,11 @@ function HeatmapCanvas({
         .attr("y", BLOCK_H / 2)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "central")
-        .style("font-size", "9.5px")
+        .style("font-size", "10.5px")
         .style("font-family", CHART_FONT_FAMILY)
         .style("font-weight", "600")
+        .style("letter-spacing", "0.04em")
         .style("fill", "#fff")
-        .style("filter", "drop-shadow(0 1px 1.5px rgba(0,0,0,0.4))")
         .style("pointer-events", "none")
         .text(display);
 
@@ -168,7 +169,7 @@ function HeatmapCanvas({
         .attr("y", y + 1)
         .attr("width", BLOCK_W)
         .attr("height", bh)
-        .attr("rx", 4)
+        .attr("rx", 6)
         .attr("fill", color);
 
       const shortLabelRow = getPartyShortLabel(party);
@@ -183,11 +184,11 @@ function HeatmapCanvas({
         .attr("y", y + 1 + bh / 2)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "central")
-        .style("font-size", "9.5px")
+        .style("font-size", "10.5px")
         .style("font-family", CHART_FONT_FAMILY)
         .style("font-weight", "600")
+        .style("letter-spacing", "0.04em")
         .style("fill", "#fff")
-        .style("filter", "drop-shadow(0 1px 1.5px rgba(0,0,0,0.4))")
         .style("pointer-events", "none")
         .text(display);
 
@@ -314,7 +315,7 @@ export default function KommentareHeatmap({ data }: Props) {
           gap: 16,
           marginBottom: 8,
           fontSize: 11,
-          color: "#524d8a",
+          color: COLOR_SECONDARY,
           fontFamily: CHART_FONT_FAMILY,
         }}
       >

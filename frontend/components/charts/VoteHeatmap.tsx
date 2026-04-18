@@ -10,6 +10,7 @@ import {
   getPartyColor,
   getPartyShortLabel,
   CHART_FONT_FAMILY,
+  COLOR_SECONDARY,
 } from "@/lib/constants";
 import {
   ChartTooltip,
@@ -35,7 +36,7 @@ const VOTE_COLOR: Record<string, string> = {
 
 const ML = 240; // left margin for y-labels
 const MR = 16; // right margin
-const PARTY_BAND_H = 22; // height of the colored party header band
+const PARTY_BAND_H = 24; // height of the colored party header band
 const MEMBER_LABEL_H = 26; // height of the "A. Lastname" label row
 const HEADER_H = PARTY_BAND_H + MEMBER_LABEL_H;
 const ROW_H = 22;
@@ -171,7 +172,7 @@ export function VoteHeatmap({
         .attr("y", 0)
         .attr("width", bandW)
         .attr("height", PARTY_BAND_H - 2)
-        .attr("rx", 3)
+        .attr("rx", 5)
         .attr("fill", group.color);
 
       headerG
@@ -183,6 +184,7 @@ export function VoteHeatmap({
         .attr("fill", textColor)
         .attr("font-size", "11px")
         .attr("font-weight", "600")
+        .attr("letter-spacing", "0.04em")
         .attr("font-family", CHART_FONT_FAMILY)
         .text(getPartyShortLabel(group.party));
     }
@@ -199,7 +201,7 @@ export function VoteHeatmap({
         .attr("y", PARTY_BAND_H + MEMBER_LABEL_H / 2 + 1)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
-        .attr("fill", "#374151")
+        .attr("fill", COLOR_SECONDARY)
         .attr("font-size", "11px")
         .attr("font-family", CHART_FONT_FAMILY)
         .text(label);
