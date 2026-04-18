@@ -141,38 +141,12 @@ export default function AusschussePage() {
 
       {/* Hero card */}
       <div
-        className="rounded-xl mb-6 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #1E1B5E 0%, #2E2A7A 60%, #3D3499 100%)",
-          boxShadow: "0 4px 24px rgba(30,27,94,0.18)",
-        }}
+        className="rounded-xl mb-6"
+        style={{ background: "var(--color-navy)" }}
       >
-        <div className="flex items-center gap-5 p-5 md:p-6">
-          {/* Warning icon */}
-          <div
-            style={{
-              flexShrink: 0,
-              width: 64,
-              height: 64,
-              borderRadius: "50%",
-              background: "#C0392B",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 32,
-              lineHeight: 1,
-              paddingBottom: 6,
-              color: "#fff",
-              boxShadow: "0 2px 12px rgba(192,57,43,0.4)",
-            }}
-            aria-hidden
-          >
-            ⚠
-          </div>
-
-          <div className="min-w-0 flex flex-col gap-4 flex-1">
-            {/* Total conflicted income */}
+        <div className="p-5 md:p-6">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-1">
+            {/* Stat 1: total conflicted income */}
             <div>
               <p
                 style={{
@@ -180,8 +154,8 @@ export default function AusschussePage() {
                   fontWeight: 700,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.8)",
-                  marginBottom: 2,
+                  color: "rgba(255,255,255,0.5)",
+                  marginBottom: 4,
                 }}
               >
                 {t.potential_conflicts.hero_income_label}
@@ -192,18 +166,18 @@ export default function AusschussePage() {
                   fontWeight: 900,
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
-                  color: "#FFFFFF",
+                  color: "#fff",
                   fontVariantNumeric: "tabular-nums",
                   transition: "font-size 0.2s",
                 }}
               >
-                {loading ? (
+                {loading || displayIncome === 0 ? (
                   <span
                     style={{
                       display: "inline-block",
-                      width: 160,
+                      width: 140,
                       height: 32,
-                      borderRadius: 6,
+                      borderRadius: 4,
                       background: "rgba(255,255,255,0.12)",
                       verticalAlign: "middle",
                     }}
@@ -215,7 +189,7 @@ export default function AusschussePage() {
                       style={{
                         fontWeight: 500,
                         fontSize: "0.6em",
-                        color: "rgba(255,255,255,0.85)",
+                        color: "rgba(255,255,255,0.6)",
                       }}
                     >
                       €
@@ -225,64 +199,60 @@ export default function AusschussePage() {
               </p>
             </div>
 
-            <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
-
-            {/* Affected politicians + committees */}
-            {loading ? (
-              <span
+            {/* Stat 2: affected politicians */}
+            <div>
+              <p
                 style={{
-                  display: "inline-block",
-                  width: 180,
-                  height: 14,
-                  borderRadius: 4,
-                  background: "rgba(255,255,255,0.12)",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.5)",
+                  marginBottom: 4,
                 }}
-              />
-            ) : data ? (
-              <div style={{ display: "flex", gap: 24 }}>
-                <div>
+              >
+                {t.potential_conflicts.hero_politicians_label}
+              </p>
+              {loading ? (
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 80,
+                    height: 32,
+                    borderRadius: 4,
+                    background: "rgba(255,255,255,0.12)",
+                    verticalAlign: "middle",
+                  }}
+                />
+              ) : data ? (
+                <>
                   <p
                     style={{
-                      fontSize: 20,
+                      fontSize: 34,
                       fontWeight: 900,
-                      color: "#fff",
+                      letterSpacing: "-0.02em",
                       lineHeight: 1.1,
+                      color: "#fff",
+                      fontVariantNumeric: "tabular-nums",
                     }}
                   >
                     {data.stats.affected_politicians}
                   </p>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
-                    {t.potential_conflicts.hero_politicians_label}
-                  </p>
-                </div>
-                <div>
                   <p
                     style={{
-                      fontSize: 20,
-                      fontWeight: 900,
-                      color: "#fff",
-                      lineHeight: 1.1,
+                      fontSize: 12,
+                      color: "rgba(255,255,255,0.75)",
+                      marginTop: 4,
                     }}
                   >
-                    {data.stats.affected_committees}
-                  </p>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
+                    {data.stats.affected_committees}{" "}
                     {t.potential_conflicts.hero_committees_label}
                   </p>
-                </div>
-              </div>
-            ) : null}
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
-
-        {/* Red accent stripe */}
-        <div
-          style={{
-            height: 3,
-            background:
-              "linear-gradient(90deg, #C0392B 0%, #E74C3C 50%, #C0392B 100%)",
-          }}
-        />
       </div>
 
       {loading ? (

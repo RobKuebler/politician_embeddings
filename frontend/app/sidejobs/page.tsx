@@ -140,7 +140,7 @@ export default function SidejobsPage() {
                   transition: "font-size 0.2s",
                 }}
               >
-                {loading ? (
+                {loading || displayIncome === 0 ? (
                   <span
                     style={{
                       display: "inline-block",

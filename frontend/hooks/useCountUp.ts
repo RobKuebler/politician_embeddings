@@ -7,6 +7,7 @@ export function useCountUp(target: number, active: boolean) {
 
   useEffect(() => {
     if (!active || target === 0) return;
+    setDisplay(0);
     let cancelled = false;
     const duration = 1200;
     const start = performance.now();
